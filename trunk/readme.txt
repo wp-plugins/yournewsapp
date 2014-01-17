@@ -22,7 +22,7 @@ This was built considering for everyone to be able to use no matter the WordPres
 * A new setting page will be created within Settings > Your News App Api, you should check with that, and make a first options save. 
 
 <br />
-<br />This plugin is developed by <a target="_blank" href="http://www.nebelhorn.com">Nebelhorn</a>
+<br />This plugin is developed by <a target="_blank" href="http://www.yournewsapp.de">YNA</a>
 
 == Installation ==
 
@@ -38,7 +38,7 @@ This was built considering for everyone to be able to use no matter the WordPres
 
 == Frequently Asked Questions  ==
 
-Feel free to contact me at info@nebelhorn.com
+Feel free to contact me at contact@yournewsapp.de
 
 = I have no PHP knowledge at all, i will still be able to use this plugin? =
 
@@ -59,5 +59,5 @@ Make sure you get the latest version
 == Localization ==
 
 Currently available in German.
-Want to contribute with a translation to your language? Please contact me at info@nebelhorn.com
-http://www.www.nebelhorn.com
+Want to contribute with a translation to your language? Please contact me at contact@yournewsapp.de
+http://www.www.yournewsapp.de
