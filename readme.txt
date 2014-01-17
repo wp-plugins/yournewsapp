@@ -1,7 +1,7 @@
 === YNA Plugin  ===
 Contributors: nebelhorn
 Donate link: 
-Tags: Push, Your News App, YNA
+Tags:
 Requires at least: 3.0
 Tested up to: 3.8
 Stable tag: 0.2
