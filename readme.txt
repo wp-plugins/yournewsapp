@@ -8,21 +8,40 @@ Stable tag: 0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Create JSON API for Your News App
+Your Blog and News App Builder for iPhone and Android
 
 == Description ==
 
-This Plugin Work with Your News App
+yourBlogApp / yourNewsApp: This plugin is the first step to a free native App for iOS (iPhone) and Android.
 
-= Usage =
-This was built considering for everyone to be able to use no matter the WordPress experience, so it's very easy:
+= Turn your blog into a free native App and even earn money =
+Don’t fall for the typical HTML web apps with poor usability. And don't spend money for a native App in iOS (iPhone) and Android. YourBlogApp is the first native App which ist not only free for you but also enables you to earn money.
+Build you app in only a few minutes. Instantly test it using our test app in the App store. If you like it, you can instantly setup an account and we will take care of pushing the app into the stores. Advertisement in the app lets you even create revenue.
+Check out our Website for more info about how to earn money with yourBlogApp.
 
-* Install the plugin through the Install Plugins interface or by uploading the `post-types-order` folder to your `/wp-content/plugins/` directory.
-* Activate the NH YNAA Plugin.
-* A new setting page will be created within Settings > Your News App Api, you should check with that, and make a first options save. 
+**Increase the number of readers of your blog of news app with Push Notification**
+Notify your readers with our free push notification service build into the plugin. This service will increase your number of readers largely. You can decide when and what you want to push. 
 
-<br />
-<br />This plugin is developed by <a target="_blank" href="http://www.yournewsapp.de">YNA</a>
+**First plugin and App with iBeacon / beacon integration**
+Setup your iBeacons and let your app trigger a welcome push, organize couponing and do content triggering. We supply you with the proper iBeacons. Visit our website for more information about our iBeacon feature.
+
+**Comment enabled App**
+Your App can enable commenting and reading comments within the App. Simply tryout for yourself with our sample App.
+
+**yourNewsApp with additional features**
+Our News App version of the native app enables many more features like integration of events, setup of iBeacon push, couponing and content triggering
+
+**Design your App**
+There are a number of settings where you can change the looks of the App. Give it a try and test your design in our Test App.
+
+**NO build time required**
+Not like other App budders we do not require any build time. You can instantly test the app in our test app and if you like it, setup an account and we upload the app for you after approval
+
+= How it works =
+1. Install and Activate the plugin
+2. Click on Get Started on the plugin's page
+3. Test the result in our Test App
+4. If you like the result, setup an account with us and start with your own app and likely even earn money.
 
 == Installation ==
 
