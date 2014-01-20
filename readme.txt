@@ -57,7 +57,7 @@ Not like other App budders we do not require any build time. You can instantly t
 
 == Frequently Asked Questions  ==
 
-= Please refer to our [FAQ Website](http://www.yournewsapp.de/frequently-asked-questions) =
+Please refer to our [FAQ Website](http://www.yournewsapp.de/frequently-asked-questions)
 
 == Change Log ==
 
