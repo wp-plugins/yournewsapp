@@ -1,4 +1,4 @@
-=== YNA Plugin  ===
+=== yourBlogApp / yourNewsApp - your FREE native Mobile App for iOS(iPhone) and Android ===
 Contributors: nebelhorn
 Donate link: 
 Tags:
