@@ -1,4 +1,4 @@
-=== yourBlogApp / yourNewsApp - your FREE native Mobile App for iOS(iPhone) and Android ===
+=== yourBlogApp / yourNewsApp - your FREE native Mobile App for iPhone and Android ===
 Contributors: nebelhorn
 Donate link: 
 Tags:
