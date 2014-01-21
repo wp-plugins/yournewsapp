@@ -1583,8 +1583,6 @@ if(!class_exists('NH_YNAA_Plugin'))
 								foreach($comments as $com){
 									if(array_key_exists($com['comment_parent'],$parrent_com))
 										$parrent_com[$com['comment_parent']][] = $com;
-									
-									
 								}
 							}
 							
