@@ -1569,7 +1569,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 								
 							);
 								
-							$comments = $wpdb->get_results( "SELECT *   FROM $wpdb->comments WHERE comment_approved=1 AND comment_parent=0   ORDER BY comment_date_gmt ASC ", ARRAY_A  );
+							$comments = $wpdb->get_results( "SELECT *   FROM $wpdb->comments WHERE comment_approved=1 AND comment_parent=0 AND comment_post_id=".$_GET['id']."  ORDER BY comment_date_gmt ASC ", ARRAY_A  );
 							if($comments){
 								foreach($comments as $com){
 									$parrent_com[$com['comment_ID']][] = $com;
@@ -1578,7 +1578,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 								}
 							}
 							
-							$comments = $wpdb->get_results( "SELECT *   FROM $wpdb->comments WHERE comment_approved=1 AND comment_parent!=0   ORDER BY comment_date_gmt ASC ", ARRAY_A  );
+							$comments = $wpdb->get_results( "SELECT *   FROM $wpdb->comments WHERE comment_approved=1 AND comment_parent!=0 AND comment_post_id=".$_GET['id']."   ORDER BY comment_date_gmt ASC ", ARRAY_A  );
 							if($comments){
 								foreach($comments as $com){
 									if(array_key_exists($com['comment_parent'],$parrent_com))
@@ -1620,8 +1620,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 											 $pos2++;
 											 $temp['pos']=$pos2;
 											 $temp['id'] = $ar2['comment_ID'];
-											 $temp['parrent_id'] = $ar['comment_ID'];
-											 $temp['text'] =$ar['comment_content'];
+											 $temp['parrent_id'] = $ar[0]['comment_ID'];
+											 $temp['text'] =$ar2['comment_content'];
 											 $temp['timestamp'] =strtotime($ar2['comment_date']);
 											 if($temp['timestamp']>$returnarray['ts']) {
 												 $returnarray['ts'] = $temp['timestamp'];

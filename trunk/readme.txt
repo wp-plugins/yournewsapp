@@ -1,10 +1,10 @@
-=== yourBlogApp / yourNewsApp - your FREE native Mobile App for iPhone and Android ===
+﻿=== yourBlogApp / yourNewsApp - your FREE native Mobile App for iPhone and Android ===
 Contributors: nebelhorn
 Donate link: 
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.2
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,11 +61,17 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/frequently-asked-que
 
 == Change Log ==
 
+= 0.2.1 =
+ - Comments bugs fix
+
 = 0.2 =
  - Initial Release - still in Alpha
  
  
 == Upgrade Notice ==
+
+= 0.2.1 =
+ - This version fixes comment json bug
 
 Make sure you get the latest version
 
