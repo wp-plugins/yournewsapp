@@ -62,7 +62,7 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/frequently-asked-que
 == Change Log ==
 
 = 0.2.1 =
- - Comments bugs fix
+ - Comments bugs fix - still in Alpha
 
 = 0.2 =
  - Initial Release - still in Alpha
