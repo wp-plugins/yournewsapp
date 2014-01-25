@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.2.1
+Stable tag: 0.2.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,9 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/frequently-asked-que
 
 == Change Log ==
 
+= 0.2.2 =
+ - Bugs fix - still in Alpha
+
 = 0.2.1 =
  - Comments bugs fix - still in Alpha
 
@@ -69,6 +72,9 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/frequently-asked-que
  
  
 == Upgrade Notice ==
+
+= 0.2.2 =
+ - This version fixes comment encode bugs
 
 = 0.2.1 =
  - This version fixes comment json bug

@@ -1,8 +1,8 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.2
-Plugin URI: http://www.nebelhorn.com/your-news-app/
+Version: 0.2.2
+Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Your News App Api - The WP Plugin for Your News App
 Author: Nebelhorn Medien GmbH
 Author URI: http://www.nebelhorn.com
@@ -1285,6 +1285,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 				//Timestamp
 				if($_GET['ts']) {
 					$ts= $_GET['ts'];
+					//Immer cahnges true
+					$ts=0;
 					$ts_string = date('Y-m-d H:i:s',$ts);					
 				}
 				else {
@@ -1524,10 +1526,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 							if($_REQUEST['comment_id']) $comment_parent = $_REQUEST['comment_id'];
 							$commentdata = array(
 								'comment_post_ID' => $_GET['id'],
-								 'comment_author' => trim($_REQUEST['name']),
+								 'comment_author' => urldecode(trim($_REQUEST['name'])),
 								 'comment_author_email' =>trim($_REQUEST['email']),
 								 'comment_author_url' => 'http://',
-								 'comment_content' => trim($_REQUEST['comment']),
+								 'comment_content' => urldecode(trim($_REQUEST['comment'])),
 								 'comment_type' => '',
 								'comment_parent' => $comment_parent,
 								'user_id' => 0,
@@ -1542,6 +1544,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 								$returnarray['ts']=$ts;
 								$returnarray['comment_id']=$newcommentid;
 								$returnarray['changes']=1;
+								$returnarray['status']='in review';
 							}
 							else $returnarray['error']=$this->nh_ynaa_errorcode(31);
 						}
@@ -1569,7 +1572,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 								
 							);
 								
-							$comments = $wpdb->get_results( "SELECT *   FROM $wpdb->comments WHERE comment_approved=1 AND comment_parent=0 AND comment_post_id=".$_GET['id']."  ORDER BY comment_date_gmt ASC ", ARRAY_A  );
+							$comments = $wpdb->get_results( "SELECT *   FROM $wpdb->comments WHERE comment_approved=1 AND comment_parent=0 AND comment_post_id=".$_GET['id']."  ORDER BY comment_date_gmt DESC ", ARRAY_A  );
 							if($comments){
 								foreach($comments as $com){
 									$parrent_com[$com['comment_ID']][] = $com;
