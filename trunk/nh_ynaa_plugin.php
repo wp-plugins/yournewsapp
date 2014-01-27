@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.2.2
+Version: 0.2.3
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Your News App Api - The WP Plugin for Your News App
 Author: Nebelhorn Medien GmbH
@@ -823,7 +823,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 					
 					if($this->general_settings['ts']>$this->menu_settings['ts'])$ts=$this->general_settings['ts'];
 					else $ts=$this->menu_settings['ts'];
-					$returnarray['sort']=1;
+					if($this->general_settings['sort'])$returnarray['sort']=1;
+					else $returnarray['sort']=0;
 					//echo $ts;
 					
 					$returnarray['changes']=1;
