@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.2.2
+Stable tag: 0.2.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,8 @@ Not like other App budders we do not require any build time. You can instantly t
 Please refer to our [FAQ Website](http://www.yournewsapp.de/frequently-asked-questions)
 
 == Change Log ==
+= 0.2.3 =
+ - Sort fix - still in Alpha
 
 = 0.2.2 =
  - Bugs fix - still in Alpha
@@ -72,6 +74,9 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/frequently-asked-que
  
  
 == Upgrade Notice ==
+
+= 0.2.3 =
+ - Sort fix - still in Alpha
 
 = 0.2.2 =
  - This version fixes comment encode bugs
