@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.2.3
+Version: 0.2.4
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Your News App Api - The WP Plugin for Your News App
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.2";
+$nh_ynaa_version = "0.2.4";
 
 //Hook for loading
 global $my_menu_hook_ynaa;
@@ -63,7 +63,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			add_action( 'admin_init', array( &$this, 'nh_ynaa_register_homepreset_settings' ) );
 			add_action( 'admin_init', array( &$this, 'nh_ynaa_register_teaser_settings' ) );
 			add_action( 'admin_init', array( &$this, 'nh_ynaa_register_push_settings' ) );
-			add_action( 'admin_init', array( &$this, 'nh_ynaa_qrcode_page' ) );
+			//add_action( 'admin_init', array( &$this, 'nh_ynaa_qrcode_page' ) );
 			
 			//Action to add Menu in Settings
 			add_action( 'admin_menu', array( &$this, 'nh_ynaa_add_admin_menus' ) );	
@@ -295,7 +295,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			//Extras
 			add_settings_section( 'extra_settings', __('Extras', 'nh-ynaa'), array( &$this, 'nh_ynaa_section_general_extra' ), $this->general_settings_key );
-			add_settings_field( 'ynaa-comments', __('Allow commets in App', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>comments));
+			add_settings_field( 'ynaa-comments', __('Allow comments in App', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>comments));
 			add_settings_field( 'ynaa-eventplugin', __('Select your Event Manager:', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_eventplugin' ), $this->general_settings_key, 'extra_settings' , array('field'=>eventplugin));
 			add_settings_field( 'ynaa-sort', __('Group by date', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>sort));
 			
@@ -530,6 +530,17 @@ if(!class_exists('NH_YNAA_Plugin'))
 			echo '<img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=yna://?url='.get_site_url().'&choe=UTF-8" alt="yna://?url='.get_site_url().'" />';		
 			//echo '<div>yna://?url='.get_site_url().'</div>';
 		} //END function nh_the_qrcode_tab_content
+		
+		/*
+    * Home  content
+    */
+                function nh_the_home_content(){
+                    echo '<p>'.__('To test you content in an App, please download and install the iOS Version of our App <a href="https://itunes.apple.com/de/app/nebelhorn/id707029895?mt=8">here</a>. Then scan the following QR Code and open the Link in your smartphone.','nh-ynaa').'</p>';
+                    echo '<a href="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=yna://?url='.get_site_url().'&choe=UTF-8"><img width="100px" src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=yna://?url='.get_site_url().'&choe=UTF-8" alt="yna://?url='.get_site_url().'" /></a> <br>
+					Alternative Link: yna://?url='.get_site_url().'';
+                    echo '<p>'.__('It wil modify our App and make it to yours. If you want to have this app as your own app, please refer to our Website: <a href="http://www.your-news-app.com">http://www.your-news-app.com</a>','nh-ynaa').'</p>';
+                } //END function nh_the_home_content
+
 				
 		
 		/*
@@ -635,8 +646,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 			?>
 			<div class="wrap">
 				<!--<div id="icon-options-general" class="icon32"><br/></div>-->
-				<h2>Your News App Api</h2>
-				<?php $this->nh_ynaa_plugin_options_tabs();
+				<h2><?php _e('Settings for yourBlogApp & yourNewsApp','nh-ynaa'); ?></h2>
+				<?php 
+					$this->nh_the_home_content();
+                    $this->nh_ynaa_plugin_options_tabs();
 				if($tab != 'qrcode'){
 				 ?>
 				<form method="post" action="options.php" enctype="multipart/form-data" id="nh_ynaa_form" class="<?php echo $tab; ?>">					
