@@ -223,7 +223,7 @@
 						<div id="post-body-content" class="">
 							<h3><?php _e('Menu Structure','nh-ynaa'); ?></h3>
 							<div class="drag-instructions post-body-plain">
-								<p><?php _e('Here you make the settings for the app menu.','nh-ynaa'); ?></p>
+								<p><?php _e('Here you change the settings for the app menu.','nh-ynaa'); ?></p>
 							</div>							
 							<div id="menu-accordion">
 								<ul id="menu-to-edit" class="menu nav-menus-php">
