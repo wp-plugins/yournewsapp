@@ -2693,7 +2693,7 @@ if(class_exists('NH_YNAA_Plugin'))
 	if(isset($nh_ynaa))
 	{
 		// Add the settings link to the plugins page
-		function plugin_settings_link($links)
+		function nh_ynaa_plugin_settings_link($links)
 		{ 
 			$settings_link = '<a href="options-general.php?page=nh_ynaa_plugin_options">'.(__('Settings')).'</a>'; 
 			array_unshift($links, $settings_link); 
@@ -2701,14 +2701,14 @@ if(class_exists('NH_YNAA_Plugin'))
 		}
 
 		$plugin = plugin_basename(__FILE__); 
-		add_filter("plugin_action_links_$plugin", 'plugin_settings_link');
+		add_filter("plugin_action_links_$plugin", 'nh_ynaa_plugin_settings_link');
 		
 		//Add Query vars
-		function add_query_vars_filter( $vars ){
+		function nh_ynaa_add_query_vars_filter( $vars ){
 			  $vars[] = QUERY_VARS_YNAA;
 			  return $vars;
 		}
-		add_filter( 'query_vars', 'add_query_vars_filter' );
+		add_filter( 'query_vars', 'nh_ynaa_add_query_vars_filter' );
 		if(!empty($_GET[QUERY_VARS_YNAA])) {
 			add_action('template_redirect', array($nh_ynaa, 'nh_ynaa_template_redirect'));
 		}
