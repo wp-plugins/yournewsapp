@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.2.4
+Version: 0.3
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Your News App Api - The WP Plugin for Your News App
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.2.4";
+$nh_ynaa_version = "0.3";
 
 //Hook for loading
 global $my_menu_hook_ynaa;
@@ -40,6 +40,50 @@ if(!class_exists('NH_YNAA_Plugin'))
 		private $plugin_options_key = 'nh_ynaa_plugin_options';		//Plugin Settings
 		private $plugin_settings_tabs = array();					//All Tabs for the Plugin
 		public $appmenus_pre = array();								//Vordefinerte App Men�s
+		
+		public static $lang_de = array(
+			'Menu'=>'Menu',
+			'Please wait...'=>'Bitte warten…',
+			'The data are updated' => 'Die Daten werden aktualisiert',
+			'More' => 'Mehr',
+			'all-day' => 'ganztägig',
+			'Tip'=>'Hinweis',
+			'This feed has been deleted' => 'Dieser Feed wurde gelöscht',
+			'The event has been removed from the calendar.'=>'Die Veranstaltung wurde aus dem Kalender entfernt.',
+			'The event was added to the calendar.' => 'Die Veranstaltung wurde dem Kalender hinzugefügt.',
+			'Today'=>'Heute',
+			'Yesterday' => 'Gestern',
+			'The day before yesterday' =>'Vorgestern',
+			'This week' =>'Diese Woche',
+			'Last week'=>'Letzte Woche',
+			'The week before last' =>'Vorletzte Woche',
+			'This month' => 'Dieser Monat',
+			'Second last month' =>'Vorletzter Monat',
+			'Vorvorletzter Monat' => 'Vorvorletzter Monat',
+			'This year' => 'Dieses Jahr',
+			'Last year' => 'Letztes Jahr',
+			'Older than last year' => 'Älter als letztes Jahr',
+			'tomorrow' => 'Morgen',
+			'The day after tomorrow' => 'Übermorgen',
+			'Next week' => 'Nächste Woche',
+			'The week after next' =>'Übernächste Woche',
+			'Next month' => 'Nächster Monat',
+			'Over the next month' => 'Übernächster Monat',
+			'Überübernächster Monat' => 'Überübernächster Monat',
+			'Next year' => 'Nächstes Jahr',
+			'Later next year' => 'Später als Nächstes Jahr',
+			'Cancel' => 'Abbrechen',
+			'Finished' => 'Fertig',
+			'Comment'=>'Kommentar',
+			'required' =>'erforderlich',
+			'Name' => 'Name',
+			'The e-mail address is not correct' => 'Die E-Mail-Adresse ist nicht korrekt',
+			'Please enter your name.' => 'Bitte gib deinen Namen an.',
+			'Please enter your comment.' => 'Bitte gib deinen Kommentar an.',
+			'Comments are being loaded ...' => 'Kommentare werden geladen...',
+			'Clock'=>'Uhr',
+			'Welcome to'=>'Willkommen bei'
+		);
 				
 		/*
 		*Konstanten
@@ -129,18 +173,59 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			//Main Pre Setting for App
 			include('include/default_css.php');
-			$nh_ynaa_general_settings=(array('sort'=>1,'c1'=>'#005058','c2'=>'#ffffff', 'cn'=>'#ffffff', 'ct'=>'#000000', 'ch'=>'#000000', 'csh'=>'#000000','ts'=>time(), 'css'=> $css,'logo'=>'', 'comments'=>0));
+			foreach(self::$lang_de as $k=>$v){
+				$lang_en[$k]=$k;
+				
+			}
+			$nh_ynaa_general_settings=(array('sort'=>1,'c1'=>'#3677a0','c2'=>'#ffffff', 'cn'=>'#ffffff', 'ct'=>'#000000', 'ch'=>'#000000', 'csh'=>'#000000','ts'=>time(), 'css'=> $css,'logo'=>'', 'comments'=>0, 'logo'=> plugins_url( 'img/yba_yna_yca_applogo.png' , __FILE__ ), 'lang_array'=>$lang_en, 'lang'=>'en' ));
 			
 			
 			//Preset teaser
-			$nh_ynaa_teaser_settings = array('ts'=>time(),'teaser'=>false);
+			$nh_ynaa_teaser_settings = array('ts'=>0,'teaser'=>false);
 			
 			//ADD Options in Wp-Option table
 			add_option('nh_ynaa_plugin_version', $nh_ynaa_version);	
 			add_option('nh_ynaa_general_settings', $nh_ynaa_general_settings);	
-			add_option('nh_ynaa_menu_settings', $nh_ynaa_menu_settings);	
-			add_option('nh_ynaa_homepreset_settings', $nh_ynaa_homepreset_settings);	
+			add_option('nh_ynaa_menu_settings', $nh_ynaa_menu_settings);
+			
+			$args = array(
+				'numberposts' => 3,
+				'offset' => 0,				
+				'orderby' => 'post_date',
+				'order' => 'DESC',				
+				'post_type' => 'post',
+				'post_status' => 'publish' );
+		
+			$recent_posts = wp_get_recent_posts( $args, ARRAY_A );
+			
+			if($recent_posts){
+				foreach($recent_posts as $recent){
+					$nh_ynaa_teaser_settings['teaser'][]=$recent["ID"];
+				}
+			}
 			add_option('nh_ynaa_teaser_settings', $nh_ynaa_teaser_settings);	
+				
+			$nh_ynaa_homepreset_settings = array($ts = 0);
+			$args = array(
+				'type'                     => 'post',
+	
+				'orderby'                  => 'name',
+				'order'                    => 'ASC',
+				'hide_empty'               => 1,
+				'hierarchical'             => 1,
+				'taxonomy'                 => 'category'
+			
+			); 
+			$categories = get_categories( $args );
+			if($categories){
+				$i=1;
+				foreach($categories as $category){
+					 $nh_ynaa_homepreset_settings['items'][] = array('img'=>'', 'title'=>$category->name, 'allowRemove'=>1, 'id' => $category->term_id, 'type'=>'cat', 'id2'=>$i);
+					 $i++;
+				}
+			}
+			add_option('nh_ynaa_homepreset_settings', $nh_ynaa_homepreset_settings);	
+				
 			add_option('nh_ynaa_push_settings', array());		
 			
 			
@@ -175,15 +260,15 @@ if(!class_exists('NH_YNAA_Plugin'))
          */     
         public static function _nh_ynaa_deactivate()
         {		
-          /*  //DELETE all  from WP options
-			delete_option('nh_ynaa_plugin_version');
+            //DELETE all  from WP options
+		/*	delete_option('nh_ynaa_plugin_version');
 			delete_option('nh_ynaa_general_settings');	
 			delete_option('nh_ynaa_menu_settings');	
 			delete_option('nh_ynaa_homepreset_settings');				
 			delete_option('nh_ynaa_teaser_settings');
 //			delete_option('nh_ynaa_events_settings');
-			delete_option('nh_ynaa_push_settings');
-		*/
+			delete_option('nh_ynaa_push_settings');*/
+		
         } // END public static function nh_ynaa_deactivate
 		
 				
@@ -295,6 +380,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			//Extras
 			add_settings_section( 'extra_settings', __('Extras', 'nh-ynaa'), array( &$this, 'nh_ynaa_section_general_extra' ), $this->general_settings_key );
+			add_settings_field( 'ynaa-lang', __('Language', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_language' ), $this->general_settings_key, 'extra_settings' , array('field'=>lang));
 			add_settings_field( 'ynaa-comments', __('Allow comments in App', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>comments));
 			add_settings_field( 'ynaa-eventplugin', __('Select your Event Manager:', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_eventplugin' ), $this->general_settings_key, 'extra_settings' , array('field'=>eventplugin));
 			add_settings_field( 'ynaa-sort', __('Group by date', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>sort));
@@ -542,6 +628,17 @@ if(!class_exists('NH_YNAA_Plugin'))
                 } //END function nh_the_home_content
 
 				
+		/*
+		 * LAngugae 
+		*/
+		function nh_ynaa_field_general_language($field){
+			?>
+			<select id="nh_language" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]">
+                    	<option value="en">English</option>
+                        <option value="de" <?php if($this->general_settings['lang']=='de') echo ' selected'; ?>>German</option>
+                    </select>
+           <?php
+		}
 		
 		/*
 		 * Event  Option field callback 
@@ -839,6 +936,18 @@ if(!class_exists('NH_YNAA_Plugin'))
 					if($this->general_settings['sort'])$returnarray['sort']=1;
 					else $returnarray['sort']=0;
 					//echo $ts;
+					if($this->general_settings['lang'] == 'de'){
+						$returnarray['lang']='de';
+						$returnarray['lang_array'] = self::$lang_de;
+					}
+					else {
+						$returnarray['lang']='en';
+						foreach(self::$lang_de as $k=>$v){
+							$lang_en[$k]=$k;
+							
+						}
+						$returnarray['lang_array'] = $lang_en;
+					}
 					
 					$returnarray['changes']=1;
 					$returnarray['color-01']=($this->general_settings['c1']);
