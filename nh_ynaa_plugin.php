@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.3
+Version: 0.3.0.1
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Your News App Api - The WP Plugin for Your News App
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.3";
+$nh_ynaa_version = "0.3.0.1";
 
 //Hook for loading
 global $my_menu_hook_ynaa;
@@ -57,24 +57,27 @@ if(!class_exists('NH_YNAA_Plugin'))
 			'This week' =>'Diese Woche',
 			'Last week'=>'Letzte Woche',
 			'The week before last' =>'Vorletzte Woche',
+			'Last month'=>'Letzter Monat',
 			'This month' => 'Dieser Monat',
 			'Second last month' =>'Vorletzter Monat',
-			'Vorvorletzter Monat' => 'Vorvorletzter Monat',
+			'Before two months' => 'Vorvorletzter Monat',
 			'This year' => 'Dieses Jahr',
 			'Last year' => 'Letztes Jahr',
 			'Older than last year' => 'Älter als letztes Jahr',
-			'tomorrow' => 'Morgen',
+			'Tomorrow' => 'Morgen',
 			'The day after tomorrow' => 'Übermorgen',
 			'Next week' => 'Nächste Woche',
 			'The week after next' =>'Übernächste Woche',
 			'Next month' => 'Nächster Monat',
 			'Over the next month' => 'Übernächster Monat',
-			'Überübernächster Monat' => 'Überübernächster Monat',
+			'Over two months' => 'Überübernächster Monat',
 			'Next year' => 'Nächstes Jahr',
 			'Later next year' => 'Später als Nächstes Jahr',
 			'Cancel' => 'Abbrechen',
 			'Finished' => 'Fertig',
 			'Comment'=>'Kommentar',
+			'Show' =>'Anzeigen',
+			'Comments'=>'Kommentare',
 			'required' =>'erforderlich',
 			'Name' => 'Name',
 			'The e-mail address is not correct' => 'Die E-Mail-Adresse ist nicht korrekt',
@@ -497,19 +500,26 @@ if(!class_exists('NH_YNAA_Plugin'))
 			include('include/events.php');
 		}*/
 		function nh_ynaa_menu_settings_desc() { 
-			do_accordion_sections( 'nav-menus', 'side', null );
-			$ynaa_menu = '';
+			if (function_exists('do_accordion_sections')) {
+				do_accordion_sections( 'nav-menus', 'side', null );
+			}
+			$ynaa_menu = '';			
 			include('include/menu.php');
+			
 			
 		}		
 		function nh_ynaa_homepreset_settings_desc() { 
-			do_accordion_sections( 'nav-menus', 'side', null );
+			if (function_exists('do_accordion_sections')) {
+				do_accordion_sections( 'nav-menus', 'side', null );
+			}
 			$ynaa_menu = '';
 			include('include/homepreset.php');
 			
 		}
 		function nh_ynaa_teaser_settings_desc() { 
-			do_accordion_sections( 'nav-menus', 'side', null );
+			if (function_exists('do_accordion_sections')) {
+				do_accordion_sections( 'nav-menus', 'side', null );
+			}
 			$ynaa_menu = '';
 			include('include/teaser.php');
 		}
@@ -2254,7 +2264,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 *Function to get Facebook content
 		*/		
 		private function nh_ynaa_get_fbcontent($limit=50){
-			if(isset($this->general_settings['social_fbid'],$this->general_settings['social_fbsecretid'],$this->general_settings['social_fbappid'])){
+			if(isset($this->general_settings['social_fbid'],$this->general_settings['social_fbsecretid'],$this->general_settings['social_fbappid']) && ($this->general_settings['social_fbid'] != '' && $this->general_settings['social_fbsecretid'] != '' && $this->general_settings['social_fbappid'] != '' )){
 				if(require_once('facebook-php-sdk-master/src/facebook.php')){
 					$config = array(
 					  'appId' => $this->general_settings['social_fbappid'],
