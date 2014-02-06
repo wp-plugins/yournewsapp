@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.3
+Stable tag: 0.3.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -61,6 +61,9 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/frequently-asked-que
 
 == Change Log ==
 
+= 0.3.0.1 = 
+- Fix do_accordion_sections
+
 = 0.3 = 
 - add App language file
 - add presets
@@ -88,6 +91,9 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/frequently-asked-que
  
  
 == Upgrade Notice ==
+
+= 0.3.0.1 = 
+- Fix function do_accordion_sections for Wordpress < 3.6
 
 = 0.3 =
 - change app language over plugin (english, german )
