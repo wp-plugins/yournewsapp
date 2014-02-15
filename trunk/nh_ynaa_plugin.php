@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.3.0.2";
+$nh_ynaa_version = "0.3.0.2.1";
 
 //Hook for loading
 global $my_menu_hook_ynaa;
@@ -621,9 +621,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 * QR-Code Tab content
 		*/
 		function nh_the_qrcode_tab_content(){
-			echo '<h3>'.__('QR-Code for Download Your App','nh-ynaa').'</h3>';
-			echo '<p>'.__('To use this QR-Code for your News App. You have to install the yournewsapp from Appstore from Nebelhorn Medien.','nh-ynaa').'</p>';
-			echo '<img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=yna://?url='.get_site_url().'&choe=UTF-8" alt="yna://?url='.get_site_url().'" />';		
+		//	echo '<h3>'.__('QR-Code for Download Your App','nh-ynaa').'</h3>';
+		//	echo '<p>'.__('To use this QR-Code for your News App. You have to install the yournewsapp from Appstore from Nebelhorn Medien.','nh-ynaa').'</p>';
+		//	echo '<img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=ynb://?url='.get_site_url().'&choe=UTF-8" alt="yna://?url='.get_site_url().'" />';		
 			//echo '<div>yna://?url='.get_site_url().'</div>';
 		} //END function nh_the_qrcode_tab_content
 		
@@ -632,8 +632,8 @@ if(!class_exists('NH_YNAA_Plugin'))
     */
                 function nh_the_home_content(){
                     echo '<p>'.__('To test you content in an App, please download and install the iOS Version of our App <a href="https://itunes.apple.com/DE/app/id815084293?mt=8&affId=2083489#">here</a>. Then scan the following QR Code and open the Link in your smartphone.','nh-ynaa').'</p>';
-                    echo '<a href="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=yna://?url='.get_site_url().'&choe=UTF-8"><img width="100px" src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=yna://?url='.get_site_url().'&choe=UTF-8" alt="yna://?url='.get_site_url().'" /></a> <br>
-					Alternative Link: yna://?url='.get_site_url().'';
+                    echo '<a href="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=ynb://?url='.get_site_url().'&choe=UTF-8"><img width="100px" src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=yna://?url='.get_site_url().'&choe=UTF-8" alt="yna://?url='.get_site_url().'" /></a> <br>
+					Alternative Link: ynb://?url='.get_site_url().'';
                     echo '<p>'.__('It wil modify our App and make it to yours. If you want to have this app as your own app, please refer to our Website: <a href="http://www.your-news-app.com">http://www.your-news-app.com</a>','nh-ynaa').'</p>';
                 } //END function nh_the_home_content
 
