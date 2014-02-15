@@ -61,6 +61,9 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/frequently-asked-que
 
 == Change Log ==
 
+= 0.3.0.2.1 = 
+- Change to ynb -
+
 = 0.3.0.2 = 
 - Change to yourNewsApp -
 
@@ -94,6 +97,9 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/frequently-asked-que
  
  
 == Upgrade Notice ==
+
+= 0.3.0.2.1 =
+- Change to ynb
 
 = 0.3.0.2 =
 - Change Main App from Nebelhorn App to yourNewsApp
