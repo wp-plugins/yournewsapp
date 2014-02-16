@@ -632,7 +632,7 @@ if(!class_exists('NH_YNAA_Plugin'))
     */
                 function nh_the_home_content(){
                     echo '<p>'.__('To test you content in an App, please download and install the iOS Version of our App <a href="https://itunes.apple.com/DE/app/id815084293?mt=8&affId=2083489#">here</a>. Then scan the following QR Code and open the Link in your smartphone.','nh-ynaa').'</p>';
-                    echo '<a href="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=yna://?url='.get_site_url().'&choe=UTF-8"><img width="100px" src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=yna://?url='.get_site_url().'&choe=UTF-8" alt="yna://?url='.get_site_url().'" /></a> <br>
+                    echo '<a href="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=yba://?url='.get_site_url().'&choe=UTF-8"><img width="100px" src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=yba://?url='.get_site_url().'&choe=UTF-8" alt="yna://?url='.get_site_url().'" /></a> <br>
 					Alternative Link: ynb://?url='.get_site_url().'';
                     echo '<p>'.__('It wil modify our App and make it to yours. If you want to have this app as your own app, please refer to our Website: <a href="http://www.your-news-app.com">http://www.your-news-app.com</a>','nh-ynaa').'</p>';
                 } //END function nh_the_home_content
