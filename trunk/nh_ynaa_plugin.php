@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.3.0.2.1";
+$nh_ynaa_version = "0.3.1";
 
 //Hook for loading
 global $my_menu_hook_ynaa;
@@ -632,8 +632,8 @@ if(!class_exists('NH_YNAA_Plugin'))
     */
                 function nh_the_home_content(){
                     echo '<p>'.__('To test you content in an App, please download and install the iOS Version of our App <a href="https://itunes.apple.com/DE/app/id815084293?mt=8&affId=2083489#">here</a>. Then scan the following QR Code and open the Link in your smartphone.','nh-ynaa').'</p>';
-                    echo '<a href="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=yba://?url='.get_site_url().'&choe=UTF-8"><img width="100px" src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=yba://?url='.get_site_url().'&choe=UTF-8" alt="yna://?url='.get_site_url().'" /></a> <br>
-					Alternative Link: ynb://?url='.get_site_url().'';
+                    echo '<a href="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=yba://?url='.get_site_url().'&choe=UTF-8"><img width="100px" src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=yba://?url='.get_site_url().'&choe=UTF-8" alt="yba://?url='.get_site_url().'" /></a> <br>
+					Alternative Link: yba://?url='.get_site_url().'';
                     echo '<p>'.__('It wil modify our App and make it to yours. If you want to have this app as your own app, please refer to our Website: <a href="http://www.your-news-app.com">http://www.your-news-app.com</a>','nh-ynaa').'</p>';
                 } //END function nh_the_home_content
 
@@ -1612,7 +1612,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		*/
 		private function nh_ynaa_social(){
 			$returnarray['error']=$this->nh_ynaa_errorcode(24);
-			if($_GET['n']='fb'){
+			if($_GET['n']=='fb'){
 				if($_GET['limit']) $limit= $_GET['limit'];
 				else $limit=50;
 				$fb= $this->nh_ynaa_get_fbcontent($limit);
@@ -1656,6 +1656,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						else {
 							$ts = time();
 							$comment_parent = 0;
+							//$wpdb->insert('temp',array('text'=>serialize($_REQUEST)), array('%s'));
 							if($_REQUEST['comment_id']) $comment_parent = $_REQUEST['comment_id'];
 							$commentdata = array(
 								'comment_post_ID' => $_GET['id'],
@@ -1667,9 +1668,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 								'comment_parent' => $comment_parent,
 								'user_id' => 0,
 								'comment_author_IP' => $_SERVER['REMOTE_ADDR'],
-								'comment_agent' => 'App',
+								'comment_agent' => $_SERVER['HTTP_USER_AGENT'],
 								'comment_date' => date('Y-m-d H:i:s',$ts),
-								'comment_approved' => 1
+								'comment_approved' => 0
 							);
 							if($newcommentid = wp_insert_comment($commentdata)){
 								add_comment_meta( $newcommentid, 'ckey', trim($_REQUEST['key']) );
@@ -1677,7 +1678,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 								$returnarray['ts']=$ts;
 								$returnarray['comment_id']=$newcommentid;
 								$returnarray['changes']=1;
-								$returnarray['status']='in review';
+								$returnarray['status']=__('Comment is in review', 'nh-ynaa');
 							}
 							else $returnarray['error']=$this->nh_ynaa_errorcode(31);
 						}
@@ -1750,7 +1751,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 										$pos2 = 0;
 										//$temparray2 = array();
 										$temp = array();
-										foreach($ar as $ar2){
+										foreach($ar as $k=>$ar2){
+											if($k==0) continue;
 											 $pos2++;
 											 $temp['pos']=$pos2;
 											 $temp['id'] = $ar2['comment_ID'];
@@ -2075,6 +2077,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$end_ts = strtotime($event->event_end_date.' '.$event->event_end_time);
 							$content = '<div id="nh_ynaa__app_content">'.$post->post_content.'</div>';
 							$content = $this->nh_ynaa_get_appcontent($content);
+							$content = '<style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style>'.$content.'<style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style>';
+							$content = str_replace(PHP_EOL,null,$content);
 							$returnarray['id']=$post->ID; 								
 							$returnarray['title']=htmlspecialchars_decode($post->post_title);
 							$returnarray['timestamp']=strtotime($post->post_modified); 

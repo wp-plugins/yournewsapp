@@ -11,6 +11,9 @@ img {
 	width:100%;
 	margin-bottom:10px;
 }
+ul, ol{
+	margin:0 0 0 20px; 
+}
 ';
 	
 ?>
