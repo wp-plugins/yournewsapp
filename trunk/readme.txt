@@ -65,6 +65,9 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
 
 == Change Log ==
 
+= 0.3.1.1 =
+- change Plugin Text -
+ 
 = 0.3.1 = 
 - change to yba -
 - bug fix -
@@ -107,6 +110,8 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
  
  
 == Upgrade Notice ==
+= 0.3.1.1 =
+- change the how to text
 
 = 0.3.1 =
 - correct yba
