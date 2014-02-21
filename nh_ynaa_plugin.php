@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.3.0.2
+Version: 0.3.1.1
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: yourBlogApp/yourNewsApp - The Wordpress Plugin for yourBlogApp/yourNewsApp
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.3.1";
+$nh_ynaa_version = "0.3.1.1";
 
 //Hook for loading
 global $my_menu_hook_ynaa;
