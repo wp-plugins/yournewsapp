@@ -42,7 +42,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		public $appmenus_pre = array();								//Vordefinerte App Men�s
 		
 		public static $lang_de = array(
-			'Menu'=>'Menu',
+			'Menu'=>'Menü',
 			'Please wait...'=>'Bitte warten…',
 			'The data are updated' => 'Die Daten werden aktualisiert',
 			'More' => 'Mehr',
@@ -85,7 +85,16 @@ if(!class_exists('NH_YNAA_Plugin'))
 			'Please enter your comment.' => 'Bitte gib deinen Kommentar an.',
 			'Comments are being loaded ...' => 'Kommentare werden geladen...',
 			'Clock'=>'Uhr',
-			'Welcome to'=>'Willkommen bei'
+			'Welcome to'=>'Willkommen bei', 
+			'There was an error.' => 'Es ist ein Fehler aufgetreten.',
+			'Redeem'=>'Einlösen',
+			'Add event to calendar'=>'Veranstaltung zum Kalender hinzufügen',
+			'Add to calendar'=>"Zum Kalender hinzufügen",
+			'Remove event from calendar' => "Veranstaltung vom Kalender entfernen",
+			'from'=>"von",
+			'to' => 'bis',
+			'starting at' => 'ab'
+
 		);
 				
 		/*
@@ -631,21 +640,35 @@ if(!class_exists('NH_YNAA_Plugin'))
     * Home  content
     */
                 function nh_the_home_content(){
-                    echo '<p>'.__('To test you content in an App, please download and install the iOS Version of our App <a href="https://itunes.apple.com/DE/app/id815084293?mt=8&affId=2083489#">here</a>. Then scan the following QR Code and open the Link in your smartphone.','nh-ynaa').'</p>';
-                    echo '<a href="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=yba://?url='.get_site_url().'&choe=UTF-8"><img width="100px" src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=yba://?url='.get_site_url().'&choe=UTF-8" alt="yba://?url='.get_site_url().'" /></a> <br>
-					Alternative Link: yba://?url='.get_site_url().'';
-                    echo '<p>'.__('It wil modify our App and make it to yours. If you want to have this app as your own app, please refer to our Website: <a href="http://www.your-news-app.com">http://www.your-news-app.com</a>','nh-ynaa').'</p>';
+					echo '<div class="headercont clearfix">';
+                    echo '<p>'.__('With this plugin you can deploy your own native iOS (iPhone) and Android app containing the content of this Wordpress installation.','nh-ynaa').'<br>';
+					echo __('To get a preview on what the app would look like, please follow these steps:','nh-ynaa').'</p>';
+					echo '<ul class="howtolist">';
+						echo '<li>'.__('First of all download and install the <a href="https://itunes.apple.com/de/app/yourblogapp-yournewsapp/id815084293?mt=8" target="_blank">yourBlogApp Test app</a> from the Apple AppStore','nh-ynaa').'</li>';
+						echo '<li>'.__('Scan the QR code and open the link on your smartphone. Other than scanning the QR you can type the following link into your smartphone’s browser: ','nh-ynaa').'yba://?url='.get_site_url().'';
+						
+						echo '</li>';
+					
+                    	echo '<li>'.__('By opening this link the test app will be reconfigured and filled with the content from your Wordpress site. Change the look and feel of your app by modifying the settings, adding your logo, customizing the startscreen and changing the overall style.','nh-ynaa').'</li>';
+						echo '<li>'.__('If you like the app, please register on our website <a href="http://www.your-news-app.com" target="_blank">www.your-news-app.com</a>. We will then create the app for you and upload it to the app stores!','nh-ynaa').'</li>';
+						echo '<li>'.__('If you have any questions contact us: ','nh-ynaa').'<a href="mailto:support@yournewsapp.de">support@yournewsapp.de</a>'.'</li>';
+					echo '</ul>';
+					echo '<div>';
+					echo '<a href="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=yba://?url='.get_site_url().'&choe=UTF-8"><img width="100px" src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=yba://?url='.get_site_url().'&choe=UTF-8" alt="yba://?url='.get_site_url().'" /></a> <br>';
+					echo '</div>';
+					echo '</div>';
+					echo '<div class="clear"></div>';
                 } //END function nh_the_home_content
 
-				
+			
 		/*
 		 * LAngugae 
 		*/
 		function nh_ynaa_field_general_language($field){
 			?>
 			<select id="nh_language" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]">
-                    	<option value="en">English</option>
-                        <option value="de" <?php if($this->general_settings['lang']=='de') echo ' selected'; ?>>German</option>
+                    	<option value="en"><?php _e('English', 'nh-ynaa'); ?></option>
+                        <option value="de" <?php if($this->general_settings['lang']=='de') echo ' selected'; ?>><?php _e('German', 'nh-ynaa'); ?></option>
                     </select>
            <?php
 		}
@@ -753,7 +776,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			?>
 			<div class="wrap">
 				<!--<div id="icon-options-general" class="icon32"><br/></div>-->
-				<h2><?php _e('Settings for yourBlogApp & yourNewsApp','nh-ynaa'); ?></h2>
+				<h2><?php _e('Settings for yourBlogApp/yourNewsApp','nh-ynaa'); ?></h2>
 				<?php 
 					$this->nh_the_home_content();
                     $this->nh_ynaa_plugin_options_tabs();
@@ -1531,7 +1554,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 					if($ts<strtotime(get_the_date('Y-m-d').' '.get_the_modified_time())) {
 						$ts = strtotime(get_the_date('Y-m-d').' '.get_the_modified_time());
 						if ( has_post_thumbnail()) {
-							$post_thumbnail_image=esc_url(wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'medium'));
+							$post_thumbnail_image=(wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'medium'));
+							$returnarray['uma']['aricle_has_image'] = true;
 						}
 						else {
 							$post_thumbnail_image[0] = '';		
@@ -1563,7 +1587,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						$returnarray['changes']=1;				
 						$returnarray['type']=get_post_type();					
 						$returnarray['format']='html';
-						$returnarray['thumb']= array($post_thumbnail_image[0]); 	
+						$returnarray['thumb']= array('src'=>$post_thumbnail_image[0]); 	
 						$returnarray['sharelink']= esc_url( get_permalink());
 						$returnarray['comment_status'] = $post->comment_status;						
 						$args = array(
@@ -1959,7 +1983,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							l.location_name, l.location_address, l.location_town, l.location_state, l.location_postcode, l.location_region, l.location_country, l.location_latitude, l.location_longitude
 							from $table_em_events e
 							left join $table_em_locations l on l.location_id=e.location_id
-							WHERE e.event_status=1 AND (e.event_start_date >='".date('Y-m-d')."' OR e.event_end_date>='".date('Y-m-d')."')
+							WHERE e.event_status=1 AND e.recurrence=0 AND (e.event_start_date >='".date('Y-m-d')."' OR e.event_end_date>='".date('Y-m-d')."') 
 							ORDER BY e.event_start_date, e.event_start_time
 							$limit", array('%d', '$d', '%s', '%d', '%s', '%s', '%s', '%d','%d', '%d', '%s', '%d', '%d', '%d', '%s')));
 				

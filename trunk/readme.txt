@@ -38,10 +38,14 @@ There are a number of settings where you can change the looks of the App. Give i
 Not like other App budders we do not require any build time. You can instantly test the app in our [test app](https://itunes.apple.com/de/app/nebelhorn/id707029895?mt=8) and if you like it, setup an account and we upload the app for you after approval
 
 = How it works =
-1. Install and Activate the plugin
-2. Click on Get Started on the plugin's page
-3. Test the result in our [Test App](https://itunes.apple.com/de/app/nebelhorn/id707029895?mt=8)
-4. If you like the result, setup an account with us and start with your own app and likely even earn money.
+1.  Install and activate the plugin
+2.	Download and install the <a href="https://itunes.apple.com/de/app/yourblogapp-yournewsapp/id815084293?mt=8">yourBlogApp Test app</a> from the Apple AppStore
+3.	Navigate to the plugins settings page in WordPress.
+4.	Scan the QR code you’ll find on the settings page and open the link on your smartphone. Other than scanning the QR you can type the following link into your smartphone’s browser: yba://http://yourdomain
+5.	By opening this link the test app will be reconfigured and filled with the content from your WordPress site. Change the look and feel of your app by modifying the settings, adding your logo, customizing the startscreen and changing the overall style.
+6.	If you like the app, please register on our website <a href="http://www.your-news-app.com">www.your-news-app.com</a>. We will then create the app for you and upload it to the app stores!
+7.	If you have any questions contact us: info@yournewsapp.de
+
 
 == Installation ==
 
@@ -57,7 +61,7 @@ Not like other App budders we do not require any build time. You can instantly t
 
 == Frequently Asked Questions  ==
 
-Please refer to our [FAQ Website](http://www.yournewsapp.de/frequently-asked-questions)
+Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
 
 == Change Log ==
 

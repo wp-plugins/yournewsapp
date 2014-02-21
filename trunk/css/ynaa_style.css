@@ -97,3 +97,15 @@ div.publishing-action {
 div.homepresetpreview { 
 	width:400px !important;
 }
+
+
+.howtolist { 
+	list-style:outside decimal;
+	margin-left:20px;
+	width:80%;
+	float:left;
+	margin-right:15px;
+	
+}
+
+.clear { clear:both; }
