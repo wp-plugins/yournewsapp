@@ -15,7 +15,7 @@
 						if( !in_array( $post_type, array( 'attachment', 'revision', 'nav_menu_item' ) ) ){
 						?>
 							<li id="add-<?php echo $post_type; ?>" class="control-section accordion-section add-<?php echo $post_type; ?>">
-								<h3 title="<?php echo ucfirst(_n($post_type,$post_type.'s',2,'nh-ynaa')); ?>" tabindex="0" class="accordion-section-title hndle">1<?php echo ucfirst(__($post_type));?></h3>				
+								<h3 title="<?php echo ucfirst(_n($post_type,$post_type.'s',2,'nh-ynaa')); ?>" tabindex="0" class="accordion-section-title hndle"><?php echo ucfirst(_n($post_type,$post_type.'s',2));?></h3>				
 								<div class="accordion-section-content ">
 									<div class="inside">
 									<?php										
