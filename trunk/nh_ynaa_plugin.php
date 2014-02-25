@@ -12,10 +12,10 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.3.1.1";
+$nh_ynaa_version = "0.3.2";
 
 //Hook for loading
-global $my_menu_hook_ynaa;
+global $nh_menu_hook_ynaa;
 
 //Query vars
 define('QUERY_VARS_YNAA','ynaa');
@@ -40,6 +40,15 @@ if(!class_exists('NH_YNAA_Plugin'))
 		private $plugin_options_key = 'nh_ynaa_plugin_options';		//Plugin Settings
 		private $plugin_settings_tabs = array();					//All Tabs for the Plugin
 		public $appmenus_pre = array();								//Vordefinerte App Men�s
+		
+		public $tabs = array(
+			// The assoc key represents the ID
+			// It is NOT allowed to contain spaces
+			 'EXAMPLE' => array(
+				 'title'   => 'TEST ME!'
+				,'content' => 'FOO'
+			 )
+		);
 		
 		public static $lang_de = array(
 			'Menu'=>'Menü',
@@ -189,7 +198,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$lang_en[$k]=$k;
 				
 			}
-			$nh_ynaa_general_settings=(array('sort'=>1,'c1'=>'#3677a0','c2'=>'#ffffff', 'cn'=>'#ffffff', 'ct'=>'#000000', 'ch'=>'#000000', 'csh'=>'#000000','ts'=>time(), 'css'=> $css,'logo'=>'', 'comments'=>0, 'logo'=> plugins_url( 'img/yba_yna_yca_applogo.png' , __FILE__ ), 'lang_array'=>$lang_en, 'lang'=>'en' ));
+			$lang = 'en';
+			if(get_bloginfo('language')=='de_DE') $lang='de';
+			$nh_ynaa_general_settings=(array('sort'=>1,'c1'=>'#3677a0','c2'=>'#ffffff', 'cn'=>'#ffffff', 'ct'=>'#000000', 'ch'=>'#000000', 'csh'=>'#000000','ts'=>time(), 'css'=> $css,'logo'=>'', 'comments'=>0, 'logo'=> plugins_url( 'img/yba_yna_yca_applogo.png' , __FILE__ ), 'lang_array'=>$lang_en, 'lang'=>$lang ));
 			
 			
 			//Preset teaser
@@ -318,7 +329,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			//set app menu
 			$this->appmenus_pre[0] = array('title'=>__('Browse','nh-ynaa'),'status'=>1,'pos'=>1, 'id'=>0, 'type'=>'app', 'type_text'=>'App', 'link-typ'=>'cat');
-			$this->appmenus_pre[1] = array('title'=>__('Subscription','nh-ynaa'),'status'=>1,'pos'=>2, 'id'=>1, 'type'=>'app', 'type_text'=>'App', 'link-typ'=>'cat');
+			$this->appmenus_pre[1] = array('title'=>__('Subscription','nh-ynaa'),'status'=>1,'pos'=>2, 'id'=>-99, 'type'=>'app', 'type_text'=>'App', 'link-typ'=>'cat');
 			if(isset($this->general_settings['social_fbid'],$this->general_settings['social_fbsecretid'],$this->general_settings['social_fbappid'])) $this->appmenus_pre[3] = array('title'=>__('Facebook','nh-ynaa'),'status'=>1,'pos'=>3, 'id'=>-2, 'type'=>'fb', 'type_text'=>'Facebook', 'link-typ'=>'fb');
 			$this->appmenus_pre[5] = array('title'=>__('Events','nh-ynaa'),'status'=>0,'pos'=>3, 'id'=>-1, 'type'=>'events', 'type_text'=>'App');
 			
@@ -479,6 +490,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			add_settings_field( 'ynaa-appkey', __('App Key', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_option' ), $this->push_settings_key, 'app_push_settings' , array('field'=>appkey));
 			add_settings_field( 'ynaa-pushsecret', __('PUSHSECRET', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_option' ), $this->push_settings_key, 'app_push_settings' , array('field'=>pushsecret));
 			add_settings_field( 'ynaa-pushurl', __('PUSHURL', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_option' ), $this->push_settings_key, 'app_push_settings' , array('field'=>pushurl));
+			add_settings_field( 'ynaa-pushshow', __('Show Push Metabox', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_option' ), $this->push_settings_key, 'app_push_settings' , array('field'=>pushshow));
 			//iBeacon
 			add_settings_section( 'app_ibeacon_settings', __('iBeacon Settings', 'nh-ynaa'), array( &$this, 'nh_ynaa_push_settings_desc' ), $this->push_settings_key );	
 			add_settings_field( 'ynaa-ts', null, array( &$this, 'nh_ynaa_field_general_option_hidden' ), $this->general_settings_key, 'app_ibeacon_settings', array('field'=>ts) );
@@ -644,7 +656,7 @@ if(!class_exists('NH_YNAA_Plugin'))
                     echo '<p>'.__('With this plugin you can deploy your own native iOS (iPhone) and Android app containing the content of this Wordpress installation.','nh-ynaa').'<br>';
 					echo __('To get a preview on what the app would look like, please follow these steps:','nh-ynaa').'</p>';
 					echo '<ul class="howtolist">';
-						echo '<li>'.__('First of all download and install the <a href="https://itunes.apple.com/de/app/yourblogapp-yournewsapp/id815084293?mt=8" target="_blank">yourBlogApp Test app</a> from the Apple AppStore','nh-ynaa').'</li>';
+						echo '<li>'.__('First of all download and install the <a href="https://itunes.apple.com/de/app/yourblogapp-yournewsapp/id815084293?mt=8" target="_blank">yourBlogApp test app</a> from the Apple AppStore','nh-ynaa').'</li>';
 						echo '<li>'.__('Scan the QR code and open the link on your smartphone. Other than scanning the QR you can type the following link into your smartphone’s browser: ','nh-ynaa').'yba://?url='.get_site_url().'';
 						
 						echo '</li>';
@@ -658,6 +670,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					echo '</div>';
 					echo '</div>';
 					echo '<div class="clear"></div>';
+					echo '<p>'.__('In the following tabs you can modify the appearance and functions of the app. With our <a href="https://itunes.apple.com/de/app/yourblogapp-yournewsapp/id815084293?mt=8" target="_blank">yourBlogApp test app</a> you can see what your app would look like.', 'nh-ynaa');
                 } //END function nh_the_home_content
 
 			
@@ -756,9 +769,94 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 * using the nh_ynaa_plugin_options_page method.
 		 */
 		function nh_ynaa_add_admin_menus() {
-			global $my_menu_hook_ynaa;
-			$my_menu_hook_ynaa = add_options_page( 'yourBlogApp/yourNewsApp', 'yourBlogApp/yourNewsApp', 'manage_options', $this->plugin_options_key, array( &$this, 'nh_ynaa_plugin_options_page' ) );
+			global $nh_menu_hook_ynaa;
+			$nh_menu_hook_ynaa = add_options_page( 'yourBlogApp/yourNewsApp', 'yourBlogApp/yourNewsApp', 'manage_options', $this->plugin_options_key, array( &$this, 'nh_ynaa_plugin_options_page' ) );
+			add_action("load-{$nh_menu_hook_ynaa}",array(&$this,'nh_create_help_screen'));
 		}
+		
+		
+		
+		/*
+		* Function to create Help 
+		*/
+		public function nh_create_help_screen() {
+ 
+		/** 
+		 * Create the WP_Screen object against your admin page handle
+		 * This ensures we're working with the right admin page
+		 */
+		$this->admin_screen = WP_Screen::get($this->admin_page);
+ 
+		/**
+		 * Content specified inline
+		 */
+		$this->admin_screen->add_help_tab(
+			array(
+				'title'    => __('Help'),
+				'id'       => 'help_tab',
+				'content'  => '<p>'.__('For help visit our website <a href="http://www.your-news-app.com/">www.your-news-app.com/</a>.').'</p>',
+				'callback' => false
+			)
+		);
+ 
+		/**
+		 * Content generated by callback
+		 * The callback fires when tab is rendered - args: WP_Screen object, current tab
+		 */
+		/*$this->admin_screen->add_help_tab(
+			array(
+				'title'    => 'Info on this Page',
+				'id'       => 'page_info',
+				'content'  => '',
+				'callback' => create_function('','echo "<p>This is my generated content.</p>";')
+			)
+		);*/
+ 
+		/*$this->admin_screen->set_help_sidebar(
+			'<p>This is my help sidebar content.</p>'
+		);*/
+ 
+		/*$this->admin_screen->add_option( 
+			'per_page', 
+			array(
+				'label' => 'Entries per page', 
+				'default' => 20, 
+				'option' => 'edit_per_page'
+			) 
+		);
+ 
+		$this->admin_screen->add_option( 
+			'layout_columns', 
+			array(
+				'default' => 3, 
+				'max' => 5
+			) 
+		);*/
+ 
+		/**
+		 * This option will NOT show up
+		 */
+		/*$this->admin_screen->add_option( 
+			'invisible_option', 
+			array(
+				'label'	=> 'I am a custom option',
+				'default' => 'wow', 
+				'option' => 'my_option_id'
+			) 
+		);*/
+ 
+		/**
+		 * But old-style metaboxes still work for creating custom checkboxes in the option panel
+		 * This is a little hack-y, but it works
+		 */
+		/*add_meta_box(
+			'my_meta_id',
+			'My Metabox',
+			array(&$this,'create_my_metabox'),
+			$this->admin_page
+		);*/
+	}
+ 
 		
 		/*
 		 * Plugin Options page rendering goes here, checks
@@ -796,6 +894,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 			<?php
 		}
 		
+		
+		
 		/*
 		 * Renders our tabs in the plugin options page,
 		 * walks through the object's tabs array and prints
@@ -819,12 +919,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 *Load  Scripts and Styles
 		*/
 		function nh_ynaa_scripts( $hook_suffix ) {
-			global $my_menu_hook_ynaa;
+			global $nh_menu_hook_ynaa;
 
 			// exit function if not on my own options page!
 			// $my_menu_hook_akt is generated when creating the options page, e.g.,
 			// $my_menu_hook_akt = add_menu_page(...), add_submenu_page(...), etc
-			if ($hook_suffix != $my_menu_hook_ynaa) return;
+			if ($hook_suffix != $nh_menu_hook_ynaa) return;
 			// first check that $hook_suffix is appropriate for your admin page
 			wp_enqueue_style( 'wp-color-picker' );
 			wp_enqueue_script('media-upload');
@@ -891,6 +991,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 			elseif($ynaa_var=='ibeacon'){
 				print_r(json_encode($this->nh_ynaa_ibeacon()));				
 			}
+			elseif($ynaa_var=='yna_settings'){
+				print_r(json_encode($this->nh_ynaa_yna_settings()));				
+			}
 			elseif($ynaa_var){
 				print_r(json_encode(array('error'=>$this->nh_ynaa_errorcode(11))));
 			}							
@@ -954,6 +1057,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 				
 				$returnarray['error']=$this->nh_ynaa_errorcode(0);
 				$returnarray['url']=get_bloginfo('url');
+				global $nh_ynaa_version;
+				$returnarray['plugin_version']=$nh_ynaa_version;
 				
 				if($ts<$this->general_settings['ts'] || $ts<$this->menu_settings['ts']){
 					/* IBeacon */
@@ -1255,6 +1360,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			$returnarray['error']=$this->nh_ynaa_errorcode(0);
 			$returnarray['changes']=0;
+			$returnarray['uma']['ts']=time();
+			$returnarray['uma']['current_time']=current_time('timestamp');
 			
 			$args=array(
 			  'orderby' => 'name',			  
@@ -1469,13 +1576,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 								LIMIT 999",'%d'));
 				*/
 				//Order by post_modified
-				$post_ids = $wpdb->get_col( $wpdb->prepare( "select p.ID from $table_posts p 
-								left join $table_term_relationships tr on tr.object_id=p.ID
-								where p.post_status='publish' and tr.term_taxonomy_id=$cid 								
-								order by p.post_date desc
-								LIMIT 1999",'%d'));
+								
+				$post_ids = false;
 				if(!$post_ids){
-					$args = array('posts_per_page'   => 2000, 'category' => $cid, 'orderby' => 'post_date',	'order' => 'DESC');
+					$args = array('posts_per_page'   => -1, 'category' => $cid, 'orderby' => 'post_date',	'order' => 'DESC');
 					$posts_array = get_posts( $args );
 					
 					if($posts_array){
@@ -1485,7 +1589,14 @@ if(!class_exists('NH_YNAA_Plugin'))
 						}
 					}
 				}
-				
+				//$post_ids = false;
+				if(!$post_ids){
+					$post_ids = $wpdb->get_col( $wpdb->prepare( "select p.ID from $table_posts p 
+								left join $table_term_relationships tr on tr.object_id=p.ID
+								where p.post_status='publish' and tr.term_taxonomy_id=$cid 								
+								order by p.post_date desc
+								LIMIT 1999",'%d'));
+				}
 				if($post_ids){
 					$returnarray['error']=$this->nh_ynaa_errorcode(0);
 					
@@ -1544,7 +1655,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 				else $ts = 0;
 				
 				if($post1){				
-							
+					
+					
+						
 					$post = $post1;
 					setup_postdata( $post1 ); 	
 								
@@ -1574,16 +1687,57 @@ if(!class_exists('NH_YNAA_Plugin'))
 						
 						$returnarray['title'] = htmlspecialchars_decode($post->post_title);
 						//$content = '<html><head><title>'.get_bloginfo('name').'</title><body><div id="nh_ynaa__app_content">'.$post->post_content.'</div></body></html>';
-						$content = $post->post_content;
+						/*$content = $post->post_content;
 						$content =do_shortcode( $content );
 						//$content = '<html><head><meta charset="utf-8" /><title>'.get_bloginfo('name').'</title><style type="text/css">'.$this->general_settings['css'].';}</style></head><body><div id="nh_ynaa__app_content">'.$content.'</div></body></html>';	
-						//$content = '<head><meta charset="utf-8" /></head><body><div id="nh_ynaa__app_content">'.$content.'</div></body>';						
-						$content = $this->nh_ynaa_get_appcontent($content);
-						$content = '<style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style>'.$content.'<style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style>';
+						//$content = '<head><meta charset="utf-8" /></head><body><div id="nh_ynaa__app_content">'.$content.'</div></body>';		
+						$post_content = $post->post_content;
+						$returnarray['uma']['sql']="SELECT post_content FROM $wpdb->posts WHERE ID=".$returnarray['id']." LIMIT 1 ";
+						$returnarray['uma']['post_content']= $post_content;
+						$post_content =nl2br($post_content);
+						//$post_content = str_replace("\r\n\r\n",'<br \>',$post_content);
+						//$post_content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$post_content);
+						$returnarray['uma']['post_content_replace']= $post_content;
+						
+						
+						$content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$content);
+						$this->general_settings['css'] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$this->general_settings['css']);
+						
+						if(strpos('<html><head><meta charset="utf-8"></head>')) $content = str_replace('<html><head><meta charset="utf-8"></head>','<html><head><meta charset="utf-8"><style type="text/css">'.($this->general_settings['css']).' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+						elseif(strpos('<html>'))
+						$content = str_replace('<html>','<html><head><meta charset="utf-8"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+						else $content = '<!doctype html><html><head><meta charset="utf-8"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head><body>'.$content.'</body></html>';
+						
+						//$content = '<style type="text/css">'.preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$this->general_settings['css']).' body{color:'.$this->general_settings['ct'].';}</style>'.preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$content).'<style type="text/css">'.preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$this->general_settings['css']).' body{color:'.$this->general_settings['ct'].';}</style>';
+						
+						
 						//echo $content;
-						//$content = $post->post_content;
+						//$content = $post->post_content;*/
 						//$returnarray['content'] = '<html><head><style type="text/css">'.$this->general_settings['css'].';}</style></head><body>'.$content.'</body></html>';
+					
+						$queried_post = get_post($returnarray['id']);
+						$content = $queried_post->post_content;
+						$content = apply_filters('the_content', $content);
+						$content = str_replace(']]>', ']]&gt;', $content);
+						$content = str_replace("\r\n",'\n',$content);
+						//$content = utf8_encode($content);
+						
+						$content = preg_replace('/[\x00-\x1F\x80-\x9F]/u', '',$content);
+						$returnarray['uma']['post_content']= $content;
+						$content = $this->nh_ynaa_get_appcontent($content);
+						//$content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$content);
+						$this->general_settings['css'] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$this->general_settings['css']);
+						$content = (str_replace('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">','<!doctype html>',$content));
+						
+						if(strpos($content,'<html><head><meta charset="utf-8"></head>'))
+							$content = str_replace('<html><head><meta charset="utf-8"></head>','<html><head><meta charset="utf-8"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+						elseif(strpos($content,'<html>'))
+							$content = str_replace('<html>','<html><head><meta charset="utf-8"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+							else $content = '<!doctype html><html><head><meta charset="utf-8"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head><body>'.$content.'</body></html>';
+							
+						$returnarray['uma']['post_content_0']= $content;
 						$returnarray['content']=$content;
+						$returnarray['uma']['content']=$content;
 						$returnarray['changes']=1;				
 						$returnarray['type']=get_post_type();					
 						$returnarray['format']='html';
@@ -1679,6 +1833,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						if($commentkey) $returnarray['error']=$this->nh_ynaa_errorcode(32);
 						else {
 							$ts = time();
+							$ts = current_time('timestamp');
 							$comment_parent = 0;
 							//$wpdb->insert('temp',array('text'=>serialize($_REQUEST)), array('%s'));
 							if($_REQUEST['comment_id']) $comment_parent = $_REQUEST['comment_id'];
@@ -1841,6 +1996,20 @@ if(!class_exists('NH_YNAA_Plugin'))
 			return (array('ibeacon'=>$returnarray));
 		}
 		// END private function nh_ynaa_ibeacon
+		
+		/**
+		 * Return  Settings for YNA Admin page
+		*/
+		private function nh_ynaa_yna_settings(){
+			
+			$returnarray['error']=$this->nh_ynaa_errorcode(0);
+			$returnarray['bloginfo']['name']=get_bloginfo('name');
+			$returnarray['bloginfo']['language']=get_bloginfo('language');
+			return (array('yna_settings'=>$returnarray));
+		}
+		// END private function nh_ynaa_yna_settings
+		
+		
 		
 		/**
 		 * Return Event Array
@@ -2099,11 +2268,31 @@ if(!class_exists('NH_YNAA_Plugin'))
 							else $post_thumbnail_image[0] = '';	
 							$start_ts = strtotime($event->event_start_date.' '.$event->event_start_time);
 							$end_ts = strtotime($event->event_end_date.' '.$event->event_end_time);
-							$content = '<div id="nh_ynaa__app_content">'.$post->post_content.'</div>';
+							//$content = '<div id="nh_ynaa__app_content">'.$post->post_content.'</div>';
+							//$content = $this->nh_ynaa_get_appcontent($content);
+							//$content = '<style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style>'.$content.'<style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style>';
+							//$content = str_replace(PHP_EOL,null,$content);
+							
+							$returnarray['id']=$post->ID; 	
+							$queried_post = get_post($returnarray['id']);
+							$content = $queried_post->post_content;
+							$content = apply_filters('the_content', $content);
+							$content = str_replace(']]>', ']]&gt;', $content);
+							$content = str_replace("\r\n",'\n',$content);
+							//$returnarray['uma']['post_content_-1']= $content;
+							$content = preg_replace('/[\x00-\x1F\x80-\x9F]/u', '',$content);
 							$content = $this->nh_ynaa_get_appcontent($content);
-							$content = '<style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style>'.$content.'<style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style>';
-							$content = str_replace(PHP_EOL,null,$content);
-							$returnarray['id']=$post->ID; 								
+							//$content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$content);
+							$this->general_settings['css'] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$this->general_settings['css']);
+							$content = (str_replace('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">','<!doctype html>',$content));
+							
+							if(strpos($content,'<html><head><meta charset="utf-8"></head>'))
+								$content = str_replace('<html><head><meta charset="utf-8"></head>','<html><head><meta charset="utf-8"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+							elseif(strpos($content,'<html>'))
+								$content = str_replace('<html>','<html><head><meta charset="utf-8"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+								else $content = '<!doctype html><html><head><meta charset="utf-8"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head><body>'.$content.'</body></html>';
+							
+														
 							$returnarray['title']=htmlspecialchars_decode($post->post_title);
 							$returnarray['timestamp']=strtotime($post->post_modified); 
 							$returnarray['type']='post'; 
