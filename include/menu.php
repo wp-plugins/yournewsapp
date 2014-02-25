@@ -15,7 +15,7 @@
 						if( !in_array( $post_type, array( 'attachment', 'revision', 'nav_menu_item' ) ) ){
 						?>
 							<li id="add-<?php echo $post_type; ?>" class="control-section accordion-section add-<?php echo $post_type; ?>">
-								<h3 title="<?php echo ucfirst(_n($post_type,$post_type.'s',2,'nh-ynaa')); ?>" tabindex="0" class="accordion-section-title hndle"><?php echo ucfirst(_n($post_type,$post_type.'s',2));?></h3>				
+								<h3 title="<?php echo ucfirst(_n($post_type,$post_type.'s',2,'nh-ynaa')); ?>" tabindex="0" class="accordion-section-title hndle">1<?php echo ucfirst(__($post_type));?></h3>				
 								<div class="accordion-section-content ">
 									<div class="inside">
 									<?php										
@@ -261,7 +261,43 @@
 												</div><!-- .menu-item-settings-->
 											</li><!--End menu-item -->
 										<?php
+										
 										}
+										
+										$menuitem['title'] = __('Report an error','nh-ynaa');
+										$menuitem['type_text'] = __('App','nh-ynaa');
+										$menuitem['pos'] = 999999999;
+										$k = 999999999;
+										?>
+										<!-- Report an Error -->
+                                        <li class="menu-item menu-item-depth-0 menu-item-<?php echo $menuitem['type']; ?> menu-item-edit-inactive pending disable" id="menu-item-<?php echo $menuitem['pos']; ?>" style="display: list-item;">
+												<dl class="menu-item-bar">
+													<dt class="menu-item-handle">
+														<span class="item-title"><span class="menu-item-title"><?php echo $menuitem['title']; ?></span></span>
+														<span class="item-controls">
+															<span class="item-type"><?php echo ($menuitem['type_text']);?></span>
+															<span class="item-order hide-if-js"></span>
+															<a href="#" title="<?php echo $menuitem['title']; ?>" id="edit-<?php echo $menuitem['pos']; ?>" class="item-edit"><?php echo $menuitem['title']; ?></a>
+														</span>
+													</dt>
+												</dl>
+												<div id="menu-item-settings-<?php echo $menuitem['pos']; ?>" class="menu-item-settings">
+													<p class="description description-thin">
+														<label for="edit-menu-item-title-<?php echo $menuitem['pos']; ?>"><?php _e('Navigation Label','nh-ynaa'); ?><br>															
+															<input type="text" disabled value="<?php echo $menuitem['title']; ?>" name="<?php echo $this->menu_settings_key; ?>[menu][<?php echo $k; ?>][title]" class="widefat edit-menu-item-title" id="edit-menu-item-title-<?php echo $menuitem['pos']; ?>">
+															
+															
+															
+															
+															
+														</label>
+													</p>									
+													<div class="menu-item-actions description-wide submitbox">
+														<span href="<?php echo $menuitem['pos']; ?>" id="delete-<?php echo $menuitem['pos']; ?>"  class=" submitdelete deletion"><?php _e("This item can't be remove."); ?></a>
+													</div>
+												</div><!-- .menu-item-settings-->
+											</li>
+                                        <?php
 									}
 									?>
 								</ul>		

@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.3.1
+Stable tag: 0.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,11 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
 
 == Change Log ==
 
+= 0.3.2 =
+- change CSS Setings -
+- chnage html content format -
+- bug fixes - 
+
 = 0.3.1.1 =
 - change Plugin Text -
  
@@ -110,6 +115,12 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
  
  
 == Upgrade Notice ==
+= 0.3.2 =
+- change CSS for event Page
+- corrected spelling and add more translations
+- fix comments time bug 
+- fix subscription id
+
 = 0.3.1.1 =
 - change the how to text
 
