@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.3.2
+Version: 0.3.2.1
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: yourBlogApp/yourNewsApp - The Wordpress Plugin for yourBlogApp/yourNewsApp
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.3.2";
+$nh_ynaa_version = "0.3.2.1";
 
 //Hook for loading
 global $nh_menu_hook_ynaa;
@@ -1741,7 +1741,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 						$returnarray['changes']=1;				
 						$returnarray['type']=get_post_type();					
 						$returnarray['format']='html';
-						$returnarray['thumb']= array('src'=>$post_thumbnail_image[0]); 	
+						$returnarray['img']= array('src'=>$post_thumbnail_image[0]); 
+						$returnarray['thumb'][]= $post_thumbnail_image[0]; 	
 						$returnarray['sharelink']= esc_url( get_permalink());
 						$returnarray['comment_status'] = $post->comment_status;						
 						$args = array(
@@ -1783,7 +1784,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			return (array('article'=>$returnarray));
 		
 		
-		} // END private function articles()
+		} // END private function article()
 		
 		/**
 		 * Return Social 
