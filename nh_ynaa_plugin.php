@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.3.2.1
+Version: 0.3.2.2
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: yourBlogApp/yourNewsApp - The Wordpress Plugin for yourBlogApp/yourNewsApp
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.3.2.1";
+$nh_ynaa_version = "0.3.2.2";
 
 //Hook for loading
 global $nh_menu_hook_ynaa;
@@ -40,6 +40,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		private $plugin_options_key = 'nh_ynaa_plugin_options';		//Plugin Settings
 		private $plugin_settings_tabs = array();					//All Tabs for the Plugin
 		public $appmenus_pre = array();								//Vordefinerte App Men�s
+		
 		
 		public $tabs = array(
 			// The assoc key represents the ID
@@ -137,6 +138,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			add_action( 'admin_enqueue_scripts', array(&$this, 'nh_ynaa_scripts' ));
 		
 			//Action Ad Meta Box in Post for sen Push and to select if Post shown in App
+			
 			add_action( 'add_meta_boxes', array(&$this,'nh_ynaa_add_custom_box' ));
 			
 			//Action Save if Post visible in  App
@@ -620,10 +622,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 		} //END function nh_ynaa_field_push_option
 		
 		function nh_ynaa_field_push_checkbox($field) {	
-			if(esc_attr( $this->general_settings[$field['field']])=='1') $check = ' checked="checked" ';
+			if(esc_attr( $this->push_settings[$field['field']])=='1') $check = ' checked="checked" ';
 			else $check = '';		
 			?>			
-			<input style="display:none;" type="checkbox" name="<?php echo $this->push_settings_key; ?>[<?php echo $field['field']; ?>]" id="<?php echo 'id_'.$field; ?>" <?php echo $check; ?> />
+			<input type="checkbox" name="<?php echo $this->push_settings_key; ?>[<?php echo $field['field']; ?>]" id="<?php echo 'id_'.$field; ?>" <?php echo $check; ?> value="1" />
 			<?php
 		} //END function nh_ynaa_field_push_checkbox
 		
@@ -2560,7 +2562,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 
 				add_meta_box(
 					'nh_ynaa_sectionid',
-					__( 'Your News App', 'nh_ynaa_textdomain' ),
+					__( 'yourBlogApp/yourNewsApp', 'nh_ynaa_textdomain' ),
 					array($this,'nh_ynaa_inner_custom_box'),
 					$screen, 'side', 'high'
 				);
