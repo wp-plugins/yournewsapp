@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.3.2
+Stable tag: 0.3.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,8 @@ Not like other App budders we do not require any build time. You can instantly t
 Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
 
 == Change Log ==
+= 0.3.2.1 =
+- fix compatibility problems
 
 = 0.3.2 =
 - change CSS Setings -
@@ -115,6 +117,9 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
  
  
 == Upgrade Notice ==
+= 0.3.2.1 =
+- fix compatibility to app Version 1.5
+
 = 0.3.2 =
 - change CSS for event Page
 - corrected spelling and add more translations
