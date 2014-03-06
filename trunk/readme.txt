@@ -64,7 +64,7 @@ Not like other App budders we do not require any build time. You can instantly t
 Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
 
 == Change Log ==
-= 0.3.2.2 =
+= 0.3.3 =
 - add location function
 - bug fix
 - fix WP_Screen error
@@ -126,7 +126,7 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
  
 == Upgrade Notice ==
 
-= 0.3.2.2 =
+= 0.3.3 =
 - add location function for posts
 - fix WP_Screen erro for WP < 3.3
 
