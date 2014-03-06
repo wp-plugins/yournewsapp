@@ -170,7 +170,7 @@
 								
 								
 								foreach ( $this->appmenus_pre as $appmenu_pre ) {
-									if($appmenu_pre['id']!=-1 &&  $appmenu_pre['id'] !=-2) continue;
+									if($appmenu_pre['id']!=-1 &&  $appmenu_pre['id'] !=-2 &&  $appmenu_pre['id'] !=-98) continue;
 									if($appmenu_pre['id']==-1 && !$this->nh_ynaa_check_eventmanager()) continue;	
 									
 									echo '<li>';
@@ -236,7 +236,7 @@
 											<li id="homepresetli<?php echo $v; ?>" class="floatli">
                                                  
                                                  <?php 
-												 	if($ar['type']=='cat' || $ar['type']=='fb' || $ar['type']=='events') { 
+												 	if($ar['type']=='cat' || $ar['type']=='fb' || $ar['type']=='events' ||$ar['type']=='map') { 
 														echo '<div class="hpdiv" id="hpdiv'.$v.'" ';
 														if(($ar['img'])) echo  'style="background-image:url(\''.($ar['img']).'\');"';
 														else echo 'style="background-color:'.$this->general_settings['c1'].';"';

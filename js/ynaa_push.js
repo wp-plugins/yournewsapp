@@ -26,4 +26,6 @@ jQuery(document).ready(function($) {
 		  })   ;
 		//alert('Got this from the server: ' + e);
 	});
+	
+	alert(3);
 });
