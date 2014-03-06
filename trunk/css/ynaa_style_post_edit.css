@@ -1,0 +1,23 @@
+@charset "utf-8";
+/* CSS Document */
+/* Location in posts */
+
+
+div.nh-location-data table {
+    float: left;
+    margin: 0 15px 0 0;
+	font-size: 13px;
+    line-height: 1.4em;
+}
+div.nh-location-data table.nh-location-data {
+    border: medium none;
+    float: left;
+    width: 50%;
+}
+
+#nh_location_name {
+    margin: 2px 0 7px;
+    padding: 6px 5px;
+    width: 98%;
+}
+

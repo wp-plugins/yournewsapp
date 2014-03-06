@@ -90,6 +90,7 @@ jQuery(document).ready(function($){
 					  case 'cat': $type_text='Kategorie'; $type2='cat'; break;
 					  case 'fb': $type_text='Facebook'; $type2='fb'; break;
 					  case 'events': $type_text='Events'; $type2='events'; break;
+					  case 'map': $type_text='Map'; $type2='map'; break;
 					  default: $type_text='';  $type2=''; break;
 				  }
 				  

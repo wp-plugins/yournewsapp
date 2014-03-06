@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.3.2.2
+Version: 0.3.3
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: yourBlogApp/yourNewsApp - The Wordpress Plugin for yourBlogApp/yourNewsApp
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,9 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.3.2.2";
+$nh_ynaa_version = "0.3.3";
+global $nh_ynaa_db_version;
+$nh_ynaa_db_version=1.1;
 
 //Hook for loading
 global $nh_menu_hook_ynaa;
@@ -153,6 +155,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 			//Action Ajax Send Push
 			add_action('wp_ajax_ny_ynaa_push_action', array(&$this,'ny_ynaa_push_action'));
 			
+			//Action Ajax location
+			add_action('wp_ajax_nh_ynaa_googlemap_action', array(&$this,'nh_ynaa_google_action'));
+			add_action("wp_ajax_nopriv_nh_ynaa_googlemap_action", array(&$this,"nh_must_login"));
+			
 			//Add new Blog in Multisite
 			add_action( 'wpmu_new_blog', array(&$this,'nh_new_blog'));    
 			
@@ -173,12 +179,14 @@ if(!class_exists('NH_YNAA_Plugin'))
 					foreach ($blogids as $blog_id) {
 						switch_to_blog($blog_id);
 						NH_YNAA_Plugin::_nh_ynaa_activate(); 
+						NH_YNAA_Plugin::nh_update_db_check();
 					}
 					switch_to_blog($old_blog);
 					return;
 				}   
 			} 
 			NH_YNAA_Plugin::_nh_ynaa_activate();      
+			NH_YNAA_Plugin::nh_update_db_check();
 		}// END public static function nh_ynaa_activate
 		
         /**
@@ -191,6 +199,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			//Preset app menu
 			$menu_array[0] = array('title'=>__('Browse','nh-ynaa'),'status'=>1,'pos'=>1, 'id'=>0, 'type'=>'app', 'type_text'=>'App');
 			$menu_array[1] = array('title'=>__('Subscription','nh-ynaa'),'status'=>1,'pos'=>2, 'id'=>1, 'type'=>'app', 'type_text'=>'App');
+			$menu_array[1] = array('title'=>__('Map','nh-ynaa'),'status'=>1,'pos'=>3, 'id'=>-98, 'type'=>'map', 'type_text'=>'App');
 	//		$menu_array[5] = array('title'=>__('Events','nh-ynaa'),'status'=>1,'pos'=>3, 'id'=>1, 'type'=>'app', 'type_text'=>'App');
 			$nh_ynaa_menu_settings = array('menu'=>$menu_array,'ts'=>time());
 			
@@ -209,7 +218,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$nh_ynaa_teaser_settings = array('ts'=>0,'teaser'=>false);
 			
 			//ADD Options in Wp-Option table
-			add_option('nh_ynaa_plugin_version', $nh_ynaa_version);	
+			update_option('nh_ynaa_plugin_version', $nh_ynaa_version);	
 			add_option('nh_ynaa_general_settings', $nh_ynaa_general_settings);	
 			add_option('nh_ynaa_menu_settings', $nh_ynaa_menu_settings);
 			
@@ -253,8 +262,65 @@ if(!class_exists('NH_YNAA_Plugin'))
 				
 			add_option('nh_ynaa_push_settings', array());		
 			
+		
+				
 			
         } // END public static function nh_ynaa_activate
+		
+		
+		/**
+		 * Add Location Table 
+		 */
+		 static function nh_add_db_tables(){
+			 global $wpdb;
+			 global $nh_ynaa_db_version;
+			 $installed_ver = get_option( "nh_ynaa_db_version" );
+			 $table_name = $wpdb->prefix . "nh_locations";
+			 if( $installed_ver != $nh_ynaa_db_version ) {
+				$sql = "CREATE TABLE `$table_name` (
+								`location_id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+								`post_id` BIGINT(20) UNSIGNED NOT NULL,
+								`blog_id` BIGINT(20) UNSIGNED NULL DEFAULT NULL,
+								`location_slug` VARCHAR(200) NULL DEFAULT NULL,
+								`location_name` TEXT NULL,
+								`location_owner` BIGINT(20) UNSIGNED NOT NULL DEFAULT '0',
+								`location_address` VARCHAR(200) NULL DEFAULT NULL,
+								`location_town` VARCHAR(200) NULL DEFAULT NULL,
+								`location_state` VARCHAR(200) NULL DEFAULT NULL,
+								`location_postcode` VARCHAR(10) NULL DEFAULT NULL,
+								`location_region` VARCHAR(200) NULL DEFAULT NULL,
+								`location_country` CHAR(2) NULL DEFAULT NULL,
+								`location_latitude` FLOAT(10,6) NULL DEFAULT NULL,
+								`location_longitude` FLOAT(10,6) NULL DEFAULT NULL,
+								`post_content` LONGTEXT NULL,
+								`location_status` INT(1) NULL DEFAULT NULL,
+								`location_private` TINYINT(1) NOT NULL DEFAULT '0',
+								PRIMARY KEY (`location_id`),
+								INDEX `location_state` (`location_state`),
+								INDEX `location_region` (`location_region`),
+								INDEX `location_country` (`location_country`),
+								INDEX `post_id` (`post_id`),
+								INDEX `blog_id` (`blog_id`)
+							);
+							";
+				require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+				dbDelta( $sql );
+				update_option( "nh_ynaa_db_version", $nh_ynaa_db_version );	
+			 }
+		 }
+		 
+		 
+		 /*
+		 * Plugin DB check
+		 */
+		 static function nh_update_db_check() {			 
+			global $nh_ynaa_db_version;
+				
+			if (get_option( 'nh_ynaa_db_version' ) != $nh_ynaa_db_version) {
+				NH_YNAA_Plugin::nh_add_db_tables();
+			}
+		}
+				 
 		
 		/**
 		 * Deative multisite
@@ -332,9 +398,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 			//set app menu
 			$this->appmenus_pre[0] = array('title'=>__('Browse','nh-ynaa'),'status'=>1,'pos'=>1, 'id'=>0, 'type'=>'app', 'type_text'=>'App', 'link-typ'=>'cat');
 			$this->appmenus_pre[1] = array('title'=>__('Subscription','nh-ynaa'),'status'=>1,'pos'=>2, 'id'=>-99, 'type'=>'app', 'type_text'=>'App', 'link-typ'=>'cat');
+			
 			if(isset($this->general_settings['social_fbid'],$this->general_settings['social_fbsecretid'],$this->general_settings['social_fbappid'])) $this->appmenus_pre[3] = array('title'=>__('Facebook','nh-ynaa'),'status'=>1,'pos'=>3, 'id'=>-2, 'type'=>'fb', 'type_text'=>'Facebook', 'link-typ'=>'fb');
 			$this->appmenus_pre[5] = array('title'=>__('Events','nh-ynaa'),'status'=>0,'pos'=>3, 'id'=>-1, 'type'=>'events', 'type_text'=>'App');
-			
+			if(isset($this->general_settings['location'])) $this->appmenus_pre[6] = array('title'=>__('Map','nh-ynaa'),'status'=>1,'pos'=>3, 'id'=>-98, 'type'=>'map', 'type_text'=>__('App', 'ynaa'), 'link-typ'=>'cat');
 		} // END  function nh_ynaa_load_settings()
 		
 		
@@ -406,9 +473,14 @@ if(!class_exists('NH_YNAA_Plugin'))
 			//Extras
 			add_settings_section( 'extra_settings', __('Extras', 'nh-ynaa'), array( &$this, 'nh_ynaa_section_general_extra' ), $this->general_settings_key );
 			add_settings_field( 'ynaa-lang', __('Language', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_language' ), $this->general_settings_key, 'extra_settings' , array('field'=>lang));
-			add_settings_field( 'ynaa-comments', __('Allow comments in App', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>comments));
+			global $nh_ynaa_db_version;			
+			 if (get_option( 'nh_ynaa_db_version' ) == $nh_ynaa_db_version) {
+				add_settings_field( 'ynaa-location', __('Enable locations and activate location metabox in posts', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>location));
+			 }
 			add_settings_field( 'ynaa-eventplugin', __('Select your Event Manager:', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_eventplugin' ), $this->general_settings_key, 'extra_settings' , array('field'=>eventplugin));
+			//add_settings_field( 'ynaa-order_value', __('Order posts on overview page by', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_order' ), $this->general_settings_key, 'extra_settings' , array('field'=>order_value));
 			add_settings_field( 'ynaa-sort', __('Group by date', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>sort));
+			add_settings_field( 'ynaa-extra', __('Allow comments in App', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>comments));
 			
 						
 		} //END  function nh_ynaa_register_general_settings()
@@ -761,6 +833,24 @@ if(!class_exists('NH_YNAA_Plugin'))
 			<?php
 		}
 		
+		/*
+		* Order option field backup
+		*/
+		function nh_ynaa_field_general_extra_order($field){
+			if(esc_attr( $this->general_settings[$field['field']])=='1') $check = ' checked="checked" ';
+			else $check = '';
+			
+			?>
+            <select id="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]">
+            	<option value="date"><?php _e('date','nh-ynaa'); ?></option>
+                <option <?php if($this->general_settings[$field['field']]=='alphabetical') echo 'selected'; ?> value="alphabetical"><?php _e('alphabetical','nh-ynaa'); ?></option>
+                <option <?php if($this->general_settings[$field['field']]=='random') echo 'selected'; ?> value="random"><?php _e('random','nh-ynaa'); ?></option>
+            </select>
+            <?php
+			
+			
+		}
+		
 		
 		
 		/*
@@ -790,7 +880,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 		* Function to create Help 
 		*/
 		public function nh_create_help_screen() {
- 
+			
+ 		if(!class_exists('WP_Screen')) return;
 		/** 
 		 * Create the WP_Screen object against your admin page handle
 		 * This ensures we're working with the right admin page
@@ -929,12 +1020,27 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 *Load  Scripts and Styles
 		*/
 		function nh_ynaa_scripts( $hook_suffix ) {
-			global $nh_menu_hook_ynaa;
+			
+			//wp_enqueue_script( 'ynaa-script-post-edit', plugins_url('js/ynaa-post-edit.js', __FILE__ ), array( 'jquery' ), '1.0', true );
+			//wp_localize_script( 'ynaa-script-post-edit', 'ajax_object',
+			//		array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'we_value' => 1234 ) );
+			if($hook_suffix =='post-new.php' || $hook_suffix =='post.php'){
+				wp_register_script( "ynaa-script-post-edit", plugins_url('js/ynaa-post-edit.js', __FILE__ ), array('jquery') );
+   				wp_localize_script( 'ynaa-script-post-edit', 'myAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'ajaxdata'=>array($hook_suffix)));        
+
+   				wp_enqueue_script( 'jquery' );
+   				wp_enqueue_script( 'ynaa-script-post-edit' );
+				wp_enqueue_style( 'ynaa-style-post-edit', plugins_url('css/ynaa_style_post_edit.css', __FILE__ ) , array(),'1.0');
+			}
+   			global $nh_menu_hook_ynaa;
 
 			// exit function if not on my own options page!
 			// $my_menu_hook_akt is generated when creating the options page, e.g.,
 			// $my_menu_hook_akt = add_menu_page(...), add_submenu_page(...), etc
+			
+			
 			if ($hook_suffix != $nh_menu_hook_ynaa) return;
+			wp_enqueue_style( 'ynaa-style', plugins_url('css/ynaa_style.css', __FILE__ ) , array(),'1.0');
 			// first check that $hook_suffix is appropriate for your admin page
 			wp_enqueue_style( 'wp-color-picker' );
 			wp_enqueue_script('media-upload');
@@ -944,7 +1050,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			
 			wp_enqueue_style('thickbox');
-			wp_enqueue_style( 'ynaa-style', plugins_url('css/ynaa_style.css', __FILE__ ) , array(),'1.0');
+			
 			
 			$data = array('general_settings_key'=>$this->general_settings_key, 'menu_settings_key'=>$this->menu_settings_key, 'teaser_settings_key' => $this->teaser_settings_key, 'homepreset_settings_key'=>$this->homepreset_settings_key, 'delete'=>__('Delete'), 'catText'=>__('Set default image for category','nh-ynaa') , 'allowremoveText' => __('Allow hide on Startscreen','nh-ynaa'), 'color01'=>$this->general_settings['c1'] , 'ajax_url' => admin_url( 'admin-ajax.php' ) );
 			wp_localize_script('ynaa-script-handle', 'php_data', $data);
@@ -1001,6 +1107,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 			elseif($ynaa_var=='ibeacon'){
 				print_r(json_encode($this->nh_ynaa_ibeacon()));				
 			}
+			elseif($ynaa_var=='locations'){
+				print_r(json_encode($this->nh_ynaa_locations()));				
+			}
 			elseif($ynaa_var=='yna_settings'){
 				print_r(json_encode($this->nh_ynaa_yna_settings()));				
 			}
@@ -1043,6 +1152,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				case 31: $errorarray['error_code']= 31; $errorarray['error_message']='email invalid'; break;
 				case 32: $errorarray['error_code']= 32; $errorarray['error_message']='key already exists'; break;
 				case 33: $errorarray['error_code']= 33; $errorarray['error_message']='No UUID'; break;
+				case 34: $errorarray['error_code']= 34; $errorarray['error_message']='No location activ'; break;
 				default: $errorarray['error_code']= 10; $errorarray['error_message']='Unknown Error'; break;
 			}
 			return ($errorarray);			
@@ -1132,6 +1242,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 								//array_push($returnarray['menu'],$tempmenu);
 							}							
 						}
+								
 						unset($tempmenu);
 						/*$tempmenu['pos'] =  $ar['pos']+1;
 						$tempmenu['type'] =  'events';
@@ -1209,12 +1320,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 					if(is_array($this->homepreset_settings['items']) && count($this->homepreset_settings['items'])>0){
 						
 						foreach($this->homepreset_settings['items'] as $hp){
-							if(($hp['type'] == 'cat' || $hp['type'] == 'fb' || $hp['type'] == 'events'   ) && $hp['img']){
+							if(($hp['type'] == 'cat' || $hp['type'] == 'fb' || $hp['type'] == 'events' || $hp['type'] == 'map'   ) && $hp['img']){
 								$categorys[$hp['id']]['img'] =   $hp['img'];
 							}
 						}
 						foreach($this->homepreset_settings['items'] as $hp){
-							
+							//var_dump($hp);
 							if($hp['allowRemove']) $allowRemove = 1; else $allowRemove=0;
 							$cat_id = '';
 							$img = '';
@@ -1233,7 +1344,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 																							
 							}
 							elseif($hp['type'] == 'fb'){	
-								$cat_id	= -2;
+								$cat_id	= $hp['id'];
 								$fb = $this->nh_ynaa_get_fbcontent(1);
 								if($fb){
 									$fb = json_decode($fb,true);									
@@ -1245,8 +1356,22 @@ if(!class_exists('NH_YNAA_Plugin'))
 								if(!$img) $img = $hp['img'];
 								
 							}
+							elseif($hp['type'] == 'map'){	
+								$cat_id	= $hp['id'];
+								$location = $this->nh_ynaa_locations(1);
+								
+								if($location){
+									//	var_dump($location);								
+									$items['articles']['items'][0]['id']=$cat_id;
+									$items['articles']['items'][0]['timestamp']=$location['locations']['ts'];
+									$items['articles']['items'][0]['publish_timestamp']=($location['locations']['ts']);
+									$img = $location['locations']['img'];									
+								}
+								if(!$img) $img = $hp['img'];
+								
+							}
 							elseif($hp['type'] == 'events'){	
-								$cat_id	= 5;
+								$cat_id	= $hp['id'];
 								$event = $this->nh_ynaa_events(1);
 								if($event){
 									$items['articles']['items'][0]['id']=$event['events']['items'][0]['id'];
@@ -1389,6 +1514,16 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$cat = array();		
 			
 			if($categories){
+				$homepresets = $this->nh_ynaa_homepresets();
+				//var_dump($homepresets);
+				//echo '<hr>';
+				if($homepresets ["homepresets"]['items']){
+					foreach($homepresets ["homepresets"]['items'] as $item){
+							$hp[$item['cat_id']]['img'] =  $item['img'];
+					}
+				}
+				//var_dump($hp);
+				//echo '<hr>';
 				foreach ( $categories as $category ) {				
 					//For Sub categories
 					
@@ -1407,11 +1542,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$returnarray['changes']=1;
 							$ts = $items['articles']['items'][0]['timestamp'];
 						}
+						if(!$items['articles']['items'][0]['thumb'] && $hp[$category->term_id]['img']) $items['articles']['items'][0]['thumb'] = $hp[$category->term_id]['img'];
 						$cat[$category->term_id]=array('pos'=>$i, 'type'=>'cat', 'id'=> $category->term_id, 'parent_id'=>$category->parent, 'title'=>htmlspecialchars_decode($category->name), 'img'=>$items['articles']['items'][0]['thumb'], 'post_id'=>$items['articles']['items'][0]['id'] ,'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1);
 						$i++;
 						unset($items);
 					}					
 				}
+				
 				
 				
 				//Categories in Subcategories
@@ -1448,26 +1585,35 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$returnarray['items'][] = $v;	
 				}
 				
-				//Events
-				if($this->general_settings['eventplugin']){
-					
-					$items = $this->nh_ynaa_events(1);
-					if($items['events']['items']){							
-						if($ts<=$items['events']['items'][0]['timestamp']) {
-							$returnarray['changes']=1;
-							$ts = $items['events']['items'][0]['timestamp'];
-						}
-						$returnarray['items'][]=array('pos'=>$i, 'type'=>'events', 'id'=> -1, 'title'=>__('Events','nh-ynaa'), 'img'=>$items['events']['items'][0]['thumb'], 'post_id'=>$items['events']['items'][0]['id'] ,'post_ts'=>$items['events']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove);
-						$i++;
-						unset($items);
-					}
-					
-				}
 				
 				
 			}
 			else {
 				$returnarray['error']=$this->nh_ynaa_errorcode(20);	
+			}
+			
+			//Events
+			if($this->general_settings['eventplugin']){
+				
+				$items = $this->nh_ynaa_events(1);
+				if($items['events']['items']){							
+					if($ts<=$items['events']['items'][0]['timestamp']) {
+						$returnarray['changes']=1;
+						$ts = $items['events']['items'][0]['timestamp'];
+					}
+					if(!$items['events']['items'][0]['thumb'] && $hp[-1]['img']) $items['events']['items'][0]['thumb'] = $hp[-1]['img'];
+					$returnarray['items'][]=array('pos'=>$i, 'type'=>'events', 'id'=> -1, 'title'=>__('Events','nh-ynaa'), 'img'=>$items['events']['items'][0]['thumb'], 'post_id'=>$items['events']['items'][0]['id'] ,'post_ts'=>$items['events']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove);
+					$i++;
+					unset($items);
+				}
+				
+			}
+			
+			//KArte
+			if($this->general_settings['location']){
+				//$hp[-98]['img'] = 'http://yna.nebelhorn.com/wp-content/uploads/2014/03/images.jpg';
+				$returnarray['items'][]=array('pos'=>$i, 'type'=>'map', 'id'=> -98, 'title'=>__('Map','nh-ynaa'), 'img'=>$hp[-98]['img'], 'allowRemove'=> 1);
+				$i++;
 			}
 			
 			
@@ -1482,6 +1628,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				elseif(!isset($fb['error']['error_code'])) {
 					
 					$fb = json_decode($fb,true);
+					if(!$fb['data'][0]['picture'] && $hp[-2]['img']) $fb['data'][0]['picture'] = $hp[-2]['img'];
 				 	$returnarray['items'][]=array('pos'=>$i, 'type'=>'fb', 'id'=> -2, 'title'=>__('Facebook','nh-ynaa'), 'img'=>$fb['data'][0]['picture'], 'post_id'=>$fb['data'][0]['id'] ,'post_ts'=>strtotime($fb['data'][0]['created_time']) ,'allowRemove'=> 1);
 					$i++;
 				}
@@ -1769,6 +1916,24 @@ if(!class_exists('NH_YNAA_Plugin'))
 								break;
 							}
 						}
+						
+						//karte temp
+						$returnarray['location']=0;
+						if($this->general_settings['location']){
+						
+							
+							$postmeta_location = (get_post_meta( $returnarray['id'], '_nh_ynaa_location', true));
+							$postmeta_location_stamp = (get_post_meta( $returnarray['id'], 'nh_location_update_stamp', true));
+							$nh_ynaa_location_id = (get_post_meta($returnarray['id'], 'nh_ynaa_location_id', true));
+							if($postmeta_location){
+								$postmeta_location = unserialize($postmeta_location);
+								$returnarray['location']=1;
+								$returnarray['location_info']=array("title"=>$postmeta_location['location_name'],"lat"=>$postmeta_location['location_latitude'],"lng"=>$postmeta_location['location_longitude'], "address"=>$postmeta_location['location_address'],  "id"=>$nh_ynaa_location_id, 'ts'=>$postmeta_location_stamp, 'cat_id'=>$returnarray['catid']);
+							}
+						}
+						
+						
+						
 					}
 					else {
 						$returnarray['changes']=0;				
@@ -2009,6 +2174,80 @@ if(!class_exists('NH_YNAA_Plugin'))
 		// END private function nh_ynaa_ibeacon
 		
 		/**
+		 * Return Locations  
+		*/
+		private function nh_ynaa_locations($limit=0){
+			
+			$returnarray['error']=$this->nh_ynaa_errorcode(0);
+			$returnarray['changes']=1;
+			$returnarray['ts'] = 0;
+			if($_GET['ts'])	$returnarray['ts']=$_GET['ts'];
+
+			if(!$this->general_settings['location']){
+				$returnarray['error']=$this->nh_ynaa_errorcode(34);
+			}
+			else{
+				
+				$lo_args = array(
+					'meta_query' => array(
+							array(
+								'key' => 'nh_ynaa_location_id'/*,
+								'value' => '',
+								'compare' => '!='*/
+							)
+						),
+					'posts_per_page'=>-1
+				);
+				 
+				$lo_query = new WP_Query( $lo_args );
+				while ( $lo_query->have_posts() ) : $lo_query->the_post();
+					$id = get_the_ID();
+					//var_dump($lo_query->post);
+					//echo '<hr>';
+					$postmeta = (get_post_meta( $id, '_nh_ynaa_location', true));
+					
+					if($postmeta){
+						$nh_location_update_stamp = (get_post_meta( $id, 'nh_location_update_stamp', true)); 
+						
+						if(strtotime($nh_location_update_stamp)>$returnarray['ts']) {
+							
+							$returnarray['ts'] = strtotime($nh_location_update_stamp);
+						}
+						$postmeta = unserialize($postmeta);
+						$cats = get_the_category();
+						//var_dump($cats);
+						if($cats) {
+							$cat_id = $cats[0]->term_id;
+							$returnarray['items'][]=
+								array("title"=>$postmeta['location_name'],
+								"lat"=>$postmeta['location_latitude'],
+								"lng"=>$postmeta['location_longitude'],
+								"address"=>$postmeta['location_address'],
+								"id"=> $id,
+								'posts'=>array(array('post_id'=>$id, 'type'=>$lo_query->post->post_type, 'cat_id'=>$cat_id))
+								
+							);
+						}
+						//var_dump($returnarray['items']);
+						//echo '<hr>';
+						
+						if($limit==1) break;
+					}	
+									
+				endwhile;
+                wp_reset_postdata();
+				//var_dump($lo_query);
+				
+				
+			}
+			return (array('locations'=>$returnarray));
+		}
+		// END private function nh_ynaa_ibeacon
+		
+		
+		
+		
+		/**
 		 * Return  Settings for YNA Admin page
 		*/
 		private function nh_ynaa_yna_settings(){
@@ -2072,10 +2311,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 									WHERE e.post_id=".$latest_cat_post->post->ID."	
 									", array('%d', '$d', '%s', '%d', '%s', '%s', '%s', '%d','%d', '%d', '%s', '%d', '%d', '%d', '%s')));
 								if($event) {
+									//$returnarray['uma']['start_ts_gmt']=get_gmt_from_date($event->event_start_date.' '.$event->event_start_time);
 									$start_ts = strtotime($event->event_start_date.' '.$event->event_start_time);
 									$end_ts = strtotime($event->event_end_date.' '.$event->event_end_time);
 												
 									$returnarray['items'][] = array(
+										'uma'=>array('start_ts_gmt',get_gmt_from_date($event->event_start_date.' '.$event->event_start_time)),
 										'pos'=>$i,
 										'id'=>$latest_cat_post->post->ID, 
 										'title'=>htmlspecialchars_decode($latest_cat_post->post->post_title), 
@@ -2185,6 +2426,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						$start_ts = strtotime($event->event_start_date.' '.$event->event_start_time);
 						$end_ts = strtotime($event->event_end_date.' '.$event->event_end_time);
 						$returnarray['items'][] = array(
+							'uma'=>array('start_ts_gmt',get_gmt_from_date($event->event_start_date.' '.$event->event_start_time)),
 							'pos'=>$i,
 							'id'=>$post->ID, 
 							'title'=>htmlspecialchars_decode($post->post_title), 
@@ -2551,22 +2793,168 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 * Adds a box to the main column on the Post and Page edit screens.
 		 */
 		function nh_ynaa_add_custom_box() {
-			$post_types = get_post_types();
-			foreach( $post_types as $post_type ){
-						if( !in_array( $post_type, array( 'attachment', 'revision', 'nav_menu_item' ) ) ){
-							$screens[] = $post_type;
-						}
+			if($pushsettings = get_option($this->push_settings_key)){
+				if($pushsettings['pushshow'] ){
+					$post_types = get_post_types();
+					foreach( $post_types as $post_type ){
+								if( !in_array( $post_type, array( 'attachment', 'revision', 'nav_menu_item' ) ) ){
+									$screens[] = $post_type;
+								}
+					}
+		
+					foreach ( $screens as $screen ) {
+		
+						add_meta_box(
+							'nh_ynaa_sectionid',
+							__( 'yourBlogApp/yourNewsApp extras', 'nh_ynaa' ),
+							array($this,'nh_ynaa_inner_custom_box'),
+							$screen, 'side', 'default'
+						);
+					}
+				}
 			}
-
-			foreach ( $screens as $screen ) {
-
-				add_meta_box(
-					'nh_ynaa_sectionid',
-					__( 'yourBlogApp/yourNewsApp', 'nh_ynaa_textdomain' ),
-					array($this,'nh_ynaa_inner_custom_box'),
-					$screen, 'side', 'high'
-				);
+			
+			if($generalsettings = get_option($this->general_settings_key)){
+				global $nh_ynaa_db_version;			
+				 if (get_option( 'nh_ynaa_db_version' ) == $nh_ynaa_db_version) {
+					if($generalsettings['location'] ){
+					$post_types = get_post_types();
+					foreach( $post_types as $post_type ){
+								if( !in_array( $post_type, array( 'attachment', 'revision', 'nav_menu_item', 'events' ) ) ){
+									$screens[] = $post_type;
+								}
+					}
+		
+					foreach ( $screens as $screen ) {
+		
+						add_meta_box(
+							'nh_ynaa_locationid',
+							__( 'yourBlogApp/yourNewsApp locations', 'nh_ynaa' ),
+							array($this,'nh_ynaa_inner_location_box'),
+							$screen, 'normal', 'default'
+						);
+					}
+				}
+				 }
 			}
+		}
+		
+		/**
+		 * Prints the box content.
+		 * 
+		 * @param WP_Post $post The object for the current post/page.
+		 */
+		function nh_ynaa_inner_location_box( $post ) {
+
+		  // Add an nonce field so we can check for it later.
+		  wp_nonce_field( 'nh_ynaa_inner_location_box', 'nh_ynaa_inner_location_box_nonce' );
+
+		  /*
+		   * Use get_post_meta() to retrieve an existing value
+		   * from the database and use the value for the form.
+		   */
+		  $value = unserialize(get_post_meta( $post->ID, '_nh_ynaa_location', true));
+		   $ynaa_location_id = (get_post_meta( $post->ID, 'nh_ynaa_location_id', true));
+		 // var_dump($value);
+		  $required = '';
+		 ?>
+         <div id="nh-location-data" class="nh-location-data">
+			<div id="nh_location_coordinates" style=" display:none;">
+				<input id="nh_location_latitude" name="nh_location_latitude" type="hidden" value="<?php echo $value['location_latitude']; ?>" size="15" >
+				<input id="nh_location_longitude" name="nh_location_longitude" type="hidden" value="<?php echo $value['location_longitude']; ?>" size="15" >
+                
+			</div>
+          
+			<table class="nh-location-data">
+				<tbody>
+                	<tr class="nh-location-data-name">
+                    	<th><?php _e('Location Name','nh-ynaa'); ?>:</th>
+                        <td><input id="nh_location_id" name="nh_location_id" type="hidden" value="<?php echo $ynaa_location_id; ?>" size="15"><input type="hidden" value="0" name="nh_location_del" id="nh_location_del">
+                        <input type="hidden" value="0" name="nh_location_name_change" id="nh_location_name_change"><input type="hidden" value="0" name="nh_location_change" id="nh_location_change">
+				<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input id="nh_location_name" type="text" name="nh_location_name" value="<?php echo $value['location_name']; ?>" class="ui-autocomplete-input"><?php echo $required; ?>													
+				<br>
+				<em id="nh-location-search-tip" style="display: none;"><?php _e( 'Create a location or start typing to search a previously created location.', 'nh-ynaa' )?></em>
+				<em id="nh-location-reset" style="display:none;"><?php _e('You cannot edit saved locations here.', 'nh-ynaa'); ?> <a href="#"><?php _e('Reset this form to create a location or search again.', 'nh-ynaa')?></a></em>
+			</td>
+ 		</tr>
+		<tr class="nh-location-data-address">
+			<th><?php _e ( 'Address:', 'nh-ynaa' )?>&nbsp;</th>
+			<td>
+				<input id="nh_location_address" type="text" name="nh_location_address" value="<?php echo esc_attr($value['location_address'], ENT_QUOTES); ; ?>" class="blurlocation" /><?php echo $required; ?>
+			</td>
+		</tr>
+		<tr class="nh-location-data-town">
+			<th><?php _e ( 'City/Town:', 'nh-ynaa' )?>&nbsp;</th>
+			<td>
+				<input id="nh_location_town" type="text" name="nh_location_town" value="<?php echo esc_attr($value['location_town'], ENT_QUOTES); ?>" class="blurlocation" /><?php echo $required; ?>
+			</td>
+		</tr>
+		<!--<tr class="nh-location-data-state">
+			<th><?php _e ( 'State/County:', 'nh-ynaa' )?>&nbsp;</th>
+			<td>
+				<input id="nh_location-state" type="text" name="nh_location_state" value="<?php echo esc_attr($value['location_state'], ENT_QUOTES); ?>" class=" blurlocation" />
+			</td>
+		</tr>-->
+		<tr class="nh-location-data-postcode">
+			<th><?php _e ( 'Postcode:', 'nh-ynaa' )?>&nbsp;</th>
+			<td>
+				<input id="nh_location_postcode" type="text" name="nh_location_postcode" value="<?php echo esc_attr($value['location_postcode'], ENT_QUOTES); ?>" class=" blurlocation" />
+              
+			</td>
+		</tr>
+	<!--	<tr class="nh-location-data-region">
+			<th><?php _e ( 'Region:', 'nh-ynaa' )?>&nbsp;</th>
+			<td>
+				<input id="nh_location_region" type="text" name="nh_location_region" value="<?php echo esc_attr($value['location_region'], ENT_QUOTES); ?>" class=" blurlocation" />
+			</td>
+		</tr>
+		-->
+        <tr>
+        	<th></th>
+            <td><a href="#del" id="reset_location"><?php _e('Reset this form to create a location.', 'nh-ynaa'); ?></a></td>
+        </tr>
+	</tbody>
+    </table>
+
+			<div class="nh-location-map-container">
+                <div id='nh-map-404'  class="nh-location-map-404" style="display:none;">
+                    <p><em><?php _e ( 'Location not found', 'nh-ynaa' ); ?></em></p>
+                </div>
+                <div id='nh-map' class="nhm-location-map-content" style="float:left;">
+                <div style="width: 400px" id="googlemapdiv"><?php if($value['location_latitude'] && $value['location_longitude']) { ?><iframe id="googlemapiframe" width="400" height="400" src="http://maps.google.de/maps?hl=de&q=<?php echo urlencode($value['location_address']).','. urlencode($value['location_postcode']).'+'. urlencode($value['location_town']).' ('.urlencode($value['location_name']).')'; ?>&ie=UTF8&t=&iwloc=A&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><?php } ?></div>
+                </div>
+            </div>	
+			<br style="clear:both;">
+		</div>
+         <?php 
+		 /* echo '<div><label for="nh_ynaa_location_name">'.__('Location name','nh-ynaa:').'</label>';
+		  	echo '<input type="text" value="'.$value['nh_ynaa_location_name'].'" id="nh_ynaa_location_name" name="nh_ynaa_location_name" required class="required" maxlength="250" >';
+			echo '<input type="checkbox" id="nh_ynaa_" name="nh_ynaa_visible_app" ';
+			if($value) {
+				if($value['s']) echo ' checked="checked" ';
+			}
+			else echo ' checked="checked" ';
+			echo ' />&nbsp;&nbsp;';
+			_e( "Show in App", 'nh-ynaa' );
+			
+		  echo '</label></div> ';
+		  echo '<hr>';
+		  echo '<div><label for="nh_ynaa_pushtext">';
+			_e( "Push Text", 'nh-ynaa' );
+			
+			echo '<br /><textarea style="width:100%" id="nh_ynaa_pushtext" name="nh_ynaa_pushtext" maxlength="120"></textarea>';
+			
+			
+		  echo '</label></div> ';
+		  
+		  echo '<div><label for="nh_ynaa_sendpush">';
+			
+			
+			echo '<input type="button" value="'.__('Send Push').'" id="nh_ynaa_sendpush" />';
+			
+			
+		  echo '</label></div> ';*/
+
 		}
 		
 		/**
@@ -2655,10 +3043,133 @@ if(!class_exists('NH_YNAA_Plugin'))
 		  /* OK, its safe for us to save the data now. */
 
 		  // Sanitize user input.
-		  $appdata['s'] = ($_POST['nh_ynaa_visible_app'] );
+		  if($pushsettings = get_option($this->push_settings_key)){
+				if($pushsettings['pushshow'] ){
 
-		  // Update the meta field in the database.
-		  update_post_meta( $post_id, '_nh_ynaa_meta_keys', serialize($appdata) );
+				  $appdata['s'] = ($_POST['nh_ynaa_visible_app'] );
+
+				  // Update the meta field in the database.
+				  update_post_meta( $post_id, '_nh_ynaa_meta_keys', serialize($appdata) );
+		  	}
+		  }
+		  
+		  if($generalsettings = get_option($this->general_settings_key)){
+			   //update_post_meta( $post_id, '_nh_ynaa_location_name', $_POST['nh_ynaa_visible_app'].'123'. $_POST['nh_location_name'] );
+			   if($_POST['nh_location_del'] && !$_POST['nh_location_change'] ){
+				   if($_POST['nh_location_id']){
+						global $wpdb;
+						global $blog_id;
+						$table_name = $wpdb->prefix ."nh_locations";
+						$wpdb->update($table_name,array('location_status'=>0, 'location_update_stamp'=>date('Y-m-d H:i:s')),array( 'location_id' => 1 ),array('%d'), array('%d') );
+						delete_post_meta( $post_id, 'nh_ynaa_location_id');
+						delete_post_meta( $post_id, '_nh_ynaa_location');
+						
+				   }
+				   
+			   }
+				elseif($generalsettings['location'] ){
+					global $wpdb;
+					global $blog_id;
+					$table_name = $wpdb->prefix ."nh_locations";
+					// update_post_meta( $post_id, '_nh_ynaa_location_name',$table_name.'123'. $_POST['nh_location_name'] );
+
+					$adresse = ''; 
+					$data['location_address'] = '';
+					$format[] = '%s';
+					if($_POST['nh_location_address']) {
+						$data['location_address'] = $_POST['nh_location_address'];
+						$adresse .= $data['location_address'].',';
+					}
+					
+					
+					$data['location_town'] = '';
+					$format[] = '%s';
+					if($_POST['nh_location_town']) {
+						$data['location_town'] = $_POST['nh_location_town'];
+						$adresse .= $data['location_town'].',';
+					}
+					
+					$data['location_state'] = '';
+					$format[] = '%s';
+					if( $_POST['nh_location_state']) {
+						$data['location_state'] = $_POST['nh_location_state'];
+						$adresse .= $data['location_state'].',';
+					}
+					
+					$data['location_postcode'] = '';
+					$format[] = '%s';
+					if( $_POST['nh_location_postcode']) {
+						$data['location_postcode'] = $_POST['nh_location_postcode'];
+						$adresse .= $data['location_postcode'].',';
+					}
+					
+					$data['location_region'] = '';
+					$format[] = '%s';
+					if( $_POST['nh_location_region']) {
+						$data['location_region'] = $_POST['nh_location_region'];
+						$adresse .= $data['location_region'].',';
+					}
+					
+					$data['location_country'] = 'DE';
+					$format[] = '%s';
+					$adresse .= $data['location_country'];
+					
+					$data['location_update_stamp'] = date('Y-m-d H:i:s');
+					$format[] = '%s';
+					
+					
+					if($_POST['nh_location_change']){
+						$cord = $this->getLatLng($adresse);
+						if($cord && is_array($cord)){
+							$data['location_latitude'] = $cord['lat'];
+							$format[] = '%d';
+							$data['location_longitude'] = $cord['lng'];
+							$format[] = '%d';
+						/*	
+							$data['post_content'] = serialize($cord);
+							$format[] = '%s';*/
+							
+							
+						}
+					}
+					$data['location_name']= $_POST['nh_location_name'];
+					$format[] = '%s';
+					$data['location_slug']= sanitize_title_with_dashes($_POST['nh_location_name']);					
+					$format[] = '%s';
+					$data['blog_id'] = $blog_id;
+					$format[]='%d';
+					$data['post_id']=$post_id;
+					$format[]= '%d';
+					$data['location_owner'] = get_current_user_id();
+					$format[]= '%d';
+					
+					
+					$data['location_status'] =1;
+					$format[] = '%d';
+					
+					if($_POST['nh_location_id']){
+						if($_POST['nh_location_change']) {
+							$wpdb->update($table_name,$data,array( 'location_id' => 1 ),$format, array('%d') );
+							update_post_meta( $post_id, '_nh_ynaa_location', serialize($data));
+							update_post_meta( $post_id, 'nh_location_update_stamp', $data['location_update_stamp']);
+						}
+						/*elseif($_POST['nh_location_change']){
+							$wpdb->update($table_name,$data,array( 'location_id' => 1 ),$format, array('%d') );
+							update_post_meta( $post_id, '_nh_ynaa_location', serialize($data));
+						}*/
+					}
+					else {
+						$wpdb->insert($table_name,$data,$format);
+						$data['id'] = $wpdb->insert_id;
+						add_post_meta( $post_id, 'nh_ynaa_location_id', $data['id']);
+						add_post_meta( $post_id, 'nh_location_update_stamp', $data['location_update_stamp']);
+						add_post_meta( $post_id, '_nh_ynaa_location', serialize($data));
+					}
+					
+					
+					
+				}
+		  }
 		  
 		}
 		
@@ -2738,6 +3249,57 @@ if(!class_exists('NH_YNAA_Plugin'))
 			}
 			return esc_url($url);
 		}
+		
+		/*
+		* Check login
+		*/
+		function nh_must_login() {
+		   echo "You must log in";
+		   die();
+		}	
+		
+		
+		/*
+		Google map load
+		*/
+		function nh_ynaa_google_action() {
+			$result['type'] = "success";
+			  $result['vote_count'] = '$new_vote_count';
+			$result = json_encode($result);
+			  echo $result;
+			  exit();
+			  die();
+		   if ( !wp_verify_nonce( $_REQUEST['nonce'], "my_user_vote_nonce")) {
+			  exit("No naughty business please");
+		   }   
+		
+		   $vote_count = get_post_meta($_REQUEST["post_id"], "votes", true);
+		   $vote_count = ($vote_count == '') ? 0 : $vote_count;
+		   $new_vote_count = $vote_count + 1;
+		
+		   $vote = update_post_meta($_REQUEST["post_id"], "votes", $new_vote_count);
+		
+		   if($vote === false) {
+			  $result['type'] = "error";
+			  $result['vote_count'] = $vote_count;
+		   }
+		   else {
+			  $result['type'] = "success";
+			  $result['vote_count'] = $new_vote_count;
+		   }
+		
+		   if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+			  $result = json_encode($result);
+			  echo $result;
+		   }
+		   else {
+			  header("Location: ".$_SERVER["HTTP_REFERER"]);
+		   }
+		
+		   die();
+		
+		}
+
 		
 		/**
 		*PUSH Funktion
@@ -2826,6 +3388,27 @@ if(!class_exists('NH_YNAA_Plugin'))
 		//echo 'aaaaa';
 			die(); // this is required to return a proper result
 		}
+		
+		/*
+		 * Function to get Lan and LAt
+		*/
+		function getLatLng($address){
+			
+			
+			$address = str_replace(" ", "+", $address);
+
+	 		$url='http://maps.googleapis.com/maps/api/geocode/json?address='.$address.'&sensor=false';
+			$source = file_get_contents($url);
+			$obj = json_decode($source);
+			if($obj != null){
+				$LATITUDE = $obj->results[0]->geometry->location->lat;
+				$LONGITUDE = $obj->results[0]->geometry->location->lng;
+			}else{
+				$LATITUDE = 0;
+				$LONGITUDE = 0;
+			}
+			return array('lat'=>$LATITUDE,'lng'=>$LONGITUDE);
+		}/* END function getLatLon() */
 		
 		/**
 		 * Helpfunction for short text
@@ -2960,8 +3543,8 @@ function nh_ynaa_load_textdomain()
 }
 add_action( 'plugins_loaded', 'nh_ynaa_load_textdomain'); 
 
-add_action( 'admin_footer', 'my_action_javascript' );
-function my_action_javascript() {
+add_action( 'admin_footer', 'nh_action_javascript' );
+function nh_action_javascript() {
 	global $post;	
 	$cat = wp_get_post_categories($post->ID);
 	if($cat){

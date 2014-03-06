@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.3.2.2
+Stable tag: 0.3.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,6 +65,11 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
 
 == Change Log ==
 = 0.3.2.2 =
+- add location function
+- bug fix
+- fix WP_Screen error
+
+= 0.3.2.2 =
 - bug fix
 
 = 0.3.2.1 =
@@ -120,6 +125,13 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
  
  
 == Upgrade Notice ==
+
+= 0.3.2.2 =
+- add location function for posts
+- fix WP_Screen erro for WP < 3.3
+
+
+ 
 = 0.3.2.2 =
 - fix compatibility to app Version 1.5
 
