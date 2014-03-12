@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.3.3
+Version: 0.3.4
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: yourBlogApp/yourNewsApp - The Wordpress Plugin for yourBlogApp/yourNewsApp
 Author: Nebelhorn Medien GmbH
@@ -12,9 +12,9 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.3.3";
+$nh_ynaa_version = "0.3.4";
 global $nh_ynaa_db_version;
-$nh_ynaa_db_version=1.1;
+$nh_ynaa_db_version=1.2;
 
 //Hook for loading
 global $nh_menu_hook_ynaa;
@@ -280,21 +280,24 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$sql = "CREATE TABLE `$table_name` (
 								`location_id` BIGINT(20) UNSIGNED NOT NULL AUTO_INCREMENT,
 								`post_id` BIGINT(20) UNSIGNED NOT NULL,
-								`blog_id` BIGINT(20) UNSIGNED NULL DEFAULT NULL,
-								`location_slug` VARCHAR(200) NULL DEFAULT NULL,
-								`location_name` TEXT NULL,
+								`blog_id` BIGINT(20) UNSIGNED NOT NULL,
+								`location_slug` VARCHAR(200) NOT NULL,
+								`location_name` TEXT NOT NULL,
 								`location_owner` BIGINT(20) UNSIGNED NOT NULL DEFAULT '0',
-								`location_address` VARCHAR(200) NULL DEFAULT NULL,
-								`location_town` VARCHAR(200) NULL DEFAULT NULL,
-								`location_state` VARCHAR(200) NULL DEFAULT NULL,
-								`location_postcode` VARCHAR(10) NULL DEFAULT NULL,
-								`location_region` VARCHAR(200) NULL DEFAULT NULL,
-								`location_country` CHAR(2) NULL DEFAULT NULL,
-								`location_latitude` FLOAT(10,6) NULL DEFAULT NULL,
-								`location_longitude` FLOAT(10,6) NULL DEFAULT NULL,
-								`post_content` LONGTEXT NULL,
-								`location_status` INT(1) NULL DEFAULT NULL,
+								`location_address` VARCHAR(200) NOT NULL,
+								`location_town` VARCHAR(200) NOT NULL,
+								`location_state` VARCHAR(200) NOT NULL,
+								`location_postcode` VARCHAR(10) NOT NULL,
+								`location_region` VARCHAR(200) NOT NULL,
+								`location_country` CHAR(2) NOT NULL,
+								`location_latitude` FLOAT(10,6) NOT NULL,
+								`location_longitude` FLOAT(10,6) NOT NULL,
+								`post_content` LONGTEXT NOT NULL,
+								`location_status` INT(1) NOT NULL,
 								`location_private` TINYINT(1) NOT NULL DEFAULT '0',
+								`location_stamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+								`location_update_stamp` DATETIME NOT NULL,
+								`location_pintype` VARCHAR(50) NOT NULL DEFAULT 'red',
 								PRIMARY KEY (`location_id`),
 								INDEX `location_state` (`location_state`),
 								INDEX `location_region` (`location_region`),
@@ -1129,20 +1132,20 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$errorarray = array();
 			switch($er){
 				case 0: $errorarray['error_code']= 0; $errorarray['error_message']='No Error'; break;
-				case 11: $errorarray['error_code']= 11; $errorarray['error_message']='Unknown Controler'; break;
-				case 12: $errorarray['error_code']= 12; $errorarray['error_message']='No Settings Saved'; break;
+				case 11: $errorarray['error_code']= 11; $errorarray['error_message']='Unknown controller'; break;
+				case 12: $errorarray['error_code']= 12; $errorarray['error_message']='No settings saved'; break;
 				case 13: $errorarray['error_code']= 13; $errorarray['error_message']='Setting is empty'; break;
 				case 14: $errorarray['error_code']= 14; $errorarray['error_message']='Menu is empty'; break;
 				case 15: $errorarray['error_code']= 15; $errorarray['error_message']='No ID'; break;
-				case 16: $errorarray['error_code']= 16; $errorarray['error_message']='No Items for this category'; break;
-				case 17: $errorarray['error_code']= 17; $errorarray['error_message']='No Item whith this ID'; break;
-				case 18: $errorarray['error_code']= 18; $errorarray['error_message']='No Teaser set'; break;
-				case 19: $errorarray['error_code']= 19; $errorarray['error_message']='No App Items for this category'; break;
-				case 20: $errorarray['error_code']= 20; $errorarray['error_message']='No Categories'; break;
+				case 16: $errorarray['error_code']= 16; $errorarray['error_message']='No items for this category'; break;
+				case 17: $errorarray['error_code']= 17; $errorarray['error_message']='No item whith this ID'; break;
+				case 18: $errorarray['error_code']= 18; $errorarray['error_message']='No teaser set'; break;
+				case 19: $errorarray['error_code']= 19; $errorarray['error_message']='No app items for this category'; break;
+				case 20: $errorarray['error_code']= 20; $errorarray['error_message']='No categories'; break;
 				case 21: $errorarray['error_code']= 21; $errorarray['error_message']='No Items in Categories'; break;
-				case 22: $errorarray['error_code']= 22; $errorarray['error_message']='No Events'; break;
-				case 23: $errorarray['error_code']= 23; $errorarray['error_message']='No Homepreset'; break;
-				case 24: $errorarray['error_code']= 24; $errorarray['error_message']='Unknown Social Network'; break;
+				case 22: $errorarray['error_code']= 22; $errorarray['error_message']='No events'; break;
+				case 23: $errorarray['error_code']= 23; $errorarray['error_message']='No homepreset'; break;
+				case 24: $errorarray['error_code']= 24; $errorarray['error_message']='Unknown social network'; break;
 				case 25: $errorarray['error_code']= 25; $errorarray['error_message']='Facebook IDs required'; break;
 				case 26: $errorarray['error_code']= 26; $errorarray['error_message']='No Facebook SDK'; break;
 				case 27: $errorarray['error_code']= 27; $errorarray['error_message']='Facebook Error'; break;
@@ -1183,10 +1186,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 				if($ts<$this->general_settings['ts'] || $ts<$this->menu_settings['ts']){
 					/* IBeacon */
 					if($this->push_settings['uuid']){
-												
+						/*						
 						$returnarray['ibeacon']['uuid']=$this->push_settings['uuid'];
 						if($this->push_settings['welcome']) $returnarray['ibeacon']['welcome']=$this->push_settings['welcome'];
 						if($this->push_settings['silent']) $returnarray['ibeacon']['silent']=$this->push_settings['silent'];
+					    */
+						$ib = $this->nh_ynaa_ibeacon();
+						$returnarray['ibeacon'] = $ib['ibeacon'];
 					}
 					
 					if($this->general_settings['ts']>$this->menu_settings['ts'])$ts=$this->general_settings['ts'];
@@ -1358,15 +1364,15 @@ if(!class_exists('NH_YNAA_Plugin'))
 							}
 							elseif($hp['type'] == 'map'){	
 								$cat_id	= $hp['id'];
-								$location = $this->nh_ynaa_locations(1);
+								//$location = $this->nh_ynaa_locations(1);
 								
-								if($location){
+								//if($location){
 									//	var_dump($location);								
 									$items['articles']['items'][0]['id']=$cat_id;
-									$items['articles']['items'][0]['timestamp']=$location['locations']['ts'];
-									$items['articles']['items'][0]['publish_timestamp']=($location['locations']['ts']);
-									$img = $location['locations']['img'];									
-								}
+									$items['articles']['items'][0]['timestamp']=time();
+									$items['articles']['items'][0]['publish_timestamp']=time();
+									$img = '';									
+								//}
 								if(!$img) $img = $hp['img'];
 								
 							}
@@ -1610,8 +1616,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 			}
 			
 			//KArte
+			
 			if($this->general_settings['location']){
 				//$hp[-98]['img'] = 'http://yna.nebelhorn.com/wp-content/uploads/2014/03/images.jpg';
+				$hp[-98]['img']='';
+				if(!$hp[-98]['img'] || $hp[-98]['img']==NULL || $hp[-98]['img']=='null') $hp[-98]['img']='';
 				$returnarray['items'][]=array('pos'=>$i, 'type'=>'map', 'id'=> -98, 'title'=>__('Map','nh-ynaa'), 'img'=>$hp[-98]['img'], 'allowRemove'=> 1);
 				$i++;
 			}
@@ -1928,7 +1937,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 							if($postmeta_location){
 								$postmeta_location = unserialize($postmeta_location);
 								$returnarray['location']=1;
-								$returnarray['location_info']=array("title"=>$postmeta_location['location_name'],"lat"=>$postmeta_location['location_latitude'],"lng"=>$postmeta_location['location_longitude'], "address"=>$postmeta_location['location_address'],  "id"=>$nh_ynaa_location_id, 'ts'=>$postmeta_location_stamp, 'cat_id'=>$returnarray['catid']);
+								if(!$postmeta_location['location_pintype']) $postmeta_location['location_pintype'] = 'red';
+								$returnarray['location_info']=array("title"=>$postmeta_location['location_name'],"lat"=>$postmeta_location['location_latitude'],"lng"=>$postmeta_location['location_longitude'], "address"=>$postmeta_location['location_address'],  "id"=>$nh_ynaa_location_id, 'ts'=>$postmeta_location_stamp, 'cat_id'=>$returnarray['catid'], 'pintype'=>$postmeta_location['location_pintype']);
 							}
 						}
 						
@@ -2165,9 +2175,15 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$returnarray['error']=$this->nh_ynaa_errorcode(33);
 			}
 			else{
-				$returnarray['uuid']=$this->push_settings['uuid'];
+				/*$returnarray['uuid']=$this->push_settings['uuid'];
 				if($this->push_settings['welcome']) $returnarray['welcome']=$this->push_settings['welcome'];
-				if($this->push_settings['silent']) $returnarray['silent']=$this->push_settings['silent'];
+				if($this->push_settings['silent']) $returnarray['silent']=$this->push_settings['silent'];*/
+				$returnarray['uuid'] ='329189AB-FC93-42DA-9F29-87891888A33D' ;
+				$returnarray['silent'] =56 ;
+				$returnarray['identifier'] ='Beacon1' ;
+				$returnarray['welcome'] ='Willkommen' ;
+				$returnarray['content'][] =array('major'=>2, 'minor'=>1, 'silentInterval'=>1000, 'proximity'=>'CLProximityNear', 'message'=>'Test Message 1', 'contentArray'=>array()) ;
+				$returnarray['content'][] =array('major'=>1, 'minor'=>2, 'silentInterval'=>1000, 'proximity'=>'CLProximityNear', 'message'=>'Zum Beitrag Daniel Klink', 'contentArray'=>array(14,283)) ;
 			}
 			return (array('ibeacon'=>$returnarray));
 		}
@@ -2218,11 +2234,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 						//var_dump($cats);
 						if($cats) {
 							$cat_id = $cats[0]->term_id;
+							if(!$postmeta['location_pintype']) $postmeta['location_pintype']='red';
 							$returnarray['items'][]=
 								array("title"=>$postmeta['location_name'],
 								"lat"=>$postmeta['location_latitude'],
 								"lng"=>$postmeta['location_longitude'],
 								"address"=>$postmeta['location_address'],
+								'pintype'=>$postmeta['location_pintype'],
 								"id"=> $id,
 								'posts'=>array(array('post_id'=>$id, 'type'=>$lo_query->post->post_type, 'cat_id'=>$cat_id))
 								
@@ -2238,6 +2256,22 @@ if(!class_exists('NH_YNAA_Plugin'))
                 wp_reset_postdata();
 				//var_dump($lo_query);
 				
+				$homepresets = $this->nh_ynaa_homepresets();
+				//var_dump($homepresets);
+				
+				$returnarray['img'] = '';
+				$returnarray['title'] = __('Map','nh-ynaa');
+				if($homepresets ["homepresets"]['items']){
+					foreach($homepresets ["homepresets"]['items'] as $item){
+							if($item['cat_id'] != -98) continue;
+							else {
+								if($item['img'])$returnarray['img'] = $item['img'];
+								$returnarray['title'] = $item['title'];
+								break;
+							}
+							
+					}
+				}
 				
 			}
 			return (array('locations'=>$returnarray));
@@ -2910,6 +2944,16 @@ if(!class_exists('NH_YNAA_Plugin'))
 		</tr>
 		-->
         <tr>
+        	<th><?php _e('Pin color'); ?></th>
+            <td><select name="nh_location_pintype" id="nh_location_pintype" class="">
+            	<option value="red" <?php if($value['location_pintype']=='red') echo 'selected'; ?>><?php _e('red'); ?></option>
+                <option value="green" <?php if($value['location_pintype']=='green') echo 'selected'; ?>><?php _e('green'); ?></option>
+                <option value="purple" <?php if($value['location_pintype']=='purple') echo 'selected'; ?>><?php _e('purple'); ?></option>
+                
+            </select>
+            </td>
+        </tr>
+        <tr>
         	<th></th>
             <td><a href="#del" id="reset_location"><?php _e('Reset this form to create a location.', 'nh-ynaa'); ?></a></td>
         </tr>
@@ -3013,16 +3057,33 @@ if(!class_exists('NH_YNAA_Plugin'))
 		   * We need to verify this came from the our screen and with proper authorization,
 		   * because save_post can be triggered at other times.
 		   */
-
-		  // Check if our nonce is set.
-		  if ( ! isset( $_POST['nh_ynaa_inner_custom_box_nonce'] ) )
-			return $post_id;
-
-		  $nonce = $_POST['nh_ynaa_inner_custom_box_nonce'];
-
-		  // Verify that the nonce is valid.
-		  if ( ! wp_verify_nonce( $nonce, 'nh_ynaa_inner_custom_box' ) )
-			  return $post_id;
+		  if($pushsettings = get_option($this->push_settings_key)){
+				if($pushsettings['pushshow'] ){
+				  // Check if our nonce is set.
+				  if ( ! isset( $_POST['nh_ynaa_inner_custom_box_nonce'] ) )
+					return $post_id;
+		
+				  $nonce = $_POST['nh_ynaa_inner_custom_box_nonce'];
+		
+				  // Verify that the nonce is valid.
+				  if ( ! wp_verify_nonce( $nonce, 'nh_ynaa_inner_custom_box' ) )
+					  return $post_id;
+				}
+		  }
+		  
+		  if($generalsettings = get_option($this->general_settings_key)){
+				if($generalsettings['location'] ){
+				  // Check if our nonce is set.
+				  if ( ! isset( $_POST['nh_ynaa_inner_location_box_nonce'] ) )
+					return $post_id;
+		
+				  $nonce = $_POST['nh_ynaa_inner_location_box_nonce'];
+		
+				  // Verify that the nonce is valid.
+				  if ( ! wp_verify_nonce( $nonce, 'nh_ynaa_inner_location_box' ) )
+					  return $post_id;
+				}
+		  }
 
 		  // If this is an autosave, our form has not been submitted, so we don't want to do anything.
 		  if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) 
@@ -3068,6 +3129,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 				   
 			   }
 				elseif($generalsettings['location'] ){
+					if((!isset($_POST['nh_location_change']) || !$_POST['nh_location_change'])) return $post_id;
+					//if((!isset($_POST['nh_location_change']) || !$_POST['nh_location_change']) &&(!isset($_POST['nh_location_address']) || $_POST['nh_location_address']=='') && (!isset($_POST['nh_location_address']) || $_POST['nh_location_address'] = '') && (!isset($_POST['nh_location_name'])|| $_POST['nh_location_name']=='') && (!isset($_POST['nh_location_postcode'])|| $_POST['nh_location_postcode']=='')) return $post_id;
 					global $wpdb;
 					global $blog_id;
 					$table_name = $wpdb->prefix ."nh_locations";
@@ -3122,9 +3185,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 						$cord = $this->getLatLng($adresse);
 						if($cord && is_array($cord)){
 							$data['location_latitude'] = $cord['lat'];
-							$format[] = '%d';
+							$format[] = '%s';
 							$data['location_longitude'] = $cord['lng'];
-							$format[] = '%d';
+							$format[] = '%s';
 						/*	
 							$data['post_content'] = serialize($cord);
 							$format[] = '%s';*/
@@ -3142,6 +3205,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$format[]= '%d';
 					$data['location_owner'] = get_current_user_id();
 					$format[]= '%d';
+					$data['location_pintype'] = 'red';
+					$format[] = '%s';
+					if( $_POST['nh_location_pintype']) {
+						$data['location_pintype'] = $_POST['nh_location_pintype'];
+					}
 					
 					
 					$data['location_status'] =1;
@@ -3149,14 +3217,14 @@ if(!class_exists('NH_YNAA_Plugin'))
 					
 					if($_POST['nh_location_id']){
 						if($_POST['nh_location_change']) {
-							$wpdb->update($table_name,$data,array( 'location_id' => 1 ),$format, array('%d') );
+							$wpdb->update($table_name,$data,array( 'location_id' =>$_POST['nh_location_id'] ),$format, array('%d') );
 							update_post_meta( $post_id, '_nh_ynaa_location', serialize($data));
 							update_post_meta( $post_id, 'nh_location_update_stamp', $data['location_update_stamp']);
 						}
-						/*elseif($_POST['nh_location_change']){
-							$wpdb->update($table_name,$data,array( 'location_id' => 1 ),$format, array('%d') );
-							update_post_meta( $post_id, '_nh_ynaa_location', serialize($data));
-						}*/
+						//elseif($_POST['nh_location_change']){
+						//	$wpdb->update($table_name,$data,array( 'location_id' => 1 ),$format, array('%d') );
+						//	update_post_meta( $post_id, '_nh_ynaa_location', serialize($data));
+						//}
 					}
 					else {
 						$wpdb->insert($table_name,$data,$format);
@@ -3323,6 +3391,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					foreach($cat as $k=>$v) $cat[$k]= (string)($v);
 					$tag['tag'] = $cat;
 					$tag2['tag'] = array(get_bloginfo('url'));
+					$tag2['tag'] = 'http://herri.nebelhorn.com';
 					$iosContent = array();
 					$iosContent['alert'] = $_POST['push_text'];
 					$iosContent['badge'] = "+1";
@@ -3340,6 +3409,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$push['device_types'] = $device_types;
 
 					$json = json_encode($push);
+					//$json= '{"aps":{"alert":"test uma static","badge":1}}';
 					var_dump($json);
 					
 					/*
