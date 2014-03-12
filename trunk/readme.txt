@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.3.3
+Stable tag: 0.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,10 @@ Not like other App budders we do not require any build time. You can instantly t
 Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
 
 == Change Log ==
+= 0.3.4 =
+- add pin color for map
+- bug fix
+
 = 0.3.3 =
 - add location function
 - bug fix
@@ -125,6 +129,10 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
  
  
 == Upgrade Notice ==
+= 0.3.4 =
+- add pins color in map
+- bug fix locations
+
 
 = 0.3.3 =
 - add location function for posts

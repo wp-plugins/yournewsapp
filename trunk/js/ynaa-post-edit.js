@@ -1,6 +1,6 @@
 jQuery(document).ready( function() {
 	var checkchange = '';
-	jQuery('#nh_location_name').change(function(){
+	jQuery('#nh_location_name, #nh_location_pintype').change(function(){
 		jQuery('#nh_location_name_change').val(1);
 		jQuery('#nh_location_change').val(1);
 		jQuery(this).unbind('change');
