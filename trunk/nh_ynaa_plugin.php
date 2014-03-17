@@ -132,7 +132,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			add_action( 'admin_init', array( &$this, 'nh_ynaa_register_homepreset_settings' ) );
 			add_action( 'admin_init', array( &$this, 'nh_ynaa_register_teaser_settings' ) );
 			add_action( 'admin_init', array( &$this, 'nh_ynaa_register_push_settings' ) );
-			add_action( 'admin_init', array( &$this, 'nh_ynaa_register_categories_settings' ) );
+			//add_action( 'admin_init', array( &$this, 'nh_ynaa_register_categories_settings' ) );
 			//add_action( 'admin_init', array( &$this, 'nh_ynaa_qrcode_page' ) );
 			
 			//Action to add Menu in Settings
@@ -1580,10 +1580,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 					
 					foreach($parent as $k=>$v){
 						if(!$cat[$v] || (!(isset($cat[$v]['itemdirekt'])) &&  ($cat[$v]['post_ts'] < $cat[$k]['post_ts']))){
+							
 							$cat[$v]=$cat[$k];
 							$cat[$v]['pos']=$allcategories[$v]['pos'];
 							$cat[$v]['pos']=0;
 							$cat[$v]['id']=$v;
+							
 							$cat[$v]['parent_id']=0;
 							$cat[$v]['title']=$allcategories[$v]['title'];
 							unset($cat[$v]['itemdirekt']);
@@ -1596,6 +1598,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						/*if(($pos != '') || $pos ===0 ) { $pos++; }
 						else {$pos=0;}
 						$cat[$k]['pos']=$pos;*/
+						$cat[$v]['showsubcategories']=1;
 						$cat[$v]['subcategories'][]=$cat[$k];					
 						unset($cat[$k]);
 					
@@ -2113,9 +2116,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 									$temparray=array();
 									$pos++;
 									$temparray['pos']=$pos;
+									
 									$temparray['id']=$ar[0]['comment_ID'];
 									$temparray['text']=$ar[0]['comment_content'];
 									$temparray['timestamp']=strtotime($ar[0]['comment_date']);
+									
 									if($temparray['timestamp']>$returnarray['ts']) {
 										$returnarray['ts'] = $temparray['timestamp'];
 										$returnarray['changes']=1;
