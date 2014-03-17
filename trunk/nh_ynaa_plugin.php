@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.3.4
+Version: 0.3.4.1
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: yourBlogApp/yourNewsApp - The Wordpress Plugin for yourBlogApp/yourNewsApp
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.3.4";
+$nh_ynaa_version = "0.3.4.1";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -38,6 +38,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		private $menu_settings_key = 'nh_ynaa_menu_settings';		//App Menu Settings
 		private $teaser_settings_key = 'nh_ynaa_teaser_settings';	//App Teaser Settings
 		private $push_settings_key = 'nh_ynaa_push_settings';		//App Push Settings
+		private $categories_settings_key = 'nh_ynaa_categories_settings';		//App Push Settings
 		private $homepreset_settings_key = 'nh_ynaa_homepreset_settings';		//App Homepreset Settings
 		private $plugin_options_key = 'nh_ynaa_plugin_options';		//Plugin Settings
 		private $plugin_settings_tabs = array();					//All Tabs for the Plugin
@@ -131,6 +132,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			add_action( 'admin_init', array( &$this, 'nh_ynaa_register_homepreset_settings' ) );
 			add_action( 'admin_init', array( &$this, 'nh_ynaa_register_teaser_settings' ) );
 			add_action( 'admin_init', array( &$this, 'nh_ynaa_register_push_settings' ) );
+			add_action( 'admin_init', array( &$this, 'nh_ynaa_register_categories_settings' ) );
 			//add_action( 'admin_init', array( &$this, 'nh_ynaa_qrcode_page' ) );
 			
 			//Action to add Menu in Settings
@@ -255,12 +257,14 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$i=1;
 				foreach($categories as $category){
 					 $nh_ynaa_homepreset_settings['items'][] = array('img'=>'', 'title'=>$category->name, 'allowRemove'=>1, 'id' => $category->term_id, 'type'=>'cat', 'id2'=>$i);
+					 //$nh_ynaa_categories_settings['items'][] = array('img'=>'', 'title'=>$category->name, );
 					 $i++;
 				}
 			}
 			add_option('nh_ynaa_homepreset_settings', $nh_ynaa_homepreset_settings);	
 				
-			add_option('nh_ynaa_push_settings', array());		
+			add_option('nh_ynaa_push_settings', array());	
+			add_option('nh_ynaa_categories_settings', array());		
 			
 		
 				
@@ -380,6 +384,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$this->homepreset_settings = (array) get_option( $this->homepreset_settings_key );
 			$this->teaser_settings = (array) get_option( $this->teaser_settings_key );
 			$this->push_settings = (array) get_option( $this->push_settings_key );
+			$this->categories_settings = (array) get_option($this->categories_settings_key);
 			
 			// Merge with defaults
 			$this->general_settings = array_merge( array(
@@ -574,6 +579,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 			add_settings_field( 'ynaa-uuid', __('UUID ', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_option' ), $this->push_settings_key, 'app_ibeacon_settings' , array('field'=>uuid));
 			add_settings_field( 'ynaa-welcome', __('Welcome text ', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_option_textarea' ), $this->push_settings_key, 'app_ibeacon_settings' , array('field'=>welcome));
 			add_settings_field( 'ynaa-silent', __('Silent intervall (sec) ', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_option' ), $this->push_settings_key, 'app_ibeacon_settings' , array('field'=>silent));
+			$i=0;
+			/*if(isset($this->push_settings['ibeacon']) && is_array($this->push_settings['ibeacon']) && count($this->push_settings['ibeacon'])>0){
+				foreach($this->push_settings['ibeacon'] as $becon) {
+					add_settings_field( 'ynaa-ibeacon', __('iBeacon', 'nh-ynaa').(' '.($i+1)), array( &$this, 'nh_ynaa_field_ibeacon_content_option' ), $this->push_settings_key, 'app_ibeacon_settings' , array('field'=>ibeacon, 'key'=>$i));
+					$i++;
+				}
+			}*/
 			add_settings_field( 'ynaa-ibeacon', __('iBeacon ', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_ibeacon_content_option' ), $this->push_settings_key, 'app_ibeacon_settings' , array('field'=>ibeacon));
 			
 			
@@ -718,8 +730,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 * push  Option ibeacon callback 
 		 */
 		function nh_ynaa_field_ibeacon_content_option($field) {			
-			?>			
-			<input type="text" name="<?php echo $this->push_settings_key; ?>[<?php echo $field['field']; ?>]" value="<?php echo esc_attr( $this->push_settings[$field['field']] ); ?>" class="extraweit" />
+				var_dump($field, $this->push_settings[$field['field']]);
+			?>	
+            <fieldset><legend>iBeacon 1</legend>		
+				<label>Major</label><input type="text" name="<?php echo $this->push_settings_key; ?>[<?php echo $field['field']; ?>][0][major]" value="<?php if(isset($this->push_settings[$field['field']][0]['major'])) echo esc_attr( $this->push_settings[$field['field']][0]['major'] ); ?>" class="extraweit" /><br>
+				<label>Major2</label><input type="text" name="<?php echo $this->push_settings_key; ?>[<?php echo $field['field']; ?>][1][major]" value="<?php echo esc_attr( $this->push_settings[$field['field']][1]['major'] ); ?>" class="extraweit" />
+                
+            </fieldset>
 			<?php
 		} //END function nh_ynaa_field_push_option
 		
@@ -2170,7 +2187,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		*/
 		private function nh_ynaa_ibeacon(){
 			
-			$returnarray['error']=$this->nh_ynaa_errorcode(0);
+			//$returnarray['error']=$this->nh_ynaa_errorcode(0);
 			if(!$this->push_settings['uuid']){
 				$returnarray['error']=$this->nh_ynaa_errorcode(33);
 			}
@@ -2178,12 +2195,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 				/*$returnarray['uuid']=$this->push_settings['uuid'];
 				if($this->push_settings['welcome']) $returnarray['welcome']=$this->push_settings['welcome'];
 				if($this->push_settings['silent']) $returnarray['silent']=$this->push_settings['silent'];*/
-				$returnarray['uuid'] ='329189AB-FC93-42DA-9F29-87891888A33D' ;
-				$returnarray['silent'] =56 ;
+				$returnarray['uuid'] ='A36A5590-A359-4C84-B9A6-E6DFDAA60B16' ;
+				$returnarray['silent'] =60 ;
 				$returnarray['identifier'] ='Beacon1' ;
-				$returnarray['welcome'] ='Willkommen' ;
-				$returnarray['content'][] =array('major'=>2, 'minor'=>1, 'silentInterval'=>1000, 'proximity'=>'CLProximityNear', 'message'=>'Test Message 1', 'contentArray'=>array()) ;
-				$returnarray['content'][] =array('major'=>1, 'minor'=>2, 'silentInterval'=>1000, 'proximity'=>'CLProximityNear', 'message'=>'Zum Beitrag Daniel Klink', 'contentArray'=>array(14,283)) ;
+				$returnarray['welcome'] ='Willkommen bei Nebelhorn Medien.' ;
+				$returnarray['content'][] =array('major'=>2, 'minor'=>1, 'silentInterval'=>60, 'proximity'=>'CLProximityNear', 'message'=>'Hi, ich bin Andree :-)', 'contentArray'=>array(14,202 )) ;
+				$returnarray['content'][] =array('major'=>1, 'minor'=>2, 'silentInterval'=>60, 'proximity'=>'CLProximityNear', 'message'=>'Hi, ich bin Daniel :-)', 'contentArray'=>array(14,283)) ;
 			}
 			return (array('ibeacon'=>$returnarray));
 		}
@@ -2905,7 +2922,7 @@ if(!class_exists('NH_YNAA_Plugin'))
                     	<th><?php _e('Location Name','nh-ynaa'); ?>:</th>
                         <td><input id="nh_location_id" name="nh_location_id" type="hidden" value="<?php echo $ynaa_location_id; ?>" size="15"><input type="hidden" value="0" name="nh_location_del" id="nh_location_del">
                         <input type="hidden" value="0" name="nh_location_name_change" id="nh_location_name_change"><input type="hidden" value="0" name="nh_location_change" id="nh_location_change">
-				<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input id="nh_location_name" type="text" name="nh_location_name" value="<?php echo $value['location_name']; ?>" class="ui-autocomplete-input"><?php echo $required; ?>													
+				<span role="status" aria-live="polite" class="ui-helper-hidden-accessible"></span><input id="nh_location_name" type="text" name="nh_location_name" value="<?php echo esc_attr(stripslashes($value['location_name'])); ?>" class="ui-autocomplete-input"><?php echo $required; ?>													
 				<br>
 				<em id="nh-location-search-tip" style="display: none;"><?php _e( 'Create a location or start typing to search a previously created location.', 'nh-ynaa' )?></em>
 				<em id="nh-location-reset" style="display:none;"><?php _e('You cannot edit saved locations here.', 'nh-ynaa'); ?> <a href="#"><?php _e('Reset this form to create a location or search again.', 'nh-ynaa')?></a></em>
@@ -3121,7 +3138,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						global $wpdb;
 						global $blog_id;
 						$table_name = $wpdb->prefix ."nh_locations";
-						$wpdb->update($table_name,array('location_status'=>0, 'location_update_stamp'=>date('Y-m-d H:i:s')),array( 'location_id' => 1 ),array('%d'), array('%d') );
+						$wpdb->update($table_name,array('location_status'=>0, 'location_update_stamp'=>date('Y-m-d H:i:s')),array( 'location_id' => $_POST['nh_location_id'] ),array('%d'), array('%d') );
 						delete_post_meta( $post_id, 'nh_ynaa_location_id');
 						delete_post_meta( $post_id, '_nh_ynaa_location');
 						
@@ -3195,7 +3212,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							
 						}
 					}
-					$data['location_name']= $_POST['nh_location_name'];
+					$data['location_name']= ($_POST['nh_location_name']);
 					$format[] = '%s';
 					$data['location_slug']= sanitize_title_with_dashes($_POST['nh_location_name']);					
 					$format[] = '%s';
@@ -3218,7 +3235,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					if($_POST['nh_location_id']){
 						if($_POST['nh_location_change']) {
 							$wpdb->update($table_name,$data,array( 'location_id' =>$_POST['nh_location_id'] ),$format, array('%d') );
-							update_post_meta( $post_id, '_nh_ynaa_location', serialize($data));
+							update_post_meta( $post_id, '_nh_ynaa_location', mysql_real_escape_string(serialize($data)));
 							update_post_meta( $post_id, 'nh_location_update_stamp', $data['location_update_stamp']);
 						}
 						//elseif($_POST['nh_location_change']){
@@ -3231,7 +3248,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						$data['id'] = $wpdb->insert_id;
 						add_post_meta( $post_id, 'nh_ynaa_location_id', $data['id']);
 						add_post_meta( $post_id, 'nh_location_update_stamp', $data['location_update_stamp']);
-						add_post_meta( $post_id, '_nh_ynaa_location', serialize($data));
+						add_post_meta( $post_id, '_nh_ynaa_location', mysql_real_escape_string(serialize($data)));
 					}
 					
 					
@@ -3391,7 +3408,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					foreach($cat as $k=>$v) $cat[$k]= (string)($v);
 					$tag['tag'] = $cat;
 					$tag2['tag'] = array(get_bloginfo('url'));
-					$tag2['tag'] = 'http://herri.nebelhorn.com';
+					//$tag2['tag'] = 'http://herri.nebelhorn.com';
 					$iosContent = array();
 					$iosContent['alert'] = $_POST['push_text'];
 					$iosContent['badge'] = "+1";
