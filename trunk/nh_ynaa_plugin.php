@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.3.4.1
+Version: 0.3.5
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: yourBlogApp/yourNewsApp - The Wordpress Plugin for yourBlogApp/yourNewsApp
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.3.4.1";
+$nh_ynaa_version = "0.3.5";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -106,7 +106,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 			'Remove event from calendar' => "Veranstaltung vom Kalender entfernen",
 			'from'=>"von",
 			'to' => 'bis',
-			'starting at' => 'ab'
+			'starting at' => 'ab',
+			'Replay' => 'Antwort',
+			'You have the location services for the app disabled. You can turn them back on in the settings of the device.'=>'Sie haben die Ortungsdienste für die App deaktiviert. Sie können diese in den Einstellungen des Geräts wieder aktivieren.'
 
 		);
 				
@@ -213,7 +215,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			}
 			$lang = 'en';
 			if(get_bloginfo('language')=='de_DE') $lang='de';
-			$nh_ynaa_general_settings=(array('sort'=>1,'c1'=>'#3677a0','c2'=>'#ffffff', 'cn'=>'#ffffff', 'ct'=>'#000000', 'ch'=>'#000000', 'csh'=>'#000000','ts'=>time(), 'css'=> $css,'logo'=>'', 'comments'=>0, 'logo'=> plugins_url( 'img/yba_yna_yca_applogo.png' , __FILE__ ), 'lang_array'=>$lang_en, 'lang'=>$lang ));
+			$nh_ynaa_general_settings=(array('sort'=>1,'c1'=>'#3677a0', 'cm'=>'#3677a0','c2'=>'#ffffff', 'cn'=>'#ffffff', 'ct'=>'#000000', 'ch'=>'#000000', 'csh'=>'#000000','ts'=>time(), 'css'=> $css,'logo'=>'', 'comments'=>0, 'logo'=> plugins_url( 'img/yba_yna_yca_applogo.png' , __FILE__ ), 'lang_array'=>$lang_en, 'lang'=>$lang ));
 			
 			
 			//Preset teaser
@@ -463,32 +465,34 @@ if(!class_exists('NH_YNAA_Plugin'))
 			add_settings_field( 'ynaa-logo', __('Select Logo', 'nh-ynaa'). '('.$this->logo_image_width.'x'.$this->logo_image_height.')', array( &$this, 'nh_ynaa_field_general_option_logo' ), $this->general_settings_key, 'logo_setting', array('field'=>'logo') );
 			//Color
 			add_settings_section( 'app_settings', __('Color And Style Settings', 'nh-ynaa'), array( &$this, 'nh_ynaa_section_general_desc' ), $this->general_settings_key );
-			add_settings_field( 'ynaa-c1', __('Primary Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings' , array('field'=>c1));
-			add_settings_field( 'ynaa-c2', __('Secondary Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>c2) );
-			add_settings_field( 'ynaa-cn', __('Navigation Bar Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>cn) );
-			add_settings_field( 'ynaa-ct', __('Flowing Text Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>ct) );
-			add_settings_field( 'ynaa-ch', __('Title 1 Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>ch) );
-			add_settings_field( 'ynaa-csh', __('Title 2 Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>csh) );
-			add_settings_field( 'ynaa-css', __('CSS Style', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_css' ), $this->general_settings_key, 'app_settings' , array('field'=>css));
+			add_settings_field( 'ynaa-c1', __('Primary Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings' , array('field'=>'c1'));
+			add_settings_field( 'ynaa-c2', __('Secondary Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>'c2') );
+			
+			add_settings_field( 'ynaa-cn', __('Navigation Bar Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>'cn') );
+			add_settings_field( 'ynaa-cm', __('Menu Text Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>'cm') );
+			add_settings_field( 'ynaa-ch', __('Title 1 Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>'ch') );
+			add_settings_field( 'ynaa-csh', __('Title 2 Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>'csh') );
+			add_settings_field( 'ynaa-ct', __('Flowing Text Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>'ct') );
+			add_settings_field( 'ynaa-css', __('CSS Style', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_css' ), $this->general_settings_key, 'app_settings' , array('field'=>'css'));
 			//Hidden Fields
-			add_settings_field( 'ynaa-ts', null, array( &$this, 'nh_ynaa_field_general_option_hidden' ), $this->general_settings_key, 'app_settings', array('field'=>ts) );
+			add_settings_field( 'ynaa-ts', null, array( &$this, 'nh_ynaa_field_general_option_hidden' ), $this->general_settings_key, 'app_settings', array('field'=>'ts') );
 			//Social Network
 			add_settings_section( 'social_settings', __('Social Network', 'nh-ynaa'), array( &$this, 'nh_ynaa_section_general_social' ), $this->general_settings_key );			
-			add_settings_field( 'ynaa-social_fbsecretid', __('Facebook App Secret', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_social' ), $this->general_settings_key, 'social_settings', array('field'=>social_fbsecretid) );
-			add_settings_field( 'ynaa-social_fbappid', __('Facebook App ID', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_social' ), $this->general_settings_key, 'social_settings', array('field'=>social_fbappid) );
-			add_settings_field( 'ynaa-social_fbid', __('Facebook page ID', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_social' ), $this->general_settings_key, 'social_settings', array('field'=>social_fbid) );
+			add_settings_field( 'ynaa-social_fbsecretid', __('Facebook App Secret', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_social' ), $this->general_settings_key, 'social_settings', array('field'=>'social_fbsecretid') );
+			add_settings_field( 'ynaa-social_fbappid', __('Facebook App ID', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_social' ), $this->general_settings_key, 'social_settings', array('field'=>'social_fbappid') );
+			add_settings_field( 'ynaa-social_fbid', __('Facebook page ID', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_social' ), $this->general_settings_key, 'social_settings', array('field'=>'social_fbid') );
 			
 			//Extras
 			add_settings_section( 'extra_settings', __('Extras', 'nh-ynaa'), array( &$this, 'nh_ynaa_section_general_extra' ), $this->general_settings_key );
-			add_settings_field( 'ynaa-lang', __('Language', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_language' ), $this->general_settings_key, 'extra_settings' , array('field'=>lang));
+			add_settings_field( 'ynaa-lang', __('Language', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_language' ), $this->general_settings_key, 'extra_settings' , array('field'=>'lang'));
 			global $nh_ynaa_db_version;			
 			 if (get_option( 'nh_ynaa_db_version' ) == $nh_ynaa_db_version) {
-				add_settings_field( 'ynaa-location', __('Enable locations and activate location metabox in posts', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>location));
+				add_settings_field( 'ynaa-location', __('Enable locations and activate location metabox in posts', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'location'));
 			 }
-			add_settings_field( 'ynaa-eventplugin', __('Select your Event Manager:', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_eventplugin' ), $this->general_settings_key, 'extra_settings' , array('field'=>eventplugin));
+			add_settings_field( 'ynaa-eventplugin', __('Select your Event Manager:', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_eventplugin' ), $this->general_settings_key, 'extra_settings' , array('field'=>'eventplugin'));
 			//add_settings_field( 'ynaa-order_value', __('Order posts on overview page by', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_order' ), $this->general_settings_key, 'extra_settings' , array('field'=>order_value));
-			add_settings_field( 'ynaa-sort', __('Group by date', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>sort));
-			add_settings_field( 'ynaa-extra', __('Allow comments in App', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>comments));
+			add_settings_field( 'ynaa-sort', __('Group by date', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'sort'));
+			add_settings_field( 'ynaa-extra', __('Allow comments in App', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'comments'));
 			
 						
 		} //END  function nh_ynaa_register_general_settings()
@@ -1230,10 +1234,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 						$returnarray['lang_array'] = $lang_en;
 					}
 					
+					if(!$this->general_settings['cm'])$this->general_settings['cm'] =$this->general_settings['c1'];
 					$returnarray['changes']=1;
 					$returnarray['color-01']=($this->general_settings['c1']);
 					$returnarray['color-02']=$this->general_settings['c2'];
 					$returnarray['color-navbar']=$this->general_settings['cn'];
+					$returnarray['color-menu']=$this->general_settings['cm'];
 					$returnarray['color-text']=$this->general_settings['ct'];
 					$returnarray['color-headline']=$this->general_settings['ch'];
 					$returnarray['color-subheadline']=$this->general_settings['csh'];
@@ -1545,6 +1551,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$hp[$item['cat_id']]['img'] =  $item['img'];
 					}
 				}
+				$ass_cats = array();
 				//var_dump($hp);
 				//echo '<hr>';
 				foreach ( $categories as $category ) {				
@@ -1554,19 +1561,23 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$post_thumbnail_image[0]='';
 					$post_id='';
 					$allowRemove = 1;
-				
+					
 					
 					$items = ($this->nh_ynaa_articles($category->term_id,1));	
 					$allcategories[$category->term_id]['title']= htmlspecialchars_decode($category->name);
 					$allcategories[$category->term_id]['pos']=$i;
 					if($items['articles']['items']){						
 						if($category->parent)$parent[$category->term_id]=$category->parent;
+						
 						if($ts<=$items['articles']['items'][0]['timestamp']) {
 							$returnarray['changes']=1;
 							$ts = $items['articles']['items'][0]['timestamp'];
 						}
 						if(!$items['articles']['items'][0]['thumb'] && $hp[$category->term_id]['img']) $items['articles']['items'][0]['thumb'] = $hp[$category->term_id]['img'];
 						$cat[$category->term_id]=array('pos'=>$i, 'type'=>'cat', 'id'=> $category->term_id, 'parent_id'=>$category->parent, 'title'=>htmlspecialchars_decode($category->name), 'img'=>$items['articles']['items'][0]['thumb'], 'post_id'=>$items['articles']['items'][0]['id'] ,'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1);
+						//$ass_cats[$category->term_id] = array('img'=>$items['articles']['items'][0]['thumb']);
+						$ass_cats[$category->term_id] = array('img'=>'http://yna.nebelhorn.com/wp-content/uploads/2014/02/image-653473-breitwandaufmacher-ixpz-300x111.jpg');
+						
 						$i++;
 						unset($items);
 					}					
@@ -1629,6 +1640,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					}
 					if(!$items['events']['items'][0]['thumb'] && $hp[-1]['img']) $items['events']['items'][0]['thumb'] = $hp[-1]['img'];
 					$returnarray['items'][]=array('pos'=>$i, 'type'=>'events', 'id'=> -1, 'title'=>__('Events','nh-ynaa'), 'img'=>$items['events']['items'][0]['thumb'], 'post_id'=>$items['events']['items'][0]['id'] ,'post_ts'=>$items['events']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove);
+					$ass_cats[-1]=array('img'=>$items['events']['items'][0]['thumb']);
 					$i++;
 					unset($items);
 				}
@@ -1642,6 +1654,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$hp[-98]['img']='';
 				if(!$hp[-98]['img'] || $hp[-98]['img']==NULL || $hp[-98]['img']=='null') $hp[-98]['img']='';
 				$returnarray['items'][]=array('pos'=>$i, 'type'=>'map', 'id'=> -98, 'title'=>__('Map','nh-ynaa'), 'img'=>$hp[-98]['img'], 'allowRemove'=> 1);
+				$ass_cats[-98]=array('img'=>$hp[-98]['img']);
 				$i++;
 			}
 			
@@ -1659,9 +1672,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$fb = json_decode($fb,true);
 					if(!$fb['data'][0]['picture'] && $hp[-2]['img']) $fb['data'][0]['picture'] = $hp[-2]['img'];
 				 	$returnarray['items'][]=array('pos'=>$i, 'type'=>'fb', 'id'=> -2, 'title'=>__('Facebook','nh-ynaa'), 'img'=>$fb['data'][0]['picture'], 'post_id'=>$fb['data'][0]['id'] ,'post_ts'=>strtotime($fb['data'][0]['created_time']) ,'allowRemove'=> 1);
+					$ass_cats[-2]=array('img'=>$fb['data'][0]['picture']);
 					$i++;
 				}
 			}
+			
+			$returnarray['ass_cats'] = $ass_cats;
 			
 			return array('categories'=>$returnarray);			
 		} // END private function categories()
@@ -2197,15 +2213,15 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$returnarray['error']=$this->nh_ynaa_errorcode(33);
 			}
 			else{
-				/*$returnarray['uuid']=$this->push_settings['uuid'];
+				$returnarray['uuid']=$this->push_settings['uuid'];
 				if($this->push_settings['welcome']) $returnarray['welcome']=$this->push_settings['welcome'];
-				if($this->push_settings['silent']) $returnarray['silent']=$this->push_settings['silent'];*/
-				$returnarray['uuid'] ='A36A5590-A359-4C84-B9A6-E6DFDAA60B16' ;
+				if($this->push_settings['silent']) $returnarray['silent']=$this->push_settings['silent'];
+				/*$returnarray['uuid'] ='A36A5590-A359-4C84-B9A6-E6DFDAA60B16' ;
 				$returnarray['silent'] =60 ;
 				$returnarray['identifier'] ='Beacon1' ;
 				$returnarray['welcome'] ='Willkommen bei Nebelhorn Medien.' ;
 				$returnarray['content'][] =array('major'=>2, 'minor'=>1, 'silentInterval'=>60, 'proximity'=>'CLProximityNear', 'message'=>'Hi, ich bin Andree :-)', 'contentArray'=>array(14,202 )) ;
-				$returnarray['content'][] =array('major'=>1, 'minor'=>2, 'silentInterval'=>60, 'proximity'=>'CLProximityNear', 'message'=>'Hi, ich bin Daniel :-)', 'contentArray'=>array(14,283)) ;
+				$returnarray['content'][] =array('major'=>1, 'minor'=>2, 'silentInterval'=>60, 'proximity'=>'CLProximityNear', 'message'=>'Hi, ich bin Daniel :-)', 'contentArray'=>array(14,283)) ;*/
 			}
 			return (array('ibeacon'=>$returnarray));
 		}
