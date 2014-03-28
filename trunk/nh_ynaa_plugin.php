@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.3.5
+Version: 0.3.6
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: yourBlogApp/yourNewsApp - The Wordpress Plugin for yourBlogApp/yourNewsApp
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.3.5";
+$nh_ynaa_version = "0.3.6";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -24,6 +24,8 @@ define('QUERY_VARS_YNAA','ynaa');
 
 
 require_once('classes/error_trap.php');
+
+require_once('classes/lang.php');
 
 if(!class_exists('NH_YNAA_Plugin'))
 {
@@ -108,7 +110,14 @@ if(!class_exists('NH_YNAA_Plugin'))
 			'to' => 'bis',
 			'starting at' => 'ab',
 			'Replay' => 'Antwort',
-			'You have the location services for the app disabled. You can turn them back on in the settings of the device.'=>'Sie haben die Ortungsdienste für die App deaktiviert. Sie können diese in den Einstellungen des Geräts wieder aktivieren.'
+			'You have the location services for the app disabled. You can turn them back on in the settings of the device.'=>'Sie haben die Ortungsdienste für die App deaktiviert. Sie können diese in den Einstellungen des Geräts wieder aktivieren.',
+			'Login'=>'Anmelden',
+			'Logout'=>'Abmelden',
+			'Username' => 'Benutzername',
+			'Password' => 'Passwort',
+			'The input is incomplete' => 'Die Eingabe ist unvollständig',
+			'Thanks' => 'Danke'
+			
 
 		);
 				
@@ -787,7 +796,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 			?>
 			<select id="nh_language" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]">
                     	<option value="en"><?php _e('English', 'nh-ynaa'); ?></option>
+                        <option value="fr" <?php if($this->general_settings['lang']=='fr') echo ' selected'; ?>><?php _e('French', 'nh-ynaa'); ?></option>
                         <option value="de" <?php if($this->general_settings['lang']=='de') echo ' selected'; ?>><?php _e('German', 'nh-ynaa'); ?></option>
+                        <option value="es" <?php if($this->general_settings['lang']=='es') echo ' selected'; ?>><?php _e('Spanish', 'nh-ynaa'); ?></option>
                     </select>
            <?php
 		}
@@ -1221,7 +1232,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 					if($this->general_settings['sort'])$returnarray['sort']=1;
 					else $returnarray['sort']=0;
 					//echo $ts;
-					if($this->general_settings['lang'] == 'de'){
+					
+					$lang = new NH_YNAA_Language;					
+					if(!$this->general_settings['lang']) $this->general_settings['lang']= 'en';
+					$returnarray['lang']=$this->general_settings['lang'];
+        			$returnarray['lang_array'] = $lang->getTranslation($this->general_settings['lang']);
+					/*if($this->general_settings['lang'] == 'de'){
 						$returnarray['lang']='de';
 						$returnarray['lang_array'] = self::$lang_de;
 					}
@@ -1232,7 +1248,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							
 						}
 						$returnarray['lang_array'] = $lang_en;
-					}
+					}*/
 					
 					if(!$this->general_settings['cm'])$this->general_settings['cm'] =$this->general_settings['c1'];
 					$returnarray['changes']=1;
@@ -1575,8 +1591,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 						}
 						if(!$items['articles']['items'][0]['thumb'] && $hp[$category->term_id]['img']) $items['articles']['items'][0]['thumb'] = $hp[$category->term_id]['img'];
 						$cat[$category->term_id]=array('pos'=>$i, 'type'=>'cat', 'id'=> $category->term_id, 'parent_id'=>$category->parent, 'title'=>htmlspecialchars_decode($category->name), 'img'=>$items['articles']['items'][0]['thumb'], 'post_id'=>$items['articles']['items'][0]['id'] ,'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1);
-						//$ass_cats[$category->term_id] = array('img'=>$items['articles']['items'][0]['thumb']);
-						$ass_cats[$category->term_id] = array('img'=>'http://yna.nebelhorn.com/wp-content/uploads/2014/02/image-653473-breitwandaufmacher-ixpz-300x111.jpg');
+						$ass_cats[$category->term_id] = array('img'=>$items['articles']['items'][0]['thumb']);
+						//$ass_cats[$category->term_id] = array('img'=>'http://yna.nebelhorn.com/wp-content/uploads/2014/02/image-653473-breitwandaufmacher-ixpz-300x111.jpg');
 						
 						$i++;
 						unset($items);
