@@ -53,7 +53,7 @@
           'from'=>"von",
           'to' => 'bis',
           'starting at' => 'ab',
-          'Replay' => 'Antwort',
+          'Reply' => 'Antwort',
           'You have the location services for the app disabled. You can turn them back on in the settings of the device.'=>'Sie haben die Ortungsdienste für die App deaktiviert. Sie können diese in den Einstellungen des Geräts wieder aktivieren.',
           'Login'=>'Anmelden',
           'Logout'=>'Abmelden',

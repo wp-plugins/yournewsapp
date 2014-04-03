@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.3.6
+Stable tag: 0.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,10 @@ Not like other App budders we do not require any build time. You can instantly t
 Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
 
 == Change Log ==
+= 0.4.0 =
+- bug fix
+- add categoriy tab with category feature
+
 = 0.3.6 =
 - add spanish, frensh
 - bug fix
@@ -140,6 +144,14 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
  
  
 == Upgrade Notice ==
+= 0.4.0 =
+- bug fix
+- add category 
+- add category image, title
+- function for category hide
+- add show sub categories view
+
+
 = 0.3.6 =
 - add spanish, frensh
 - bug fix

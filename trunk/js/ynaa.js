@@ -268,7 +268,7 @@ jQuery(document).ready(function($){
 						$objhtml = '<li id="homepresetli'+$pos+'" class="floatli">' +
 										'<div class="hpdiv" id="hpdiv'+$pos+'" style="background-color:'+$color01+';">' +
 											'<div class="ttitle" id="hptitle'+$pos+'div">'+$title+'</div>' +
-											'<div class="setdefaultcatpic"><a id="upload_image_button" class="upload_image_button" href="#" name="'+$homepreset_settings_key+'_items_'+$pos+'_img">'+$catText+'</a></div>' +
+											'<div class="setdefaultcatpic" style="display:none;"><a id="upload_image_button" class="upload_image_button" href="#" name="'+$homepreset_settings_key+'_items_'+$pos+'_img">'+$catText+'</a></div>' +
 										'</div>' +
 									   '<div><input type="text" value="'+$title+'" id="hptitle'+$pos+'" name="'+$homepreset_settings_key+'[items]['+$pos+'][title]" class="hptitle" /></div>' +
 									   '<div><input type="checkbox" checked="checked" name="'+$homepreset_settings_key+'[items]['+$pos+'][allowRemove]" id="allowRemove'+$pos+'" value="1" /><label for="allowRemove'+$pos+'"> '+$allowremoveText+'</label></div>' +
@@ -343,6 +343,8 @@ jQuery(document).ready(function($){
 		 formfield = $(this).attr('name');
 		 $send_url_to =formfield;
 		
+		 //$(this).closest( "div.image-div" ).css( "background-color", "red" );
+		 
 		 tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
 		 
 		 
@@ -356,8 +358,28 @@ jQuery(document).ready(function($){
 		 var tempid = '#'+$('#'+$send_url_to).attr('data-id');
 		 $(tempid).css('background-image','url("' + imgurl + '")');
 		 $(tempid).css('background-color','');
+		
+		 if($('#'+$send_url_to).attr('data-link')){
+		
+		 	var $id = $('#'+$send_url_to).attr('data-link');
+			//alert($id);
+			//alert($('#'+$send_url_to).attr('id'));
+		 	$('#reset-cat-img-link-cont_'+$id).html('<a href="'+$id+'" class="reset-cat-img-link">Reset image</a>');
+		 }
 		 tb_remove();
 	}
+	
+	/* RESET IMAGE */
+	$('.reset-cat-img-link').live('click',function(){
+		if(confirm('Do you want reset the image?')){
+			var $id = $(this).attr('href');
+			$('#image-div'+$id).css('background-image','');
+			$('#nh_ynaa_categories_settings_items_'+$id+'_img').val('');
+			$('#reset-cat-img-link-cont_'+$id+' a').remove();
+			return false;
+		}
+		return false;
+	});
 	
 	//Load All Posts tybes
 	/*$('.ynaa-tab-all').click(function(){

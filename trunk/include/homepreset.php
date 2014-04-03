@@ -238,7 +238,8 @@
                                                  <?php 
 												 	if($ar['type']=='cat' || $ar['type']=='fb' || $ar['type']=='events' ||$ar['type']=='map') { 
 														echo '<div class="hpdiv" id="hpdiv'.$v.'" ';
-														if(($ar['img'])) echo  'style="background-image:url(\''.($ar['img']).'\');"';
+														if($this->categories_settings[$ar['id']]['img']) echo  'style="background-image:url(\''.($this->categories_settings[$ar['id']]['img']).'\');"';
+														elseif(($ar['img'])) echo  'style="background-image:url(\''.($ar['img']).'\');"';
 														else echo 'style="background-color:'.$this->general_settings['c1'].';"';
 														echo ' >';
 												 	}
@@ -248,7 +249,7 @@
 												   ?>
                                                     <div class="ttitle" id="hptitle<?php echo $v; ?>div"><?php echo ($ar['title']); ?></div>
                                                     <?php if($ar['type']=='cat' || $ar['type']=='fb' || $ar['type']=='events') { ?>
-                                                    <div class="setdefaultcatpic"><a id="upload_image_button<?php echo $v; ?>" class="upload_image_button" href="#" name="<?php echo $this->homepreset_settings_key; ?>_items_<?php echo $v; ?>_img"><?php _e('Set default image for category','nh-ynaa'); ?></a></div>
+                                                    <div class="setdefaultcatpic" style="display:none;"><a id="upload_image_button<?php echo $v; ?>" class="upload_image_button" href="#" name="<?php echo $this->homepreset_settings_key; ?>_items_<?php echo $v; ?>_img"><?php _e('Set default image for category','nh-ynaa'); ?></a></div>
            											<input type="hidden" value="<?php echo $ar['img']; ?>" id="<?php echo $this->homepreset_settings_key; ?>_items_<?php echo $v; ?>_img" name="<?php echo $this->homepreset_settings_key; ?>[items][<?php echo $v; ?>][img]" data-id="hpdiv<?php echo $v; ?>" />                                         
                                                     <?php } ?>
                                                </div>
