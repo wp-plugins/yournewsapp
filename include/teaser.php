@@ -114,7 +114,7 @@
 						}
 					}					
 				?>	
-                <li id="add-custom-categories" class="control-section accordion-section   add-custom-categories">
+                <!--<li id="add-custom-categories" class="control-section accordion-section   add-custom-categories">
 				<h3 title="<?php _e('Categories'); ?>" tabindex="0" class="accordion-section-title hndle"><?php _e('Categories'); ?></h3>
 				<div class="accordion-section-content ">
 					<div class="inside">
@@ -143,17 +143,17 @@
 								?>
 							</ul>
 							<p class="button-controls">
-								<!--<span class="list-controls"><a class="select-all" href="<?php echo $_SERVER['PHP_SELF']; ?>?page=ynaa_plugin_options&page-tab=all&amp;selectall=1#category ?>"><?php //_e('Select All'); ?></a></span>-->
+								<!--<span class="list-controls"><a class="select-all" href="<?php echo $_SERVER['PHP_SELF']; ?>?page=ynaa_plugin_options&page-tab=all&amp;selectall=1#category ?>"><?php //_e('Select All'); ?></a></span>->
 								<span class="add-to-menu">
 									<input type="submit" id="submit-customcategorydiv" name="add-custom-menu-item" value="<?php _e('Add to Menu'); ?>" class="button-secondary submit-add-to-menu right">
 									<span class="spinner"></span>
 								</span>
 							</p>
 
-						</div><!-- /.customlinkdiv -->
-					</div><!-- .inside -->
-				</div><!-- .accordion-section-content -->
-			</li>
+						</div><!-- /.customlinkdiv ->
+					</div><!-- .inside ->
+				</div><!-- .accordion-section-content ->
+			</li>-->
             					
 		</ul><!-- .outer-border -->
         <input type="hidden" value="<?php echo $menu_id; ?>" id="menu_id_counter">

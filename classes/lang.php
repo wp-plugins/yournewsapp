@@ -127,7 +127,7 @@
             'from'=>"from",
             'to' => 'to',
             'starting at' => 'starting at',
-            'Replay' => 'Replay',
+            'Reply' => 'Reply',
             'You have the location services for the app disabled. You can turn them back on in the settings of the device.'=>'You have the location services for the app disabled. You can turn them back on in the settings of the device.',
             'Login'=>'Login',
             'Logout'=>'Logout',
