@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.4.0
+Stable tag: 0.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,13 @@ Not like other App budders we do not require any build time. You can instantly t
 Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
 
 == Change Log ==
+= 0.5.0 =
+- support hide categories
+- encoding bug fix
+- add sorttype
+- remove homepreset image
+
+
 = 0.4.0 =
 - bug fix
 - add categoriy tab with category feature
@@ -144,6 +151,18 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
  
  
 == Upgrade Notice ==
+= 0.5.0 =
+- bug fix hide categories
+- encoding bug fix '\n'
+- add sorttype  for show post
+- remove homepreset image only support category image
+- css bug fix
+- set map image
+- set event image
+- facebook bug fix
+- translation error fix
+
+
 = 0.4.0 =
 - bug fix
 - add category 
