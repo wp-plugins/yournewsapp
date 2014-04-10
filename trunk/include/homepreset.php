@@ -8,7 +8,7 @@
 		<div class="accordion-container" id="side-sortables">		
 			<ul class="outer-border">
 				<li id="add-custom-categories" class="control-section accordion-section   add-custom-categories">
-				<h3 title="<?php _e('Categories'); ?>" tabindex="0" class="accordion-section-title hndle"><?php _e('Categories'); ?></h3>
+				<h3 title="<?php _e('Categories', 'nh-ynaa'); ?>" tabindex="0" class="accordion-section-title hndle"><?php _e('Categories', 'nh-ynaa'); ?></h3>
 				<div class="accordion-section-content ">
 					<div class="inside">
 						<div id="customcategoriediv" class="customlinkdiv">		

@@ -142,6 +142,10 @@ div.homepresetpreview {
     overflow: hidden;
     padding: 5px;
 }
+
+.categorie-div-con > ul li input.cat-name-input {
+	width:161px;
+}
 .hide-cat-div {margin-bottom:5px; }
 
 .show-subcat-div {height:55px; overflow:hidden; }

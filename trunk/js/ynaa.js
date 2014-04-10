@@ -469,7 +469,19 @@ jQuery(document).ready(function($){
 		
 	});
 	
+	/* deactive post order if startvie = category */
 	
+	$('#nh_homescreentype').change(function(){
+		if($(this).val()=='1'){
+			//alert('disable=false setzen');
+			$('#nh_sorttype').prop('disabled', false);
+		}
+		else {
+			//alert('disable=true setzen');
+			//$('#nh_sorttype').removeAttr('disabled');
+			$('#nh_sorttype').prop('disabled', true);
+		}
+	});
 			
 });
 
