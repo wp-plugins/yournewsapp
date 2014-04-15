@@ -1,5 +1,5 @@
 <?php $menu_id=0;
-//var_dump($this->general_settings);
+//var_dump($this->teaser_settings);
  ?>
  <input type="hidden" name="<?php echo $this->teaser_settings_key; ?>[ts]" value="<?php echo time(); ?>" />
 <div id="nav-menus-frame">
@@ -15,7 +15,7 @@
 						if( !in_array( $post_type, array( 'attachment', 'revision', 'nav_menu_item' ) ) ){
 						?>
 							<li id="add-<?php echo $post_type; ?>" class="control-section accordion-section add-<?php echo $post_type; ?>">
-								<h3 title="<?php echo ucfirst(_n($post_type,$post_type.'s',2,'nh-ynaa')); ?>" tabindex="0" class="accordion-section-title hndle"><?php echo ucfirst(_n($post_type,$post_type.'s',2));?></h3>				
+								<h3 title="<?php echo ucfirst(__($post_type,'nh-ynaa')); ?>" tabindex="0" class="accordion-section-title hndle"><?php echo ucfirst(__($post_type,'nh-ynaa'));?></h3>				
 								<div class="accordion-section-content ">
 									<div class="inside">
 									<?php
@@ -179,10 +179,11 @@
 								<ul id="menu-to-edit" class="menu nav-menus-php nh-teaser-ul">
 									<?php
 									if($this->teaser_settings['teaser'] && !empty($this->teaser_settings['teaser'])){
-										$menuitems= $this->teaser_settings['teaser'];								
+										$menuitems= $this->teaser_settings['teaser'];
+										//var_dump($menuitems);								
 										foreach($menuitems as $k=>$v){									
 										?>
-											<li id="teaserli<?php echo $v; ?>"  class="floatli"><div class="teaserdiv" style="background-image:url('<?php echo $this->getthumblepic($v); ?>');">
+											<li id="teaserli<?php echo $v; ?>"  class="floatli"><div class="teaserdiv" style="background-image:url('<?php echo $this->nh_getthumblepic($v); ?>');">
                                                 <div class="ttitle"><?php echo get_the_title($v); ?></div>
                                                 </div>
                                                 <div>

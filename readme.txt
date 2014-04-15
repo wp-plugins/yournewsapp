@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.5.0
+Stable tag: 0.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,11 @@ Not like other App budders we do not require any build time. You can instantly t
 Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
 
 == Change Log ==
+= 0.5.1 =
+- teaser & starscreen bug fix
+- add meta tag viewport
+- add category features use category image
+
 = 0.5.0 =
 - support hide categories
 - encoding bug fix
@@ -151,6 +156,13 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
  
  
 == Upgrade Notice ==
+= 0.5.1 =
+- teaser & starscreen bug fix
+- add meta tag viewport (pleace remove from CSS settings: font-size:3em;	line-height:1.5em;
+- add category features use category image instead of post image
+- extern url on homescreen
+
+
 = 0.5.0 =
 - bug fix hide categories
 - encoding bug fix '\n'

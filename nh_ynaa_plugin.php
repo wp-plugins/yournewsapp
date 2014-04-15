@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.5.0
+Version: 0.5.1
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: yourBlogApp/yourNewsApp - The Wordpress Plugin for yourBlogApp/yourNewsApp
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.5.0";
+$nh_ynaa_version = "0.5.1";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -137,6 +137,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 		
 			//Action Initial App and Set WP Options
 			add_action( 'init', array( &$this, 'nh_ynaa_load_settings' ) );			
+			//update routine
+			add_action('init',array(&$this, 'nh_ynaa_update_routine'),1);
 			//Action on Plugin Setting Page
 			add_action( 'admin_init', array( &$this, 'nh_ynaa_register_general_settings' ) );
 			
@@ -379,7 +381,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 			delete_option('nh_ynaa_homepreset_settings');				
 			delete_option('nh_ynaa_teaser_settings');
 //			delete_option('nh_ynaa_events_settings');
-			delete_option('nh_ynaa_push_settings');*/
+			delete_option('nh_ynaa_push_settings');
+			delete_option('nh_ynaa_categories_settings');*/
 		
         } // END public static function nh_ynaa_deactivate
 		
@@ -424,8 +427,17 @@ if(!class_exists('NH_YNAA_Plugin'))
 			if(isset($this->general_settings['social_fbid'],$this->general_settings['social_fbsecretid'],$this->general_settings['social_fbappid'])) $this->appmenus_pre[3] = array('title'=>__('Facebook','nh-ynaa'),'status'=>1,'pos'=>3, 'id'=>-2, 'type'=>'fb', 'type_text'=>'Facebook', 'link-typ'=>'fb');
 			$this->appmenus_pre[5] = array('title'=>__('Events','nh-ynaa'),'status'=>0,'pos'=>3, 'id'=>-1, 'type'=>'events', 'type_text'=>'App');
 			if(isset($this->general_settings['location'])) $this->appmenus_pre[6] = array('title'=>__('Map','nh-ynaa'),'status'=>1,'pos'=>3, 'id'=>-98, 'type'=>'map', 'type_text'=>__('App', 'ynaa'), 'link-typ'=>'cat');
+			$this->appmenus_pre[6] = array('title'=>__('Extern URL','nh-ynaa'),'status'=>1,'pos'=>6, 'id'=>-3, 'type'=>'webview', 'type_text'=>'URL', 'link-typ'=>'cat');
+			
 		} // END  function nh_ynaa_load_settings()
 		
+		
+		/**
+		 *Update routine
+		*/
+		function nh_ynaa_update_routine(){
+			//$this->general_settings[''];
+		}
 		
 		/*
 		* Multisite loade Settings for new blog
@@ -697,9 +709,14 @@ if(!class_exists('NH_YNAA_Plugin'))
 										$noradio = 'checked';
 									}
 								?>
-									<label for=""><?php _e('Yes', 'nh-ynaa');  ?></label> <input type="radio" name="<?php echo $this->categories_settings_key.'['.$category->term_id.'][hidecat]';?>" <?php echo $yesradio; ?> value="1">
-                                    <label for=""><?php _e('No', 'nh-ynaa'); ?></label> <input type="radio" name="<?php echo $this->categories_settings_key.'['.$category->term_id.'][hidecat]';?>" value="0" <?php echo $noradio; ?>>
+									<label for="hidecat1"><?php _e('Yes', 'nh-ynaa');  ?></label> <input type="radio" id="hidecat1" name="<?php echo $this->categories_settings_key.'['.$category->term_id.'][hidecat]';?>" <?php echo $yesradio; ?> value="1">
+                                    <label for="hidecat0"><?php _e('No', 'nh-ynaa'); ?></label> <input type="radio" id="hidecat0" name="<?php echo $this->categories_settings_key.'['.$category->term_id.'][hidecat]';?>" value="0" <?php echo $noradio; ?>>
 								</div>
+                                <div class="use-cat-image-div">
+                                	<input type="radio" value="0"  name="<?php echo $this->categories_settings_key.'['.$category->term_id.'][usecatimg]';?>" id="use_cat_image1" <?php if(!isset($this->categories_settings[$category->term_id]['usecatimg']) || !$this->categories_settings[$category->term_id]['usecatimg']) echo 'checked'; ?>> <label for="use_cat_image0"><?php _e('Use post image on homescreen', 'nh-ynaa'); ?></label><br>
+                                    <input type="radio" value="1"  name="<?php echo $this->categories_settings_key.'['.$category->term_id.'][usecatimg]';?>" id="use_cat_image1" <?php if($this->categories_settings[$category->term_id]['usecatimg'] ) echo 'checked'; ?>> <label for="use_cat_image1"><?php _e('Use category image on homescreen', 'nh-ynaa'); ?></label>
+                                    
+                                </div>
                             	<div class="show-subcat-div">
 							<?php
 								if(get_categories(array('hide_empty'=>0, 'child_of'=>$category->term_id))){
@@ -1273,6 +1290,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 */
 		public function nh_ynaa_template_redirect() {			
 			$ynaa_var = get_query_var('ynaa');
+			header('Content-Type: application/json');
 			if($ynaa_var=='settings'){
 				print_r(json_encode($this->nh_ynaa_settings()));				
 			}
@@ -1400,7 +1418,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					if($this->general_settings['sort'])$returnarray['sort']=1;
 					else $returnarray['sort']=0;
 					if($this->general_settings['homescreentype']){
-						$returnarray['homescreentype']=$this->general_settings['homescreentype'];
+						$returnarray['homescreentype']=(int) $this->general_settings['homescreentype'];
 						if($this->general_settings['sorttype'])$returnarray['sorttype']=$this->general_settings['sorttype'];
 						else $returnarray['sorttype']='recent';
 					}
@@ -1593,6 +1611,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 									$img = $this->categories_settings[$cat_id]['img'];
 								}
 								elseif($hp['img']) $img = $hp['img'];
+								
+								if($this->categories_settings[$cat_id]['usecatimg']) $img = $this->categories_settings[$cat_id]['img'];
+								
 																							
 							}
 							elseif($hp['type'] == 'fb'){	
@@ -1623,6 +1644,24 @@ if(!class_exists('NH_YNAA_Plugin'))
 								
 								if(!$img &&  $this->categories_settings[-98]['img']) $img = $this->categories_settings[-98]['img'];
 								if(!$img) $img = $hp['img'];
+								
+							}
+							elseif($hp['type'] == 'webview'){	
+								$cat_id	= $hp['id'];
+								//$location = $this->nh_ynaa_locations(1);
+								
+								//if($location){
+									//	var_dump($location);								
+									$items['articles']['items'][0]['id']=($cat_id);
+									$items['articles']['items'][0]['url']=$hp['url'];
+									$items['articles']['items'][0]['timestamp']=time();
+									$items['articles']['items'][0]['publish_timestamp']=time();
+									$img = '';
+																		
+								//}
+								 
+								//if(!$img &&  $this->categories_settings[-98]['img']) $img = $this->categories_settings[-98]['img'];
+								if(!$img && $hp['img']) $img = $hp['img'];
 								
 							}
 							elseif($hp['type'] == 'events'){	
@@ -1821,7 +1860,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							else*/
 							//if($hp[$category->term_id]['img']) $items['articles']['items'][0]['thumb'] = $hp[$category->term_id]['img'];
 						}
-						$cat[$category->term_id]=array('pos'=>$i, 'type'=>'cat', 'id'=> $category->term_id, 'parent_id'=>$category->parent, 'title'=>htmlspecialchars_decode($category->name), 'img'=>$items['articles']['items'][0]['thumb'], 'post_id'=>$items['articles']['items'][0]['id'] ,'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1);
+						$cat[$category->term_id]=array('pos'=>$i, 'type'=>'cat', 'id'=> $category->term_id, 'parent_id'=>$category->parent, 'title'=>htmlspecialchars_decode($category->name), 'post_img'=>$items['articles']['items'][0]['thumb'], 'img'=>$this->categories_settings[$category->term_id]['img'], 'post_id'=>$items['articles']['items'][0]['id'] ,'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1);
 						
 						//$ass_cats[$category->term_id] = array('img'=>'');
 						if($this->categories_settings[$category->term_id]['showsub']){
@@ -1829,7 +1868,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 							//$ass_cats[$category->term_id]['showsubcategories']=1;
 						}
 						else $cat[$category->term_id]['showsubcategories']=0;
-						$ass_cats[$category->term_id] = array('showsubcategories'=>$cat[$category->term_id]['showsubcategories'],'img'=>$this->categories_settings[$category->term_id]['img'], 'pos'=>$i, 'type'=>'cat', 'id'=> $category->term_id, 'parent_id'=>$category->parent, 'title'=>htmlspecialchars_decode($category->name), 'post_img'=>$items['articles']['items'][0]['thumb'], 'post_id'=>$items['articles']['items'][0]['id'] ,'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1    ); 
+						if($this->categories_settings[$category->term_id]['usecatimg']){
+							$use_cat_img = 1;
+						}
+						else $use_cat_img = 0;
+						$ass_cats[$category->term_id] = array('showsubcategories'=>$cat[$category->term_id]['showsubcategories'],'img'=>$this->categories_settings[$category->term_id]['img'], 'pos'=>$i, 'type'=>'cat', 'id'=> $category->term_id, 'parent_id'=>$category->parent, 'title'=>htmlspecialchars_decode($category->name), 'post_img'=>$items['articles']['items'][0]['thumb'], 'post_id'=>$items['articles']['items'][0]['id'] ,'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1, 'use_cat_img'=> $use_cat_img   ); 
 						//$ass_cats[$category->term_id] = array('img'=>'http://yna.nebelhorn.com/wp-content/uploads/2014/02/image-653473-breitwandaufmacher-ixpz-300x111.jpg');
 						
 						$i++;
@@ -1984,7 +2027,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							
 							if($cat_id_array) $cat_id = $cat_id_array[0];
 							$img = $this->nh_getthumblepic($the_query->post->ID);
-							$returnarray['items'][]=array('pos'=>$i, "type"=>get_post_type(), 'allowRemove'=> 1, 'cat_id'=>$cat_id, 'cat_id_array'=>$cat_id_array,  'title'=>htmlspecialchars_decode($latest_cat_post->posts[0]->post_title), 'img'=>$img, 'thumb' => 'img', 'post_id'=>$the_query->post->ID, 'timestamp'=>strtotime($the_query->post->post_modified), 'publish_timestamp' =>strtotime($the_query->post->post_date), 'showsubcategories'=>0);
+							$returnarray['items'][]=array('pos'=>$i, "type"=>get_post_type(), 'allowRemove'=> 1, 'cat_id'=>$cat_id, 'cat_id_array'=>$cat_id_array,  'title'=>htmlspecialchars_decode($the_query->post->post_title), 'img'=>$img, 'thumb' => 'img', 'post_id'=>$the_query->post->ID, 'timestamp'=>strtotime($the_query->post->post_modified), 'publish_timestamp' =>strtotime($the_query->post->post_date), 'showsubcategories'=>0);
 							if(strtotime($the_query->post->post_modified) > $returnarray['timestamp']) $returnarray['timestamp']= strtotime($the_query->post->post_modified);
 							$i++;
 						}
@@ -2253,10 +2296,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 						$content = (str_replace('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">','<!doctype html>',$content));
 						
 						if(strpos($content,'<html><head><meta charset="utf-8"></head>'))
-							$content = str_replace('<html><head><meta charset="utf-8"></head>','<html><head><meta charset="utf-8"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+							$content = str_replace('<html><head><meta charset="utf-8"></head>','<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+       <link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
 						elseif(strpos($content,'<html>'))
-							$content = str_replace('<html>','<html><head><meta charset="utf-8"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
-							else $content = '<!doctype html><html><head><meta charset="utf-8"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head><body>'.$content.'</body></html>';
+							$content = str_replace('<html>','<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+       <link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+							else $content = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+       <link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head><body>'.$content.'</body></html>';
 							
 						$returnarray['uma']['post_content_0']= $content;
 						$returnarray['content']=$content;
@@ -2945,10 +2991,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$content = (str_replace('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">','<!doctype html>',$content));
 							
 							if(strpos($content,'<html><head><meta charset="utf-8"></head>'))
-								$content = str_replace('<html><head><meta charset="utf-8"></head>','<html><head><meta charset="utf-8"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+								$content = str_replace('<html><head><meta charset="utf-8"></head>','<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
 							elseif(strpos($content,'<html>'))
-								$content = str_replace('<html>','<html><head><meta charset="utf-8"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
-								else $content = '<!doctype html><html><head><meta charset="utf-8"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head><body>'.$content.'</body></html>';
+								$content = str_replace('<html>','<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+								else $content = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head><body>'.$content.'</body></html>';
 							
 							if(!$event->location_latitude || $event->location_latitude== null || $event->location_latitude=='null' || $event->location_latitude=='0.000000') $event->location_latitude =  0;
 							else $event->location_latitude = (float) $event->location_latitude ;
