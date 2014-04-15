@@ -2,10 +2,10 @@
 	$css = '
 	@import url("../fonts/stylesheet.css");
 body {	
-	font-size:3em;
-	line-height:1.5em;
 	font-family:"Roboto Condensed",Roboto, Helvetica, sans-serif;
 	text-align:justify;
+	margin:0;
+	padding:0;
 }	
 img {
 	width:100%;

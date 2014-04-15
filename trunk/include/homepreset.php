@@ -170,7 +170,7 @@
 								
 								
 								foreach ( $this->appmenus_pre as $appmenu_pre ) {
-									if($appmenu_pre['id']!=-1 &&  $appmenu_pre['id'] !=-2 &&  $appmenu_pre['id'] !=-98) continue;
+									if($appmenu_pre['id']!=-1 &&  $appmenu_pre['id'] !=-2 &&  $appmenu_pre['id'] !=-98 && $appmenu_pre['id'] !=-3 ) continue;
 									if($appmenu_pre['id']==-1 && !$this->nh_ynaa_check_eventmanager()) continue;	
 									
 									echo '<li>';
@@ -236,7 +236,7 @@
 											<li id="homepresetli<?php echo $v; ?>" class="floatli">
                                                  
                                                  <?php 
-												 	if($ar['type']=='cat' || $ar['type']=='fb' || $ar['type']=='events' ||$ar['type']=='map') { 
+												 	if($ar['type']=='cat' || $ar['type']=='fb' || $ar['type']=='events' ||$ar['type']=='map' ||$ar['type']=='webview') { 
 														echo '<div class="hpdiv" id="hpdiv'.$v.'" ';
 														if($this->categories_settings[$ar['id']]['img']) echo  'style="background-image:url(\''.($this->categories_settings[$ar['id']]['img']).'\');"';
 														elseif(($ar['img'])) echo  'style="background-image:url(\''.($ar['img']).'\');"';
@@ -244,16 +244,23 @@
 														echo ' >';
 												 	}
 												 	else {
-	                                                	echo '<div class="hpdiv" id="hpdiv'.$v.'" style="background-image:url(\''.($this->getthumblepic($ar['id'])).'\');">';
+	                                                	echo '<div class="hpdiv" id="hpdiv'.$v.'" style="background-image:url(\''.($this->nh_getthumblepic($ar['id'])).'\');">';
     	                                            }
 												   ?>
                                                     <div class="ttitle" id="hptitle<?php echo $v; ?>div"><?php echo ($ar['title']); ?></div>
-                                                    <?php if($ar['type']=='cat' || $ar['type']=='fb' || $ar['type']=='events') { ?>
-                                                    <div class="setdefaultcatpic" style="display:none;"><a id="upload_image_button<?php echo $v; ?>" class="upload_image_button" href="#" name="<?php echo $this->homepreset_settings_key; ?>_items_<?php echo $v; ?>_img"><?php _e('Set default image for category','nh-ynaa'); ?></a></div>
+                                                    <?php if($ar['type']=='cat' || $ar['type']=='fb' || $ar['type']=='events' ||$ar['type']=='webview') { ?>
+                                                    
+                                                    <div class="setdefaultcatpic" <?php if($ar['type']!='webview') echo ' style="display:none;"'; ?>><a id="upload_image_button<?php echo $v; ?>" class="upload_image_button" href="#" name="<?php echo $this->homepreset_settings_key; ?>_items_<?php echo $v; ?>_img"><?php _e('Set default image','nh-ynaa'); ?></a></div>
            											<input type="hidden" value="<?php echo $ar['img']; ?>" id="<?php echo $this->homepreset_settings_key; ?>_items_<?php echo $v; ?>_img" name="<?php echo $this->homepreset_settings_key; ?>[items][<?php echo $v; ?>][img]" data-id="hpdiv<?php echo $v; ?>" />                                         
                                                     <?php } ?>
                                                </div>
                                                 <div><input type="text" value="<?php echo $ar['title']; ?>" id="hptitle<?php echo $v; ?>" name="<?php echo $this->homepreset_settings_key; ?>[items][<?php echo $v; ?>][title]" class="hptitle" /></div>
+                                                
+                                                <div class="h30">
+                                                <?php if($ar['type']=='webview') { ?>
+                                                <input type="text" value="<?php echo $ar['url']; ?>"  name="<?php echo $this->homepreset_settings_key; ?>[items][<?php echo $v; ?>][url]"  />
+                                                <?php } ?>
+                                                </div>
                                                 <div><input type="checkbox" name="<?php echo $this->homepreset_settings_key; ?>[items][<?php echo $v; ?>][allowRemove]" id="allowRemove<?php echo $v; ?>" value="1" <?php if($ar['allowRemove']) echo ' checked="checked" '; ?> /><label for="allowRemove<?php echo $v; ?>"> <?php _e('Allow hide on Startscreen','nh-ynaa'); ?></label></div>
                                                 <div>
                                                     <a href="<?php echo $v; ?>" class="delhp"><?php _e('Delete'); ?></a>

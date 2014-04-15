@@ -265,16 +265,23 @@ jQuery(document).ready(function($){
 					var $pos = getMaxHomepresetID();
 					if($link_type == 'cat') {
 						var $title = $('#title-'+$o.attr('name')).val();
+						var $oval = $o.val();
+						if($type =='webview') {
+							$oval = ($o.val())-(100+$pos);
+							var $urldiv = '<div class="h30"><input type="text" value="http://" id="'+$homepreset_settings_key+'_items_'+$pos+'_url" name="'+$homepreset_settings_key+'[items]['+$pos+'][url]" data-id="hpdiv'+$pos+'" /></div>';
+						}
+						else var $urldiv = '<div class="h30"><br></div>';
 						$objhtml = '<li id="homepresetli'+$pos+'" class="floatli">' +
 										'<div class="hpdiv" id="hpdiv'+$pos+'" style="background-color:'+$color01+';">' +
 											'<div class="ttitle" id="hptitle'+$pos+'div">'+$title+'</div>' +
 											'<div class="setdefaultcatpic" style="display:none;"><a id="upload_image_button" class="upload_image_button" href="#" name="'+$homepreset_settings_key+'_items_'+$pos+'_img">'+$catText+'</a></div>' +
 										'</div>' +
 									   '<div><input type="text" value="'+$title+'" id="hptitle'+$pos+'" name="'+$homepreset_settings_key+'[items]['+$pos+'][title]" class="hptitle" /></div>' +
-									   '<div><input type="checkbox" checked="checked" name="'+$homepreset_settings_key+'[items]['+$pos+'][allowRemove]" id="allowRemove'+$pos+'" value="1" /><label for="allowRemove'+$pos+'"> '+$allowremoveText+'</label></div>' +
+									   $urldiv +
+									   '<div><input type="checkbox" checked="checked" name="'+$homepreset_settings_key+'[items]['+$pos+'][allowRemove]" id="allowRemove'+$pos+'" value="1" /><label for="allowRemove'+$pos+'"> '+$allowremoveText+'</label></div>' +									   
 									   '<div>' +
 											'<a href="'+$pos+'" class="delhp">'+$delete+'</a>' +
-											'<input type="hidden" value="'+$o.val()+'"  name="'+$homepreset_settings_key+'[items]['+$pos+'][id]" />' +
+											'<input type="hidden" value="'+$oval+'"  name="'+$homepreset_settings_key+'[items]['+$pos+'][id]" />' +
 											'<input type="hidden" value="'+$type+'"  name="'+$homepreset_settings_key+'[items]['+$pos+'][type]" />' + 
 											'<input type="hidden" value="" id="'+$homepreset_settings_key+'_items_'+$pos+'_img" name="'+$homepreset_settings_key+'[items]['+$pos+'][img]" data-id="hpdiv'+$pos+'" />' +
 											'<input type="hidden" value="'+$pos+'" name="'+$homepreset_settings_key+'[items]['+$pos+'][id2]" id="menu-id'+$pos+'" class="homepreset-id-ynaa" />' +
