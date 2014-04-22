@@ -31,6 +31,16 @@ div.publishing-action {
 	margin-bottom:0 !important;
 }
 
+#nh_ynaa_form.nh_ynaa_general_settings {
+	float:left;
+	width:60%;
+}
+
+#nh-simulator {
+	"width: 300px; float: left;
+	margin-top:50px;
+}
+
 #menu-to-edit li.floatli { 
 	float:left; 
 	margin:5px;

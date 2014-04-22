@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.5.1
+Stable tag: 0.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,9 @@ Not like other App budders we do not require any build time. You can instantly t
 Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
 
 == Change Log ==
+= 0.5.2 =
+- integrated app simulator 
+
 = 0.5.1 =
 - teaser & starscreen bug fix
 - add meta tag viewport
@@ -156,6 +159,9 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
  
  
 == Upgrade Notice ==
+= 0.5.2 =
+- integrated app simulator 
+
 = 0.5.1 =
 - teaser & starscreen bug fix
 - add meta tag viewport (pleace remove from CSS settings: font-size:3em;	line-height:1.5em;
