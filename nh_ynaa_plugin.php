@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.5.1
+Version: 0.5.2
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: yourBlogApp/yourNewsApp - The Wordpress Plugin for yourBlogApp/yourNewsApp
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.5.1";
+$nh_ynaa_version = "0.5.2";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -1202,12 +1202,15 @@ if(!class_exists('NH_YNAA_Plugin'))
 					<?php settings_fields( $tab ); ?>					
 					<?php do_settings_sections( $tab ); ?>
 					<?php submit_button(); ?>
+                    
 				</form>
+                <?php if($tab == $this->general_settings_key) $this->nh_ynaa_simulator(); ?>
                 <?php }
 				else{
 					$this->nh_the_qrcode_tab_content();
 				}?>
 			</div>
+            
 			<?php 
 		}
 		
@@ -2250,6 +2253,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						}
 						
 						$returnarray['title'] = htmlspecialchars_decode($post->post_title);
+						//$returnarray['']['title']
 						//$content = '<html><head><title>'.get_bloginfo('name').'</title><body><div id="nh_ynaa__app_content">'.$post->post_content.'</div></body></html>';
 						/*$content = $post->post_content;
 						$content =do_shortcode( $content );
@@ -2505,7 +2509,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 									$temparray['pos']=$pos;
 									
 									$temparray['id']=$ar[0]['comment_ID'];
-									$temparray['text']=$ar[0]['comment_content'];
+									$temparray['text']=html_entity_decode($ar[0]['comment_content']);
 									$temparray['timestamp']=strtotime($ar[0]['comment_date']);
 									
 									if($temparray['timestamp']>$returnarray['ts']) {
@@ -2531,7 +2535,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 											 $temp['pos']=$pos2;
 											 $temp['id'] = $ar2['comment_ID'];
 											 $temp['parrent_id'] = $ar[0]['comment_ID'];
-											 $temp['text'] =$ar2['comment_content'];
+											 $temp['text'] =html_entity_decode($ar2['comment_content']);
 											 $temp['timestamp'] =strtotime($ar2['comment_date']);
 											 if($temp['timestamp']>$returnarray['ts']) {
 												 $returnarray['ts'] = $temp['timestamp'];
@@ -2687,7 +2691,17 @@ if(!class_exists('NH_YNAA_Plugin'))
 		}
 		// END private function nh_ynaa_ibeacon
 		
-		
+		/**
+		* Return iframe with Simulator
+		*/
+		private function nh_ynaa_simulator(){
+			?>
+            <div id="nh-simulator">
+            <h3>Simulator</h3>
+            <iframe src="https://app.io/p6Kgfi?params=%7B%22customURLString%22%3A%22<?php echo(get_site_url()); ?>%22%7D&#038;autoplay=true&#038;orientation=portrait&#038;device=iphone5" height="607px" width="291px" frameborder="0" allowtransparency="true" scrolling="no"></iframe><!--
+            <img src="<?php echo plugins_url( 'img/simulator_default.jpg' , __FILE__ ); ?>" alt="" />--></div>
+            <?php
+		}// END private function nh_ynaa_simulator
 		
 		
 		/**
