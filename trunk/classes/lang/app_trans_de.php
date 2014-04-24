@@ -54,12 +54,14 @@
           'to' => 'bis',
           'starting at' => 'ab',
           'Reply' => 'Antwort',
-          'You have the location services for the app disabled. You can turn them back on in the settings of the device.'=>'Sie haben die Ortungsdienste für die App deaktiviert. Sie können diese in den Einstellungen des Geräts wieder aktivieren.',
+          'You have disabled the location services for the app. You can turn them back on in the privacy settings of your device.'=>'Sie haben die Ortungsdienste für die App deaktiviert. Sie können diese in den Einstellungen des Geräts wieder aktivieren.',
           'Login'=>'Anmelden',
           'Logout'=>'Abmelden',
           'Username' => 'Benutzername',
           'Password' => 'Passwort',
           'The input is incomplete' => 'Die Eingabe ist unvollständig',
-          'Thanks' => 'Danke'
+          'Thanks' => 'Danke',
+		  'No set up email account.' => 'Kein E-Mail Account eingerichtet.',
+			"No set up twitter account." => "Kein Twitter Account eingerichtet."
            );
 ?>

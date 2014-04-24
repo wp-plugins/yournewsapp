@@ -176,7 +176,7 @@
 								
 								
 								foreach ( $this->appmenus_pre as $appmenu_pre ) {
-									if($appmenu_pre['id']==-1 && !$this->nh_ynaa_check_eventmanager()) continue;	
+									//if($appmenu_pre['id']==-1 && !$this->nh_ynaa_check_eventmanager()) continue;	
 									echo '<li>';
 									echo '<input type="hidden" value="'.$appmenu_pre['type'].'" name="type-menu-item-'.$appmenu_pre['type'].$menu_id.'" id="type-menu-item-'.$appmenu_pre['type'].$menu_id.'">';
 									echo '<input type="hidden" value="cat" name="link-typ-menu-item-'.$appmenu_pre['type'].$menu_id.'" id="link-type-menu-item-'.$appmenu_pre['type'].$menu_id.'">';

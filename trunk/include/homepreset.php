@@ -155,7 +155,7 @@
 				?>	
                 <?php if(true) { ?>
         		<li id="add-app-menus" class="control-section accordion-section   add-app-menus">
-				<h3 title="<?php _e('App Extras'); ?>" tabindex="0" class="accordion-section-title hndle"><?php _e('App Extras'); ?></h3>
+				<h3 title="<?php _e('App Extras').'sasa'; ?>" tabindex="0" class="accordion-section-title hndle"><?php _e('App Extras'); ?></h3>
 				<div class="accordion-section-content ">
 					<div class="inside">
 						<div id="app-menusdiv" class="customlinkdiv">		
@@ -167,11 +167,10 @@
 								);
 								$categories = get_categories( $args );
 								*/
-								
-								
+						
 								foreach ( $this->appmenus_pre as $appmenu_pre ) {
-									if($appmenu_pre['id']!=-1 &&  $appmenu_pre['id'] !=-2 &&  $appmenu_pre['id'] !=-98 && $appmenu_pre['id'] !=-3 ) continue;
-									if($appmenu_pre['id']==-1 && !$this->nh_ynaa_check_eventmanager()) continue;	
+									//if($appmenu_pre['id']!=-1 &&  $appmenu_pre['id'] !=-2 &&  $appmenu_pre['id'] !=-98 && $appmenu_pre['id'] !=-3 ) continue;
+									//if($appmenu_pre['id']==-1 && !$this->general_settings['eventplugin']) continue;	
 									
 									echo '<li>';
 									echo '<input type="hidden" value="'.$appmenu_pre['type'].'" name="type-menu-item-'.$appmenu_pre['type'].$menu_id.'" id="type-menu-item-'.$appmenu_pre['type'].$menu_id.'">';

@@ -6,7 +6,7 @@ jQuery(document).ready(function($){
 		$menu_settings_key = php_data.menu_settings_key;
 		$teaser_settings_key = php_data.teaser_settings_key;
 		$homepreset_settings_key = php_data.homepreset_settings_key;
-		$delete = php_data.delete;
+		$delete = php_data.delete2;
 		$catText = php_data.catText;
 		$allowremoveText = php_data.allowremoveText;
 		$color01 = php_data.color01;
@@ -281,7 +281,7 @@ jQuery(document).ready(function($){
 									   '<div><input type="checkbox" checked="checked" name="'+$homepreset_settings_key+'[items]['+$pos+'][allowRemove]" id="allowRemove'+$pos+'" value="1" /><label for="allowRemove'+$pos+'"> '+$allowremoveText+'</label></div>' +									   
 									   '<div>' +
 											'<a href="'+$pos+'" class="delhp">'+$delete+'</a>' +
-											'<input type="hidden" value="'+$oval+'"  name="'+$homepreset_settings_key+'[items]['+$pos+'][id]" />' +
+											'<input type="hidden" value="'+$o.val()+'"  name="'+$homepreset_settings_key+'[items]['+$pos+'][id]" />' +
 											'<input type="hidden" value="'+$type+'"  name="'+$homepreset_settings_key+'[items]['+$pos+'][type]" />' + 
 											'<input type="hidden" value="" id="'+$homepreset_settings_key+'_items_'+$pos+'_img" name="'+$homepreset_settings_key+'[items]['+$pos+'][img]" data-id="hpdiv'+$pos+'" />' +
 											'<input type="hidden" value="'+$pos+'" name="'+$homepreset_settings_key+'[items]['+$pos+'][id2]" id="menu-id'+$pos+'" class="homepreset-id-ynaa" />' +

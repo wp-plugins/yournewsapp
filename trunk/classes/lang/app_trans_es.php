@@ -52,7 +52,8 @@
          "Remove event from calendar"=>"Eliminar evento del calendario",
          "from"=>"de",
          "to"=>"a",
-         "starting at"=>"comenzando a las"
+         "starting at"=>"comenzando a las",
+		 'Reply' => 'Responder'
          
            );
 ?>
