@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NH YNAA Plugin 1.0\n"
-"POT-Creation-Date: 2014-04-24 13:22+0100\n"
-"PO-Revision-Date: 2014-04-24 13:23+0100\n"
+"POT-Creation-Date: 2014-04-24 17:32+0100\n"
+"PO-Revision-Date: 2014-04-24 17:35+0100\n"
 "Last-Translator: \n"
 "Language-Team: Nebelhorn <info@nebelhorn.com>\n"
 "Language: de\n"
@@ -40,17 +40,17 @@ msgstr "Teaservariablen"
 msgid "Push value"
 msgstr "Pushvariblen"
 
-#: nh_ynaa_plugin.php:429 nh_ynaa_plugin.php:2012 nh_ynaa_plugin.php:2013
+#: nh_ynaa_plugin.php:429 nh_ynaa_plugin.php:2020 nh_ynaa_plugin.php:2021
 msgid "Facebook"
 msgstr "Facebook"
 
-#: nh_ynaa_plugin.php:432 nh_ynaa_plugin.php:771 nh_ynaa_plugin.php:1977
-#: nh_ynaa_plugin.php:1978
+#: nh_ynaa_plugin.php:432 nh_ynaa_plugin.php:771 nh_ynaa_plugin.php:1985
+#: nh_ynaa_plugin.php:1986
 msgid "Events"
 msgstr "Events"
 
-#: nh_ynaa_plugin.php:435 nh_ynaa_plugin.php:1992 nh_ynaa_plugin.php:1993
-#: nh_ynaa_plugin.php:2710
+#: nh_ynaa_plugin.php:435 nh_ynaa_plugin.php:2000 nh_ynaa_plugin.php:2001
+#: nh_ynaa_plugin.php:2718
 msgid "Map"
 msgstr "Karte"
 
@@ -209,7 +209,7 @@ msgstr "Teaser"
 msgid "App Teaser Settings"
 msgstr "App Teaser  Einstellungen"
 
-#: nh_ynaa_plugin.php:606 nh_ynaa_plugin.php:977 include/events.php:135
+#: nh_ynaa_plugin.php:606 nh_ynaa_plugin.php:985 include/events.php:135
 #: include/homepreset.php:11 include/menu.php:124 include/teaser.php:118
 msgid "Categories"
 msgstr "Kategorien"
@@ -258,7 +258,7 @@ msgstr "Willkommens Text"
 msgid "Silent intervall (sec) "
 msgstr ""
 
-#: nh_ynaa_plugin.php:701 nh_ynaa_plugin.php:1298
+#: nh_ynaa_plugin.php:701 nh_ynaa_plugin.php:1306
 msgid "Set default image for category"
 msgstr "Ein Standardbild für diese Kategorie setzen"
 
@@ -315,134 +315,93 @@ msgstr "App Menü Einstellungen."
 #: nh_ynaa_plugin.php:950
 msgid ""
 "With this plugin you can deploy your own native iOS (iPhone) and Android app "
-"containing the content of this Wordpress installation."
+"containing the content of this Wordpress installation. To get a preview on "
+"what the app would look like, use our simulator in the tab „App Settings“ of "
+"this plugin."
 msgstr ""
 "Mit diesem Plugin kannst Du Deine eigene native iOS (iPhone) und Android App "
-"mit den Inhalten Deiner WordPress-Installation erstellen."
+"mit den Inhalten Deiner WordPress-Installation erstellen.Um eine Vorschau zu "
+"sehen, wie die App aussehen wird, verwende den Simulator im Bereich App "
+"Einstellungen."
 
 #: nh_ynaa_plugin.php:951
 msgid ""
-"To get a preview on what the app would look like, please follow these steps:"
-msgstr ""
-"Um eine Vorschau zu sehen, wie die App aussehen wird, gehe wie folgt vor:"
-
-#: nh_ynaa_plugin.php:953
-msgid ""
-"First of all download and install the <a href=\"https://itunes.apple.com/de/"
-"app/yourblogapp-yournewsapp/id815084293?mt=8\" target=\"_blank\">yourBlogApp "
-"test app</a> from the Apple AppStore"
-msgstr ""
-"Lade Dir zunächst unsere <a href=\"https://itunes.apple.com/de/app/"
-"yourblogapp-yournewsapp/id815084293?mt=8\" target=\"_blank\">yourBlogApp "
-"Test-App</a> aus dem Apple App Store herunter und installiere sie"
-
-#: nh_ynaa_plugin.php:954
-msgid ""
-"Scan the QR code and open the link on your smartphone. Other than scanning "
-"the QR you can type the following link into your smartphone’s browser: "
-msgstr ""
-"Scanne den QR-Code und öffne den Link auf dem Smartphone. Alternative: Gebe "
-"folgenden Link in die Adresszeile des Browsers auf dem Smartphone ein: "
-
-#: nh_ynaa_plugin.php:958
-msgid ""
-"By opening this link the test app will be reconfigured and filled with the "
-"content from your Wordpress site. Change the look and feel of your app by "
-"modifying the settings, adding your logo, customizing the startscreen and "
-"changing the overall style."
-msgstr ""
-"Durch den Link wird die Test-App mit Deinen Inhalten gefüllt und Du kannst "
-"sehen und testen, wie sie später aussehen wird. Nimm unten weitere "
-"Einstellungen vor, um die App Deinem Stil anzupassen – ändere z.B. das Logo "
-"und die Farben und füge dem Menü und dem Homescreen Seiten oder "
-"Beitragskategorien hinzu."
-
-#: nh_ynaa_plugin.php:959
-msgid ""
 "If you like the app, please register on our website <a href=\"http://www."
-"your-news-app.com\" target=\"_blank\">www.your-news-app.com</a>. We will "
-"then create the app for you and upload it to the app stores!"
+"blappsta.com\" target=\"_blank\">www.blappsta.com</a>. We will then create "
+"the app for you and upload it to the app stores!"
 msgstr ""
-"Bist Du begeistert und möchtest die App kostenlos erhalten? Dann registriere "
-"Dich auf unserem Portal: <a href=\"http://www.yournewsapp.de/\" target="
-"\"_blank\">www.yournewsapp.de</a>. Hier gibt es auch weiterführende "
-"Informationen zur yourBlogApp."
+"Bist Du begeistert und möchtest die App in den Stores haben? Dann "
+"registriere Dich auf unserem Portal: <a href=\"http://www.blappsta.com\" "
+"target=\"_blank\">www.blappsta.com</a>. Hier gibt es auch weiterführende "
+"Informationen zu Blappsta."
 
-#: nh_ynaa_plugin.php:960
-msgid "If you have any questions contact us: "
-msgstr "Hast Du Fragen, setze Dich mit uns in Verbindung: "
-
-#: nh_ynaa_plugin.php:967
+#: nh_ynaa_plugin.php:952
 msgid ""
-"In the following tabs you can modify the appearance and functions of the "
-"app. With our <a href=\"https://itunes.apple.com/de/app/yourblogapp-"
-"yournewsapp/id815084293?mt=8\" target=\"_blank\">yourBlogApp test app</a> "
-"you can see what your app would look like."
+"If you have any questions contact us: <a href=\"mailto:support@blappsta.com"
+"\">support@blappsta.com</a>"
 msgstr ""
-"Bearbeite in den folgenden Tabs das Aussehen und weitere Funktionen Deiner "
-"App. Mit unserer <a href=\"https://itunes.apple.com/de/app/yourblogapp-"
-"yournewsapp/id815084293?mt=8\" target=\"_blank\">yourBlogApp Test-App</a> "
-"kannst Du sehen, wie Deine App aussehen wird."
+"Hast Du Fragen, setze Dich mit uns in Verbindung: <a href=\"mailto:"
+"support@blappsta.com\">support@blappsta.com</a>"
 
-#: nh_ynaa_plugin.php:978
+#: nh_ynaa_plugin.php:986
 msgid "Articles"
 msgstr "Beiträge"
 
-#: nh_ynaa_plugin.php:991
+#: nh_ynaa_plugin.php:999
 msgid "English"
 msgstr "Englisch"
 
-#: nh_ynaa_plugin.php:992
+#: nh_ynaa_plugin.php:1000
 msgid "French"
 msgstr "Französisch"
 
-#: nh_ynaa_plugin.php:993
+#: nh_ynaa_plugin.php:1001
 msgid "German"
 msgstr "Deutsch"
 
-#: nh_ynaa_plugin.php:994
+#: nh_ynaa_plugin.php:1002
 msgid "Spanish"
 msgstr "Spanisch"
 
-#: nh_ynaa_plugin.php:1005
+#: nh_ynaa_plugin.php:1013
 msgid "Recent posts"
 msgstr "Aktuellsten Beiträge"
 
-#: nh_ynaa_plugin.php:1006
+#: nh_ynaa_plugin.php:1014
 msgid "Most popular posts"
 msgstr "Beliebtesten Beiträge"
 
-#: nh_ynaa_plugin.php:1027
+#: nh_ynaa_plugin.php:1035
 msgid "Please select"
 msgstr "Bitte auswählen"
 
-#: nh_ynaa_plugin.php:1039 include/events.php:12
+#: nh_ynaa_plugin.php:1047 include/events.php:12
 msgid "No supported Plugin installed. Please Install the Plugin Event Manager."
 msgstr ""
 "Kein unterstütztes Eventplugin installiert. Bitte installieren Sie den Event "
 "Manager."
 
-#: nh_ynaa_plugin.php:1041 include/events.php:14
+#: nh_ynaa_plugin.php:1049 include/events.php:14
 msgid "Plugin Directory"
 msgstr "Plug Verzeichnis"
 
-#: nh_ynaa_plugin.php:1085
+#: nh_ynaa_plugin.php:1093
 msgid "date"
 msgstr "Datum"
 
-#: nh_ynaa_plugin.php:1086
+#: nh_ynaa_plugin.php:1094
 msgid "alphabetical"
 msgstr "Alphabetisch"
 
-#: nh_ynaa_plugin.php:1087
+#: nh_ynaa_plugin.php:1095
 msgid "random"
 msgstr "Zufällig"
 
-#: nh_ynaa_plugin.php:1136
+#: nh_ynaa_plugin.php:1144
 msgid "Help"
 msgstr "Hilfe"
 
-#: nh_ynaa_plugin.php:1138
+#: nh_ynaa_plugin.php:1146
 msgid ""
 "For help visit our website <a href=\"http://www.your-news-app.com/\">www."
 "your-news-app.com/</a>."
@@ -450,191 +409,191 @@ msgstr ""
 "Für weiter Hilfe besuche unsere Webseite: <a href=\"http://www.yournewsapp.de"
 "\">http://www.yournewsapp.de</a>."
 
-#: nh_ynaa_plugin.php:1211
+#: nh_ynaa_plugin.php:1219
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 "Sie verfügen nicht über ausreichende Berechtigungen, um auf diese Seite "
 "zuzugreifen."
 
-#: nh_ynaa_plugin.php:1218
+#: nh_ynaa_plugin.php:1226
 msgid "Settings for yourBlogApp/yourNewsApp"
 msgstr "Einstellungen für yourBlogApp/yourNewsApp"
 
-#: nh_ynaa_plugin.php:1298 include/homepreset.php:265 include/menu.php:259
+#: nh_ynaa_plugin.php:1306 include/homepreset.php:265 include/menu.php:259
 #: include/teaser.php:190
 msgid "Delete"
 msgstr "Löschen"
 
-#: nh_ynaa_plugin.php:1298 include/homepreset.php:263
+#: nh_ynaa_plugin.php:1306 include/homepreset.php:263
 msgid "Allow hide on Startscreen"
 msgstr "Ausblenden erlauben"
 
-#: nh_ynaa_plugin.php:2491
+#: nh_ynaa_plugin.php:2499
 msgid "Comment is in review"
 msgstr "Kommentar wartet auf Freigabe"
 
-#: nh_ynaa_plugin.php:2760 nh_ynaa_plugin.php:2989
+#: nh_ynaa_plugin.php:2768 nh_ynaa_plugin.php:2997
 msgid "Sunday"
 msgstr "Sonntag"
 
-#: nh_ynaa_plugin.php:2760 nh_ynaa_plugin.php:2989
+#: nh_ynaa_plugin.php:2768 nh_ynaa_plugin.php:2997
 msgid "Monday"
 msgstr "Montag"
 
-#: nh_ynaa_plugin.php:2760 nh_ynaa_plugin.php:2989
+#: nh_ynaa_plugin.php:2768 nh_ynaa_plugin.php:2997
 msgid "Tuesday"
 msgstr "Dienstag"
 
-#: nh_ynaa_plugin.php:2760 nh_ynaa_plugin.php:2989
+#: nh_ynaa_plugin.php:2768 nh_ynaa_plugin.php:2997
 msgid "Wednesday"
 msgstr "Mittwoch"
 
-#: nh_ynaa_plugin.php:2760 nh_ynaa_plugin.php:2989
+#: nh_ynaa_plugin.php:2768 nh_ynaa_plugin.php:2997
 msgid "Thursday"
 msgstr "Donnerstag"
 
-#: nh_ynaa_plugin.php:2760 nh_ynaa_plugin.php:2989
+#: nh_ynaa_plugin.php:2768 nh_ynaa_plugin.php:2997
 msgid "Friday"
 msgstr "Freitag"
 
-#: nh_ynaa_plugin.php:2760 nh_ynaa_plugin.php:2989
+#: nh_ynaa_plugin.php:2768 nh_ynaa_plugin.php:2997
 msgid "Saturday"
 msgstr "Samstag"
 
-#: nh_ynaa_plugin.php:3331
+#: nh_ynaa_plugin.php:3339
 msgid "yourBlogApp/yourNewsApp extras"
 msgstr "yourBlogApp/yourNewsApp Extras"
 
-#: nh_ynaa_plugin.php:3354
+#: nh_ynaa_plugin.php:3362
 msgid "yourBlogApp/yourNewsApp locations"
 msgstr "yourBlogApp/yourNewsApp Ort"
 
-#: nh_ynaa_plugin.php:3393
+#: nh_ynaa_plugin.php:3401
 msgid "Location Name"
 msgstr "Ort Name"
 
-#: nh_ynaa_plugin.php:3398
+#: nh_ynaa_plugin.php:3406
 msgid ""
 "Create a location or start typing to search a previously created location."
 msgstr ""
 
-#: nh_ynaa_plugin.php:3399
+#: nh_ynaa_plugin.php:3407
 msgid "You cannot edit saved locations here."
 msgstr ""
 
-#: nh_ynaa_plugin.php:3399
+#: nh_ynaa_plugin.php:3407
 msgid "Reset this form to create a location or search again."
 msgstr ""
 
-#: nh_ynaa_plugin.php:3403
+#: nh_ynaa_plugin.php:3411
 msgid "Address:"
 msgstr "Anschrift:"
 
-#: nh_ynaa_plugin.php:3409
+#: nh_ynaa_plugin.php:3417
 msgid "City/Town:"
 msgstr "Stadt/Ort: "
 
-#: nh_ynaa_plugin.php:3415
+#: nh_ynaa_plugin.php:3423
 msgid "State/County:"
 msgstr "Bundesland/Land:"
 
-#: nh_ynaa_plugin.php:3421
+#: nh_ynaa_plugin.php:3429
 msgid "Postcode:"
 msgstr "Postleitzahl:"
 
-#: nh_ynaa_plugin.php:3428
+#: nh_ynaa_plugin.php:3436
 msgid "Region:"
 msgstr "Region:"
 
-#: nh_ynaa_plugin.php:3435
+#: nh_ynaa_plugin.php:3443
 msgid "Pin color"
 msgstr "Pin Farbe"
 
-#: nh_ynaa_plugin.php:3437
+#: nh_ynaa_plugin.php:3445
 msgid "red"
 msgstr "rot"
 
-#: nh_ynaa_plugin.php:3438
+#: nh_ynaa_plugin.php:3446
 msgid "green"
 msgstr "grün"
 
-#: nh_ynaa_plugin.php:3439
+#: nh_ynaa_plugin.php:3447
 msgid "purple"
 msgstr "violett"
 
-#: nh_ynaa_plugin.php:3446
+#: nh_ynaa_plugin.php:3454
 msgid "Reset this form to create a location."
 msgstr "Setze das Formular zurück um einen Ort anzulegen."
 
-#: nh_ynaa_plugin.php:3453
+#: nh_ynaa_plugin.php:3461
 msgid "Location not found"
 msgstr "Ort nicht gefunden"
 
-#: nh_ynaa_plugin.php:3515
+#: nh_ynaa_plugin.php:3523
 msgid "Show in App"
 msgstr "In der App anzeigen"
 
-#: nh_ynaa_plugin.php:3520
+#: nh_ynaa_plugin.php:3528
 msgid "Push Text"
 msgstr "Push Nachricht"
 
-#: nh_ynaa_plugin.php:3530
+#: nh_ynaa_plugin.php:3538
 msgid "Send Push"
 msgstr "Push senden"
 
-#: nh_ynaa_plugin.php:3746
+#: nh_ynaa_plugin.php:3754
 msgid "No ID"
 msgstr "Keine ID"
 
-#: nh_ynaa_plugin.php:3784
+#: nh_ynaa_plugin.php:3792
 msgid "No posts found."
 msgstr "Keine Beiträge gefunden."
 
-#: nh_ynaa_plugin.php:3787
+#: nh_ynaa_plugin.php:3795
 msgid "Error"
 msgstr "Fehler"
 
-#: nh_ynaa_plugin.php:3881
+#: nh_ynaa_plugin.php:3889
 msgid "No Appkey."
 msgstr "Kein App Schlüssel."
 
-#: nh_ynaa_plugin.php:3882
+#: nh_ynaa_plugin.php:3890
 msgid "No Push Secret Key."
 msgstr "Kein Push Secret Schlüssel."
 
-#: nh_ynaa_plugin.php:3883
+#: nh_ynaa_plugin.php:3891
 msgid "No Push Url."
 msgstr "Keine Push URL."
 
-#: nh_ynaa_plugin.php:3947
+#: nh_ynaa_plugin.php:3970
 msgid "Got negative response from server, http code: "
 msgstr "Server meldet Fehler, Fehler Code:"
 
-#: nh_ynaa_plugin.php:3955
+#: nh_ynaa_plugin.php:3978
 msgid "Send successfull."
 msgstr "Versand erfolgreich."
 
-#: nh_ynaa_plugin.php:3962
+#: nh_ynaa_plugin.php:3985
 msgid "Feed Error!"
 msgstr "Feed Fehler!"
 
-#: nh_ynaa_plugin.php:3966
+#: nh_ynaa_plugin.php:3989
 msgid "No Feed Set!"
 msgstr "Kein Feed gesetzt!"
 
-#: nh_ynaa_plugin.php:4100
+#: nh_ynaa_plugin.php:4123
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: nh_ynaa_plugin.php:4144
+#: nh_ynaa_plugin.php:4167
 msgid "Insert Pushtext!"
 msgstr "Pushtext einfügen!"
 
-#: nh_ynaa_plugin.php:4146
+#: nh_ynaa_plugin.php:4169
 msgid "Pleas wait!"
 msgstr "Bitte warten!"
 
-#: nh_ynaa_plugin.php:4158
+#: nh_ynaa_plugin.php:4181
 msgid "You have to publish the Post first.!"
 msgstr "Sie müssen zuerst den Beitrag veröffentlichen!"
 
@@ -730,6 +689,56 @@ msgstr "Hier nehmen Sie die Einstellungen für den Teaser vor."
 #: include/teaser.php:207
 msgid "Save Changes"
 msgstr "Änderung Speichern"
+
+#~ msgid ""
+#~ "To get a preview on what the app would look like, please follow these "
+#~ "steps:"
+#~ msgstr ""
+#~ "Um eine Vorschau zu sehen, wie die App aussehen wird, gehe wie folgt vor:"
+
+#~ msgid ""
+#~ "First of all download and install the <a href=\"https://itunes.apple.com/"
+#~ "de/app/yourblogapp-yournewsapp/id815084293?mt=8\" target=\"_blank"
+#~ "\">yourBlogApp test app</a> from the Apple AppStore"
+#~ msgstr ""
+#~ "Lade Dir zunächst unsere <a href=\"https://itunes.apple.com/de/app/"
+#~ "yourblogapp-yournewsapp/id815084293?mt=8\" target=\"_blank\">yourBlogApp "
+#~ "Test-App</a> aus dem Apple App Store herunter und installiere sie"
+
+#~ msgid ""
+#~ "Scan the QR code and open the link on your smartphone. Other than "
+#~ "scanning the QR you can type the following link into your smartphone’s "
+#~ "browser: "
+#~ msgstr ""
+#~ "Scanne den QR-Code und öffne den Link auf dem Smartphone. Alternative: "
+#~ "Gebe folgenden Link in die Adresszeile des Browsers auf dem Smartphone "
+#~ "ein: "
+
+#~ msgid ""
+#~ "By opening this link the test app will be reconfigured and filled with "
+#~ "the content from your Wordpress site. Change the look and feel of your "
+#~ "app by modifying the settings, adding your logo, customizing the "
+#~ "startscreen and changing the overall style."
+#~ msgstr ""
+#~ "Durch den Link wird die Test-App mit Deinen Inhalten gefüllt und Du "
+#~ "kannst sehen und testen, wie sie später aussehen wird. Nimm unten weitere "
+#~ "Einstellungen vor, um die App Deinem Stil anzupassen – ändere z.B. das "
+#~ "Logo und die Farben und füge dem Menü und dem Homescreen Seiten oder "
+#~ "Beitragskategorien hinzu."
+
+#~ msgid "If you have any questions contact us: "
+#~ msgstr "Hast Du Fragen, setze Dich mit uns in Verbindung: "
+
+#~ msgid ""
+#~ "In the following tabs you can modify the appearance and functions of the "
+#~ "app. With our <a href=\"https://itunes.apple.com/de/app/yourblogapp-"
+#~ "yournewsapp/id815084293?mt=8\" target=\"_blank\">yourBlogApp test app</a> "
+#~ "you can see what your app would look like."
+#~ msgstr ""
+#~ "Bearbeite in den folgenden Tabs das Aussehen und weitere Funktionen "
+#~ "Deiner App. Mit unserer <a href=\"https://itunes.apple.com/de/app/"
+#~ "yourblogapp-yournewsapp/id815084293?mt=8\" target=\"_blank\">yourBlogApp "
+#~ "Test-App</a> kannst Du sehen, wie Deine App aussehen wird."
 
 #~ msgid "App Homepreset Settings"
 #~ msgstr "App Startseite Einstellungen"
