@@ -128,13 +128,15 @@
             'to' => 'to',
             'starting at' => 'starting at',
             'Reply' => 'Reply',
-            'You have the location services for the app disabled. You can turn them back on in the settings of the device.'=>'You have the location services for the app disabled. You can turn them back on in the settings of the device.',
+            'You have disabled the location services for the app. You can turn them back on in the privacy settings of your device.'=>'You have disabled the location services for the app. You can turn them back on in the privacy settings of your device.',
             'Login'=>'Login',
             'Logout'=>'Logout',
             'Username' => 'Username',
             'Password' => 'Password',
             'The input is incomplete' => 'The input is incomplete',
-            'Thanks' => 'Thanks'
+            'Thanks' => 'Thanks',
+			'No set up email account.' => 'No set up email account.',
+			"No set up twitter account." => "No set up twitter account."
            ));
            
          }
