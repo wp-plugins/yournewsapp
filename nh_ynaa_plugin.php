@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.5.3
+Version: 0.5.4
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: yourBlogApp/yourNewsApp - The Wordpress Plugin for yourBlogApp/yourNewsApp
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.5.3";
+$nh_ynaa_version = "0.5.4";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -947,6 +947,13 @@ if(!class_exists('NH_YNAA_Plugin'))
     */
                 function nh_the_home_content(){
 					echo '<div class="headercont clearfix">';
+					echo '<p>'.__('With this plugin you can deploy your own native iOS (iPhone) and Android app containing the content of this Wordpress installation. To get a preview on what the app would look like, use our simulator in the tab „App Settings“ of this plugin.', 'nh-ynaa').'</p>';
+					echo '<p>'.__('If you like the app, please register on our website <a href="http://www.blappsta.com" target="_blank">www.blappsta.com</a>. We will then create the app for you and upload it to the app stores!', 'nh-ynaa').'</p>';
+					echo '<p>'.__('If you have any questions contact us: <a href="mailto:support@blappsta.com">support@blappsta.com</a>', 'nh-ynaa').'</p>';
+					
+					
+					echo '<div>';
+				/*	echo '<div class="headercont clearfix">';
                     echo '<p>'.__('With this plugin you can deploy your own native iOS (iPhone) and Android app containing the content of this Wordpress installation.','nh-ynaa').'<br>';
 					echo __('To get a preview on what the app would look like, please follow these steps:','nh-ynaa').'</p>';
 					echo '<ul class="howtolist">';
@@ -965,6 +972,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					echo '</div>';
 					echo '<div class="clear"></div>';
 					echo '<p>'.__('In the following tabs you can modify the appearance and functions of the app. With our <a href="https://itunes.apple.com/de/app/yourblogapp-yournewsapp/id815084293?mt=8" target="_blank">yourBlogApp test app</a> you can see what your app would look like.', 'nh-ynaa');
+					*/
                 } //END function nh_the_home_content
 
 			
@@ -1494,6 +1502,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 						foreach($this->menu_settings['menu'] as $k=>$ar){
 							if($ar['status']==0) continue;
 							else {
+								if($ar['type'] != 'cat' && $ar['type'] != 'fb' && $ar['type'] != 'map' && $ar['type'] != 'webview' && $ar['type'] != 'events' ){
+									if(get_post_status($ar['id']) != 'publish') continue;
+								}
 								unset($tempmenu);
 								$tempmenu['pos'] =  $ar['pos'];
 								$tempmenu['type'] =  $ar['type'];
@@ -1622,6 +1633,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 							//var_dump($hp);
 							if($hp['type'] == 'map' && !$this->general_settings['location']) continue;
 							if($hp['type'] == 'cat' && $this->categories_settings[$hp['id']]['hidecat']) continue;
+							if($hp['type'] != 'cat' && $hp['type'] != 'fb' && $hp['type'] != 'map' && $hp['type'] != 'webview' && $hp['type'] != 'events' ){
+								if(get_post_status($hp['id']) != 'publish') continue;
+							}
 							if($hp['allowRemove']) $allowRemove = 1; else $allowRemove=0;
 							$cat_id = '';
 							$img = '';
@@ -3885,7 +3899,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			define('APPKEY', esc_attr( $this->push_settings['appkey'] )); // App Key
 			define('PUSHSECRET', esc_attr( $this->push_settings['pushsecret'] )); // Master Secret
 			define('PUSHURL', esc_attr( $this->push_settings['pushurl'] ));
-			$device_types = array('ios');
+			$device_types = array('ios', 'android');
 			
 			if($cat = $_POST['push_cat']){ 
 				
@@ -3894,10 +3908,15 @@ if(!class_exists('NH_YNAA_Plugin'))
 				if(is_array($cat) && count($cat)>0){
 					foreach($cat as $k=>$v) $cat[$k]= (string)($v);
 					//$device_token['device_token'] = array('6DBBDB5FD28A8A08FDC04DD36032C21C46120C233A7757CDDB666074777AA43E'); // Device 
+					//$apid['apid'] = array('52cf87da-84f1-40b1-a23e-50ad569c40f8'); // apid for Android
+					//$device_ids['OR'] = array($device_token, $apid);
+
 					$tag['tag'] = $cat;
 					$tag2['tag'] = array(get_bloginfo('url'));
 					//$tag2['tag'] = 'http://herri.nebelhorn.com';
 					if($tag2['tag'][0]=='http://smokeycats.com') $tag2['tag'][0] = 'http://www.smokeycats.com';
+					
+					// iOS
 					$iosContent = array();
 					$iosContent['alert'] = $_POST['push_text'];
 					$iosContent['sound'] = "default";
@@ -3905,12 +3924,22 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$iosExtraContent = array();
 					$iosExtraContent['articleHierarchyIDs'] = array((int) $cat[0], (int) $_POST['push_post_id']);
 					$iosContent['extra'] = $iosExtraContent;
+					
+					// Android
+					$androidContent = array();
+					$androidContent['alert'] =$_POST['push_text'];
+					$androidContent['sound'] = "default";
+					$androidExtraContent = array();					
+					$androidExtraContent['articleHierarchyIDs'] = '['.((int) $cat[0]).','.((int) $_POST['push_post_id']).']';
+					$androidContent['extra'] = $androidExtraContent;
+
 
 					$alertContent = array();
 					$alertContent['ios'] = $iosContent;
+					$alertContent['android'] = $androidContent;
 
 					$audience['AND'] = array( $tag, $tag2);
-					//$audience['AND'] = array( $device_token, $tag, $tag2); // mit device token
+					//$audience['AND'] = array($device_ids, $tag, $tag2); // mit device token
 					$push = array("audience" => $audience); //$audience, wenn devicetoke dabei
 															//$tag, wenn nur auf tags separiert
 					$push['notification'] = $alertContent;
