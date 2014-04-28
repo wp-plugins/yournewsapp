@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NH YNAA Plugin
-Version: 0.5.4
+Version: 0.5.5
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: yourBlogApp/yourNewsApp - The Wordpress Plugin for yourBlogApp/yourNewsApp
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.5.4";
+$nh_ynaa_version = "0.5.5";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -1498,12 +1498,18 @@ if(!class_exists('NH_YNAA_Plugin'))
 					else $returnarray['comments']=0;
 					$returnarray['style']='<style type="text/css">body { color:#'.$this->general_settings['ct'].';}'.($this->general_settings['css']).'</style>';					
 					
-					if($this->menu_settings['menu']){						
+					if($this->menu_settings['menu']){	
+						//var_dump($this->menu_settings);					
 						foreach($this->menu_settings['menu'] as $k=>$ar){
 							if($ar['status']==0) continue;
 							else {
+								//echo  $ar['title'].'<br>';
 								if($ar['type'] != 'cat' && $ar['type'] != 'fb' && $ar['type'] != 'map' && $ar['type'] != 'webview' && $ar['type'] != 'events' ){
-									if(get_post_status($ar['id']) != 'publish') continue;
+									//echo  $ar['title']."\r\n";
+									if(get_post_status($ar['id']) != 'publish') {
+										//echo $ar['item_id'].':'.get_post_status($ar['id']).$ar['title']."\r\n";
+										continue;
+									}
 								}
 								unset($tempmenu);
 								$tempmenu['pos'] =  $ar['pos'];
