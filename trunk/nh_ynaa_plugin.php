@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: NH YNAA Plugin
-Version: 0.5.5
+Plugin Name: Blappsta Plugin
+Version: 0.6.0
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
-Description: yourBlogApp/yourNewsApp - The Wordpress Plugin for yourBlogApp/yourNewsApp
+Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
 Author: Nebelhorn Medien GmbH
 Author URI: http://www.nebelhorn.com
 Min WP Version: 3.0
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.5.5";
+$nh_ynaa_version = "0.6.0";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -230,7 +230,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			}*/
 			$lang = 'en';
 			if(get_bloginfo('language')=='de_DE') $lang='de';
-			$nh_ynaa_general_settings=(array('sort'=>1,'c1'=>'#3677a0', 'cm'=>'#3677a0','c2'=>'#ffffff', 'cn'=>'#ffffff', 'ct'=>'#000000', 'ch'=>'#000000', 'csh'=>'#000000','ts'=>time(), 'css'=> $css,'logo'=>'', 'comments'=>0, 'logo'=> plugins_url( 'img/yba_yna_yca_applogo.png' , __FILE__ ), 'lang_array'=>$lang_en, 'lang'=>$lang, 'homescreentype'=>0 , 'min-img-size-for-resize'=>100));
+			$nh_ynaa_general_settings=(array('sort'=>1,'c1'=>'#3677a0', 'cm'=>'#3677a0','c2'=>'#ffffff', 'cn'=>'#ffffff', 'ct'=>'#000000', 'ch'=>'#000000', 'csh'=>'#000000','ts'=>time(), 'css'=> $css,'logo'=>'', 'comments'=>0, 'logo'=> plugins_url( 'img/blappsta_title.png' , __FILE__ ), 'lang_array'=>$lang_en, 'lang'=>$lang, 'homescreentype'=>0 , 'min-img-size-for-resize'=>100));
 			
 			
 			//Preset teaser
@@ -947,7 +947,7 @@ if(!class_exists('NH_YNAA_Plugin'))
     */
                 function nh_the_home_content(){
 					echo '<div class="headercont clearfix">';
-					echo '<p>'.__('With this plugin you can deploy your own native iOS (iPhone) and Android app containing the content of this Wordpress installation. To get a preview on what the app would look like, use our simulator in the tab „App Settings“ of this plugin.', 'nh-ynaa').'</p>';
+					echo '<p>'.__('With this plugin you can deploy your own native iOS (iPhone) and Android app containing the content of this Wordpress installation. To get a preview on what the app would look like, use our emulator in the tab „App Settings“ of this plugin.', 'nh-ynaa').'</p>';
 					echo '<p>'.__('If you like the app, please register on our website <a href="http://www.blappsta.com" target="_blank">www.blappsta.com</a>. We will then create the app for you and upload it to the app stores!', 'nh-ynaa').'</p>';
 					echo '<p>'.__('If you have any questions contact us: <a href="mailto:support@blappsta.com">support@blappsta.com</a>', 'nh-ynaa').'</p>';
 					
@@ -1118,7 +1118,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 */
 		function nh_ynaa_add_admin_menus() {
 			global $nh_menu_hook_ynaa;
-			$nh_menu_hook_ynaa = add_options_page( 'yourBlogApp/yourNewsApp', 'yourBlogApp/yourNewsApp', 'manage_options', $this->plugin_options_key, array( &$this, 'nh_ynaa_plugin_options_page' ) );
+			$nh_menu_hook_ynaa = add_options_page( 'Blappsta Plugin', 'Blappsta Plugin', 'manage_options', $this->plugin_options_key, array( &$this, 'nh_ynaa_plugin_options_page' ) );
 			add_action("load-{$nh_menu_hook_ynaa}",array(&$this,'nh_create_help_screen'));
 		}
 		
@@ -1223,7 +1223,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			?>
 			<div class="wrap">
 				<!--<div id="icon-options-general" class="icon32"><br/></div>-->
-				<h2><?php _e('Settings for yourBlogApp/yourNewsApp','nh-ynaa'); ?></h2>
+				<h2><?php _e('Settings for Blappsta Plugin','nh-ynaa'); ?></h2>
 				<?php 
 					$this->nh_the_home_content();
                     $this->nh_ynaa_plugin_options_tabs();
@@ -1506,7 +1506,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 								//echo  $ar['title'].'<br>';
 								if($ar['type'] != 'cat' && $ar['type'] != 'fb' && $ar['type'] != 'map' && $ar['type'] != 'webview' && $ar['type'] != 'events' ){
 									//echo  $ar['title']."\r\n";
-									if(get_post_status($ar['id']) != 'publish') {
+									if(get_post_status($ar['item_id']) != 'publish') {
 										//echo $ar['item_id'].':'.get_post_status($ar['id']).$ar['title']."\r\n";
 										continue;
 									}
@@ -1810,7 +1810,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 								}
 								$category = get_the_category($teaser); 
 								if(get_post_type($teaser)=='event') $category[0]->term_id=0;
-								$returnarray['items'][]=array('pos'=>$i, 'apectFill'=>1, 'type' => get_post_type($teaser), 'id'=> $teaser, 'title'=> htmlspecialchars_decode($p->post_title), 'thumb'=>$this->nh_getthumblepic($teaser, 'full'), 'cat_id'=>$category[0]->term_id, 'post_ts'=>strtotime($p->post_modified));
+								$posttitle = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($p->post_title)), ENT_NOQUOTES, 'UTF-8')));
+								$returnarray['items'][]=array('pos'=>$i, 'apectFill'=>1, 'type' => get_post_type($teaser), 'id'=> $teaser, 'title'=> $posttitle, 'thumb'=>$this->nh_getthumblepic($teaser, 'full'), 'cat_id'=>$category[0]->term_id, 'post_ts'=>strtotime($p->post_modified));
 								$i++;
 								unset($category);
 							}
@@ -2080,7 +2081,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 							
 							if($cat_id_array) $cat_id = $cat_id_array[0];
 							$img = $this->nh_getthumblepic($the_query->post->ID);
-							$returnarray['items'][]=array('pos'=>$i, "type"=>get_post_type(), 'allowRemove'=> 1, 'cat_id'=>$cat_id, 'cat_id_array'=>$cat_id_array,  'title'=>htmlspecialchars_decode($the_query->post->post_title), 'img'=>$img, 'thumb' => 'img', 'post_id'=>$the_query->post->ID, 'timestamp'=>strtotime($the_query->post->post_modified), 'publish_timestamp' =>strtotime($the_query->post->post_date), 'showsubcategories'=>0);
+							
+							$posttitle = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($the_query->post->post_title)), ENT_NOQUOTES, 'UTF-8')));
+							$returnarray['items'][]=array('pos'=>$i, "type"=>get_post_type(), 'allowRemove'=> 1, 'cat_id'=>$cat_id, 'cat_id_array'=>$cat_id_array,  'title'=> $posttitle, 'img'=>$img, 'thumb' => 'img', 'post_id'=>$the_query->post->ID, 'timestamp'=>strtotime($the_query->post->post_modified), 'publish_timestamp' =>strtotime($the_query->post->post_date), 'showsubcategories'=>0);
 							if(strtotime($the_query->post->post_modified) > $returnarray['timestamp']) $returnarray['timestamp']= strtotime($the_query->post->post_modified);
 							$i++;
 						}
@@ -2117,7 +2120,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 								else {
 									$post_thumbnail_image=array();
 								}
-								$returnarray['items'][] = array('pos'=>1, 'id'=>$latest_cat_post->posts[0]->ID,'title'=>htmlspecialchars_decode($latest_cat_post->posts[0]->post_title),'timestamp'=>strtotime($latest_cat_post->posts[0]->post_modified),'type'=>$latest_cat_post->posts[0]->post_type, 'thumb'=> ($post_thumbnail_image[0]), 'publish_timestamp'=> strtotime($latest_cat_post->posts[0]->post_date)); 							
+								$posttitle = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($latest_cat_post->posts[0]->post_title)), ENT_NOQUOTES, 'UTF-8')));
+								$returnarray['items'][] = array('pos'=>1, 'id'=>$latest_cat_post->posts[0]->ID,'title'=>$posttitle,'timestamp'=>strtotime($latest_cat_post->posts[0]->post_modified),'type'=>$latest_cat_post->posts[0]->post_type, 'thumb'=> ($post_thumbnail_image[0]), 'publish_timestamp'=> strtotime($latest_cat_post->posts[0]->post_date)); 							
 								//$returnarray['items'][]=array('pos'=>1, 'type' => $post->post_type, 'allowRemove'=> $allowRemove, 'id'=> $category->term_id, 'parent_id'=>0, 'title'=>$category->name, 'img'=>$post_thumbnail_image[0], 'post_id'=>$latest_cat_post->post->ID );
 							}
 							else {
@@ -2231,7 +2235,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 						}*/
 						else $post_thumbnail_image[0] = '';	
 						//echo esc_url($post_thumbnail_image[0]);
-						$returnarray['items'][] = array('pos'=>$i, 'id'=>$post->ID,'title'=>htmlspecialchars_decode($post->post_title),'timestamp'=>strtotime($post->post_modified),'type'=>$post->post_type, 'thumb'=> ($post_thumbnail_image[0]), 'publish_timestamp'=> strtotime($post->post_date)); 							
+						$posttitle = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($post->post_title)), ENT_NOQUOTES, 'UTF-8')));
+						$returnarray['items'][] = array('pos'=>$i, 'id'=>$post->ID,'title'=>$posttitle,'timestamp'=>strtotime($post->post_modified),'type'=>$post->post_type, 'thumb'=> ($post_thumbnail_image[0]), 'publish_timestamp'=> strtotime($post->post_date)); 							
 						$i++;				
 					}
 					if(!($returnarray['items'])){
@@ -2302,7 +2307,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							}*/
 						}
 						
-						$returnarray['title'] = htmlspecialchars_decode(strip_tags(do_shortcode($post->post_title)));
+						$returnarray['title'] = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($post->post_title)), ENT_NOQUOTES, 'UTF-8')));
 						//$returnarray['']['title']
 						//$content = '<html><head><title>'.get_bloginfo('name').'</title><body><div id="nh_ynaa__app_content">'.$post->post_content.'</div></body></html>';
 						/*$content = $post->post_content;
@@ -2746,12 +2751,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 		// END private function nh_ynaa_ibeacon
 		
 		/**
-		* Return iframe with Simulator
+		* Return iframe with Emulator
 		*/
 		private function nh_ynaa_simulator(){
 			?>
             <div id="nh-simulator">
-            <h3>Simulator</h3>
+            <h3><?php _e('Emulator','nh-ynaa'); ?></h3>
             <iframe src="https://app.io/p6Kgfi?params=%7B%22customURLString%22%3A%22<?php echo(get_site_url()); ?>%22%7D&#038;autoplay=true&#038;orientation=portrait&#038;device=iphone5" height="607px" width="291px" frameborder="0" allowtransparency="true" scrolling="no"></iframe><!--
             <img src="<?php echo plugins_url( 'img/simulator_default.jpg' , __FILE__ ); ?>" alt="" />--></div>
             <?php
@@ -3223,6 +3228,16 @@ if(!class_exists('NH_YNAA_Plugin'))
 					}				
 				}
 				
+				
+				//iframe tag src replace // with http://
+				$iframeElements  = $dom->getElementsByTagName("iframe");
+				foreach ($iframeElements as $iframeElement) {
+					$src = $iframeElement->getAttribute('src');
+					if(substr($src,0,2)=='//'){
+						$iframeElement->setAttribute('src','http:'.$src);
+					}
+				}
+				
 				$divElements  = $dom->getElementsByTagName("div");
 				foreach ($divElements as $divElement) {
 					if($divElement->hasAttribute('style'))$divElement->removeAttribute('style');
@@ -3348,7 +3363,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		
 						add_meta_box(
 							'nh_ynaa_sectionid',
-							__( 'yourBlogApp/yourNewsApp extras', 'nh_ynaa' ),
+							__( 'Blappsta Plugin extras', 'nh_ynaa' ),
 							array($this,'nh_ynaa_inner_custom_box'),
 							$screen, 'side', 'default'
 						);
@@ -3371,7 +3386,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		
 						add_meta_box(
 							'nh_ynaa_locationid',
-							__( 'yourBlogApp/yourNewsApp locations', 'nh_ynaa' ),
+							__( 'Blappsta Plugin locations', 'nh_ynaa' ),
 							array($this,'nh_ynaa_inner_location_box'),
 							$screen, 'normal', 'default'
 						);
@@ -3906,6 +3921,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			define('PUSHSECRET', esc_attr( $this->push_settings['pushsecret'] )); // Master Secret
 			define('PUSHURL', esc_attr( $this->push_settings['pushurl'] ));
 			$device_types = array('ios', 'android');
+			//$device_types = array('ios');
 			
 			if($cat = $_POST['push_cat']){ 
 				
@@ -3933,8 +3949,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					
 					// Android
 					$androidContent = array();
-					$androidContent['alert'] =$_POST['push_text'];
-					$androidContent['sound'] = "default";
+					$androidContent['alert'] =$_POST['push_text'];					
 					$androidExtraContent = array();					
 					$androidExtraContent['articleHierarchyIDs'] = '['.((int) $cat[0]).','.((int) $_POST['push_post_id']).']';
 					$androidContent['extra'] = $androidExtraContent;
@@ -3944,7 +3959,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$alertContent['ios'] = $iosContent;
 					$alertContent['android'] = $androidContent;
 
-					$audience['AND'] = array( $tag, $tag2);
+					//$audience['AND'] = array( $tag, $tag2); //Push Filterung durch KAtegorien
+					$audience['AND'] = array(  $tag2); //Push für alle KAtegorien
 					//$audience['AND'] = array($device_ids, $tag, $tag2); // mit device token
 					$push = array("audience" => $audience); //$audience, wenn devicetoke dabei
 															//$tag, wenn nur auf tags separiert

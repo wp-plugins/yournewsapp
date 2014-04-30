@@ -1,10 +1,10 @@
-﻿=== yourBlogApp / yourNewsApp - your FREE native Mobile App for iPhone and Android ===
+﻿=== Blappsta - your FREE native Wordpress based Mobile App for iPhone and Android ===
 Contributors: nebelhorn
 Donate link: 
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.5.5
+Stable tag: 0.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,23 +12,23 @@ Your Blog and News App Builder for iPhone and Android
 
 == Description ==
 
-yourBlogApp / yourNewsApp: This plugin is the first step to a free native App for iOS (iPhone) and Android.
+Blappsta: This plugin is the first step to a free native App for iOS (iPhone) and Android.
 
 = Turn your blog into a free native App and even earn money =
-Don’t fall for the typical HTML web apps with poor usability. And don't spend money for a native App in iOS (iPhone) and Android. YourBlogApp is the first native App which ist not only free for you but also enables you to earn money.
+Don’t fall for the typical HTML web apps with poor usability. And don't spend money for a native App in iOS (iPhone) and Android. Blappsta is the first native App which ist not only free for you but also enables you to earn money.
 Build you app in only a few minutes. Instantly test it using our [test app in the App store](https://itunes.apple.com/de/app/nebelhorn/id707029895?mt=8). If you like it, you can instantly setup an account and we will take care of pushing the app into the stores. Advertisement in the app lets you even create revenue.
-Check out our [Website](http://www.yournewsapp.de) for more info about how to earn money with yourBlogApp.
+Check out our [Website](http://www.blappsta.com) for more info about how to earn money with Blappsta.
 
 **Increase the number of readers of your blog of news app with Push Notification**
 Notify your readers with our free push notification service build into the plugin. This service will increase your number of readers largely. You can decide when and what you want to push. 
 
 **First plugin and App with iBeacon / beacon integration**
-Setup your iBeacons and let your app trigger a welcome push, organize couponing and do content triggering. We supply you with the proper iBeacons. Visit our [website](http://www.yournewsapp.de) for more information about our iBeacon feature.
+Setup your iBeacons and let your app trigger a welcome push, organize couponing and do content triggering. We supply you with the proper iBeacons. Visit our [website](http://www.blappsta.com) for more information about our iBeacon feature.
 
 **Comment enabled App**
 Your App can enable commenting and reading comments within the App. Simply tryout for yourself with our sample App.
 
-**yourNewsApp with additional features**
+**Blappsta business features**
 Our News App version of the native app enables many more features like integration of events, setup of iBeacon push, couponing and content triggering
 
 **Design your App**
@@ -39,19 +39,16 @@ Not like other App budders we do not require any build time. You can instantly t
 
 = How it works =
 1.  Install and activate the plugin
-2.	Download and install the <a href="https://itunes.apple.com/de/app/yourblogapp-yournewsapp/id815084293?mt=8">yourBlogApp Test app</a> from the Apple AppStore
-3.	Navigate to the plugins settings page in WordPress.
-4.	Scan the QR code you’ll find on the settings page and open the link on your smartphone. Other than scanning the QR you can type the following link into your smartphone’s browser: yba://?url=http://yourdomain
-5.	By opening this link the test app will be reconfigured and filled with the content from your WordPress site. Change the look and feel of your app by modifying the settings, adding your logo, customizing the startscreen and changing the overall style.
-6.	If you like the app, please register on our website <a href="http://www.your-news-app.com">www.your-news-app.com</a>. We will then create the app for you and upload it to the app stores!
-7.	If you have any questions contact us: info@yournewsapp.de
+2.	To get a preview on what the app would look like, use our emulator in the first tab of this plugin.
+3.	 Do you like what you see? Then register today on <a href="http://www.blappsta.com/">www.blappsta.com</a>!
+4.	If you have any questions contact us: info@blappsta.com
 
 
 == Installation ==
 
 1. Upload `post-types-order` folder to your `/wp-content/plugins/` directory.
 2. Activate the plugin from Admin > Plugins menu.
-3. Once activated you should check with Settings > Your News App Api 
+3. Once activated you should check with Settings > Blappsta Plugin 
 4. Update your Settings for the App.
 
 
@@ -61,9 +58,16 @@ Not like other App budders we do not require any build time. You can instantly t
 
 == Frequently Asked Questions  ==
 
-Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
+Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.6.0 =
+- bug fix menu items
+- fix push bug
+- change plugin name to Blappsta Plugin
+- html in title bug fix
+- add new default logo
+
 = 0.5.5 =
 - bug fix menu items
 
@@ -171,6 +175,12 @@ Please refer to our [FAQ Website](http://www.yournewsapp.de/category/faqs/)
  
  
 == Upgrade Notice ==
+= 0.6.0 =
+- bug fix menu items
+- fix push bug
+- change plugin name
+- html in title bug fix
+
 = 0.5.5 =
 - bug fix menu items
 
@@ -295,4 +305,4 @@ Make sure you get the latest version
 == Localization ==
 
 Currently available in English and German.
-Want to contribute with a translation to your language? Please contact me at contact@yournewsapp.de
+Want to contribute with a translation to your language? Please contact me at contact@blappsta.com
