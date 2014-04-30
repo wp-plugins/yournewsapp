@@ -14,6 +14,10 @@ img {
 ul, ol{
 	margin:0 0 0 20px; 
 }
+iframe {
+    width:100%;
+}
+
 ';
 	
 ?>
