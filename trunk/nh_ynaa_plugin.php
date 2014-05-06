@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.6.0
+Version: 0.6.1
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
 Author: Nebelhorn Medien GmbH
@@ -12,7 +12,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.6.0";
+$nh_ynaa_version = "0.6.1";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -733,18 +733,45 @@ if(!class_exists('NH_YNAA_Plugin'))
                             	<div class="margin-botton  show-subcat-div">
 							<?php
 								if(get_categories(array('hide_empty'=>0, 'child_of'=>$category->term_id))){
+									
 									if($this->categories_settings[$category->term_id]['showsub']){
 										$yesradio = 'checked';
 										$noradio = '';
+										$hidethisdiv = "";
 									}
 									else{
 										$yesradio = '';
 										$noradio = 'checked';
+										$hidethisdiv = "hidethisdiv";
 									}
-							 _e('Show subcategories overview:', 'nh-ynaa'); 
-							 echo '<br><input type="radio" name="'.$this->categories_settings_key.'['.$category->term_id.'][showsub]" value="1" id="yesradio_'.$category->term_id.'" '.$yesradio.' /><label for="yesradio_'.$category->term_id.'">'; _e('Yes', 'nh-ynaa'); 
-							 echo '</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="'.$this->categories_settings_key.'['.$category->term_id.'][showsub]" value="0" id="noradio_'.$category->term_id.'" '.$noradio.' /><label for="noradio_'.$category->term_id.'">'; _e('No', 'nh-ynaa'); 
-							 echo '</label>';
+									echo '<div class="margin-botton">';
+									 _e('Show subcategories overview:', 'nh-ynaa'); 
+									 echo '<br><input type="radio" name="'.$this->categories_settings_key.'['.$category->term_id.'][showsub]" value="1" id="yesradio_'.$category->term_id.'" '.$yesradio.' class="showoverviewposts" data-catid="'.$category->term_id.'" /><label for="yesradio_'.$category->term_id.'">'; _e('Yes', 'nh-ynaa'); 
+									 echo '</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="'.$this->categories_settings_key.'['.$category->term_id.'][showsub]" value="0" id="noradio_'.$category->term_id.'" '.$noradio.' class="showoverviewposts" data-catid="'.$category->term_id.'" /><label for="noradio_'.$category->term_id.'">'; _e('No', 'nh-ynaa'); 
+									 echo '</label>';
+									echo '</div>';
+								//SUb categories overview show post
+									
+									
+									if($this->categories_settings[$category->term_id]['showoverviewposts']){
+										$yesradioshowoverviewposts = 'checked';
+										$noradioshowoverviewposts = '';
+										
+										
+									}
+									else{
+										$yesradioshowoverviewposts = '';
+										$noradioshowoverviewposts = 'checked';
+										
+									}
+									echo '<div id="showoverviewposts'.$category->term_id.'" class="categorieovervie_sub '.$hidethisdiv.'">';
+									_e('Show posts under subcategories overview', 'nh-ynaa');
+									 echo '<br><input type="radio" name="'.$this->categories_settings_key.'['.$category->term_id.'][showoverviewposts]" value="1" id="yesshowoverviewpostsradio_'.$category->term_id.'" '.$yesradioshowoverviewposts.' /><label for="yesradio_'.$category->term_id.'">'; _e('Yes', 'nh-ynaa'); 
+									 echo '</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" name="'.$this->categories_settings_key.'['.$category->term_id.'][showoverviewposts]" value="0" id="noshowoverviewpostsradio_'.$category->term_id.'" '.$noradioshowoverviewposts.' /><label for="noradio_'.$category->term_id.'">'; _e('No', 'nh-ynaa'); 
+									 echo '</label>';	
+									 echo '</div>';
+									
+								
 								}
 								
 							 ?>
@@ -1919,14 +1946,21 @@ if(!class_exists('NH_YNAA_Plugin'))
 						//$ass_cats[$category->term_id] = array('img'=>'');
 						if($this->categories_settings[$category->term_id]['showsub']){
 							$cat[$category->term_id]['showsubcategories']=1;
+							if($this->categories_settings[$category->term_id]['showoverviewposts']) {
+								 $cat[$category->term_id]['showoverviewposts'] = 1;
+							}
+							else $cat[$category->term_id]['showoverviewposts'] = 0;
 							//$ass_cats[$category->term_id]['showsubcategories']=1;
 						}
-						else $cat[$category->term_id]['showsubcategories']=0;
+						else {
+							$cat[$category->term_id]['showsubcategories']=0;
+							$cat[$category->term_id]['showoverviewposts'] = 0;
+						}
 						if($this->categories_settings[$category->term_id]['usecatimg']){
 							$use_cat_img = 1;
 						}
 						else $use_cat_img = 0;
-						$ass_cats[$category->term_id] = array('showsubcategories'=>$cat[$category->term_id]['showsubcategories'],'img'=>$this->categories_settings[$category->term_id]['img'], 'pos'=>$i, 'type'=>'cat', 'id'=> $category->term_id, 'parent_id'=>$category->parent, 'title'=>htmlspecialchars_decode($category->name), 'post_img'=>$items['articles']['items'][0]['thumb'], 'post_id'=>$items['articles']['items'][0]['id'] ,'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1, 'use_cat_img'=> $use_cat_img   ); 
+						$ass_cats[$category->term_id] = array('showsubcategories'=>$cat[$category->term_id]['showsubcategories'], 'showoverviewposts'=>$cat[$category->term_id]['showoverviewposts'],'img'=>$this->categories_settings[$category->term_id]['img'], 'pos'=>$i, 'type'=>'cat', 'id'=> $category->term_id, 'parent_id'=>$category->parent, 'title'=>htmlspecialchars_decode($category->name), 'post_img'=>$items['articles']['items'][0]['thumb'], 'post_id'=>$items['articles']['items'][0]['id'] ,'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1, 'use_cat_img'=> $use_cat_img   ); 
 						//$ass_cats[$category->term_id] = array('img'=>'http://yna.nebelhorn.com/wp-content/uploads/2014/02/image-653473-breitwandaufmacher-ixpz-300x111.jpg');
 						
 						$i++;
@@ -2062,11 +2096,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 				
 				if(($_GET['option']=1 && $_GET['sorttype']) ){
 					// The Query
-					$returnarray['timestamp']=0;
+					$returnarray['changes']=0;
+					if($_GET['ts'])$returnarray['timestamp']=$_GET['ts'];
+					else $returnarray['timestamp']=0;
 					if(isset($_GET['id'])) $args['cat'] =$_GET['id'];
 					elseif($id) $args['cat'] =$id; 
 					$args ['post_status'] = 'publish'; 
-					$args ['post_type'] = 'post'; 
+					$args ['post_type'] = 'any'; 
 					$args ['nopaging'] = true; 
 					
 					$the_query = new WP_Query( $args );
@@ -2084,7 +2120,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 							
 							$posttitle = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($the_query->post->post_title)), ENT_NOQUOTES, 'UTF-8')));
 							$returnarray['items'][]=array('pos'=>$i, "type"=>get_post_type(), 'allowRemove'=> 1, 'cat_id'=>$cat_id, 'cat_id_array'=>$cat_id_array,  'title'=> $posttitle, 'img'=>$img, 'thumb' => 'img', 'post_id'=>$the_query->post->ID, 'timestamp'=>strtotime($the_query->post->post_modified), 'publish_timestamp' =>strtotime($the_query->post->post_date), 'showsubcategories'=>0);
-							if(strtotime($the_query->post->post_modified) > $returnarray['timestamp']) $returnarray['timestamp']= strtotime($the_query->post->post_modified);
+							if(strtotime($the_query->post->post_modified) > $returnarray['timestamp']) {
+								$returnarray['changes']=1;
+								$returnarray['timestamp']= strtotime($the_query->post->post_modified);
+							}
 							$i++;
 						}
 							
@@ -2101,7 +2140,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				//If Post ID Check if is ist the newest Post and if hat changes
 				if(isset($_GET['post_id']) && isset($_GET['post_ts'])){
 					$break = false;
-					$latest_cat_post = new WP_Query( array('posts_per_page' => 1, 'category__in' => array($_GET['id'])));
+					$latest_cat_post = new WP_Query( array('posts_per_page' => 1, 'post_type'=>'any', 'category__in' => array($_GET['id'])));
 					//var_dump($latest_cat_post);
 					
 					if( $latest_cat_post->have_posts() ) {						
@@ -2140,6 +2179,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					}
 					if($break) {
 						$returnarray['timestamp']=$ts;
+						$returnarray['error']=$this->nh_ynaa_errorcode(0);
 						return array('articles'=>$returnarray);
 					}
 				} 
@@ -2647,13 +2687,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$returnarray['error']=$this->nh_ynaa_errorcode(33);
 			}
 			else{
-				/*$returnarray['uuid']=$this->push_settings['uuid'];
+				$returnarray['uuid']=$this->push_settings['uuid'];
 				if($this->push_settings['welcome']) $returnarray['welcome']=$this->push_settings['welcome'];
-				if($this->push_settings['silent']) $returnarray['silent']=$this->push_settings['silent'];*/
-				$returnarray['uuid'] ='B9407F30-F5F8-466E-AFF9-25556B57FE6D	' ;
-				$returnarray['silent'] =60 ;
+				if($this->push_settings['silent']) $returnarray['silent']=$this->push_settings['silent'];
+				/*$returnarray['uuid'] ='B9407F30-F5F8-466E-AFF9-25556B57FE6D' ;
+				$returnarray['silent'] =60 ;*/
 				$returnarray['identifier'] ='Beacon1' ;
-				$returnarray['welcome'] ='Willkommen bei der Frankfurter Buchmesse.' ;
+				//$returnarray['welcome'] ='Willkommen bei der Frankfurter Buchmesse.' ;
 				$returnarray['content'][] =array('major'=>50658, 'minor'=>42436, 'silentInterval'=>60, 'proximity'=>'CLProximityNear', 'message'=>'Willkommen bei Oettinger.', 'contentArray'=>array(7,44 )) ;
 				$returnarray['content'][] =array('major'=>20535, 'minor'=>33212, 'silentInterval'=>60, 'proximity'=>'CLProximityNear', 'message'=>'Willkommen bei Dressler.', 'contentArray'=>array(7,37)) ;
 			}

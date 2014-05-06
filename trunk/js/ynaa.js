@@ -489,6 +489,20 @@ jQuery(document).ready(function($){
 			$('#nh_sorttype').prop('disabled', true);
 		}
 	});
+	
+	//Show Post on category overvie page
+	$('.showoverviewposts').change(function(){
+		
+		var catid = $(this).attr('data-catid');
+		if($(this).val() == '1'){
+		
+			$('#showoverviewposts'+catid).show();
+		}
+		else{
+			$('#showoverviewposts'+catid).hide();
+		}
+
+	});
 			
 });
 

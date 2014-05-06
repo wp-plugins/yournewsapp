@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.6.0
+Stable tag: 0.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,33 +15,57 @@ Your Blog and News App Builder for iPhone and Android
 Blappsta: This plugin is the first step to a free native App for iOS (iPhone) and Android.
 
 = Turn your blog into a free native App and even earn money =
-Don’t fall for the typical HTML web apps with poor usability. And don't spend money for a native App in iOS (iPhone) and Android. Blappsta is the first native App which ist not only free for you but also enables you to earn money.
-Build you app in only a few minutes. Instantly test it using our [test app in the App store](https://itunes.apple.com/de/app/nebelhorn/id707029895?mt=8). If you like it, you can instantly setup an account and we will take care of pushing the app into the stores. Advertisement in the app lets you even create revenue.
-Check out our [Website](http://www.blappsta.com) for more info about how to earn money with Blappsta.
+Don’t fall for the typical HTML web apps with poor usability. And don't spend money for a native app in iOS (iPhone) and Android. Blappsta is the first native App which is not only free for you but also enables you to earn money. 
+Build your app in only a few minutes. Instantly test it using our test app from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-your-blog.-your-app./id865289027?mt=8) or [Google Play Store](https://play.google.com/store/apps/details?id=com.nebelhorn.blappsta&hl=de). If you like it, you can instantly setup an account and we will take care of pushing the app into the stores. Advertisement in the app lets you even create revenue.
+Check out our [website](http://www.blappsta.com) for more information about Blappsta.
 
-**Increase the number of readers of your blog of news app with Push Notification**
+**Increase the number of readers of your blog with Push Notification**
 Notify your readers with our free push notification service build into the plugin. This service will increase your number of readers largely. You can decide when and what you want to push. 
 
-**First plugin and App with iBeacon / beacon integration**
-Setup your iBeacons and let your app trigger a welcome push, organize couponing and do content triggering. We supply you with the proper iBeacons. Visit our [website](http://www.blappsta.com) for more information about our iBeacon feature.
+**Features of the app**
+Some of the app features:
+- for iOS and Android devices
+- sharing via Facebook, Twitter, Google+ and email
+- send push notifications
+- show the feed of your Facebook page (optional)
+- your logo, your icons, your colors
+- your app can enable commenting and reading comments
+- continual improvement guaranteed
 
-**Comment enabled App**
-Your App can enable commenting and reading comments within the App. Simply tryout for yourself with our sample App.
+**Features of the plugin**
+- fully integrated in WordPress
+- send push-notifications directly from a post
+- edit teaser content
+- add category images
+- individualize app menu
+- set homepresets for the app start screen
 
-**Blappsta business features**
-Our News App version of the native app enables many more features like integration of events, setup of iBeacon push, couponing and content triggering
+**Blappsta Business features**
+Our Business version version of the native app enables many more features like integration of events, setup of iBeacon, couponing and content triggering
 
-**Design your App**
-There are a number of settings where you can change the looks of the App. Give it a try and test your design in our [Test App](https://itunes.apple.com/de/app/nebelhorn/id707029895?mt=8).
+**Design your app**
+There are a number of settings where you can change the looks of the app. Give it a try and test your design in the [emulator](http://www.blappsta.com/emulator/) or our [Blappsta Test App](https://itunes.apple.com/us/app/blappsta-your-blog.-your-app./id865289027?mt=8).
 
-**NO build time required**
-Not like other App budders we do not require any build time. You can instantly test the app in our [test app](https://itunes.apple.com/de/app/nebelhorn/id707029895?mt=8) and if you like it, setup an account and we upload the app for you after approval
+**No build time required**
+Not like other app builders we do not require any build time. You can instantly test the app in our [test app](https://itunes.apple.com/de/app/nebelhorn/id707029895?mt=8) and if you like it, setup an account on [www.blappsta.com](http://www.blappsta.com) and we upload the app for you after approval.
+
+**There is more to come!**
+These features are currently under development and will soon be part of Blappsta:
+- support for videos
+- image galleries
+- a growing number of available themes
+- a list of the most popular articles instead of the categories or the latest articles up front
+- iPad/Android Tablet version
+- Windows Phone version
+
+
 
 = How it works =
-1.  Install and activate the plugin
-2.	To get a preview on what the app would look like, use our emulator in the first tab of this plugin.
-3.	 Do you like what you see? Then register today on <a href="http://www.blappsta.com/">www.blappsta.com</a>!
-4.	If you have any questions contact us: info@blappsta.com
+1. Install and activate the plugin
+2. To get a preview on what the app would look like, use our emulator in the first tab of the plugin settings in the WordPress backend.
+3. If you want, you can additionally get a preview of your blogs content and design in our test app from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-your-blog.-your-app./id865289027?mt=8) or [Google Play Store](https://play.google.com/store/apps/details?id=com.nebelhorn.blappsta&hl=de).
+4. Do you like what you see? Then register today on <a href="http://www.blappsta.com/">www.blappsta.com</a> to publish your app on the app stores for free!
+5. If you have any questions contact us: info@blappsta.com
 
 
 == Installation ==
@@ -61,6 +85,12 @@ Not like other App budders we do not require any build time. You can instantly t
 Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.6.1 =
+- bug fix new post on homescreen
+- bug fix other post types
+- posts in categorie overview
+- bug fix ibeacon
+
 = 0.6.0 =
 - bug fix menu items
 - fix push bug
@@ -77,8 +107,8 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 
 = 0.5.3 =
 - integrated URL for Homepresets
-- Bug fix map in homepreset
-
+- bug fix map in homepreset
+- 
 
 = 0.5.2 =
 - integrated app simulator 
@@ -175,6 +205,13 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.6.1 =
+- bug fix new post on homescreen
+- bug fix other post types
+- posts in categorie overview
+- bug fix ibeacon
+- If anny have problems wit your app menu, please delete all menu items and create a new menu!
+
 = 0.6.0 =
 - bug fix menu items
 - fix push bug
@@ -304,5 +341,5 @@ Make sure you get the latest version
 
 == Localization ==
 
-Currently available in English and German.
+Currently available in English, Frensh, Spain and German.
 Want to contribute with a translation to your language? Please contact me at contact@blappsta.com

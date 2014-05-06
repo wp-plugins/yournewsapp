@@ -136,7 +136,11 @@
             'The input is incomplete' => 'The input is incomplete',
             'Thanks' => 'Thanks',
 			'No set up email account.' => 'No set up email account.',
-			"No set up twitter account." => "No set up twitter account."
+			"No set up twitter account." => "No set up twitter account.",
+			'Copy link' => 'Copy link',
+			'Open in Safari' => 'Open in Safari',
+			'Notifications' => 'Notifications',
+			'Select which categories to receive push-notifications from:' => 'Select which categories to receive push-notifications from:'
            ));
            
          }

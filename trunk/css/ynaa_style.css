@@ -174,7 +174,9 @@ div.h30 {
 }
 .hide-cat-div {margin-bottom:5px; }
 
-.show-subcat-div {height:55px; overflow:hidden; }
+.show-subcat-div {min-height:130px; overflow:hidden; }
+
+.hidethisdiv { display:none; }
 
 .clear { clear:both; }
 
