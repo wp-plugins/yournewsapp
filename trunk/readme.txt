@@ -205,12 +205,15 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+
+
 = 0.6.1 =
 - bug fix new post on homescreen
 - bug fix other post types
 - posts in categorie overview
 - bug fix ibeacon
 - If anny have problems wit your app menu, please delete all menu items and create a new menu!
+- catch html tags in event title
 
 = 0.6.0 =
 - bug fix menu items
