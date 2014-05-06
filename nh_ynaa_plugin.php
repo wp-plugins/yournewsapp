@@ -2875,11 +2875,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 									if(!$event->location_longitude || $event->location_longitude== null || $event->location_longitude=='null' || $event->location_longitude=='0.000000') $event->location_longitude =  0;
 									else $event->location_longitude = (float) $event->location_longitude ;		
 								
+									$latest_cat_post->post->post_title = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($latest_cat_post->post->post_title)), ENT_NOQUOTES, 'UTF-8')));
 									$returnarray['items'][] = array(
 										'uma'=>array('start_ts_gmt',get_gmt_from_date($event->event_start_date.' '.$event->event_start_time), 'test'=>1),
 										'pos'=>$i,
 										'id'=>$latest_cat_post->post->ID, 
-										'title'=>htmlspecialchars_decode($latest_cat_post->post->post_title), 
+										'title'=>($latest_cat_post->post->post_title), 
 										'timestamp'=>strtotime($latest_cat_post->post->post_modified), 
 										'type'=>$latest_cat_post->post->post_type, 
 										'thumb'=> ($post_thumbnail_image[0]), 
@@ -2989,11 +2990,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 						else $event->location_latitude = (float) $event->location_latitude ;
 						if(!$event->location_longitude || $event->location_longitude== null || $event->location_longitude=='null' || $event->location_longitude=='0.000000') $event->location_longitude =  0;
 						else $event->location_longitude = (float) $event->location_longitude ;	
+						$post->post_title = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($post->post_title)), ENT_NOQUOTES, 'UTF-8')));
 						$returnarray['items'][] = array(
 							'uma'=>array('start_ts_gmt',get_gmt_from_date($event->event_start_date.' '.$event->event_start_time), 'test'=>2),
 							'pos'=>$i,
 							'id'=>$post->ID, 
-							'title'=>htmlspecialchars_decode($post->post_title), 
+							'title'=>($post->post_title), 
 							'timestamp'=>strtotime($post->post_modified), 
 							'type'=>$post->post_type, 
 							'thumb'=> ($post_thumbnail_image[0]), 
@@ -3113,8 +3115,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 							else $event->location_latitude = (float) $event->location_latitude ;
 							if(!$event->location_longitude || $event->location_longitude== null || $event->location_longitude=='null' || $event->location_longitude=='0.000000') $event->location_longitude =  0;
 							else $event->location_longitude = (float) $event->location_longitude ;	
-														
-							$returnarray['title']=htmlspecialchars_decode($post->post_title);
+							
+							$post->post_title = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($post->post_title)), ENT_NOQUOTES, 'UTF-8')));						
+							$returnarray['title']=($post->post_title);
 							$returnarray['timestamp']=strtotime($post->post_modified); 
 							$returnarray['type']='post'; 
 							$returnarray['thumb']= ($post_thumbnail_image[0]); 
