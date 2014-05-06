@@ -62,6 +62,10 @@
           'The input is incomplete' => 'Die Eingabe ist unvollständig',
           'Thanks' => 'Danke',
 		  'No set up email account.' => 'Kein E-Mail Account eingerichtet.',
-			"No set up twitter account." => "Kein Twitter Account eingerichtet."
+			"No set up twitter account." => "Kein Twitter Account eingerichtet.",
+			'Copy link' => 'Link kopieren',
+			'Open in Safari' => 'In Safari öffnen',
+			'Notifications' => 'Benachrichtigungen',
+			'Select which categories to receive push-notifications from:' => 'Wählen sie die Kategorien aus der sie Push-Benachrichtigungen erhalten wollen:'
            );
 ?>
