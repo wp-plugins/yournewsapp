@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.6.2
+Stable tag: 0.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,14 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.6.3 =
+- bug fix
+- work around for wpseo Plugin
+- fix getimagesize() bug
+- cat_id int
+- fix recent post bug
+- add app language Italian
+
 = 0.6.2 =
 - bug fix event title html tag
 - prefix nh for variable
@@ -209,6 +217,13 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.6.3 =
+- bug fix
+- work around for wpseo Plugin
+- fix getimagesize() bug
+- fix recent post bug
+- add app language Italian
+
 = 0.6.2 =
 - bug fix event title html tag
 - prefix nh for variable
@@ -351,5 +366,5 @@ Make sure you get the latest version
 
 == Localization ==
 
-Currently available in English, Frensh, Spain and German.
+Currently available in English and German.
 Want to contribute with a translation to your language? Please contact me at contact@blappsta.com
