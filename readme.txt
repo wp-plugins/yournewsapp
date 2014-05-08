@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.6.1
+Stable tag: 0.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,10 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.6.2 =
+- bug fix event title html tag
+- prefix nh for variable
+
 = 0.6.1 =
 - bug fix new post on homescreen
 - bug fix other post types
@@ -205,6 +209,9 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.6.2 =
+- bug fix event title html tag
+- prefix nh for variable
 
 
 = 0.6.1 =
