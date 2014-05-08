@@ -1,7 +1,11 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.6.1
+Version: 0.6.2 
+
+//PRefix für variable eingeführt
+
+
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
 Author: Nebelhorn Medien GmbH
@@ -12,7 +16,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.6.1";
+$nh_ynaa_version = "0.6.2";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -44,7 +48,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 		private $homepreset_settings_key = 'nh_ynaa_homepreset_settings';		//App Homepreset Settings
 		private $plugin_options_key = 'nh_ynaa_plugin_options';		//Plugin Settings
 		private $plugin_settings_tabs = array();					//All Tabs for the Plugin
-		public $appmenus_pre = array();								//Vordefinerte App Men�s
+		public $appmenus_pre = array();								//Vordefinerte App Menüs
+		
+		private $requesvar ; // Define Get POST Requst Var
 		
 		
 		public $tabs = array(
@@ -134,6 +140,8 @@ if(!class_exists('NH_YNAA_Plugin'))
         {
 			$this->logo_image_width = $logo_image_width;
 			$this->logo_image_height = $logo_image_height;
+			
+			$this->nh_set_request_var();
 		
 			//Action Initial App and Set WP Options
 			add_action( 'init', array( &$this, 'nh_ynaa_load_settings' ) );			
@@ -181,6 +189,38 @@ if(!class_exists('NH_YNAA_Plugin'))
 			add_action( 'wpmu_new_blog', array(&$this,'nh_new_blog'));    
 			
         } // END public function __construct
+		
+		/**
+		* SET up all REquest, POST , GET VAr Name
+		*/
+		private function nh_set_request_var($prefix = ''){
+			if(isset($_GET['nh_prefix'])) $prefix = $_GET['nh_prefix'].'_';
+			$this->requesvar['id']= $prefix.'id';
+			$this->requesvar['option']= $prefix.'option';
+			$this->requesvar['ts']= $prefix.'ts';			
+			$this->requesvar['sorttype']= $prefix.'sorttype';
+			$this->requesvar['post_id']= $prefix.'post_id';
+			$this->requesvar['post_ts']= $prefix.'post_ts';
+			$this->requesvar['limit']= $prefix.'limit';
+			$this->requesvar['n']= $prefix.'n';
+			$this->requesvar['action']= $prefix.'action';
+			$this->requesvar['key']= $prefix.'key';
+			$this->requesvar['comment']= $prefix.'comment';
+			$this->requesvar['name']= $prefix.'name';
+			$this->requesvar['email']= $prefix.'email';
+			$this->requesvar['comment_id']= $prefix.'comment_id';
+			
+			//App Infos
+			$this->requesvar['lang']= $prefix.'lang';
+			$this->requesvar['b']= $prefix.'b';
+			$this->requesvar['h']= $prefix.'h';
+			$this->requesvar['pl']= $prefix.'pl';
+			$this->requesvar['pv']= $prefix.'pv';
+			$this->requesvar['d']= $prefix.'d';	
+			
+			//Backend
+			$this->requesvar['tab']= $prefix.'tab';
+		}// END unction nh_set_request_var
 
 		/**
 		* Active Multisite
@@ -1245,7 +1285,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			{
 				wp_die(__('You do not have sufficient permissions to access this page.'));
 			}
-			$tab = isset( $_GET['tab'] ) ? $_GET['tab'] : $this->general_settings_key;
+			$tab = isset( $_GET[$this->requesvar['tab']] ) ? $_GET[$this->requesvar['tab']] : $this->general_settings_key;
 			
 			?>
 			<div class="wrap">
@@ -1282,7 +1322,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 * nh_ynaa_plugin_options_page method.
 		 */
 		function nh_ynaa_plugin_options_tabs() {
-			$current_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : $this->general_settings_key;
+			$current_tab = isset( $_GET[$this->requesvar['tab']] ) ? $_GET[$this->requesvar['tab']] : $this->general_settings_key;
 
 			screen_icon();
 			echo '<h2 class="nav-tab-wrapper">';
@@ -1406,6 +1446,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 */
 		private function nh_ynaa_errorcode($er=10){
 			$errorarray = array();
+			$errorarray['url']="http://".$_SERVER['HTTP_HOST'].$_SERVER['QUERY_STRING'];
 			switch($er){
 				case 0: $errorarray['error_code']= 0; $errorarray['error_message']='No Error'; break;
 				case 11: $errorarray['error_code']= 11; $errorarray['error_message']='Unknown controller'; break;
@@ -1452,7 +1493,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$returnarray['error']=$this->nh_ynaa_errorcode(14);
 			}			
 			else {
-				if($_GET['ts']) $ts= $_GET['ts'];
+				if($_GET[$this->requesvar['ts']]) $ts= $_GET[$this->requesvar['ts']];
 				else $ts = 0;
 				
 				$returnarray['error']=$this->nh_ynaa_errorcode(0);
@@ -1589,10 +1630,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$returnarray['error']=$this->nh_ynaa_errorcode(23);
 			}
 			else {
-				if($_GET['ts']) $ts= $_GET['ts'];
+				if($_GET[$this->requesvar['ts']]) $ts= $_GET[$this->requesvar['ts']];
 				else $ts = 0;
 				
-				/*if(($this->general_settings['homescreentype'] && $this->general_settings['sorttype']) || ($_GET['option']=1 && $_GET['sorttype']) ){
+				/*if(($this->general_settings['homescreentype'] && $this->general_settings['sorttype']) || ($_GET[$this->requesvar['option']]=1 && $_GET[$this->requesvar['sorttype']]) ){
 					// The Query
 					$args = array('post_status'=>'publish' , 'post_type'=>'post', 'nopaging'=>true);
 					$the_query = new WP_Query( $args );
@@ -1817,7 +1858,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			}
 			else {
 				
-				if($_GET['ts']) $ts= $_GET['ts'];
+				if($_GET[$this->requesvar['ts']]) $ts= $_GET[$this->requesvar['ts']];
 				else $ts = 0;
 				if($this->teaser_settings['teaser']){
 					$returnarray['changes']=0;
@@ -1883,8 +1924,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 			  'order' => 'ASC',
 			  'hide_empty'=>1
 			);
-			if($_GET['ts']) {
-				$ts= $_GET['ts'];				
+			if($_GET[$this->requesvar['ts']]) {
+				$ts= $_GET[$this->requesvar['ts']];				
 			}
 			else {
 				$ts = 0;				
@@ -2080,11 +2121,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 */
 		private function nh_ynaa_articles($id=0, $lim=0){
 			$allowRemove=1;
-			//$returnarray['uma']['info_Articles_start'] = $id.'start nh_ynaa_articles'.$_GET['id']; 
+			//$returnarray['uma']['info_Articles_start'] = $id.'start nh_ynaa_articles'.$_GET[$this->requesvar['id']]; 
 			//$returnarray['uma']['categories_settings'] = $this->categories_settings;
-				if(isset($_GET['id']) || $id){
+				if(isset($_GET[$this->requesvar['id']]) || $id){
 					if(( $id))$tempid= $id;
-					else $tempid= $_GET['id'];
+					else $tempid= $_GET[$this->requesvar['id']];
 					if($this->categories_settings[$tempid]['hidecat']) {
 						$returnarray['changes']=1;	
 						$returnarray['timestamp']=time();	
@@ -2094,12 +2135,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 					}
 				}
 				
-				if(($_GET['option']=1 && $_GET['sorttype']) ){
+				if(($_GET[$this->requesvar['option']]=1 && $_GET[$this->requesvar['sorttype']]) ){
 					// The Query
 					$returnarray['changes']=0;
-					if($_GET['ts'])$returnarray['timestamp']=$_GET['ts'];
+					if($_GET[$this->requesvar['ts']])$returnarray['timestamp']=$_GET[$this->requesvar['ts']];
 					else $returnarray['timestamp']=0;
-					if(isset($_GET['id'])) $args['cat'] =$_GET['id'];
+					if(isset($_GET[$this->requesvar['id']])) $args['cat'] =$_GET[$this->requesvar['id']];
 					elseif($id) $args['cat'] =$id; 
 					$args ['post_status'] = 'publish'; 
 					$args ['post_type'] = 'any'; 
@@ -2134,27 +2175,27 @@ if(!class_exists('NH_YNAA_Plugin'))
 					wp_reset_postdata();
 					return array('articles'=>$returnarray);
 				}
-				elseif(isset($_GET['id']) || $id) {
+				elseif(isset($_GET[$this->requesvar['id']]) || $id) {
 				$returnarray['changes']=0;
 				//PostID
 				//If Post ID Check if is ist the newest Post and if hat changes
-				if(isset($_GET['post_id']) && isset($_GET['post_ts'])){
+				if(isset($_GET[$this->requesvar['post_id']]) && isset($_GET[$this->requesvar['post_ts']])){
 					$break = false;
-					$latest_cat_post = new WP_Query( array('posts_per_page' => 1, 'post_type'=>'any', 'category__in' => array($_GET['id'])));
+					$latest_cat_post = new WP_Query( array('posts_per_page' => 1, 'post_type'=>'any', 'category__in' => array($_GET[$this->requesvar['id']])));
 					//var_dump($latest_cat_post);
 					
 					if( $latest_cat_post->have_posts() ) {						
-						if($latest_cat_post->posts[0]->ID == $_GET['post_id']){
+						if($latest_cat_post->posts[0]->ID == $_GET[$this->requesvar['post_id']]){
 							$break = true;	
-							if(strtotime($latest_cat_post->posts[0]->post_modified)>$_GET['post_ts']){
+							if(strtotime($latest_cat_post->posts[0]->post_modified)>$_GET[$this->requesvar['post_ts']]){
 								$ts = strtotime($latest_cat_post->posts[0]->post_modified);
 								$returnarray['changes']=1;
-								//var_dump($this->categories_settings[$_GET['id']]);
+								//var_dump($this->categories_settings[$_GET[$this->requesvar['id']]]);
 								if ( has_post_thumbnail($latest_cat_post->posts[0]->ID)) {
 									$post_thumbnail_image=wp_get_attachment_image_src(get_post_thumbnail_id($latest_cat_post->posts[0]->ID), 'original');
 								}
-								/*elseif($this->categories_settings[$_GET['id']]['img']){
-									$post_thumbnail_image=array($this->categories_settings[$_GET['id']]['img']);
+								/*elseif($this->categories_settings[$_GET[$this->requesvar['id']]]['img']){
+									$post_thumbnail_image=array($this->categories_settings[$_GET[$this->requesvar['id']]]['img']);
 								}*/
 								else {
 									$post_thumbnail_image=array();
@@ -2164,7 +2205,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 								//$returnarray['items'][]=array('pos'=>1, 'type' => $post->post_type, 'allowRemove'=> $allowRemove, 'id'=> $category->term_id, 'parent_id'=>0, 'title'=>$category->name, 'img'=>$post_thumbnail_image[0], 'post_id'=>$latest_cat_post->post->ID );
 							}
 							else {
-								$ts = $_GET['post_ts'];
+								$ts = $_GET[$this->requesvar['post_ts']];
 							}
 						}
 								
@@ -2190,10 +2231,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 					if($lim) $limit = $lim;
 					else $limit=999;
 				}
-				else  {$cid = $_GET['id'];
+				else  {$cid = $_GET[$this->requesvar['id']];
 					//LIMIT
-					if($_GET['limit']) {
-						$limit=$_GET['limit'];
+					if($_GET[$this->requesvar['limit']]) {
+						$limit=$_GET[$this->requesvar['limit']];
 					}
 					else {
 						$limit = 999;
@@ -2201,8 +2242,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 				}
 				
 				//Timestamp
-				if($_GET['ts']) {
-					$ts= $_GET['ts'];
+				if($_GET[$this->requesvar['ts']]) {
+					$ts= $_GET[$this->requesvar['ts']];
 					//Immer cahnges true
 					$ts=0;
 					$ts_string = date('Y-m-d H:i:s',$ts);					
@@ -2270,8 +2311,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 						if ( has_post_thumbnail($post->ID)) {
 							$post_thumbnail_image=wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'medium');
 						}
-						/*elseif($this->categories_settings[$_GET['id']]['img']){
-							$post_thumbnail_image=array($this->categories_settings[$_GET['id']]['img']);
+						/*elseif($this->categories_settings[$_GET[$this->requesvar['id']]]['img']){
+							$post_thumbnail_image=array($this->categories_settings[$_GET[$this->requesvar['id']]]['img']);
 						}*/
 						else $post_thumbnail_image[0] = '';	
 						//echo esc_url($post_thumbnail_image[0]);
@@ -2303,16 +2344,16 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 * Return Aricle Array
 		 */
 		private function nh_ynaa_article(){			
-			if(isset($_GET['id'])){
+			if(isset($_GET[$this->requesvar['id']])){
 				//backup main post
 				global $post;
 				$stored_post = clone $post;
-				$cid = $_GET['id'];
+				$cid = $_GET[$this->requesvar['id']];
 				$returnarray['error']=$this->nh_ynaa_errorcode(0);
 				
 				$post1 = get_post( $cid);
 				
-				if($_GET['ts']) $ts= $_GET['ts'];
+				if($_GET[$this->requesvar['ts']]) $ts= $_GET[$this->requesvar['ts']];
 				else $ts = 0;
 				
 				if($post1){				
@@ -2464,7 +2505,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				else {
 					$returnarray['error']=$this->nh_ynaa_errorcode(17);
 					
-					$returnarray['id'] = $_GET['id'];
+					$returnarray['id'] = $_GET[$this->requesvar['id']];
 				}
 				
 				if($stored_post) $post = clone $stored_post;
@@ -2486,8 +2527,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 		*/
 		private function nh_ynaa_social(){
 			$returnarray['error']=$this->nh_ynaa_errorcode(24);
-			if($_GET['n']=='fb'){
-				if($_GET['limit']) $limit= $_GET['limit'];
+			if($_GET[$this->requesvar['n']]=='fb'){
+				if($_GET[$this->requesvar['limit']]) $limit= $_GET[$this->requesvar['limit']];
 				else $limit=50;
 				$fb= $this->nh_ynaa_get_fbcontent($limit);
 				if($fb){
@@ -2512,33 +2553,33 @@ if(!class_exists('NH_YNAA_Plugin'))
 		private function nh_ynaa_comments(){
 			$returnarray['error']=$this->nh_ynaa_errorcode(0);
 			$returnarray['changes']=1;
-			if($_GET['ts'])$returnarray['ts']=$_GET['ts'];
+			if($_GET[$this->requesvar['ts']])$returnarray['ts']=$_GET[$this->requesvar['ts']];
 			else $returnarray['ts']=0;
-			if($_GET['id']){
+			if($_GET[$this->requesvar['id']]){
 				global $wpdb;
 				$table_comments = $wpdb->prefix . "comments";
 				//$table_comments_meta = $wpdb->prefix . "comments_meta";
 				
-				if($_GET['action']=='add' ){
-					if(!$_REQUEST['key'] || (!$_REQUEST['comment'] || trim($_REQUEST['comment']) =='') || !$_REQUEST['name'] || !$_REQUEST['email']  ) $returnarray['error']=$this->nh_ynaa_errorcode(30);
-					elseif(!is_email($_REQUEST['email'])){
+				if($_GET[$this->requesvar['action']]=='add' ){
+					if(!$_REQUEST[$this->requesvar['key']] || (!$_REQUEST[$this->requesvar['comment']] || trim($_REQUEST[$this->requesvar['comment']]) =='') || !$_REQUEST[$this->requesvar['name']] || !$_REQUEST[$this->requesvar['email']]  ) $returnarray['error']=$this->nh_ynaa_errorcode(30);
+					elseif(!is_email($_REQUEST[$this->requesvar['email']])){
 						$returnarray['error']=$this->nh_ynaa_errorcode(31);
 					}
 					else{
-						$commentkey = $wpdb->get_var( "SELECT meta_id FROM $wpdb->commentmeta WHERE meta_key = 'ckey' AND meta_value = '".trim($_REQUEST['key'])."' LIMIT 1" );
+						$commentkey = $wpdb->get_var( "SELECT meta_id FROM $wpdb->commentmeta WHERE meta_key = 'ckey' AND meta_value = '".trim($_REQUEST[$this->requesvar['key']])."' LIMIT 1" );
 						if($commentkey) $returnarray['error']=$this->nh_ynaa_errorcode(32);
 						else {
 							$ts = time();
 							$ts = current_time('timestamp');
 							$comment_parent = 0;
 							//$wpdb->insert('temp',array('text'=>serialize($_REQUEST)), array('%s'));
-							if($_REQUEST['comment_id']) $comment_parent = $_REQUEST['comment_id'];
+							if($_REQUEST[$this->requesvar['comment_id']]) $comment_parent = $_REQUEST[$this->requesvar['comment_id']];
 							$commentdata = array(
-								'comment_post_ID' => $_GET['id'],
-								 'comment_author' => urldecode(trim($_REQUEST['name'])),
-								 'comment_author_email' =>trim($_REQUEST['email']),
+								'comment_post_ID' => $_GET[$this->requesvar['id']],
+								 'comment_author' => urldecode(trim($_REQUEST[$this->requesvar['name']])),
+								 'comment_author_email' =>trim($_REQUEST[$this->requesvar['email']]),
 								 'comment_author_url' => 'http://',
-								 'comment_content' => urldecode(trim($_REQUEST['comment'])),
+								 'comment_content' => urldecode(trim($_REQUEST[$this->requesvar['comment']])),
 								 'comment_type' => '',
 								'comment_parent' => $comment_parent,
 								'user_id' => 0,
@@ -2548,7 +2589,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 								'comment_approved' => 0
 							);
 							if($newcommentid = wp_insert_comment($commentdata)){
-								add_comment_meta( $newcommentid, 'ckey', trim($_REQUEST['key']) );
+								add_comment_meta( $newcommentid, 'ckey', trim($_REQUEST[$this->requesvar['key']]) );
 								$returnarray['error']=$this->nh_ynaa_errorcode(0);
 								$returnarray['ts']=$ts;
 								$returnarray['comment_id']=$newcommentid;
@@ -2560,11 +2601,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 					}
 				}
 				else{
-					$post_7 = get_post($_GET['id']); 
+					$post_7 = get_post($_GET[$this->requesvar['id']]); 
 					if($post_7->comment_status == 'open'){
 						$returnarray['comment_status']=$post_7->comment_status;
 						$args = array(
-							'post_id' => $_GET['id'], // use post_id, not post_ID
+							'post_id' => $_GET[$this->requesvar['id']], // use post_id, not post_ID
 							'status' => 'approve',
 							'count' => true //return only the count
 						);
@@ -2575,13 +2616,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 						if($comments_count>0){
 							
 							$args = array(
-								'post_id' => $_GET['id'], // use post_id, not post_ID
+								'post_id' => $_GET[$this->requesvar['id']], // use post_id, not post_ID
 								'status' => 'approve',
 								'$order' => 'ASC'
 								
 							);
 								
-							$comments = $wpdb->get_results( "SELECT *   FROM $wpdb->comments WHERE comment_approved=1 AND comment_parent=0 AND comment_post_id=".$_GET['id']."  ORDER BY comment_date_gmt DESC ", ARRAY_A  );
+							$comments = $wpdb->get_results( "SELECT *   FROM $wpdb->comments WHERE comment_approved=1 AND comment_parent=0 AND comment_post_id=".$_GET[$this->requesvar['id']]."  ORDER BY comment_date_gmt DESC ", ARRAY_A  );
 							if($comments){
 								foreach($comments as $com){
 									$parrent_com[$com['comment_ID']][] = $com;
@@ -2590,7 +2631,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 								}
 							}
 							
-							$comments = $wpdb->get_results( "SELECT *   FROM $wpdb->comments WHERE comment_approved=1 AND comment_parent!=0 AND comment_post_id=".$_GET['id']."   ORDER BY comment_date_gmt ASC ", ARRAY_A  );
+							$comments = $wpdb->get_results( "SELECT *   FROM $wpdb->comments WHERE comment_approved=1 AND comment_parent!=0 AND comment_post_id=".$_GET[$this->requesvar['id']]."   ORDER BY comment_date_gmt ASC ", ARRAY_A  );
 							if($comments){
 								foreach($comments as $com){
 									if(array_key_exists($com['comment_parent'],$parrent_com))
@@ -2709,7 +2750,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$returnarray['error']=$this->nh_ynaa_errorcode(0);
 			$returnarray['changes']=1;
 			$returnarray['ts'] = 0;
-			if($_GET['ts'])	$returnarray['ts']=$_GET['ts'];
+			if($_GET[$this->requesvar['ts']])	$returnarray['ts']=$_GET[$this->requesvar['ts']];
 
 			if(!$this->general_settings['location']){
 				$returnarray['error']=$this->nh_ynaa_errorcode(34);
@@ -2831,26 +2872,26 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$limit = " LIMIT $lim ";
 					$limit2 = $lim;
 				}
-				elseif($_GET['limit'] ) {
-					$limit = " LIMIT ".$_GET['limit']." ";
-					$limit2 = $_GET['limit'];
+				elseif($_GET[$this->requesvar['limit']] ) {
+					$limit = " LIMIT ".$_GET[$this->requesvar['limit']]." ";
+					$limit2 = $_GET[$this->requesvar['limit']];
 				}
 				else $limit = " LIMIT 9999 ";
 				
 				$returnarray['changes']=0;
 				//PostID
 				//If Post ID Check if is ist the newest Post and if hat changes
-				if(isset($_GET['post_id']) && isset($_GET['post_ts'])){
+				if(isset($_GET[$this->requesvar['post_id']]) && isset($_GET[$this->requesvar['post_ts']])){
 					$break = false;
 					$latest_cat_post = new WP_Query( array('posts_per_page' => 1, 'post_type' => 'event'));
 					//var_dump($latest_cat_post);
 					if( $latest_cat_post->have_posts() ) : while( $latest_cat_post->have_posts() ) : $latest_cat_post->the_post();  
-						if($latest_cat_post->post->ID == $_GET['post_id']){
+						if($latest_cat_post->post->ID == $_GET[$this->requesvar['post_id']]){
 							$break = true;		
 							$i = 1;		
 							
 										
-							if(strtotime($latest_cat_post->post->post_modified)>$_GET['post_ts']){
+							if(strtotime($latest_cat_post->post->post_modified)>$_GET[$this->requesvar['post_ts']]){
 								$ts = strtotime($latest_cat_post->post->post_modified);
 								$returnarray['changes']=1;
 								if ( has_post_thumbnail()) {
@@ -2927,7 +2968,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						
 							}
 							else {
-								$ts = $_GET['post_ts'];
+								$ts = $_GET[$this->requesvar['post_ts']];
 							}
 						}
 						else {							
@@ -2948,8 +2989,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 				} 
 				
 				//Timestamp
-				if($_GET['ts']) {
-					$ts= $_GET['ts'];
+				if($_GET[$this->requesvar['ts']]) {
+					$ts= $_GET[$this->requesvar['ts']];
 					$ts_string = date('Y-m-d H:i:s',$ts);					
 				}
 				else {
@@ -3050,8 +3091,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 * Function to get event details
 		*/
 		private function nh_ynaa_event() {
-			if(isset($_GET['id'])){
-				if($_GET['ts']) $ts= $_GET['ts'];
+			if(isset($_GET[$this->requesvar['id']])){
+				if($_GET[$this->requesvar['ts']]) $ts= $_GET[$this->requesvar['ts']];
 				else $ts = 0;
 				$weekdays = array(__('Sunday'), __('Monday'), __('Tuesday'), __('Wednesday'), __('Thursday'), __('Friday'), __('Saturday'));
 				$returnarray['changes']=0;
@@ -3065,7 +3106,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					l.location_name, l.location_address, l.location_town, l.location_state, l.location_postcode, l.location_region, l.location_country, l.location_latitude, l.location_longitude
 					from $table_em_events e
 					left join $table_em_locations l on l.location_id=e.location_id
-					WHERE e.post_id=".$_GET['id']."			
+					WHERE e.post_id=".$_GET[$this->requesvar['id']]."			
 					", array('%d', '$d', '%s', '%d', '%s', '%s', '%s', '%d','%d', '%d', '%s', '%d', '%d', '%d', '%s')));
 					
 				if($event) {
