@@ -359,7 +359,10 @@ jQuery(document).ready(function($){
 	});
 	window.send_to_editor = function(html) {
 		 imgurl = $('img',html).attr('src');
-		 
+		  if (typeof imgurl === "undefined") {
+			  imgurl = $(html).attr('src');
+		 }
+		// alert(imgurl);
 		 $('#'+$send_url_to).val(imgurl);			 
 		 
 		 var tempid = '#'+$('#'+$send_url_to).attr('data-id');
@@ -492,14 +495,13 @@ jQuery(document).ready(function($){
 	
 	//Show Post on category overvie page
 	$('.showoverviewposts').change(function(){
-		
+		alert($(this).val());
 		var catid = $(this).attr('data-catid');
 		if($(this).val() == '1'){
-		
-			$('#showoverviewposts'+catid).show();
+			$('#showoverviewposts'+$catid).show();
 		}
 		else{
-			$('#showoverviewposts'+catid).hide();
+			$('#showoverviewposts'+$catid).show();
 		}
 
 	});

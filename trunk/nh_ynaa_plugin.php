@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.6.3 
+Version: 0.6.4 
 
 //PRefix für variable eingeführt
 
@@ -16,7 +16,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.6.3";
+$nh_ynaa_version = "0.6.4";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -1393,50 +1393,79 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 */
 		public function nh_ynaa_template_redirect() {			
 			$ynaa_var = get_query_var('ynaa');
-			header('Content-Type: application/json');
 			if($ynaa_var=='settings'){
+				header('Content-Type: application/json');
 				print_r(json_encode($this->nh_ynaa_settings()));				
+				
 			}
 			elseif($ynaa_var=='homepresets'){
+				header('Content-Type: application/json');
 				print_r(json_encode($this->nh_ynaa_homepresets()));				
 			}
 			elseif($ynaa_var=='teaser'){
+				header('Content-Type: application/json');
 				print_r(json_encode($this->nh_ynaa_teaser()));				
 			}
 			elseif($ynaa_var=='categories'){
+				header('Content-Type: application/json');
 				print_r(json_encode($this->nh_ynaa_categories()));				
 			}
 			elseif($ynaa_var=='articles'){
+				header('Content-Type: application/json');
 				print_r(json_encode($this->nh_ynaa_articles()));				
 			}
 			elseif($ynaa_var=='article'){
-				print_r(json_encode($this->nh_ynaa_article()));				
+				header('Content-Type: application/json');
+				//add_action('wp_head', array($this,'nh_buffer_start'));
+				//add_action('wp_footer', array($this,'nh_buffer_end'));
+				//ob_start(array($this,"nh_op_callback"));
+				
+				//remove_action( 'wp', 'wp_donottrack_ob_setup' );
+				print_r(json_encode($this->nh_ynaa_article()));	
+				//$out1 = ob_get_contents();
+				
+				//ob_end_clean();
+				//ob_end_flush();	
+				//echo substr($out1,strpos($out1,'<body>')+6,100);		
 			}
 			elseif($ynaa_var=='events'){
+				header('Content-Type: application/json');
 				print_r(json_encode($this->nh_ynaa_events()));				
 			}
 			elseif($ynaa_var=='event'){
+				header('Content-Type: application/json');
 				print_r(json_encode($this->nh_ynaa_event()));				
 			}
 			elseif($ynaa_var=='social'){
+				header('Content-Type: application/json');
 				print_r(json_encode($this->nh_ynaa_social()));				
 			}
 			elseif($ynaa_var=='comments'){
+				header('Content-Type: application/json');
 				print_r(json_encode($this->nh_ynaa_comments()));				
 			}
 			elseif($ynaa_var=='ibeacon'){
+				header('Content-Type: application/json');
 				print_r(json_encode($this->nh_ynaa_ibeacon()));				
 			}
 			elseif($ynaa_var=='locations'){
+				header('Content-Type: application/json');
 				print_r(json_encode($this->nh_ynaa_locations()));				
 			}
+			elseif($ynaa_var=='content'){
+				header('Content-Type: text/html');
+				echo ($this->nh_ynaa_content());				
+			}
 			elseif($ynaa_var=='yna_settings'){
+				header('Content-Type: application/json');
 				print_r(json_encode($this->nh_ynaa_yna_settings()));				
 			}
 			elseif($ynaa_var){
+				header('Content-Type: application/json');
 				print_r(json_encode(array('error'=>$this->nh_ynaa_errorcode(11))));
 			}							
 			else {
+				header('Content-Type: application/json');
 				print_r(json_encode(array('error'=>$this->nh_ynaa_errorcode())));
 			}
 			exit();
@@ -1447,7 +1476,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 */
 		private function nh_ynaa_errorcode($er=10){
 			$errorarray = array();
-			$errorarray['url']="http://".$_SERVER['HTTP_HOST'].$_SERVER['QUERY_STRING'];
+			$errorarray['url']="http://".$_SERVER['HTTP_HOST'].'/?'.$_SERVER['QUERY_STRING'];
 			switch($er){
 				case 0: $errorarray['error_code']= 0; $errorarray['error_message']='No Error'; break;
 				case 11: $errorarray['error_code']= 11; $errorarray['error_message']='Unknown controller'; break;
@@ -1565,7 +1594,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$returnarray['allowreorder']=1;
 					if($this->general_settings['comments'])	$returnarray['comments']=$this->general_settings['comments'];
 					else $returnarray['comments']=0;
-					$returnarray['style']='<style type="text/css">body { color:#'.$this->general_settings['ct'].';}'.($this->general_settings['css']).'</style>';					
+					//$returnarray['style']='<style type="text/css">body { color:#'.$this->general_settings['ct'].';}'.($this->general_settings['css']).'</style>';					
 					
 					if($this->menu_settings['menu']){	
 						//var_dump($this->menu_settings);					
@@ -2419,7 +2448,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 						//echo $content;
 						//$content = $post->post_content;*/
 						//$returnarray['content'] = '<html><head><style type="text/css">'.$this->general_settings['css'].';}</style></head><body>'.$content.'</body></html>';
-					
+						
+						if(isset($_GET[$this->requesvar['nh_av']]) && (($_GET[$this->requesvar['pl']]=='ios' && $_GET[$this->requesvar['pl']]>=1.7) || ($_GET[$this->requesvar['pl']]=='android' && $_GET[$this->requesvar['pl']]>1.3))){
+						}
+						else{
 						$queried_post = get_post($returnarray['id']);
 						$content = $queried_post->post_content;
 						$content = apply_filters('the_content', $content);
@@ -2455,18 +2487,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 
 						$content = str_replace('<script type="text/javascript">aop_around(document.body, \'appendChild\'); aop_around(document.body, \'insertBefore\'); </script>','',$content);
 						$content = str_replace(array("<body>\r\n","<body>\r","<body>\n"),'<body>',$content);
-						/*$head = substr($content,strpos($content,'<meta charset="utf-8">'),strpos($content,'<meta name="viewport"')-(strpos($content,'<meta charset="utf-8">')));
-						if($head ) {
-							$head = trim($head);
-							$returnarray['head1'] = $head;
-							$head = substr($head,22);
-							
-							if($head){
-								
-							}
-						}*/
+						
 						//$returnarray['uma']['post_content_0']= $content;
 						$returnarray['content']=$content;
+						}
 						//$returnarray['uma']['content']=$content;
 						$returnarray['changes']=1;				
 						$returnarray['type']=get_post_type();					
@@ -2538,6 +2562,53 @@ if(!class_exists('NH_YNAA_Plugin'))
 		
 		
 		} // END private function article()
+		
+		
+		/**
+		* Return $content HTML
+		*/
+		private function nh_ynaa_content(){
+			$contetn = '';
+			if($_GET[$this->requesvar['id']]){
+				$queried_post = get_post($_GET[$this->requesvar['id']]);
+				$content = $queried_post->post_content;
+				$content = apply_filters('the_content', $content);
+				//$content = str_replace(']]>', ']]&gt;', $content);
+				//$content = str_replace("\r\n",'\n',$content);
+				//$content = utf8_encode($content);
+						
+				//$content = preg_replace('/[\x00-\x1F\x80-\x9F]/u', '',$content);
+				$content = $this->nh_ynaa_get_appcontent($content);
+				//$content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$content);
+				$this->general_settings['css'] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$this->general_settings['css']);
+				$this->general_settings['css'] = str_replace('../fonts/stylesheet.css',plugins_url( 'fonts/stylesheet.css' , __FILE__ ),$this->general_settings['css']);
+				
+				
+				if(strpos($content,'<html><head><meta charset="utf-8"></head>')){
+							$content = str_replace('<html><head><meta charset="utf-8"></head>','<html data-html="html1"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+						}
+				elseif(strpos($content,'<html>')) {
+							//if(get_bloginfo('url') == 'http://www.automotiveit.eu' || get_bloginfo('url') == 'http://automotiveit.eu'  || (is_array($active_plugins) && in_array('wpseo/wpseo.php',$active_plugins)) ){
+								//$content = str_replace('<html>','<html data-html="html2a"><head><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+							//}
+							//elseif( get_bloginfo('url') == 'http://www.bailazu.de'){
+								//$content = utf8_encode(html_entity_decode($content));
+								//$returnarray['uma']['utf8_encode_html_entity_decode_content']= $content;
+								
+								//$content = str_replace('<html>','<html data-html="html2a"><head><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+							//}
+							//else {
+								//$content = str_replace('<html>','<html data-html="html2"><head><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+								$content = str_replace('<html>','<html data-html="html2b"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+
+							//}
+						}
+						else {
+							$content = '<!doctype html><html data-html="html3"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head><body>'.$content.'</body></html>';
+						}
+			}
+			return $content;
+		}
 		
 		/**
 		 * Return Social 
@@ -3669,7 +3740,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			echo '<input type="button" value="'.__('Send Push').'" id="nh_ynaa_sendpush" />';
 			
 			
-		  echo '</label></div> ';
+		  echo '</label></div><div id="nh-push-dialog" title="Push"><span style="display:none;">'.__('Please wait...','nh-ynaa').'</span></div> ';
 
 		}
 		
@@ -4017,16 +4088,44 @@ if(!class_exists('NH_YNAA_Plugin'))
 		*/
 		function ny_ynaa_push_action() {
 			
-			if(!($this->push_settings['appkey']) || $this->push_settings['appkey'] == '') { _e('No Appkey.'); die(); }
-			if(!($this->push_settings['pushsecret']) || $this->push_settings['pushsecret'] == '') {_e('No Push Secret Key.');die(); }
-			if(!($this->push_settings['pushurl']) || $this->push_settings['pushurl'] == '') { _e('No Push Url.'); die(); }
+			if(!($this->push_settings['appkey']) || $this->push_settings['appkey'] == '') { _e('No Appkey.', 'nh-ynaa'); die(); }
+			if(!($this->push_settings['pushsecret']) || $this->push_settings['pushsecret'] == '') {_e('No Push Secret Key.', 'nh-ynaa');die(); }
+			if(!($this->push_settings['pushurl']) || $this->push_settings['pushurl'] == '') { _e('No Push Url.', 'nh-ynaa'); die(); }
 			
 			define('APPKEY', esc_attr( $this->push_settings['appkey'] )); // App Key
 			define('PUSHSECRET', esc_attr( $this->push_settings['pushsecret'] )); // Master Secret
 			define('PUSHURL', esc_attr( $this->push_settings['pushurl'] ));
 			$device_types = array('ios', 'android');
 			//$device_types = array('ios');
-			
+			$cat = '';
+			if($_POST['push_cat']) $cat = (implode(',',$_POST['push_cat']));
+			$url= 'http://www.blappsta.com/';
+			$qry_str = '?bas=push&pkey='.APPKEY.'&pmkey='.PUSHSECRET.'&url='.get_bloginfo('url').'&nhcat='.$cat.'&id='.$_POST['push_post_id'].'&push_text='.$_POST['push_text'];
+			if(!ini_get('allow_url_fopen')){
+				//echo ('http://www.blappsta.com/?bas=push&pkey='.APPKEY.'&pmkey='.PUSHSECRET.'&url='.get_bloginfo('url').'&cat='.$cat.'&id='.$_POST['push_post_id'].'&push_text='.$_POST['push_text']);
+				echo (file_get_contents($url.$qry_str.'&nh_mode=fgc'));
+			}
+			elseif(!function_exists('curl_version')){
+				$ch = curl_init();
+				// Set query data here with the URL
+				curl_setopt($ch, CURLOPT_URL, $url . $qry_str.'&nh_mode=curl'); 
+				
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_TIMEOUT, '3');
+				$push_response = trim(curl_exec($ch));
+				curl_close($ch);
+				echo($push_response);
+			}			
+			else {
+				/*echo '<script type="text/javascript">';
+				echo 'window.open("'.$url.$qry_str.'&nh_mode=js");';
+				echo '</script>';*/
+				echo 'nomodul';
+				echo ' '.$url . $qry_str.'&nh_mode=js';
+				//_e('Error: No supported Modul installed.', 'nh-ynaa');
+			}
+			die();
+			return;
 			if($cat = $_POST['push_cat']){ 
 				
 				//$cat= explode(',',$_POST['cat']);
@@ -4299,13 +4398,24 @@ jQuery(document).ready(function($) {
 			if($('#nh_ynaa_pushtext').val()=='') alert('<?php _e('Insert Pushtext!', 'nh-ynaa'); ?>');
 			else {
 				//alert('<?php _e('Pleas wait!'); ?>');
-								
+				jQuery('#nh-push-dialog span').show();
 				jQuery.ajax({
 					 type : "post",			 
 					 url : ajaxurl,
+					 //dataType:"json",
 					 data : {action: "ny_ynaa_push_action", push_post_id:<?php echo $post->ID; ?>, push_cat:[<?php echo $cat; ?>] , push_text:$('#nh_ynaa_pushtext').val()},
 					 success: function(data,textStatus,jqXHR ) {
-						alert(data);				
+						jQuery('#nh-push-dialog span').hide(); 
+						
+						if(data.substr(0,7)=='nomodul'){
+							//alert("window open");
+							window.open(data.substr(8));
+						}
+						else{
+							alert(data);	
+						}
+						
+						 console.log(data);
 					 }
 				  })   ;
 			}

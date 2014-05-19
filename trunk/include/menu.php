@@ -270,7 +270,7 @@
 										$k = 999999999;
 										?>
 										<!-- Report an Error -->
-                                        <li class="menu-item menu-item-depth-0 menu-item-<?php echo $menuitem['type']; ?> menu-item-edit-inactive pending disable" id="menu-item-<?php echo $menuitem['pos']; ?>" style="display: list-item;">
+                                        <li class="menu-item menu-item-depth-0 menu-item-<?php echo $menuitem['type']; ?> menu-item-edit-inactive pending disable" id="menu-item-<?php echo $menuitem['pos']; ?>" style="display:none;">
 												<dl class="menu-item-bar">
 													<dt class="menu-item-handle">
 														<span class="item-title"><span class="menu-item-title"><?php echo $menuitem['title']; ?></span></span>
@@ -292,8 +292,8 @@
 															
 														</label>
 													</p>									
-													<div class="menu-item-actions description-wide submitbox">
-														<span href="<?php echo $menuitem['pos']; ?>" id="delete-<?php echo $menuitem['pos']; ?>"  class=" submitdelete deletion"><?php _e("This item can't be remove."); ?></a>
+													<div class="menu-item-actions description-wide submitbox" >
+														<span href="<?php echo $menuitem['pos']; ?>" id="delete-<?php echo $menuitem['pos']; ?>"  class=" submitdelete deletion"><?php _e("This item can not be removed.", 'nh-ynaa'); ?></a>
 													</div>
 												</div><!-- .menu-item-settings-->
 											</li>

@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.6.3
+Stable tag: 0.6.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,11 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.6.4 =
+- bug fix
+- push support without curl
+- new controler content
+
 = 0.6.3 =
 - bug fix
 - work around for wpseo Plugin
@@ -217,6 +222,12 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.6.4 =
+- bug fix
+- push support without curl
+- new controler content
+
+
 = 0.6.3 =
 - bug fix
 - work around for wpseo Plugin
