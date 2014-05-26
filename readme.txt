@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.6.4
+Stable tag: 0.6.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,10 +85,17 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.6.5 =
+- bug fix empty map coordinates
+- order in category
+- sorting option in the categories
+- push bug fix
+
 = 0.6.4 =
 - bug fix
 - push support without curl
-- new controler content
+- new controller content
+- post order in categories
 
 = 0.6.3 =
 - bug fix
@@ -222,10 +229,16 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.6.5 =
+- bug fix empty map coordinates
+- order in category
+- sorting option in the categories
+- push bug fix
+
 = 0.6.4 =
 - bug fix
 - push support without curl
-- new controler content
+- new controller content
 
 
 = 0.6.3 =

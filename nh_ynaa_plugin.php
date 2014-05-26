@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.6.4 
+Version: 0.6.5
 
 //PRefix für variable eingeführt
 
@@ -16,7 +16,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.6.4";
+$nh_ynaa_version = "0.6.5";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -215,7 +215,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$this->requesvar['b']= $prefix.'b';
 			$this->requesvar['h']= $prefix.'h';
 			$this->requesvar['pl']= $prefix.'pl';
-			$this->requesvar['pv']= $prefix.'pv';
+			$this->requesvar['av']= $prefix.'av';
 			$this->requesvar['d']= $prefix.'d';	
 			
 			//Backend
@@ -566,7 +566,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				add_settings_field( 'ynaa-location', __('Enable locations and activate location metabox in posts', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'location'));
 			 }
 			add_settings_field( 'ynaa-eventplugin', __('Select your Event Manager:', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_eventplugin' ), $this->general_settings_key, 'extra_settings' , array('field'=>'eventplugin'));
-			add_settings_field( 'ynaa-order_value', __('Order posts on overview page by', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_order' ), $this->general_settings_key, 'extra_settings' , array('field'=>'order_value'));
+			//add_settings_field( 'ynaa-order_value', __('Order posts on overview page by', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_order' ), $this->general_settings_key, 'extra_settings' , array('field'=>'order_value'));
 			add_settings_field( 'ynaa-sort', __('Group by date', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'sort'));
 			add_settings_field( 'ynaa-extra', __('Allow comments in App', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'comments'));
 			
@@ -730,6 +730,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				echo '<div id="categorie-div-con" class="categorie-div-con"><ul>';
 				foreach($categories as $category){
 					 //var_dump($this->categories_settings);
+					 //var_dump($this->categories_settings[$category->term_id]);
 					 if(!$this->categories_settings[$category->term_id]['cat_name']) $this->categories_settings[$category->term_id]['cat_name']= $category->cat_name;
 					 
 			?>
@@ -746,7 +747,15 @@ if(!class_exists('NH_YNAA_Plugin'))
 								if($this->categories_settings[$category->term_id]['img']) echo '<a href="'.$category->term_id.'" class="reset-cat-img-link">'.(__('Reset image', 'nh-ynaa')).'</a>'; else echo '<br>';
 								echo '</div>'; ?>
                             <div>
+                            
                             	<div class="margin-botton"><input type="text" class="cat-name-input" value="<?php echo $this->categories_settings[$category->term_id]['cat_name']; ?>" name="<?php echo $this->categories_settings_key; ?>[<?php echo $category->term_id; ?>][cat_name]"></div>
+                                <div class="margin-botton"><label><?php _e('Order posts in category:', 'nh-ynaa'); ?></label>
+                                <select name="<?php echo $this->categories_settings_key; ?>[<?php echo $category->term_id; ?>][cat_order]" id="cat_order">
+                                	<option  value="date-desc" <?php if($this->categories_settings[$category->term_id]['cat_order'] == 'date-desc') echo ' selected '; ?>><?php _e('Recent posts','nh-ynaa') ?></option>
+                                    <option value="date-asc" <?php if($this->categories_settings[$category->term_id]['cat_order'] == 'date-asc') echo ' selected '; ?>><?php _e('Oldest posts','nh-ynaa') ?></option>
+                                    <option value="alpha-asc" <?php if($this->categories_settings[$category->term_id]['cat_order'] == 'alpha-asc') echo ' selected '; ?>><?php _e('Alphabetically','nh-ynaa') ?></option>
+                                </select>
+                                </div>
                             	<div class="margin-botton hide-cat-div"><?php _e('Hide this category and all posts in this categorie in the app:','nh-ynaa'); ?><br>
                                 <?php
 									if($this->categories_settings[$category->term_id]['hidecat']){
@@ -770,6 +779,7 @@ if(!class_exists('NH_YNAA_Plugin'))
                                      </div>
                                     
                                 </div>
+                                
                             	<div class="margin-botton  show-subcat-div">
 							<?php
 								if(get_categories(array('hide_empty'=>0, 'child_of'=>$category->term_id))){
@@ -1394,25 +1404,25 @@ if(!class_exists('NH_YNAA_Plugin'))
 		public function nh_ynaa_template_redirect() {			
 			$ynaa_var = get_query_var('ynaa');
 			if($ynaa_var=='settings'){
-				header('Content-Type: application/json');
-				print_r(json_encode($this->nh_ynaa_settings()));				
+				header('Content-Type: text/plain');
+				echo(json_encode($this->nh_ynaa_settings()));				
 				
 			}
 			elseif($ynaa_var=='homepresets'){
 				header('Content-Type: application/json');
-				print_r(json_encode($this->nh_ynaa_homepresets()));				
+				echo(json_encode($this->nh_ynaa_homepresets()));				
 			}
 			elseif($ynaa_var=='teaser'){
 				header('Content-Type: application/json');
-				print_r(json_encode($this->nh_ynaa_teaser()));				
+				echo(json_encode($this->nh_ynaa_teaser()));				
 			}
 			elseif($ynaa_var=='categories'){
 				header('Content-Type: application/json');
-				print_r(json_encode($this->nh_ynaa_categories()));				
+				echo(json_encode($this->nh_ynaa_categories()));				
 			}
 			elseif($ynaa_var=='articles'){
 				header('Content-Type: application/json');
-				print_r(json_encode($this->nh_ynaa_articles()));				
+				echo(json_encode($this->nh_ynaa_articles()));				
 			}
 			elseif($ynaa_var=='article'){
 				header('Content-Type: application/json');
@@ -1421,7 +1431,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				//ob_start(array($this,"nh_op_callback"));
 				
 				//remove_action( 'wp', 'wp_donottrack_ob_setup' );
-				print_r(json_encode($this->nh_ynaa_article()));	
+				echo(json_encode($this->nh_ynaa_article()));	
 				//$out1 = ob_get_contents();
 				
 				//ob_end_clean();
@@ -1430,27 +1440,27 @@ if(!class_exists('NH_YNAA_Plugin'))
 			}
 			elseif($ynaa_var=='events'){
 				header('Content-Type: application/json');
-				print_r(json_encode($this->nh_ynaa_events()));				
+				echo(json_encode($this->nh_ynaa_events()));				
 			}
 			elseif($ynaa_var=='event'){
 				header('Content-Type: application/json');
-				print_r(json_encode($this->nh_ynaa_event()));				
+				echo(json_encode($this->nh_ynaa_event()));				
 			}
 			elseif($ynaa_var=='social'){
 				header('Content-Type: application/json');
-				print_r(json_encode($this->nh_ynaa_social()));				
+				echo(json_encode($this->nh_ynaa_social()));				
 			}
 			elseif($ynaa_var=='comments'){
 				header('Content-Type: application/json');
-				print_r(json_encode($this->nh_ynaa_comments()));				
+				echo(json_encode($this->nh_ynaa_comments()));				
 			}
 			elseif($ynaa_var=='ibeacon'){
 				header('Content-Type: application/json');
-				print_r(json_encode($this->nh_ynaa_ibeacon()));				
+				echo(json_encode($this->nh_ynaa_ibeacon()));				
 			}
 			elseif($ynaa_var=='locations'){
 				header('Content-Type: application/json');
-				print_r(json_encode($this->nh_ynaa_locations()));				
+				echo(json_encode($this->nh_ynaa_locations()));				
 			}
 			elseif($ynaa_var=='content'){
 				header('Content-Type: text/html');
@@ -1458,15 +1468,15 @@ if(!class_exists('NH_YNAA_Plugin'))
 			}
 			elseif($ynaa_var=='yna_settings'){
 				header('Content-Type: application/json');
-				print_r(json_encode($this->nh_ynaa_yna_settings()));				
+				echo(json_encode($this->nh_ynaa_yna_settings()));				
 			}
 			elseif($ynaa_var){
 				header('Content-Type: application/json');
-				print_r(json_encode(array('error'=>$this->nh_ynaa_errorcode(11))));
+				echo(json_encode(array('error'=>$this->nh_ynaa_errorcode(11))));
 			}							
 			else {
 				header('Content-Type: application/json');
-				print_r(json_encode(array('error'=>$this->nh_ynaa_errorcode())));
+				echo(json_encode(array('error'=>$this->nh_ynaa_errorcode())));
 			}
 			exit();
 		} // END public function nh_ynaa_template_redirect()
@@ -2211,7 +2221,17 @@ if(!class_exists('NH_YNAA_Plugin'))
 				//If Post ID Check if is ist the newest Post and if hat changes
 				if(isset($_GET[$this->requesvar['post_id']]) && isset($_GET[$this->requesvar['post_ts']])){
 					$break = false;
-					$latest_cat_post = new WP_Query( array('posts_per_page' => 1, 'post_type'=>'any', 'category__in' => array($_GET[$this->requesvar['id']])));
+					$orderby = 'date';
+					$order = 'DESC';
+					if($this->categories_settings[$cid]['cat_order']){
+						switch($this->categories_settings[$cid]['cat_order']){
+							case 'alpha-asc': $orderby = 'title';	$order = 'ASC'; break;
+							case 'date-asc': $orderby = 'date';	$order = 'ASC'; break;
+							default: $orderby = 'date';	$order = 'DESC'; break;
+						}						
+					}
+					
+					$latest_cat_post = new WP_Query( array('posts_per_page' => 1, 'post_type'=>'any', 'orderby' => $orderby, 'order'=>$order , 'category__in' => array($_GET[$this->requesvar['id']])));
 					//var_dump($latest_cat_post);
 					
 					if( $latest_cat_post->have_posts() ) {						
@@ -2249,6 +2269,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 											
 					}
 					if($break) {
+						$returnarray['orderby']=$orderby;
+						$returnarray['order']=$order;
 						$returnarray['timestamp']=$ts;
 						$returnarray['error']=$this->nh_ynaa_errorcode(0);
 						return array('articles'=>$returnarray);
@@ -2305,9 +2327,18 @@ if(!class_exists('NH_YNAA_Plugin'))
 								
 				$post_ids = false;
 				if(!$post_ids){
-					$orderby = 'post_date';
 					
-					$args = array('posts_per_page'   => -1, 'category' => $cid, 'orderby' => 'post_date',	'order' => 'DESC');
+					$orderby = 'date';
+					$order = 'DESC';
+					if($this->categories_settings[$cid]['cat_order']){
+						switch($this->categories_settings[$cid]['cat_order']){
+							case 'alpha-asc': $orderby = 'title';	$order = 'ASC'; break;
+							case 'date-asc': $orderby = 'date';	$order = 'ASC'; break;
+							default: $orderby = 'date';	$order = 'DESC'; break;
+						}						
+					}
+					
+					$args = array('posts_per_page'   => -1, 'category' => $cid, 'orderby' => $orderby ,	'order' => $order);
 					$posts_array = get_posts( $args );
 					
 					if($posts_array){
@@ -2319,15 +2350,26 @@ if(!class_exists('NH_YNAA_Plugin'))
 				}
 				//$post_ids = false;
 				if(!$post_ids){
+					//var_dump($this->categories_settings);
+					$orderby = 'date';
+					$order = 'DESC';
+					if($this->categories_settings[$cid]['cat_order']){
+						switch($this->categories_settings[$cid]['cat_order']){
+							case 'alpha-asc': $orderby = 'title';	$order = 'ASC'; break;
+							case 'date-asc': $orderby = 'date';	$order = 'ASC'; break;				
+							default: $orderby = 'date';	$order = 'DESC'; break;
+						}						
+					}
 					$post_ids = $wpdb->get_col( $wpdb->prepare( "select p.ID from $table_posts p 
 								left join $table_term_relationships tr on tr.object_id=p.ID
 								where p.post_status='publish' and tr.term_taxonomy_id=$cid 								
-								order by p.post_date desc
+								order by p.post_$orderby $order
 								LIMIT 1999",'%d'));
 				}
 				if($post_ids){
 					$returnarray['error']=$this->nh_ynaa_errorcode(0);
-					
+					$returnarray['orderby']= $orderby;
+					$returnarray['order']= $order;
 					$i=1;
 					foreach($post_ids as $pid){	
 						if(isset($limit) && count($returnarray['items'])>=$limit) break;
@@ -2449,9 +2491,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 						//$content = $post->post_content;*/
 						//$returnarray['content'] = '<html><head><style type="text/css">'.$this->general_settings['css'].';}</style></head><body>'.$content.'</body></html>';
 						
-						if(isset($_GET[$this->requesvar['nh_av']]) && (($_GET[$this->requesvar['pl']]=='ios' && $_GET[$this->requesvar['pl']]>=1.7) || ($_GET[$this->requesvar['pl']]=='android' && $_GET[$this->requesvar['pl']]>1.3))){
+						if(isset($_GET[$this->requesvar['av']]) && (($_GET[$this->requesvar['pl']]=='ios' && $_GET[$this->requesvar['av']]>=1.7) || ($_GET[$this->requesvar['pl']]=='android' && $_GET[$this->requesvar['av']]>1.3))){
 						}
 						else{
+
 						$queried_post = get_post($returnarray['id']);
 						$content = $queried_post->post_content;
 						$content = apply_filters('the_content', $content);
@@ -2528,9 +2571,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$nh_ynaa_location_id = (get_post_meta($returnarray['id'], 'nh_ynaa_location_id', true));
 							if($postmeta_location){
 								$postmeta_location = unserialize($postmeta_location);
-								$returnarray['location']=1;
-								if(!$postmeta_location['location_pintype']) $postmeta_location['location_pintype'] = 'red';
-								$returnarray['location_info']=array("title"=>$postmeta_location['location_name'],"lat"=>$postmeta_location['location_latitude'],"lng"=>$postmeta_location['location_longitude'], "address"=>$postmeta_location['location_address'],  "id"=>$nh_ynaa_location_id, 'ts'=>$postmeta_location_stamp, 'cat_id'=>$returnarray['catid'], 'pintype'=>$postmeta_location['location_pintype']);
+								if(!is_null($postmeta_location['location_latitude'])){
+									$returnarray['location']=1;
+									if(!$postmeta_location['location_pintype']) $postmeta_location['location_pintype'] = 'red';
+									$returnarray['location_info']=array("title"=>$postmeta_location['location_name'],"lat"=>$postmeta_location['location_latitude'],"lng"=>$postmeta_location['location_longitude'], "address"=>$postmeta_location['location_address'],  "id"=>$nh_ynaa_location_id, 'ts'=>$postmeta_location_stamp, 'cat_id'=>$returnarray['catid'], 'pintype'=>$postmeta_location['location_pintype']);
+								}
 							}
 						}
 						
@@ -2573,11 +2618,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$queried_post = get_post($_GET[$this->requesvar['id']]);
 				$content = $queried_post->post_content;
 				$content = apply_filters('the_content', $content);
-				//$content = str_replace(']]>', ']]&gt;', $content);
-				//$content = str_replace("\r\n",'\n',$content);
+				$content = str_replace(']]>', ']]&gt;', $content);
+				$content = str_replace("\r\n",'\n',$content);
 				//$content = utf8_encode($content);
 						
-				//$content = preg_replace('/[\x00-\x1F\x80-\x9F]/u', '',$content);
+				$content = preg_replace('/[\x00-\x1F\x80-\x9F]/u', '',$content);
 				$content = $this->nh_ynaa_get_appcontent($content);
 				//$content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$content);
 				$this->general_settings['css'] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$this->general_settings['css']);
@@ -4101,11 +4146,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 			if($_POST['push_cat']) $cat = (implode(',',$_POST['push_cat']));
 			$url= 'http://www.blappsta.com/';
 			$qry_str = '?bas=push&pkey='.APPKEY.'&pmkey='.PUSHSECRET.'&url='.get_bloginfo('url').'&nhcat='.$cat.'&id='.$_POST['push_post_id'].'&push_text='.$_POST['push_text'];
-			if(!ini_get('allow_url_fopen')){
+			if(ini_get('allow_url_fopen')){
 				//echo ('http://www.blappsta.com/?bas=push&pkey='.APPKEY.'&pmkey='.PUSHSECRET.'&url='.get_bloginfo('url').'&cat='.$cat.'&id='.$_POST['push_post_id'].'&push_text='.$_POST['push_text']);
 				echo (file_get_contents($url.$qry_str.'&nh_mode=fgc'));
 			}
-			elseif(!function_exists('curl_version')){
+			elseif(function_exists('curl_version')){
 				$ch = curl_init();
 				// Set query data here with the URL
 				curl_setopt($ch, CURLOPT_URL, $url . $qry_str.'&nh_mode=curl'); 
@@ -4408,8 +4453,14 @@ jQuery(document).ready(function($) {
 						jQuery('#nh-push-dialog span').hide(); 
 						
 						if(data.substr(0,7)=='nomodul'){
-							//alert("window open");
-							window.open(data.substr(8));
+							alert("window open"+ data+data.substr(8));
+							//window.open(data.substr(8));
+							jQuery.get( data.substr(8), function( data2 ) {
+							 // jQuery( ".result" ).html( data );
+							  //alert( "Load was performed." );
+							});
+							alert("Push send success.");
+							
 						}
 						else{
 							alert(data);	
