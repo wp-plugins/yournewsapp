@@ -83,6 +83,7 @@ jQuery(document).ready(function($){
 				  var $type = $('#type-'+$o.attr('name')).val();
 				  var $menu_id = $o.val();
 				  var $title = $('#title-'+$o.attr('name')).val();
+				  var $inputurl = '';
 				  switch($type){
 					  case 'page': $type_text='Seite'; $type2='article'; break;
 					  case 'post': $type_text='Beitrag'; $type2='article'; break;
@@ -91,6 +92,7 @@ jQuery(document).ready(function($){
 					  case 'fb': $type_text='Facebook'; $type2='fb'; break;
 					  case 'events': $type_text='Events'; $type2='events'; break;
 					  case 'map': $type_text='Map'; $type2='map'; break;
+					  case 'webview': $type_text='URL'; $type2='webview'; $inputurl='<div style="clear:left; margin-top:10px;"><p><label for="edit-menu-item-url-'+$pos+'">Url<br><input type="text" value="http://" name="'+$menu_settings_key+'[menu]['+$pos+'][url]" class="widefat edit-menu-item-url" id="edit-menu-item-url-'+$pos+'"></p></div>'; break;
 					  default: $type_text='';  $type2=''; break;
 				  }
 				  
@@ -116,7 +118,8 @@ jQuery(document).ready(function($){
 											'<input type="hidden" value="'+$menu_id+'" name="'+$menu_settings_key+'[menu]['+$pos+'][item_id]" id="menu-item-id'+$pos+'" />' +
 											'<input type="hidden" value="1" name="'+$menu_settings_key+'[menu]['+$pos+'][status]" id="menu-status'+$pos+'" />' +
 											'</label>' +
-										'</p>' +									
+										'</p>' +
+										$inputurl +									
 										'<div class="menu-item-actions description-wide submitbox">' +
 											'<a href="'+$pos+'" id="delete-'+$pos+'" class="item-delete submitdelete deletion">'+$delete+'</a>' +
 										'</div>' +
