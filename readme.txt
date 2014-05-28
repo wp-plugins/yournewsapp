@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.6.5
+Stable tag: 0.6.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,15 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.6.6 =
+- fix extern url in menu
+- content controller in events
+- push bug fix
+- bug fix conent type
+- add widget for promote app
+- getimagesize local file
+
+
 = 0.6.5 =
 - bug fix empty map coordinates
 - order in category
@@ -229,6 +238,13 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.6.6 =
+- fix extern url in menu
+- content controller in events
+- push bug fix
+- bug fix conent type
+- add widget for promote app
+
 = 0.6.5 =
 - bug fix empty map coordinates
 - order in category

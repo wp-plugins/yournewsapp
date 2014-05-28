@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.6.5
+Version: 0.6.6
 
 //PRefix für variable eingeführt
 
@@ -16,7 +16,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.6.5";
+$nh_ynaa_version = "0.6.6";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -30,6 +30,7 @@ define('QUERY_VARS_YNAA','ynaa');
 require_once('classes/error_trap.php');
 
 require_once('classes/lang.php');
+
 
 if(!class_exists('NH_YNAA_Plugin'))
 {
@@ -469,12 +470,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$this->appmenus_pre[3] = array('title'=>__('Facebook','nh-ynaa'),'status'=>1,'pos'=>3, 'id'=>-2, 'type'=>'fb', 'type_text'=>'Facebook', 'link-typ'=>'fb');
 			
 			if($this->general_settings['eventplugin'])	
-				$this->appmenus_pre[5] = array('title'=>__('Events','nh-ynaa'),'status'=>0,'pos'=>3, 'id'=>-1, 'type'=>'events', 'type_text'=>'App');
+				$this->appmenus_pre[5] = array('title'=>__('Events','nh-ynaa'),'status'=>0,'pos'=>5, 'id'=>-1, 'type'=>'events', 'type_text'=>'App');
 			
 			if(isset($this->general_settings['location'])) 
-				$this->appmenus_pre[6] = array('title'=>__('Map','nh-ynaa'),'status'=>1,'pos'=>3, 'id'=>-98, 'type'=>'map', 'type_text'=>__('App', 'ynaa'), 'link-typ'=>'cat');
+				$this->appmenus_pre[6] = array('title'=>__('Map','nh-ynaa'),'status'=>1,'pos'=>6, 'id'=>-98, 'type'=>'map', 'type_text'=>__('App', 'nh-ynaa'), 'link-typ'=>'cat');
 				
-			$this->appmenus_pre[6] = array('title'=>__('Extern URL','nh-ynaa'),'status'=>1,'pos'=>6, 'id'=>-3, 'type'=>'webview', 'type_text'=>'URL', 'link-typ'=>'cat');
+			$this->appmenus_pre[7] = array('title'=>__('Extern URL','nh-ynaa'),'status'=>1,'pos'=>7, 'id'=>-3, 'type'=>'webview', 'type_text'=>__('URL', 'nh-ynaa'), 'link-typ'=>'cat');
 			
 		} // END  function nh_ynaa_load_settings()
 		
@@ -1353,6 +1354,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 			//wp_enqueue_script( 'ynaa-script-post-edit', plugins_url('js/ynaa-post-edit.js', __FILE__ ), array( 'jquery' ), '1.0', true );
 			//wp_localize_script( 'ynaa-script-post-edit', 'ajax_object',
 			//		array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'we_value' => 1234 ) );
+			
+			
 			if($hook_suffix =='post-new.php' || $hook_suffix =='post.php'){
 				wp_register_script( "ynaa-script-post-edit", plugins_url('js/ynaa-post-edit.js', __FILE__ ), array('jquery') );
    				wp_localize_script( 'ynaa-script-post-edit', 'myAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' ), 'ajaxdata'=>array($hook_suffix)));        
@@ -1404,7 +1407,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		public function nh_ynaa_template_redirect() {			
 			$ynaa_var = get_query_var('ynaa');
 			if($ynaa_var=='settings'){
-				header('Content-Type: text/plain');
+				header('Content-Type: application/json');
 				echo(json_encode($this->nh_ynaa_settings()));				
 				
 			}
@@ -1627,6 +1630,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 								$tempmenu['ts']= $this->menu_settings['ts'];
 								if(isset($ar['content']))$tempmenu['content'] = $ar['content'];
 								if(isset($ar['item_id']))$tempmenu['item_id'] = $ar['item_id'];
+								if(isset($ar['url'])){
+									
+									$tempmenu['url'] = $ar['url'];
+								}
 								
 								$returnarray['menu'][] = $tempmenu;
 								//array_push($returnarray['menu'],$tempmenu);
@@ -3267,30 +3274,37 @@ if(!class_exists('NH_YNAA_Plugin'))
 							//$content = str_replace(PHP_EOL,null,$content);
 							
 							$returnarray['id']=$post->ID; 	
-							$queried_post = get_post($returnarray['id']);
-							$content = $queried_post->post_content;
-							$content = apply_filters('the_content', $content);
-							$content = str_replace(']]>', ']]&gt;', $content);
-							$content = str_replace("\r\n",'\n',$content);
-							//$returnarray['uma']['post_content_-1']= $content;
-							$content = preg_replace('/[\x00-\x1F\x80-\x9F]/u', '',$content);
-							$content = $this->nh_ynaa_get_appcontent($content);
-							//$content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$content);
-							$this->general_settings['css'] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$this->general_settings['css']);
-							$content = (str_replace('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">','<!doctype html>',$content));
+							if(isset($_GET[$this->requesvar['av']]) && (($_GET[$this->requesvar['pl']]=='ios' && $_GET[$this->requesvar['av']]>=1.7) || ($_GET[$this->requesvar['pl']]=='android' && $_GET[$this->requesvar['av']]>1.3))){
+							}
+							else{
+								$queried_post = get_post($returnarray['id']);
+								$content = $queried_post->post_content;
+								$content = apply_filters('the_content', $content);
+								$content = str_replace(']]>', ']]&gt;', $content);
+								$content = str_replace("\r\n",'\n',$content);
+								//$returnarray['uma']['post_content_-1']= $content;
+								$content = preg_replace('/[\x00-\x1F\x80-\x9F]/u', '',$content);
+								$content = $this->nh_ynaa_get_appcontent($content);
+								//$content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$content);
+								$this->general_settings['css'] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$this->general_settings['css']);
+								$content = (str_replace('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">','<!doctype html>',$content));
+								
+								
+								if(strpos($content,'<html><head><meta charset="utf-8"></head>'))
+									$content = str_replace('<html><head><meta charset="utf-8"></head>','<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+								elseif(strpos($content,'<html>'))
+									$content = str_replace('<html>','<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+									else $content = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head><body>'.$content.'</body></html>';
+								$returnarray['text']=$content;
+									
+							}
 							
-							
-							if(strpos($content,'<html><head><meta charset="utf-8"></head>'))
-								$content = str_replace('<html><head><meta charset="utf-8"></head>','<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
-							elseif(strpos($content,'<html>'))
-								$content = str_replace('<html>','<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
-								else $content = '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head><body>'.$content.'</body></html>';
 							
 							if(!$event->location_latitude || $event->location_latitude== null || $event->location_latitude=='null' || $event->location_latitude=='0.000000') $event->location_latitude =  0;
 							else $event->location_latitude = (float) $event->location_latitude ;
 							if(!$event->location_longitude || $event->location_longitude== null || $event->location_longitude=='null' || $event->location_longitude=='0.000000') $event->location_longitude =  0;
 							else $event->location_longitude = (float) $event->location_longitude ;	
-							
+						
 							$post->post_title = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($post->post_title)), ENT_NOQUOTES, 'UTF-8')));						
 							$returnarray['title']=($post->post_title);
 							$returnarray['timestamp']=strtotime($post->post_modified); 
@@ -3327,7 +3341,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$returnarray['lat'] = $event->location_latitude;
 							$returnarray['lng'] = $event->location_longitude;
 							$returnarray['short_text'] = htmlspecialchars_decode($post->post_excerpt);
-							$returnarray['text']=$content;
+							
 							/*$returnarray = array(								
 								'id'=>$post->ID, 								
 								'title'=>htmlspecialchars_decode($post->post_title), 
@@ -3420,10 +3434,20 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 				$imgElements  = $dom->getElementsByTagName("img");
 				if(!isset($this->general_settings['min-img-size-for-resize'])) $this->general_settings['min-img-size-for-resize'] = 100; 
+				 $upload_dir = wp_upload_dir();
 				foreach ($imgElements as $imgElement) {
-					if( ini_get('allow_url_fopen') ) {
+					$src = $imgElement->getAttribute('src');
+					if($upload_dir['baseurl'] == substr($src,0,strlen($upload_dir['baseurl']))){
 						if($this->general_settings['min-img-size-for-resize']){
-							$src = $imgElement->getAttribute('src');
+							//echo $upload_dir['basedir'].substr($src,strlen($upload_dir['baseurl'])).'<br>';
+							$src = $upload_dir['basedir'].substr($src,strlen($upload_dir['baseurl']));
+							list($w, $h) = getimagesize($src);
+							if( $w < $this->general_settings['min-img-size-for-resize'] ) continue;
+						}
+					}
+					elseif( ini_get('allow_url_fopen') ) {
+						if($this->general_settings['min-img-size-for-resize']){
+							
 							
 							list($w, $h) = getimagesize($src); 
 							if($w){
@@ -4145,10 +4169,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$cat = '';
 			if($_POST['push_cat']) $cat = (implode(',',$_POST['push_cat']));
 			$url= 'http://www.blappsta.com/';
-			$qry_str = '?bas=push&pkey='.APPKEY.'&pmkey='.PUSHSECRET.'&url='.get_bloginfo('url').'&nhcat='.$cat.'&id='.$_POST['push_post_id'].'&push_text='.$_POST['push_text'];
+			$qry_str = '?bas=push&pkey='.APPKEY.'&pmkey='.PUSHSECRET.'&url='.get_bloginfo('url').'&nhcat='.$cat.'&id='.$_POST['push_post_id'].'&push_text='.urlencode($_POST['push_text']);
 			if(ini_get('allow_url_fopen')){
 				//echo ('http://www.blappsta.com/?bas=push&pkey='.APPKEY.'&pmkey='.PUSHSECRET.'&url='.get_bloginfo('url').'&cat='.$cat.'&id='.$_POST['push_post_id'].'&push_text='.$_POST['push_text']);
-				echo (file_get_contents($url.$qry_str.'&nh_mode=fgc'));
+				echo (file_get_contents($url.(($qry_str)).'&nh_mode=fgc'));
 			}
 			elseif(function_exists('curl_version')){
 				$ch = curl_init();
@@ -4166,7 +4190,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				echo 'window.open("'.$url.$qry_str.'&nh_mode=js");';
 				echo '</script>';*/
 				echo 'nomodul';
-				echo ' '.$url . $qry_str.'&nh_mode=js';
+				echo ' '.$url . ($qry_str).'&nh_mode=js';
 				//_e('Error: No supported Modul installed.', 'nh-ynaa');
 			}
 			die();
@@ -4453,11 +4477,11 @@ jQuery(document).ready(function($) {
 						jQuery('#nh-push-dialog span').hide(); 
 						
 						if(data.substr(0,7)=='nomodul'){
-							alert("window open"+ data+data.substr(8));
+							//alert("window open"+ data+data.substr(8));
 							//window.open(data.substr(8));
 							jQuery.get( data.substr(8), function( data2 ) {
 							 // jQuery( ".result" ).html( data );
-							  //alert( "Load was performed." );
+							  alert( "Load was performed." );
 							});
 							alert("Push send success.");
 							
@@ -4482,6 +4506,16 @@ jQuery(document).ready(function($) {
 
 
 add_action('wp_ajax_nh_search_action', 'nh_search_action');
+
+add_action( 'wp_enqueue_scripts', 'nh_blappsta_add_stylesheet' );
+function nh_blappsta_add_stylesheet() {
+
+wp_enqueue_style( 'blappsta-style-front', plugins_url('css/blappsta.css', __FILE__ ) , array(),'1.0');
+}
+//Widget
+include ('classes/nh-widget.php');
+// register widget
+add_action('widgets_init', create_function('', 'return register_widget("NH_Blappsta_Widget");'));
 
 //add_action('wp_ajax_nopriv_my_action', 'my_action_callback');
 

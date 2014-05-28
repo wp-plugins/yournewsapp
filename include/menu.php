@@ -230,6 +230,7 @@
 									<?php
 									if($this->menu_settings['menu'] && !empty($this->menu_settings['menu'])){
 										$menuitems= $this->menu_settings['menu'];								
+										//var_dump($menuitems);
 										foreach($menuitems as $k=>$menuitem){									
 										?>
 											<li class="menu-item menu-item-depth-0 menu-item-<?php echo $menuitem['type']; ?> menu-item-edit-inactive pending" id="menu-item-<?php echo $menuitem['pos']; ?>" style="display: list-item;">
@@ -245,7 +246,7 @@
 												</dl>
 												<div id="menu-item-settings-<?php echo $menuitem['pos']; ?>" class="menu-item-settings">
 													<p class="description description-thin">
-														<label for="edit-menu-item-title-<?php echo $menuitem['pos']; ?>"><?php _e('Navigation Label','nh-ynaa'); ?><br>															
+														<label for="edit-menu-item-title-<?php echo $menuitem['pos']; ?>"><?php _e('Navigation Label','nh-ynaa'); ?></label><br>															
 															<input type="text" value="<?php echo $menuitem['title']; ?>" name="<?php echo $this->menu_settings_key; ?>[menu][<?php echo $k; ?>][title]" class="widefat edit-menu-item-title" id="edit-menu-item-title-<?php echo $menuitem['pos']; ?>">
 															<input type="hidden" value="<?php echo $menuitem['pos']; ?>" name="<?php echo $this->menu_settings_key; ?>[menu][<?php echo $k; ?>][pos]" id="menu-pos<?php echo $menuitem['pos']; ?>"  class="menu-pos-ynaa" />
 															<input type="hidden" value="<?php echo $menuitem['type']; ?>" name="<?php echo $this->menu_settings_key; ?>[menu][<?php echo $k; ?>][type]" id="menu-type<?php echo $menuitem['pos']; ?>" />
@@ -253,11 +254,15 @@
 															<input type="hidden" value="<?php echo $menuitem['id']; ?>" name="<?php echo $this->menu_settings_key; ?>[menu][<?php echo $k; ?>][id]" id="menu-id<?php echo $menuitem['pos']; ?>" class="menu-id-ynaa" />
 															<input type="hidden" value="<?php echo $menuitem['item_id']; ?>" name="<?php echo $this->menu_settings_key; ?>[menu][<?php echo $k; ?>][item_id]" id="menu-item-id<?php echo $menuitem['pos']; ?>" />
 															<input type="hidden" value="<?php echo $menuitem['status']; ?>" name="<?php echo $this->menu_settings_key; ?>[menu][<?php echo $k; ?>][status]" id="menu-status<?php echo $menuitem['pos']; ?>" />
-														</label>
-													</p>									
+														
+													</p>
+                                                    <?php if( $menuitem['type'] == 'webview') { ?>
+															
+                                                    <div style="clear:left; margin-top:10px;"><p><label for="edit-menu-item-url-<?php echo $menuitem['pos']; ?>">Url<br><input type="text" value="<?php echo $menuitem['url']; ?>" name="<?php echo $this->menu_settings_key; ?>[menu][<?php echo $k; ?>][url]" class="widefat edit-menu-item-url" id="edit-menu-item-url-<?php echo $menuitem['pos']; ?>"></p></div>								
 													<div class="menu-item-actions description-wide submitbox">
 														<a href="<?php echo $menuitem['pos']; ?>" id="delete-<?php echo $menuitem['pos']; ?>" class="item-delete submitdelete deletion"><?php _e('Delete'); ?></a>
 													</div>
+                                                    <?php } ?>
 												</div><!-- .menu-item-settings-->
 											</li><!--End menu-item -->
 										<?php
