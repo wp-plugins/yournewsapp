@@ -1,10 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.6.6
-
-//PRefix für variable eingeführt
-
+Version: 0.6.7
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -16,7 +13,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.6.6";
+$nh_ynaa_version = "0.6.7";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
