@@ -258,11 +258,12 @@
 													</p>
                                                     <?php if( $menuitem['type'] == 'webview') { ?>
 															
-                                                    <div style="clear:left; margin-top:10px;"><p><label for="edit-menu-item-url-<?php echo $menuitem['pos']; ?>">Url<br><input type="text" value="<?php echo $menuitem['url']; ?>" name="<?php echo $this->menu_settings_key; ?>[menu][<?php echo $k; ?>][url]" class="widefat edit-menu-item-url" id="edit-menu-item-url-<?php echo $menuitem['pos']; ?>"></p></div>								
+                                                    <div style="clear:left; margin-top:10px;"><p><label for="edit-menu-item-url-<?php echo $menuitem['pos']; ?>">Url<br><input type="text" value="<?php echo $menuitem['url']; ?>" name="<?php echo $this->menu_settings_key; ?>[menu][<?php echo $k; ?>][url]" class="widefat edit-menu-item-url" id="edit-menu-item-url-<?php echo $menuitem['pos']; ?>"></p></div>			
+                                                    <?php } ?>					
 													<div class="menu-item-actions description-wide submitbox">
 														<a href="<?php echo $menuitem['pos']; ?>" id="delete-<?php echo $menuitem['pos']; ?>" class="item-delete submitdelete deletion"><?php _e('Delete'); ?></a>
 													</div>
-                                                    <?php } ?>
+                                                    
 												</div><!-- .menu-item-settings-->
 											</li><!--End menu-item -->
 										<?php
@@ -298,7 +299,7 @@
 														</label>
 													</p>									
 													<div class="menu-item-actions description-wide submitbox" >
-														<span href="<?php echo $menuitem['pos']; ?>" id="delete-<?php echo $menuitem['pos']; ?>"  class=" submitdelete deletion"><?php _e("This item can not be removed.", 'nh-ynaa'); ?></a>
+														<a href="<?php echo $menuitem['pos']; ?>" id="delete-<?php echo $menuitem['pos']; ?>"  class=" submitdelete deletion"><?php _e("This item can not be removed.", 'nh-ynaa'); ?></a>
 													</div>
 												</div><!-- .menu-item-settings-->
 											</li>

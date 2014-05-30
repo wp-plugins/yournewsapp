@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NH YNAA Plugin 1.0\n"
-"POT-Creation-Date: 2014-05-28 10:03+0100\n"
-"PO-Revision-Date: 2014-05-28 10:03+0100\n"
+"POT-Creation-Date: 2014-05-28 16:43+0100\n"
+"PO-Revision-Date: 2014-05-28 16:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: Nebelhorn <info@nebelhorn.com>\n"
 "Language: de\n"
@@ -134,7 +134,7 @@ msgstr "CSS Style"
 #: nh_ynaa_plugin.php:549
 msgid "Minimum image size for set image width 100% (in Pixel)"
 msgstr ""
-"Minimale größe der Bilder wie auf 100% breite angezeigt werden sollen (in "
+"Minimale Größe bei der die Bilder auf 100% Breite skaliert werden sollen (in "
 "Pixel)"
 
 #: nh_ynaa_plugin.php:554
@@ -485,144 +485,144 @@ msgstr "Freitag"
 msgid "Saturday"
 msgstr "Samstag"
 
-#: nh_ynaa_plugin.php:3600
+#: nh_ynaa_plugin.php:3610
 msgid "Blappsta Plugin extras"
 msgstr "Blappsta Plugin Extras"
 
-#: nh_ynaa_plugin.php:3623
+#: nh_ynaa_plugin.php:3633
 msgid "Blappsta Plugin locations"
 msgstr "Blappsta Plugin Orte"
 
-#: nh_ynaa_plugin.php:3662
+#: nh_ynaa_plugin.php:3672
 msgid "Location Name"
 msgstr "Ort Name"
 
-#: nh_ynaa_plugin.php:3667
+#: nh_ynaa_plugin.php:3677
 msgid ""
 "Create a location or start typing to search a previously created location."
 msgstr ""
 
-#: nh_ynaa_plugin.php:3668
+#: nh_ynaa_plugin.php:3678
 msgid "You cannot edit saved locations here."
 msgstr ""
 
-#: nh_ynaa_plugin.php:3668
+#: nh_ynaa_plugin.php:3678
 msgid "Reset this form to create a location or search again."
 msgstr ""
 
-#: nh_ynaa_plugin.php:3672
+#: nh_ynaa_plugin.php:3682
 msgid "Address:"
 msgstr "Anschrift:"
 
-#: nh_ynaa_plugin.php:3678
+#: nh_ynaa_plugin.php:3688
 msgid "City/Town:"
 msgstr "Stadt/Ort: "
 
-#: nh_ynaa_plugin.php:3684
+#: nh_ynaa_plugin.php:3694
 msgid "State/County:"
 msgstr "Bundesland/Land:"
 
-#: nh_ynaa_plugin.php:3690
+#: nh_ynaa_plugin.php:3700
 msgid "Postcode:"
 msgstr "Postleitzahl:"
 
-#: nh_ynaa_plugin.php:3697
+#: nh_ynaa_plugin.php:3707
 msgid "Region:"
 msgstr "Region:"
 
-#: nh_ynaa_plugin.php:3704
+#: nh_ynaa_plugin.php:3714
 msgid "Pin color"
 msgstr "Pin Farbe"
 
-#: nh_ynaa_plugin.php:3706
+#: nh_ynaa_plugin.php:3716
 msgid "red"
 msgstr "rot"
 
-#: nh_ynaa_plugin.php:3707
+#: nh_ynaa_plugin.php:3717
 msgid "green"
 msgstr "grün"
 
-#: nh_ynaa_plugin.php:3708
+#: nh_ynaa_plugin.php:3718
 msgid "purple"
 msgstr "violett"
 
-#: nh_ynaa_plugin.php:3715
+#: nh_ynaa_plugin.php:3725
 msgid "Reset this form to create a location."
 msgstr "Setze das Formular zurück um einen Ort anzulegen."
 
-#: nh_ynaa_plugin.php:3722
+#: nh_ynaa_plugin.php:3732
 msgid "Location not found"
 msgstr "Ort nicht gefunden"
 
-#: nh_ynaa_plugin.php:3784
+#: nh_ynaa_plugin.php:3794
 msgid "Show in App"
 msgstr "In der App anzeigen"
 
-#: nh_ynaa_plugin.php:3789
+#: nh_ynaa_plugin.php:3799
 msgid "Push Text"
 msgstr "Push Nachricht"
 
-#: nh_ynaa_plugin.php:3799
+#: nh_ynaa_plugin.php:3809
 msgid "Send Push"
 msgstr "Push senden"
 
-#: nh_ynaa_plugin.php:3802
+#: nh_ynaa_plugin.php:3812
 msgid "Please wait..."
 msgstr "Bitte warten..."
 
-#: nh_ynaa_plugin.php:4015
+#: nh_ynaa_plugin.php:4025
 msgid "No ID"
 msgstr "Keine ID"
 
-#: nh_ynaa_plugin.php:4053
+#: nh_ynaa_plugin.php:4063
 msgid "No posts found."
 msgstr "Keine Beiträge gefunden."
 
-#: nh_ynaa_plugin.php:4056
+#: nh_ynaa_plugin.php:4066
 msgid "Error"
 msgstr "Fehler"
 
-#: nh_ynaa_plugin.php:4150
+#: nh_ynaa_plugin.php:4160
 msgid "No Appkey."
 msgstr "Kein App Schlüssel."
 
-#: nh_ynaa_plugin.php:4151
+#: nh_ynaa_plugin.php:4161
 msgid "No Push Secret Key."
 msgstr "Kein Push Secret Schlüssel."
 
-#: nh_ynaa_plugin.php:4152
+#: nh_ynaa_plugin.php:4162
 msgid "No Push Url."
 msgstr "Keine Push URL."
 
-#: nh_ynaa_plugin.php:4260
+#: nh_ynaa_plugin.php:4270
 msgid "Got negative response from server, http code: "
 msgstr "Server meldet Fehler, Fehler Code:"
 
-#: nh_ynaa_plugin.php:4268
+#: nh_ynaa_plugin.php:4278
 msgid "Send successfull."
 msgstr "Versand erfolgreich."
 
-#: nh_ynaa_plugin.php:4275
+#: nh_ynaa_plugin.php:4285
 msgid "Feed Error!"
 msgstr "Feed Fehler!"
 
-#: nh_ynaa_plugin.php:4279
+#: nh_ynaa_plugin.php:4289
 msgid "No Feed Set!"
 msgstr "Kein Feed gesetzt!"
 
-#: nh_ynaa_plugin.php:4413
+#: nh_ynaa_plugin.php:4423
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: nh_ynaa_plugin.php:4457
+#: nh_ynaa_plugin.php:4467
 msgid "Insert Pushtext!"
 msgstr "Pushtext einfügen!"
 
-#: nh_ynaa_plugin.php:4459
+#: nh_ynaa_plugin.php:4469
 msgid "Pleas wait!"
 msgstr "Bitte warten!"
 
-#: nh_ynaa_plugin.php:4488
+#: nh_ynaa_plugin.php:4498
 msgid "You have to publish the Post first.!"
 msgstr "Sie müssen zuerst den Beitrag veröffentlichen!"
 

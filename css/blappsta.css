@@ -3,7 +3,7 @@
 
 /* Widget Style */
 #blappsta-icon-cont {
-	width:200px; 
+	width:100%; 
 	text-align:center; 
 	margin:20px auto;
 	overflow:hidden;
@@ -24,6 +24,12 @@
 	position: relative;
 	top: -6px;*/
 }
+#blappsta-icon-cont .blappsta-app-name {
+	text-align:center; margin:10px;
+}
+#blappsta-icon-cont .blappsta-app-apple-store {
+	margin-bottom:3px;
+}
 #blappsta-icon-cont  .blappsta-powerd{
 	text-align:right; 
 	margin:10px; 
@@ -31,14 +37,22 @@
 }
 
 #blappsta-icon-cont .blappsta-app-img-div {
-position: relative;
-top: -153px;
-width: 139px;
+width: 140px;
 padding: 0;
 margin: 0;
-left: 6px;
-height: 139px;
+height: 140px;
 background-size: cover;
-z-index: -1;
 border-radius: 30px;
+
+}
+#blappsta-icon-cont .blappsta-app-img-div2 {
+	left: 5px;
+    position: relative;
+    top: -132px;
+}
+#blappsta-icon-cont .blappsta-app-img img {	
+position: relative;
+top: -277px;
+left: 0;
+z-index: 0;
 }

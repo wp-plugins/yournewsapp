@@ -88,19 +88,20 @@ class NH_Blappsta_Widget extends WP_Widget
        <div id="blappsta-icon-cont">
        	<?php if($icon_url) { ?>
        		<div class="blappsta-app-img" >
-                <img src="<?php echo  $plugin_url; ?>/img/widgets/icon-window.png" alt="" />
-            	<div class="blappsta-app-img-div" style="background-image: url('<?php echo  $icon_url; ?>')"></div>	
-            
+                <div class="blappsta-app-img-div"></div>	
+            	
+            	<div class="blappsta-app-img-div blappsta-app-img-div2" style="background-image: url('<?php echo  $icon_url; ?>')"></div>	
+            	<img src="<?php echo  $plugin_url; ?>/img/widgets/icon-window.png" alt="" />
             </div>
          <?php } ?>   
          <?php
 		 if($app_name){
 		?>
-            <div class="blappsta-app-name" style="text-align:center; margin:10px;"><?php echo $app_name; ?></div>
+            <div class="blappsta-app-name"><?php echo $app_name; ?></div>
          <?php } ?> 
             <div>
             <?php if($apple_link) { ?>
-                <div><a href="<?php echo $apple_link; ?>" target="_blank"><img src="<?php echo  $plugin_url; ?>/img/widgets/app-store.png" alt="Apple App Store" title=""></a></div>
+                <div class="blappsta-app-apple-store"><a href="<?php echo $apple_link; ?>" target="_blank"><img src="<?php echo  $plugin_url; ?>/img/widgets/app-store.png" alt="Apple App Store" title=""></a></div>
             <?php }
 				if($google_link) { ?>
                 <div><a href="<?php echo $google_link; ?>" target="_blank"><img src="<?php echo  $plugin_url; ?>/img/widgets/Google-Play-Store.png" alt="Google Play Store" title=""></a></div>
