@@ -15,7 +15,8 @@
             /*border: 2px solid rgba(0, 0, 0, 0); */
            
             height: 152px;
-            width: 152px; margin:auto;
+            width: 152px; 
+			margin:auto auto 10px;
 			overflow:hidden;
 }
 
