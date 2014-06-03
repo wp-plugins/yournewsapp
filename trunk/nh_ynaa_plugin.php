@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.6.7
+Version: 0.6.8
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -13,7 +13,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.6.7";
+$nh_ynaa_version = "0.6.8";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -200,6 +200,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$this->requesvar['post_id']= $prefix.'post_id';
 			$this->requesvar['post_ts']= $prefix.'post_ts';
 			$this->requesvar['limit']= $prefix.'limit';
+			$this->requesvar['offset']= $prefix.'offset';
 			$this->requesvar['n']= $prefix.'n';
 			$this->requesvar['action']= $prefix.'action';
 			$this->requesvar['key']= $prefix.'key';
@@ -1514,6 +1515,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				case 33: $errorarray['error_code']= 33; $errorarray['error_message']='No UUID'; break;
 				case 34: $errorarray['error_code']= 34; $errorarray['error_message']='No location activ'; break;
 				case 35: $errorarray['error_code']= 35; $errorarray['error_message']='This category ist now inactive for the app'; break;
+				case 36: $errorarray['error_code']= 36; $errorarray['error_message']='No more itemes'; break;
 				default: $errorarray['error_code']= 10; $errorarray['error_message']='Unknown Error'; break;
 			}
 			return ($errorarray);			
@@ -2167,6 +2169,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$allowRemove=1;
 			//$returnarray['uma']['info_Articles_start'] = $id.'start nh_ynaa_articles'.$_GET[$this->requesvar['id']]; 
 			//$returnarray['uma']['categories_settings'] = $this->categories_settings;
+			$returnarray['error']=$this->nh_ynaa_errorcode(0);
 				if(isset($_GET[$this->requesvar['id']]) || $id){
 					if(( $id))$tempid= $id;
 					else $tempid= $_GET[$this->requesvar['id']];
@@ -2186,9 +2189,33 @@ if(!class_exists('NH_YNAA_Plugin'))
 					else $returnarray['timestamp']=0;
 					if(isset($_GET[$this->requesvar['id']])) $args['cat'] =$_GET[$this->requesvar['id']];
 					elseif($id) $args['cat'] =$id; 
+					
+					if(isset($_GET[$this->requesvar['limit']])) {
+						$args['posts_per_page'] =$_GET[$this->requesvar['limit']];
+						if(isset($_GET[$this->requesvar['offset']])){
+							$args['offset'] =$_GET[$this->requesvar['offset']];
+						}
+					}
+					else{
+						$args ['nopaging'] = true; 
+					}
+					if($this->categories_settings){
+
+						foreach($this->categories_settings as $cat_id => $cat){
+							//var_dump($cat);
+						
+							if($cat['hidecat']) $hidecat[] = $cat_id * -1;
+						}
+						if($hidecat) {
+							
+							$args['cat']=implode($hidecat,',');;
+						}
+					}
+					
 					$args ['post_status'] = 'publish'; 
 					$args ['post_type'] = 'post'; 
-					$args ['nopaging'] = true; 
+					
+					//var_dump($args);
 					
 					$the_query = new WP_Query( $args );
 					
@@ -2197,6 +2224,20 @@ if(!class_exists('NH_YNAA_Plugin'))
 						$i=1;
 						while ( $the_query->have_posts() ) {
 							$the_query->the_post();
+							
+							//var_dump($the_query->post->ID);
+							
+							//Hide POSTS
+							/*if($_nh_ynaa_meta_keys =get_post_meta($the_query->post->ID,'_nh_ynaa_meta_keys',true)){
+								$_nh_ynaa_meta_keys = unserialize($_nh_ynaa_meta_keys);
+								if($_nh_ynaa_meta_keys && is_array($_nh_ynaa_meta_keys)){
+									if(isset($_nh_ynaa_meta_keys) && is_null($_nh_ynaa_meta_keys['s'])) {
+										var_dump ($_nh_ynaa_meta_keys);
+										continue;
+									}
+								}
+								
+							}*/
 							$cat_id = 0;
 							$cat_id_array = $this->nh_getpostcategories($the_query->post->ID);							
 							
@@ -2213,7 +2254,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						}
 							
 					} else {
-						$returnarray['error']=$this->nh_ynaa_errorcode(16);
+						$returnarray['error']=$this->nh_ynaa_errorcode(36);
 					}
 					// Restore original Post Data 
 					wp_reset_postdata();
