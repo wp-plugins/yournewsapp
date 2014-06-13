@@ -31,6 +31,27 @@ div.publishing-action {
 	margin-bottom:0 !important;
 }
 
+#nh_ynaa_form .wp-picker-container {
+	float:left;
+	width:150px;
+}
+
+#nh_ynaa_form .nh-floatleft{
+	float:left;
+	margin-right:10px;
+}
+
+#nh_ynaa_form .helptext {
+	float:left;
+	width:50%;
+	/*line-height:27px;*/
+	padding-top:5px;
+}
+
+#nh_ynaa_form .helptext.padding0{
+	padding-top:0;
+}
+
 #nh_ynaa_form.nh_ynaa_general_settings {
 	float:left;
 	width:60%;

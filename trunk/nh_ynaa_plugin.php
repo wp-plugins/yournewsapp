@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.6.8
+Version: 0.6.9
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -13,7 +13,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.6.8";
+$nh_ynaa_version = "0.6.9";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -544,7 +544,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			add_settings_field( 'ynaa-csh', __('Title 2 Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>'csh') );
 			add_settings_field( 'ynaa-ct', __('Flowing Text Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>'ct') );
 			add_settings_field( 'ynaa-css', __('CSS Style', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_css' ), $this->general_settings_key, 'app_settings' , array('field'=>'css'));
-			add_settings_field( 'ynaa-min-img-size-for-resize', __('Minimum image size for set image width 100% (in Pixel)', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_input' ), $this->general_settings_key, 'app_settings' , array('field'=>'min-img-size-for-resize'));
+			add_settings_field( 'ynaa-min-img-size-for-resize', __('Maximum width for images so they won‘t scale up (in px)', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_input' ), $this->general_settings_key, 'app_settings' , array('field'=>'min-img-size-for-resize'));
 			
 			//Hidden Fields
 			add_settings_field( 'ynaa-ts', null, array( &$this, 'nh_ynaa_field_general_option_hidden' ), $this->general_settings_key, 'app_settings', array('field'=>'ts') );
@@ -555,19 +555,23 @@ if(!class_exists('NH_YNAA_Plugin'))
 			add_settings_field( 'ynaa-social_fbid', __('Facebook page ID', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_social' ), $this->general_settings_key, 'social_settings', array('field'=>'social_fbid') );
 			
 			//Extras
+			global $nh_ynaa_db_version;	
 			add_settings_section( 'extra_settings', __('Extras', 'nh-ynaa'), array( &$this, 'nh_ynaa_section_general_extra' ), $this->general_settings_key );
 			add_settings_field( 'ynaa-lang', __('Language', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_language' ), $this->general_settings_key, 'extra_settings' , array('field'=>'lang'));
+			add_settings_field( 'ynaa-extra', __('Allow comments in App', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'comments'));
 			add_settings_field( 'ynaa-homescreentype', __('Startscreen view', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_homescreentype' ), $this->general_settings_key, 'extra_settings' , array('field'=>'homescreentype'));
 			add_settings_field( 'ynaa-sorttype', __('Startscreen articles sorty by <br><span>(Only if startscreen view is articles)</span>', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_sorttype' ), $this->general_settings_key, 'extra_settings' , array('field'=>'sorttype'));
-			
-			global $nh_ynaa_db_version;			
-			 if (get_option( 'nh_ynaa_db_version' ) == $nh_ynaa_db_version) {
+			add_settings_field( 'ynaa-sort', __('Group by date', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'sort'));
+					
+			 
+			add_settings_field( 'ynaa-eventplugin', __('Select your Event Manager:', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_eventplugin' ), $this->general_settings_key, 'extra_settings' , array('field'=>'eventplugin'));
+			if (get_option( 'nh_ynaa_db_version' ) == $nh_ynaa_db_version) {
 				add_settings_field( 'ynaa-location', __('Enable locations and activate location metabox in posts', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'location'));
 			 }
-			add_settings_field( 'ynaa-eventplugin', __('Select your Event Manager:', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_eventplugin' ), $this->general_settings_key, 'extra_settings' , array('field'=>'eventplugin'));
+			 add_settings_field( 'ynaa-sort', __('Use image from Gadgetry-Theme', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'gadgetry'));
 			//add_settings_field( 'ynaa-order_value', __('Order posts on overview page by', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_order' ), $this->general_settings_key, 'extra_settings' , array('field'=>'order_value'));
-			add_settings_field( 'ynaa-sort', __('Group by date', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'sort'));
-			add_settings_field( 'ynaa-extra', __('Allow comments in App', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'comments'));
+			
+			
 			
 						
 		} //END  function nh_ynaa_register_general_settings()
@@ -912,7 +916,18 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 */
 		function nh_ynaa_field_general_option_color($field) {			
 			?>			
-			<input type="text" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" value="<?php echo esc_attr( $this->general_settings[$field['field']] ); ?>" class="my-color-field" />
+			<input type="text" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" value="<?php echo esc_attr( $this->general_settings[$field['field']] ); ?>" class="my-color-field" /><?php
+            switch($field['field']){
+				case 'c1': echo '<div class="helptext">'.(__('Color of main elements, e.g. dog ears, menu button, time stamps, category names, empty tiles, bullet points, social icons, etc.','nh-ynaa')).'</div>'; break;
+				case 'c2': echo '<div class="helptext">'.(__('Color of further elements, e.g. homescreen and posts background, elements of the commentary section','nh-ynaa')).'</div>'; break;
+				case 'cn': echo '<div class="helptext">'.(__('Color of title bar, navigation bar, quicknavigation bar','nh-ynaa')).'</div>'; break;
+				case 'cm': echo '<div class="helptext">'.(__('Text color in main menu and navigation menus (browse, subscribe, etc.)','nh-ynaa')).'</div>'; break;
+				case 'ch': echo '<div class="helptext">'.(__('Text color of post headlines','nh-ynaa')).'</div>'; break;
+				case 'csh': echo '<div class="helptext">'.(__('Text color of post sub headlines','nh-ynaa')).'</div>'; break;
+				case 'ct': echo '<div class="helptext">'.(__('Text color of continuous text','nh-ynaa')).'</div>'; break;				
+				default: break;
+			}
+			?>
 			<?php
 		}
 		
@@ -921,7 +936,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 */
 		function nh_ynaa_field_general_option_input($field) {			
 			?>			
-			<input type="number" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" value="<?php if(isset($this->general_settings[$field['field']]))echo esc_attr( $this->general_settings[$field['field']] ); else echo 100; ?>" class="my-input-field" />
+			<input type="number" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" value="<?php if(isset($this->general_settings[$field['field']]))echo esc_attr( $this->general_settings[$field['field']] ); else echo 100; ?>" class="my-input-field nh-floatleft" /><?php
+			 echo '<div class="helptext">'.(__('Images wider than this will be scaled up to full display width','nh-ynaa')).'</div>';
+				
+			?>
 			<?php
 		}
 		
@@ -1057,11 +1075,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 		*/
 		function nh_ynaa_field_general_homescreentype($field){
 			?>
-			<select id="nh_homescreentype" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]">
+			<select id="nh_homescreentype" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" class="nh-floatleft">
                     	<option value="0"><?php _e('Categories', 'nh-ynaa'); ?></option>
                         <option value="1" <?php if($this->general_settings[$field['field']]=='1') echo ' selected'; ?>><?php _e('Articles', 'nh-ynaa'); ?></option>        
                     </select>
            <?php
+		    echo '<div class="helptext">'.(__('Select your startscreen view for your app.','nh-ynaa')).'</div>';
 		}
 		
 		/*
@@ -1071,7 +1090,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			
 			?>
-			<select  id="nh_language" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]">
+			<select  id="nh_language" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" class="nh-floatleft">
                     	<option value="en"><?php _e('English', 'nh-ynaa'); ?></option>
                         <option value="fr" <?php if($this->general_settings[$field['field']]=='fr') echo ' selected'; ?>><?php _e('French', 'nh-ynaa'); ?></option>
                         <option value="de" <?php if($this->general_settings[$field['field']]=='de') echo ' selected'; ?>><?php _e('German', 'nh-ynaa'); ?></option>
@@ -1079,6 +1098,7 @@ if(!class_exists('NH_YNAA_Plugin'))
                         <option value="es" <?php if($this->general_settings[$field['field']]=='es') echo ' selected'; ?>><?php _e('Spanish', 'nh-ynaa'); ?></option>
                     </select>
            <?php
+		   echo '<div class="helptext">'.(__('Interface and dialogue language','nh-ynaa')).'</div>';
 		}
 		
 		/**
@@ -1086,11 +1106,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 		*/
 		function nh_ynaa_field_general_sorttype($field){
 			?>
-            <select   <?php if(!$this->general_settings['homescreentype'] || !isset($this->general_settings['homescreentype'])) echo 'disabled'; ?>  id="nh_sorttype" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]">
+            <select   <?php if(!$this->general_settings['homescreentype'] || !isset($this->general_settings['homescreentype'])) echo 'disabled'; ?>  id="nh_sorttype" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" class="nh-floatleft">
                     	<option value="recent"><?php _e('Recent posts', 'nh-ynaa'); ?></option>
                         <!--<option value="popular" <?php if($this->general_settings[$field['field']]=='popular') echo ' selected'; ?>><?php _e('Most popular posts', 'nh-ynaa'); ?></option> -->       
                     </select>
             <?php
+			 echo '<div class="helptext">'.(__('Post order on starscreen.','nh-ynaa')).'</div>';
 		}
 		
 		/*
@@ -1108,7 +1129,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			}
 			if($aktiveventplugis && count($aktiveventplugis) > 0){
 				?>
-                	<select id="eventplugin" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]">
+                	<select id="eventplugin" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" class="nh-floatleft">
                     	<option value="0"><?php _e('Please select'); ?></option>
                         <?php
 						foreach($aktiveventplugis as $k=>$eventplugin){
@@ -1117,8 +1138,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 							echo '<option value="'.$k.'" '.$checked.'>'.$events_plugins_names[$k].'</option>';
 						}
 						?>
-                    </select>
+                    </select>                    
                 <?php
+				 echo '<div class="helptext">'.(__('This is a Blappsta business feature.','nh-ynaa')).' '.(__('You can select here a event plugin to show events in your app.','nh-ynaa')).'</div>';
 			}
 			else {
 				_e('No supported Plugin installed. Please Install the Plugin Event Manager.', 'nh-ynaa');
@@ -1154,8 +1176,15 @@ if(!class_exists('NH_YNAA_Plugin'))
 			if(esc_attr( $this->general_settings[$field['field']])=='1') $check = ' checked="checked" ';
 			else $check = '';
 			?>			
-			<input value="1" type="checkbox" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" id="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" <?php echo $check; ?> />
+			<input value="1" type="checkbox" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" id="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" <?php echo $check; ?> class="nh-floatleft" />
 			<?php
+			switch($field['field']){
+				case 'location': echo '<div class="helptext padding0">'.(__('This is a Blappsta business feature.','nh-ynaa')).(__('Activate this checkbox if they want under your posts show a map with a location.', 'nh-ynaa')).'</div>'; break;
+				case 'sort' : echo '<div class="helptext padding0">'.(__('Create separators for periods of time between posts<br>(only if Post order within categories is set to "chronologically")', 'nh-ynaa')).'</div>'; break;
+				case 'comments' : echo '<div class="helptext padding0">'.(__('Turn the comments section beneath posts on or off.', 'nh-ynaa')).'</div>'; break;
+				case 'gadgetry': echo '<div class="helptext padding0">'.(__('Activate the checkbox if you use gadgetry theme image as post featured image.', 'nh-ynaa')).'</div>'; break;
+				default: break;
+			}
 		}
 		
 		/*
@@ -1640,6 +1669,16 @@ if(!class_exists('NH_YNAA_Plugin'))
 						}
 								
 						unset($tempmenu);
+						if(get_bloginfo('url')=='http://yna.nebelhorn.com'){
+							unset($tempmenu);
+							$tempmenu['pos'] =  $ar['pos']+1;
+							$tempmenu['type'] =  'pushCenter';
+							$tempmenu['id'] =  -96;
+							$tempmenu['title'] =  'Pushcenter';
+							//if(isset($ar['content']))$tempmenu['content'] = $ar['content'];
+							//if(isset($ar['item_id']))$tempmenu['item_id'] = $ar['item_id'];
+							$returnarray['menu'][] = $tempmenu;
+						}
 						/*$tempmenu['pos'] =  $ar['pos']+1;
 						$tempmenu['type'] =  'events';
 						$tempmenu['id'] =  $ar['id']+1;
@@ -2286,15 +2325,17 @@ if(!class_exists('NH_YNAA_Plugin'))
 								$ts = strtotime($latest_cat_post->posts[0]->post_modified);
 								$returnarray['changes']=1;
 								//var_dump($this->categories_settings[$_GET[$this->requesvar['id']]]);
-								if ( has_post_thumbnail($latest_cat_post->posts[0]->ID)) {
+						/*		if ( has_post_thumbnail($latest_cat_post->posts[0]->ID)) {
 									$post_thumbnail_image=wp_get_attachment_image_src(get_post_thumbnail_id($latest_cat_post->posts[0]->ID), 'original');
 								}
 								/*elseif($this->categories_settings[$_GET[$this->requesvar['id']]]['img']){
 									$post_thumbnail_image=array($this->categories_settings[$_GET[$this->requesvar['id']]]['img']);
 								}*/
-								else {
+						/*		else {
 									$post_thumbnail_image=array();
 								}
+								*/
+								$post_thumbnail_image[0] = $this->nh_getthumblepic($latest_cat_post->posts[0]->ID,'original');
 								$posttitle = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($latest_cat_post->posts[0]->post_title)), ENT_NOQUOTES, 'UTF-8')));
 								$returnarray['items'][] = array('pos'=>1, 'id'=>$latest_cat_post->posts[0]->ID,'title'=>$posttitle,'timestamp'=>strtotime($latest_cat_post->posts[0]->post_modified),'type'=>$latest_cat_post->posts[0]->post_type, 'thumb'=> ($post_thumbnail_image[0]), 'publish_timestamp'=> strtotime($latest_cat_post->posts[0]->post_date)); 							
 								//$returnarray['items'][]=array('pos'=>1, 'type' => $post->post_type, 'allowRemove'=> $allowRemove, 'id'=> $category->term_id, 'parent_id'=>0, 'title'=>$category->name, 'img'=>$post_thumbnail_image[0], 'post_id'=>$latest_cat_post->post->ID );
@@ -2425,13 +2466,15 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$ts = strtotime($post->post_modified);
 							$returnarray['changes']=1;
 						}
-						if ( has_post_thumbnail($post->ID)) {
+						$post_thumbnail_image[0] = $this->nh_getthumblepic($post->ID,'medium');
+					/*	if ( has_post_thumbnail($post->ID)) {
 							$post_thumbnail_image=wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'medium');
 						}
 						/*elseif($this->categories_settings[$_GET[$this->requesvar['id']]]['img']){
 							$post_thumbnail_image=array($this->categories_settings[$_GET[$this->requesvar['id']]]['img']);
 						}*/
-						else $post_thumbnail_image[0] = '';	
+					/*	else $post_thumbnail_image[0] = '';	
+						*/
 						//echo esc_url($post_thumbnail_image[0]);
 						$posttitle = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($post->post_title)), ENT_NOQUOTES, 'UTF-8')));
 						$returnarray['items'][] = array('pos'=>$i, 'id'=>$post->ID,'title'=>$posttitle,'timestamp'=>strtotime($post->post_modified),'type'=>$post->post_type, 'thumb'=> ($post_thumbnail_image[0]), 'publish_timestamp'=> strtotime($post->post_date)); 							
@@ -2483,27 +2526,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$returnarray['id'] = get_the_ID();		
 					$returnarray['error']['postid']=$returnarray['id'] ;			
 					$returnarray['timestamp'] = strtotime(get_the_date('Y-m-d').' '.get_the_modified_time());
-					if($ts<strtotime(get_the_date('Y-m-d').' '.get_the_modified_time())) {
-						$ts = strtotime(get_the_date('Y-m-d').' '.get_the_modified_time());
-						if ( has_post_thumbnail()) {
-							$post_thumbnail_image=(wp_get_attachment_image_src(get_post_thumbnail_id(get_the_ID()), 'medium'));
-							$returnarray['uma']['aricle_has_image'] = true;
-						}
-						else {
-							$post_thumbnail_image[0] = '';
-									
-							/*if(isset($this->homepreset_settings['items'])){
-								if(is_array($this->homepreset_settings['items']) && count($this->homepreset_settings['items'])>0){
-								           
-									foreach($this->homepreset_settings['items'] as $hp){
-										if($hp['id']==$returnarray['id'] && $hp['type'] == 'cat' && $hp['img']){
-											$post_thumbnail_image[0] =   $hp['img'];
-											break;
-										}
-									}
-								}
-							}*/
-						}
+					$returnarray['timestamp'] = strtotime($post->post_modified);
+					if($ts<$returnarray['timestamp']) {
+						$ts = $returnarray['timestamp'];
+						$post_thumbnail_image[0] = $this->nh_getthumblepic($returnarray['id'],'medium');
+						
 						
 						$returnarray['title'] = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($post->post_title)), ENT_NOQUOTES, 'UTF-8')));
 						//$returnarray['']['title']
@@ -2583,6 +2610,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						$returnarray['changes']=1;				
 						$returnarray['type']=get_post_type();					
 						$returnarray['format']='html';
+						$returnarray['post_date'] = strtotime($post->post_date);
 						 	
 						$returnarray['sharelink']= esc_url( get_permalink());
 						$returnarray['comment_status'] = $post->comment_status;						
@@ -2662,9 +2690,24 @@ if(!class_exists('NH_YNAA_Plugin'))
 			if($_GET[$this->requesvar['id']]){
 				$queried_post = get_post($_GET[$this->requesvar['id']]);
 				$content = $queried_post->post_content;
+				
+				$hook='the_content';	
+				if(get_bloginfo('url')=='http://lovemypetbook.com'){			
+					remove_all_filters( $hook);
+				}
+				if($this->general_settings['debug'] ==1 && $_GET['debug']=1 && $_GET['filter']='the_content'){
+				 global $wp_filter;   
+				
+					print '<pre>';
+					print_r( $wp_filter[$hook] );
+					print '</pre>';
+				}
 				$content = apply_filters('the_content', $content);
 				$content = str_replace(']]>', ']]&gt;', $content);
 				$content = str_replace("\r\n",'\n',$content);
+				if(get_bloginfo('url')=='http://lovemypetbook.com'){			
+					$content = str_replace("\n",'',$content);
+				}
 				//$content = utf8_encode($content);
 						
 				$content = preg_replace('/[\x00-\x1F\x80-\x9F]/u', '',$content);
@@ -3072,6 +3115,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							if(strtotime($latest_cat_post->post->post_modified)>$_GET[$this->requesvar['post_ts']]){
 								$ts = strtotime($latest_cat_post->post->post_modified);
 								$returnarray['changes']=1;
+								
 								if ( has_post_thumbnail()) {
 									$post_thumbnail_image=wp_get_attachment_image_src(get_post_thumbnail_id($post_id), 'original');
 								}
@@ -3345,6 +3389,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						
 							$post->post_title = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($post->post_title)), ENT_NOQUOTES, 'UTF-8')));						
 							$returnarray['title']=($post->post_title);
+							$returnarray['post_date']=strtotime($post->post_date);
 							$returnarray['timestamp']=strtotime($post->post_modified); 
 							$returnarray['type']='post'; 
 							$returnarray['thumb']= ($post_thumbnail_image[0]); 
@@ -3582,18 +3627,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$access_token = $facebook->getAccessToken();
 					if( $access_token){	
 						$url = 'https://graph.facebook.com/'.$this->general_settings['social_fbid'].'/feed?access_token='.$access_token.'&format=json&limit='.$limit;						 						//echo $url;
-						$items = @file_get_contents($url);
 						if($items){
-							$returnarray=$items;
+								$returnarray=$items;
 						}
 						else {
-							$items =  $this->nh_ynaa_get_data($url);
-							if($items){
-								$returnarray=$items;
-							}
-							else {
-								$returnarray['error']=$this->nh_ynaa_errorcode(28);
-							}
+							$returnarray['error']=$this->nh_ynaa_errorcode(28);
 						}
 					}
 					else {
@@ -3618,13 +3656,26 @@ if(!class_exists('NH_YNAA_Plugin'))
 			* return strin content
 		*/
 		function nh_ynaa_get_data($url) {
-			$ch = curl_init();
-			$timeout = 25;
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-			$data = curl_exec($ch);
-			curl_close($ch);
+			$data = false;
+			$items = @file_get_contents($url);
+			if($items){
+				$data=$items;
+			}
+			else {
+				if(function_exists('curl_version')){
+					$ch = curl_init();
+					$timeout = 25;
+					curl_setopt($ch, CURLOPT_URL, $url);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+					curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+					$items = curl_exec($ch);
+					curl_close($ch);
+					if($items){
+						$data=$items;
+					}	
+				}
+			}
+			
 			return $data;
 		}
 		
@@ -4114,10 +4165,26 @@ if(!class_exists('NH_YNAA_Plugin'))
 		function nh_getthumblepic($id, $size='medium'){
 			$url ='';
 			if($id){
-				if ( has_post_thumbnail($id)) {
-					$post_thumbnail_image=wp_get_attachment_image_src(get_post_thumbnail_id($id), $size);
+				if($this->general_settings['gadgetry']){
+					$gadgetry_tfuse_post_options = get_post_meta($id,'gadgetry_tfuse_post_options',true);
+					//var_dump($gadgetry_tfuse_post_options);
+					//$gadgetry_tfuse_post_options = unserialize($gadgetry_tfuse_post_options);
+					if( $gadgetry_tfuse_post_options['gadgetry_single_image'])$post_thumbnail_image[0] = $gadgetry_tfuse_post_options['gadgetry_single_image'];
+					elseif( $gadgetry_tfuse_post_options['gadgetry_thumbnail_image'])$post_thumbnail_image[0] = $gadgetry_tfuse_post_options['gadgetry_thumbnail_image'];
+					else {
+						if ( has_post_thumbnail($id)) {
+						$post_thumbnail_image=wp_get_attachment_image_src(get_post_thumbnail_id($id), $size);
+						}
+						else $post_thumbnail_image[0] = '';	
+					}
+					
 				}
-				else $post_thumbnail_image[0] = '';	
+				else{
+					if ( has_post_thumbnail($id)) {
+						$post_thumbnail_image=wp_get_attachment_image_src(get_post_thumbnail_id($id), $size);
+					}
+					else $post_thumbnail_image[0] = '';	
+				}
 				$url = $post_thumbnail_image[0];
 			}
 			return esc_url($url);
