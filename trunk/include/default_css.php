@@ -11,6 +11,11 @@ img {
 	width:100%;
 	margin-bottom:10px;
 }
+
+img.wp-smiley { 
+	width:auto; 
+}
+
 ul, ol{
 	margin:0 0 0 20px; 
 }

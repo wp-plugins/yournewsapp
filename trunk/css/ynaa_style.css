@@ -45,11 +45,14 @@ div.publishing-action {
 	float:left;
 	width:50%;
 	/*line-height:27px;*/
-	padding-top:5px;
+	/*padding-top:5px;*/
 }
 
 #nh_ynaa_form .helptext.padding0{
 	padding-top:0;
+}
+#nh_ynaa_form .helptext.padding5{
+	padding-top:5px;
 }
 
 #nh_ynaa_form.nh_ynaa_general_settings {

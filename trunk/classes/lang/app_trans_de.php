@@ -66,6 +66,7 @@
 			'Copy link' => 'Link kopieren',
 			'Open in Safari' => 'In Safari öffnen',
 			'Notifications' => 'Benachrichtigungen',
-			'Select which categories to receive push-notifications from:' => 'Wählen sie die Kategorien aus der sie Push-Benachrichtigungen erhalten wollen:'
+			'Select which categories to receive push-notifications from:' => 'Wählen sie die Kategorien aus der sie Push-Benachrichtigungen erhalten wollen:',
+			'Recent content could not be accessed. Please connect your device to the internet and try again.'=>'Aktuelle Inhalte können gerade leider nicht geladen werden. Bitte überprüfen Sie Ihre Internetverbindung.'
            );
 ?>

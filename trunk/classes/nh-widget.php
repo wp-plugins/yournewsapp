@@ -100,11 +100,17 @@ class NH_Blappsta_Widget extends WP_Widget
             <div class="blappsta-app-name"><?php echo $app_name; ?></div>
          <?php } ?> 
             <div>
-            <?php if($apple_link) { ?>
-                <div class="blappsta-app-apple-store"><a href="<?php echo $apple_link; ?>" target="_blank"><img src="<?php echo  $plugin_url; ?>/img/widgets/app-store.png" alt="Apple App Store" title=""></a></div>
+            <?php if($apple_link) { 
+				if(substr(get_bloginfo('language'),0,2)=='de') $storeimg = 'apple_store_de.png'; 
+				else $storeimg = 'apple_store_en.png'; 
+			?>
+                <div class="blappsta-app-apple-store"><a href="<?php echo $apple_link; ?>" target="_blank"><img src="<?php echo  $plugin_url; ?>/img/widgets/<?php echo $storeimg; ?>" alt="Apple App Store" title=""></a></div>
             <?php }
-				if($google_link) { ?>
-                <div><a href="<?php echo $google_link; ?>" target="_blank"><img src="<?php echo  $plugin_url; ?>/img/widgets/Google-Play-Store.png" alt="Google Play Store" title=""></a></div>
+				if($google_link) { 
+				if(substr(get_bloginfo('language'),0,2)=='de') $storeimg = 'google_play_store_de.png'; 
+				else $storeimg = 'google_play_store_en.png';
+			?>
+                <div><a href="<?php echo $google_link; ?>" target="_blank"><img src="<?php echo  $plugin_url; ?>/img/widgets/<?php echo $storeimg; ?>" alt="Google Play Store" title=""></a></div>
             <?php } ?>
             </div>
             
