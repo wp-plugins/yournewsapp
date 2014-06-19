@@ -140,7 +140,8 @@
 			'Copy link' => 'Copy link',
 			'Open in Safari' => 'Open in Safari',
 			'Notifications' => 'Notifications',
-			'Select which categories to receive push-notifications from:' => 'Select which categories to receive push-notifications from:'
+			'Select which categories to receive push-notifications from:' => 'Select which categories to receive push-notifications from:',
+			'Recent content could not be accessed. Please connect your device to the internet and try again.'=>'Recent content could not be accessed. Please connect your device to the internet and try again.'
            ));
            
          }
