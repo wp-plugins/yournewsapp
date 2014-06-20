@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.7.0
+Version: 0.7.1
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -13,7 +13,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.7.0";
+$nh_ynaa_version = "0.7.1";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -3585,7 +3585,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				if(!isset($this->general_settings['min-img-size-for-resize'])) $this->general_settings['min-img-size-for-resize'] = 100; 
 				 $upload_dir = wp_upload_dir();
 				foreach ($imgElements as $imgElement) {
-					echo $imgElement->getAttribute('class');
+					
 					if($imgElement->getAttribute('class')=='wp-smiley') continue;
 					$src = $imgElement->getAttribute('src');
 					if($upload_dir['baseurl'] == substr($src,0,strlen($upload_dir['baseurl']))){
@@ -3694,7 +3694,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$facebook = new Facebook($config);
 					$access_token = $facebook->getAccessToken();
 					if( $access_token){	
-						$url = 'https://graph.facebook.com/'.$this->general_settings['social_fbid'].'/feed?access_token='.$access_token.'&format=json&type=post&limit='.$limit;						 						
+					$limit2 =$limit;
+					if($limit==1) $limit2 =50;
+						$url = 'https://graph.facebook.com/'.$this->general_settings['social_fbid'].'/feed?access_token='.$access_token.'&format=json&type=post&limit='.$limit2;						 						
 						$items = $this->nh_ynaa_get_data($url,$limit);
 						if($items){
 							
@@ -3746,13 +3748,24 @@ if(!class_exists('NH_YNAA_Plugin'))
 					}	
 				}
 			}
-			/*if($limit==1 && $data){
-				$datatemp = json_decode($data,true,16);
-				while($datatemp['data'][0]['message'] ){
-					$data = $this->nh_ynaa_get_data($url,1,$offset++);
+			if($limit==1 && $data){
+				$datatemp = json_decode($data,true);
+				//var_dump($datatemp);				
+				foreach($datatemp['data'] as $temp){
+					
+						
+					if($temp['message']) {
+						$data = (json_encode(array('data'=>array($temp),'paging'=>$datatemp['paging'])));
+						
+						//var_dump($temp);
+						
+						break;
+					}
 				}
-			}*/
-			
+				/*while($datatemp['data'][0]['message'] ){
+					$data = $this->nh_ynaa_get_data($url,1,$offset++);
+				}*/
+			}
 			return $data;
 		}
 		
