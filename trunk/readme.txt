@@ -92,6 +92,7 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 - remove errorcode if menu empty
 - fix problem with 'Disqus Comment System' Plugin
 - integrate ticket support system
+- seperate tab for CSS Style
 
 = 0.7.1 =
 - bug fix
