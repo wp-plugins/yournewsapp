@@ -81,17 +81,19 @@ jQuery(document).ready(function($){
 			  if(typeof ($o.attr('checked')) != 'undefined'){				 
 			  
 				  var $type = $('#type-'+$o.attr('name')).val();
-				  var $menu_id = $o.val();
+				  var $menu_id = $o.val(); 
+				  //alert($menu_id);
 				  var $title = $('#title-'+$o.attr('name')).val();
 				  var $inputurl = '';
 				  switch($type){
 					  case 'page': $type_text='Seite'; $type2='article'; break;
 					  case 'post': $type_text='Beitrag'; $type2='article'; break;
-					  case 'app': $type_text='App'; $type2='app'; $id = $o.val();$menu_id='';break;
+					  case 'app': $type_text='App'; $type2='app'; $id = $o.val();break;
 					  case 'cat': $type_text='Kategorie'; $type2='cat'; break;
 					  case 'fb': $type_text='Facebook'; $type2='fb'; break;
 					  case 'events': $type_text='Events'; $type2='events'; break;
 					  case 'map': $type_text='Map'; $type2='map'; break;
+					   case 'pushCenter': $type_text='Push center'; $type2='pushCenter'; break;
 					  case 'webview': $type_text='URL'; $type2='webview'; $inputurl='<div style="clear:left; margin-top:10px;"><p><label for="edit-menu-item-url-'+$pos+'">Url<br><input type="text" value="http://" name="'+$menu_settings_key+'[menu]['+$pos+'][url]" class="widefat edit-menu-item-url" id="edit-menu-item-url-'+$pos+'"></p></div>'; break;
 					  default: $type_text='';  $type2=''; break;
 				  }
@@ -485,7 +487,7 @@ jQuery(document).ready(function($){
 	/* deactive post order if startvie = category */
 	
 	$('#nh_homescreentype').change(function(){
-		if($(this).val()=='1'){
+		if($(this).val()>'0'){
 			//alert('disable=false setzen');
 			$('#nh_sorttype').prop('disabled', false);
 		}
