@@ -61,70 +61,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			 )
 		);
 		
-		/*public static $lang_de = array(
-			'Menu'=>'Menü',
-			'Please wait...'=>'Bitte warten…',
-			'The data are updated' => 'Die Daten werden aktualisiert',
-			'More' => 'Mehr',
-			'all-day' => 'ganztägig',
-			'Tip'=>'Hinweis',
-			'This feed has been deleted' => 'Dieser Feed wurde gelöscht',
-			'The event has been removed from the calendar.'=>'Die Veranstaltung wurde aus dem Kalender entfernt.',
-			'The event was added to the calendar.' => 'Die Veranstaltung wurde dem Kalender hinzugefügt.',
-			'Today'=>'Heute',
-			'Yesterday' => 'Gestern',
-			'The day before yesterday' =>'Vorgestern',
-			'This week' =>'Diese Woche',
-			'Last week'=>'Letzte Woche',
-			'The week before last' =>'Vorletzte Woche',
-			'Last month'=>'Letzter Monat',
-			'This month' => 'Dieser Monat',
-			'Second last month' =>'Vorletzter Monat',
-			'Before two months' => 'Vorvorletzter Monat',
-			'This year' => 'Dieses Jahr',
-			'Last year' => 'Letztes Jahr',
-			'Older than last year' => 'Älter als letztes Jahr',
-			'Tomorrow' => 'Morgen',
-			'The day after tomorrow' => 'Übermorgen',
-			'Next week' => 'Nächste Woche',
-			'The week after next' =>'Übernächste Woche',
-			'Next month' => 'Nächster Monat',
-			'Over the next month' => 'Übernächster Monat',
-			'Over two months' => 'Überübernächster Monat',
-			'Next year' => 'Nächstes Jahr',
-			'Later next year' => 'Später als Nächstes Jahr',
-			'Cancel' => 'Abbrechen',
-			'Finished' => 'Fertig',
-			'Comment'=>'Kommentar',
-			'Show' =>'Anzeigen',
-			'Comments'=>'Kommentare',
-			'required' =>'erforderlich',
-			'Name' => 'Name',
-			'The e-mail address is not correct' => 'Die E-Mail-Adresse ist nicht korrekt',
-			'Please enter your name.' => 'Bitte gib deinen Namen an.',
-			'Please enter your comment.' => 'Bitte gib deinen Kommentar an.',
-			'Comments are being loaded ...' => 'Kommentare werden geladen...',
-			'Clock'=>'Uhr',
-			'Welcome to'=>'Willkommen bei', 
-			'There was an error.' => 'Es ist ein Fehler aufgetreten.',
-			'Redeem'=>'Einlösen',
-			'Add event to calendar'=>'Veranstaltung zum Kalender hinzufügen',
-			'Add to calendar'=>"Zum Kalender hinzufügen",
-			'Remove event from calendar' => "Veranstaltung vom Kalender entfernen",
-			'from'=>"von",
-			'to' => 'bis',
-			'starting at' => 'ab',
-			'Replay' => 'Antwort',
-			'You have the location services for the app disabled. You can turn them back on in the settings of the device.'=>'Sie haben die Ortungsdienste für die App deaktiviert. Sie können diese in den Einstellungen des Geräts wieder aktivieren.',
-			'Login'=>'Anmelden',
-			'Logout'=>'Abmelden',
-			'Username' => 'Benutzername',
-			'Password' => 'Passwort',
-			'The input is incomplete' => 'Die Eingabe ist unvollständig',
-			'Thanks' => 'Danke'
-			
-
-		);*/
+		
 				
 		/*
 		*Konstanten
@@ -238,7 +175,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					foreach ($blogids as $blog_id) {
 						switch_to_blog($blog_id);
 						NH_YNAA_Plugin::_nh_ynaa_activate(); 
-						NH_YNAA_Plugin::nh_update_db_check();
+						
 					}
 					switch_to_blog($old_blog);
 					return;
@@ -408,7 +345,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 					update_option('nh_ynaa_css_settings_ts', $general_settings_old['ts']);
 				}
 			}
-			update_option( "nh_ynaa_plugin_version", $nh_ynaa_version );	
+			if($nh_ynaa_version_old != $nh_ynaa_version  )		update_option( "nh_ynaa_plugin_version", $nh_ynaa_version );	
+			
+			
 			
 			
 		}
@@ -2765,6 +2704,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						}
 						//$returnarray['uma']['post_content_after_nh_ynaa_get_appcontent']= $content;
 						//$content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$content);
+						if($this->css_settings['css'])$this->general_settings['css'] = $this->css_settings['css'];
 						$this->general_settings['css'] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$this->general_settings['css']);
 						//$content = (str_replace('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">','<!doctype html>',$content));
 						$active_plugins = get_option('active_plugins');
@@ -2899,6 +2839,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				//Für nicht utf8
 				$content = $this->nh_ynaa_get_appcontent($content);
 				//$content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$content);
+				if($this->css_settings['css'])$this->general_settings['css'] = $this->css_settings['css'];
 				$this->general_settings['css'] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$this->general_settings['css']);
 				$this->general_settings['css'] = str_replace('../fonts/stylesheet.css',plugins_url( 'fonts/stylesheet.css' , __FILE__ ),$this->general_settings['css']);
 				
@@ -3556,6 +3497,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 								$content = preg_replace('/[\x00-\x1F\x80-\x9F]/u', '',$content);
 								$content = $this->nh_ynaa_get_appcontent($content);
 								//$content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$content);
+								if($this->css_settings['css'])$this->general_settings['css'] = $this->css_settings['css'];
 								$this->general_settings['css'] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$this->general_settings['css']);
 								$content = (str_replace('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">','<!doctype html>',$content));
 								
@@ -4735,6 +4677,7 @@ if(class_exists('NH_YNAA_Plugin'))
 
     // instantiate the plugin class
     $nh_ynaa = new NH_YNAA_Plugin();
+	add_action( 'plugins_loaded',array($nh_ynaa,'nh_update_db_check')); 
 	
 	// Add a link to the settings page onto the plugin page
 	if(isset($nh_ynaa))
@@ -4766,8 +4709,10 @@ if(class_exists('NH_YNAA_Plugin'))
 function nh_ynaa_load_textdomain() 
 {
 	load_plugin_textdomain('nh-ynaa', FALSE, dirname( plugin_basename( __FILE__ ) ) . '/lang');
+	
 }
 add_action( 'plugins_loaded', 'nh_ynaa_load_textdomain'); 
+
 
 add_action( 'admin_footer', 'nh_action_javascript' );
 function nh_action_javascript() {
