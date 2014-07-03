@@ -133,16 +133,18 @@
 								);
 								$categories = get_categories( $args );
 								$post_type = 'cat';
-								foreach ( $categories as $category ) {
-									echo '<li>';
-									echo '<input type="hidden" value="'.$post_type.'" name="type-menu-item-'.$post_type.$menu_id.'" id="type-menu-item-'.$post_type.$menu_id.'">';
-									echo '<input type="hidden" value="'.$post_type.'" name="link-typ-menu-item-'.$post_type.$menu_id.'" id="link-type-menu-item-'.$post_type.$menu_id.'">';
-									echo '<input type="hidden" value="'.$category->name.'" name="title-menu-item-'.$post_type.$menu_id.'" id="title-menu-item-'.$post_type.$menu_id.'">';
-									echo '<label class="menu-item-title">';
-									echo '<input type="checkbox" value="'.$category->term_id.'" name="menu-item-'.$post_type.$menu_id.'" class="menu-item-checkbox" /> ';										
-									echo $category->name.'</label>';													
-									echo '</li>';
-									$menu_id++;
+								if($categories){
+										foreach ( $categories as $category ) {
+										echo '<li>';
+										echo '<input type="hidden" value="'.$post_type.'" name="type-menu-item-'.$post_type.$menu_id.'" id="type-menu-item-'.$post_type.$menu_id.'">';
+										echo '<input type="hidden" value="'.$post_type.'" name="link-typ-menu-item-'.$post_type.$menu_id.'" id="link-type-menu-item-'.$post_type.$menu_id.'">';
+										echo '<input type="hidden" value="'.$category->name.'" name="title-menu-item-'.$post_type.$menu_id.'" id="title-menu-item-'.$post_type.$menu_id.'">';
+										echo '<label class="menu-item-title">';
+										echo '<input type="checkbox" value="'.$category->term_id.'" name="menu-item-'.$post_type.$menu_id.'" class="menu-item-checkbox" /> ';										
+										echo $category->name.'</label>';													
+										echo '</li>';
+										$menu_id++;
+									}
 								}
 									//wp_category_checklist();
 									
@@ -313,7 +315,7 @@
 					<div id="nav-menu-footer">
 						<div class="major-publishing-actions">
 							<div class="publishing-action">&nbsp;<?php //submit_button(); ?>
-								<!--<input type="submit" name="save_menu" id="save_menu_header" class="button button-primary menu-save" value="Menü erstellen">-->
+								<!--<input type="submit" name="save_menu" id="save_menu_header" class="button button-primary menu-save" value="Menï¿½ erstellen">-->
 							</div><!-- END .publishing-action -->
 						</div><!-- END .major-publishing-actions -->
 					</div><!-- /#nav-menu-footer -->

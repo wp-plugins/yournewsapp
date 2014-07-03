@@ -1,8 +1,35 @@
 <?php $menu_id=0;
-//var_dump($this->general_settings);
+//var_dump($this->homepreset_settings);
  ?>
+ <h2><?php _e('Display options', 'nh-ynaa'); ?></h2>
+ <table class="form-table">
+ 	<tr>
+ 		<th scope="row"><?php _e('Startscreen view', 'nh-ynaa'); ?></th>
+ 		<td>
+ 			<select id="nh_homescreentype" name="<?php echo $this->homepreset_settings_key; ?>[homescreentype]" class="nh-floatleft">
+ 				<option value="0" ><?php _e('Individual','nh-ynaa'); ?></option>
+            	<option value="3" <?php if($this->homepreset_settings['homescreentype']=='3') echo 'selected="selected"'; ?>><?php _e('Categories', 'nh-ynaa'); ?></option>
+                <option value="1" <?php if($this->homepreset_settings['homescreentype']=='1') echo ' selected="selected"'; ?>><?php _e('Articles', 'nh-ynaa'); ?></option>
+                <option value="2" <?php if($this->homepreset_settings['homescreentype']=='2') echo ' selected="selected"'; ?>><?php _e('Pages', 'nh-ynaa'); ?></option>        
+            </select>
+           <?php echo '<div class="helptext padding5">'.(__('Select your startscreen view for your app.','nh-ynaa')).'</div>'; ?>
+           </td>
+ 	</tr>
+ 	<tr class="nh_sorttype-tr" style="<?php if(isset($this->homepreset_settings['homescreentype']) && ($this->homepreset_settings['homescreentype']==0 || $this->homepreset_settings['homescreentype']==3)) {echo 'display:none;'; }  ?>">
+ 		<th scope="row"><?php _e('Startscreen articles sorty by','nh-ynaa'); ?></span></th>
+ 		<td>
+ 			<select id="nh_sorttype" name="<?php echo $this->homepreset_settings_key; ?>[sorttype]" class="nh-floatleft">
+            	<option value="date-desc" <?php if($this->homepreset_settings['sorttype']=='date-desc') echo ' selected="selected"'; ?>><?php _e('Recent posts', 'nh-ynaa'); ?></option>
+                <option value="date-asc" <?php if($this->homepreset_settings['sorttype']=='date-asc') echo ' selected="selected"'; ?>><?php _e('Oldest posts', 'nh-ynaa'); ?></option>
+                <option value="alpha-asc" <?php if($this->homepreset_settings['sorttype']=='alpha-asc') echo ' selected="selected"'; ?>><?php _e('Alphabetically', 'nh-ynaa'); ?></option>
+                <!--<option value="popular" <?php if($this->general_settings[$field['field']]=='popular') echo ' selected'; ?>><?php _e('Most popular posts', 'nh-ynaa'); ?></option> -->       
+            </select>
+   		<?php echo '<div class="helptext padding5">'.(__('Post order on starscreen.','nh-ynaa')).'</div>'; ?>
+   	</td>
+   </tr>
+ </table>
  <input type="hidden" name="<?php echo $this->homepreset_settings_key; ?>[ts]" value="<?php echo time(); ?>" />
-<div id="nav-menus-frame">
+<div id="nav-menus-frame" style="<?php if(isset($this->homepreset_settings['homescreentype']) && $this->homepreset_settings['homescreentype']!=0  ) echo 'display:none;';?>">
 	<div id="menu-settings-column" class="metabox-holder">
 		<div class="clear"></div>
 		<div class="accordion-container" id="side-sortables">		
@@ -289,7 +316,7 @@
 					<div id="nav-menu-footer">
 						<div class="major-publishing-actions">
 							<div class="publishing-action">&nbsp;<?php //submit_button(); ?>
-								<!--<input type="submit" name="save_menu" id="save_menu_header" class="button button-primary menu-save" value="Menü erstellen">-->
+								<!--<input type="submit" name="save_menu" id="save_menu_header" class="button button-primary menu-save" value="Menï¿½ erstellen">-->
 							</div><!-- END .publishing-action -->
 						</div><!-- END .major-publishing-actions -->
 					</div><!-- /#nav-menu-footer -->
