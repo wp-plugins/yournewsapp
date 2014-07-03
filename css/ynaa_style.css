@@ -114,6 +114,7 @@ div.publishing-action {
 	width:159px;
 }
 
+
 .setdefaultcatpic { 
 	font-size: 11px;
     margin-top: 40px;
@@ -216,4 +217,8 @@ div.h30 {
 	top: 25%;
 	right: 0;
 	height: 108px;
+}
+
+.nodisplay {
+	display:none !important;
 }

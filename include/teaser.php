@@ -2,7 +2,57 @@
 //var_dump($this->teaser_settings);
  ?>
  <input type="hidden" name="<?php echo $this->teaser_settings_key; ?>[ts]" value="<?php echo time(); ?>" />
-<div id="nav-menus-frame">
+<div>
+	<table class="form-table">
+		<tbody>
+			<tr>
+				<th><?php _e('Teaser source','nh-ynaa'); ?></th>
+				<td>
+					<select id="teaser_source"  name="<?php echo $this->teaser_settings_key; ?>[source]" class="nh-floatleft" >
+						<option value="indi" <?php if($this->teaser_settings['source']=='indi') echo 'selected="selected"'; ?>><?php _e('Individual','nh-ynaa'); ?></option>
+						<!--<option value="cat" <?php if($this->teaser_settings['source']=='cat') echo 'selected="selected"'; ?>><?php _e('Category','nh-ynaa'); ?></option>
+						<option value="recent" <?php if($this->teaser_settings['source']=='recent') echo 'selected="selected"'; ?>><?php _e('Recent posts','nh-ynaa'); ?></option>-->
+					</select>
+					<div class="helptext padding5"><?php _e('Select your source for the teasers in the app.'); ?></div>
+					
+				</td>
+			</tr>
+			<tr class="teaser_categories" style="<?php if($this->teaser_settings['source']!='cat') echo 'display:none;';?>" >
+				<th><?php _e('Teaser Category', 'nh-ynaa');?></th>
+				<td><?php
+					$args=array(
+								  'orderby' => 'name',			  
+								  'order' => 'ASC'
+								);
+								$categories = get_categories( $args );
+								
+								if($categories){
+									echo '<select id="teaser_cat" name="'.$this->teaser_settings_key.'[cat]" class="nh-floatleft">';
+										foreach ( $categories as $category ) {
+										$selected = "";
+											if($this->teaser_settings['cat']==$category->name) $selected = ' selected="selected" ' ;
+										echo '<option value="'.$category->name.'" '.$selected.'>'.$category->name.'</option>';
+										
+									}
+									echo '</select>';
+								}
+								else {
+									echo '<select><option>'.__('No categories existing', 'nh-ynaa').'</option></select>';
+								}
+				?></td>
+			</tr>
+			<tr style="<?php if(!isset($this->teaser_settings['source']) || $this->teaser_settings['source']=='indi') echo 'display:none;'; ?>" class="teaser_limit">
+				<th><?php _e('Teaser limit', 'nh-ynaa'); ?></th>
+				<td>
+					<input type="number" name="<?php echo $this->teaser_settings_key; ?>[limit]" value="4" class="my-input-field nh-floatleft" step="1" min="1" >
+					<div class="helptext"><?php _e('Number of teaser to be shown.','nh-ynaa'); ?></div>
+				</td>
+			</tr>
+			
+		</tbody>
+	</table>
+</div>
+<div id="nav-menus-frame" style="<?php if(isset($this->teaser_settings['source']) && $this->teaser_settings['source']!='indi') echo 'display:none;'; ?>">
 	<div id="menu-settings-column" class="metabox-holder">
 		<div class="clear"></div>
 		<div class="accordion-container" id="side-sortables">		
@@ -176,7 +226,7 @@
 								<p><?php _e('Here you change the settings for teasers on the home screen.','nh-ynaa'); ?></p>
 							</div>							
 							<div id="menu-accordion">                            	
-								<ul id="menu-to-edit" class="menu nav-menus-php nh-teaser-ul">
+								<ul id="menu-to-edit" class="menu nav-menus-php nh-teaser-ul drag-teaser">
 									<?php
 									if($this->teaser_settings['teaser'] && !empty($this->teaser_settings['teaser'])){
 										$menuitems= $this->teaser_settings['teaser'];
@@ -211,7 +261,7 @@
 					<div id="nav-menu-footer">
 						<div class="major-publishing-actions">
 							<div class="publishing-action">&nbsp;<?php //submit_button(); ?>
-								<!--<input type="submit" name="save_menu" id="save_menu_header" class="button button-primary menu-save" value="Menü erstellen">-->
+								<!--<input type="submit" name="save_menu" id="save_menu_header" class="button button-primary menu-save" value="Menï¿½ erstellen">-->
 							</div><!-- END .publishing-action -->
 						</div><!-- END .major-publishing-actions -->
 					</div><!-- /#nav-menu-footer -->

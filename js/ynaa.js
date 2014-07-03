@@ -14,7 +14,7 @@ jQuery(document).ready(function($){
 	}
 	
     $('.my-color-field').wpColorPicker({
-		//clear: function() {alert('Dieser Wert ist ungültig.');}
+		//clear: function() {alert('Dieser Wert ist ungï¿½ltig.');}
 	});
 	
 	//Secon Submit Button
@@ -205,6 +205,29 @@ jQuery(document).ready(function($){
 		  }
 		  return false;
 	  });
+	  
+	  /*
+	   * Teaser source
+	   */
+	  $('#teaser_source').change(function(){
+	  	if($(this).val()=='indi'){
+	  		$('.teaser_categories').hide();
+	  		$('.teaser_limit').hide();
+	  		$('#nav-menus-frame').show();
+	  		
+	  	}
+	  	else {	  
+	  		if($(this).val()=='cat'){
+	  			$('.teaser_categories').show();
+	  		}
+	  		else {
+	  			$('.teaser_categories').hide();
+	  		}		  		
+	  		$('.teaser_limit').show();
+	  		$('#nav-menus-frame').hide();
+	  	}
+	  });
+
 	  
 	   //Element aus Homepreset entfernen
 	  $('.delhp').live('click', function(e){
@@ -417,7 +440,7 @@ jQuery(document).ready(function($){
 	*/
 	
 	//Post search
-	//auskomentiert weil load.ph wwp-load.php enthält
+	//auskomentiert weil load.ph wwp-load.php enthï¿½lt
 	/*$('div.tabs-panel p.quick-search-wrap input.quick-search').bind('keypress', function(e) {
 		$this = $(this);
 		
@@ -487,14 +510,23 @@ jQuery(document).ready(function($){
 	/* deactive post order if startvie = category */
 	
 	$('#nh_homescreentype').change(function(){
-		if($(this).val()>'0'){
-			//alert('disable=false setzen');
-			$('#nh_sorttype').prop('disabled', false);
+		if($(this).val()==3){
+		
+			$('.nh_sorttype-tr').hide();
+			$('#nav-menus-frame').hide();
 		}
+		else if($(this).val()!=1 && $(this).val()!=2 ){
+			//alert('disable=false setzen');
+			//$('#nh_sorttype').prop('disabled', false);
+			$('.nh_sorttype-tr').hide();			
+			$('#nav-menus-frame').show();
+		}		
 		else {
 			//alert('disable=true setzen');
 			//$('#nh_sorttype').removeAttr('disabled');
-			$('#nh_sorttype').prop('disabled', true);
+			//$('#nh_sorttype').prop('disabled', true);
+			$('.nh_sorttype-tr').show();
+			$('#nav-menus-frame').hide();
 		}
 	});
 	

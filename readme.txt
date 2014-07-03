@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.7.2
+Stable tag: 0.7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,10 +85,18 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.7.3 =
+- supported language: portuguese
+- new alert message for push send success
+- remove not required "Title 2 Color"
+- teaser can be setup from category, recent posts or individually (wait for app update)
+- support extern css an javascript from blappsta
+- bug fix
+
 = 0.7.2 =
 - support blogs with only pages
 - no crah anymore if there are no categories
-- integrate push center (need iOS App Version 2 or Android Version 1.6)
+- integrate push center (need iOS App Version 1.9 or Android Version 1.6)
 - remove errorcode if menu empty
 - fix problem with 'Disqus Comment System' Plugin
 - integrate ticket support system
@@ -272,6 +280,14 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.7.3 =
+- supported language: portuguese
+- new alert message for push send success
+- remove not required "Title 2 Color"
+- teaser can be setup from category, recent posts or individually (wait for app update)
+- support extern css an javascript from blappsta
+- bug fix
+
 = 0.7.2 =
 - support blogs with only pages
 - no crah anymore if there are no categories
