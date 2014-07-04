@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.7.3
+Version: 0.7.4
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -13,7 +13,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.7.3";
+$nh_ynaa_version = "0.7.4";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -1779,6 +1779,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$returnarray['wphtml_type']=get_bloginfo('html_type');
 				
 				$ts_general =  get_option( 'nh_ynaa_general_settings_ts' );	
+				
+				// sticki, hebelt den timestamp aus um den fehler erstmal kurzfristig zu beheben
+				$ts = 0;
 				
 				if($ts<$ts_general){
 					/* IBeacon */

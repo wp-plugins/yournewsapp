@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.7.3
+Stable tag: 0.7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,9 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.7.4 =
+- critical bug fix for the 0.7.3 issue
+
 = 0.7.3 =
 - supported language: portuguese
 - new alert message for push send success
@@ -280,6 +283,9 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.7.4 =
+- critical bug fix for the 0.7.3 issue
+
 = 0.7.3 =
 - supported language: portuguese
 - new alert message for push send success
