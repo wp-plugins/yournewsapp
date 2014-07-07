@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.7.4
+Version: 0.7.5
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -13,7 +13,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.7.4";
+$nh_ynaa_version = "0.7.5";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -351,23 +351,38 @@ if(!class_exists('NH_YNAA_Plugin'))
 					update_option('nh_ynaa_css_settings_ts', $general_settings_old['ts']);
 				}
 			}
-			if(!$nh_ynaa_version_old || $nh_ynaa_version_old <'0.7.3'){				
-				$teaser_settings_old =  get_option( 'nh_ynaa_teaser_settings' );
-				$teaser_settings_old['limit'] = 4;
-				$teaser_settings_old['source'] = 'indi';
-				if(!$teaser_settings_old['ts'])	$teaser_settings_old['ts']=time();
-				update_option('nh_ynaa_teaser_settings', $teaser_settings_old);			
-				update_option('nh_ynaa_teaser_settings_ts', $teaser_settings_old['ts']);
+			if(!$nh_ynaa_version_old || $nh_ynaa_version_old <'0.7.5'){
+				if(!get_option( 'nh_ynaa_teaser_settings_ts' ))	{			
+					$teaser_settings_old =  get_option( 'nh_ynaa_teaser_settings' );
+					$teaser_settings_old['limit'] = 4;
+					$teaser_settings_old['source'] = 'indi';
+					if(!$teaser_settings_old['ts'])	$teaser_settings_old['ts']=time();
+					update_option('nh_ynaa_teaser_settings', $teaser_settings_old);			
+					update_option('nh_ynaa_teaser_settings_ts', $teaser_settings_old['ts']);
+				}
 				
-				$general_settings_old =  get_option( 'nh_ynaa_general_settings' );
-				$homepreset_settings_old =  get_option( 'nh_ynaa_homepreset_settings' );
-				$homepreset_settings_old['homescreentype'] = $general_settings_old['homescreentype'];
-				$homepreset_settings_old['sorttype'] = $general_settings_old['sorttype'];
+				if(!get_option( 'nh_ynaa_homepreset_settings_ts' ))	{		
+					$general_settings_old =  get_option( 'nh_ynaa_general_settings' );
+					$homepreset_settings_old =  get_option( 'nh_ynaa_homepreset_settings' );
+					$homepreset_settings_old['homescreentype'] = $general_settings_old['homescreentype'];
+					$homepreset_settings_old['sorttype'] = $general_settings_old['sorttype'];
 				
 				
-				if(!$homepreset_settings_old['ts'])	$homepreset_settings_old['ts']=time();	
-				update_option('nh_ynaa_homepreset_settings', $homepreset_settings_old);					
-				update_option('nh_ynaa_homepreset_settings_ts', $homepreset_settings_old['ts'] );
+					if(!$homepreset_settings_old['ts'])	$homepreset_settings_old['ts']=time();	
+					update_option('nh_ynaa_homepreset_settings', $homepreset_settings_old);					
+					update_option('nh_ynaa_homepreset_settings_ts', $homepreset_settings_old['ts'] );
+				}
+				
+				if(!get_option( 'nh_ynaa_general_settings_ts' ))	{
+					$general_settings_old =  get_option( 'nh_ynaa_general_settings' );
+					if(!$general_settings_old['ts']){
+						$general_settings_old['ts'] = 0;
+					}
+					update_option('nh_ynaa_general_settings_ts', $general_settings_old['ts']);
+					
+				}
+				
+				
 				
 				
 			}
@@ -1371,7 +1386,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					update_option('nh_ynaa_teaser_settings_ts', $this->teaser_settings['ts']);
 				}				
 			}
-			elseif($_GET['tab']==='nh_ynaa_general_settings'){
+			elseif($_GET['tab']==='nh_ynaa_general_settings'|| !isset($_GET['tab'])){
 				$ts =  get_option( 'nh_ynaa_general_settings_ts' );				
 				if($this->general_settings['ts']!=$ts){
 					update_option('nh_ynaa_general_settings_ts', $this->general_settings['ts']);
@@ -1780,8 +1795,6 @@ if(!class_exists('NH_YNAA_Plugin'))
 				
 				$ts_general =  get_option( 'nh_ynaa_general_settings_ts' );	
 				
-				// sticki, hebelt den timestamp aus um den fehler erstmal kurzfristig zu beheben
-				$ts = 0;
 				
 				if($ts<$ts_general){
 					/* IBeacon */
