@@ -1795,7 +1795,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 				
 				$ts_general =  get_option( 'nh_ynaa_general_settings_ts' );	
 				
+				//FAls ts nich definiert
 				
+				if(!$ts_general) $ts = -1;
 				if($ts<$ts_general){
 					/* IBeacon */
 					if($this->push_settings['uuid']){
@@ -1974,7 +1976,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$ts_homepreset = -1;
 				$returnarray['changes']=0;
 				$ts_homepreset=  get_option( 'nh_ynaa_homepreset_settings_ts' );	
-				
+				if(!$ts_homepreset) $ts = -1;
 				if($ts<$ts_homepreset) {
 					$returnarray['changes']=1;
 					$ts = $ts_homepreset;

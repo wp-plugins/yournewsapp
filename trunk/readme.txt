@@ -87,6 +87,7 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 == Change Log ==
 = 0.7.5 =
 - critical bug fix for the 0.7.4 issue
+- fix timestamp problem in homepresets
 
 = 0.7.4 =
 - critical bug fix for the 0.7.3 issue
@@ -288,7 +289,7 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 == Upgrade Notice ==
 = 0.7.5 =
 - critical bug fix for the 0.7.4 issue
-
+- fix timestamp problem in homepresets
 
 = 0.7.4 =
 - critical bug fix for the 0.7.3 issue
