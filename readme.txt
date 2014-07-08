@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.7.6
+Stable tag: 0.7.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,9 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.7.7 =
+- fix plugin folder problem
+
 = 0.7.6 =
 - fix category img value null
 - on plugin deactive don't reset plugin settings
@@ -291,6 +294,10 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.7.7 =
+- fix plugin folder problem
+
+
 = 0.7.6 =
 - fix category img value null
 - on plugin deactive don't reset plugin settings
