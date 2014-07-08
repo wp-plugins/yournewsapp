@@ -1,0 +1,224 @@
+div#side-sortables { width:300px;}
+div#posttype-page > ul > li.ui-tabs-active, div#posttype-post > ul > li.ui-tabs-active {
+	border-style: solid solid none;
+    border-width: 1px 1px 0;
+	border-color: #DFDFDF;
+}
+div#posttype-page > ul > li.ui-tabs-active a, div#posttype-post > ul > li.ui-tabs-active a {
+	color: #333333;
+}
+
+div#post-body-content {
+	padding:20px; 
+}
+div.publishing-action {
+	padding:10px 10px;
+}
+
+#menu-management-liquid {
+	min-width:90%;
+	margin-left:20px;
+}
+
+#css_textarea {
+	width:500px;
+	height:300px;
+}
+
+.extraweit { width:300px; }
+
+#nh_ynaa_form #nav-menu-header {
+	margin-bottom:0 !important;
+}
+
+#nh_ynaa_form .wp-picker-container {
+	float:left;
+	width:150px;
+}
+
+#nh_ynaa_form .nh-floatleft{
+	float:left;
+	margin-right:10px;
+}
+
+#nh_ynaa_form .helptext {
+	float:left;
+	width:50%;
+	/*line-height:27px;*/
+	/*padding-top:5px;*/
+}
+
+#nh_ynaa_form .helptext.padding0{
+	padding-top:0;
+}
+#nh_ynaa_form .helptext.padding5{
+	padding-top:5px;
+}
+
+#nh_ynaa_form.nh_ynaa_general_settings {
+	float:left;
+	width:60%;
+}
+
+#nh-simulator {
+	"width: 300px; float: left;
+	margin-top:50px;
+}
+
+#menu-to-edit li.floatli { 
+	float:left; 
+	margin:5px;
+	margin-bottom:20px;
+}
+#menu-to-edit li.floatli div.teaserdiv { 
+	border:1px solid #999; 
+	width:250px; 
+	height:90px;  
+	color:#ffffff; 
+	font-family:Helvetica, sans-serif; 
+	font-size:15px; font-weight:bold;  
+	background-size: 250px;
+    background-repeat: no-repeat;
+} 
+.empty_teaser_li {
+	width:250px;
+	height:90px;
+	border:1px dotted #000000;
+	background:url(../img/2-1.gif) no-repeat center;
+}
+#menu-to-edit li.floatli div.hpdiv { 
+	border:1px solid #999; 
+	width:159px; 
+	height:119px;  
+	color:#ffffff; 
+	font-family:Helvetica, sans-serif; 
+	font-size:15px; font-weight:bold;  
+	background-size:cover;
+    background-repeat: no-repeat;
+	margin-right:10px;
+}
+
+#menu-to-edit li.empty_li_clear {clear:left; }
+
+#menu-to-edit li.floatli div.teaserdiv div.ttitle, #menu-to-edit li.floatli div.hpdiv div.ttitle {
+	background: rgb(0, 0, 0);
+	 /* The Fallback */   
+	 background: rgba(0, 0, 0, 0.15); height:30px; padding:5px;
+	/*background-image: -moz-linear-gradient(top , #ccc 25%, #fff 75%);
+	background-image: -webkit-linear-gradient(top , #ccc 25%, #fff 75%);
+	background-image: -ms-linear-gradient(top , #ccc 25%, #fff 75%);
+	background-image: -o-linear-gradient(top , #ccc 25%, #fff 75%);*/
+	overflow:hidden;
+}
+#menu-to-edit li.floatli input[type=text]{
+	width:159px;
+}
+
+
+.setdefaultcatpic { 
+	font-size: 11px;
+    margin-top: 40px;
+    text-align: right;
+	padding-right:3px;
+}
+
+.empty_homepreset_li {
+	width:159px;
+	height:119px;
+	border:1px dotted #000000;
+	background:url(../img/2-1.gif) no-repeat center;
+}
+
+div.homepresetpreview { 
+	width:400px !important;
+}
+
+
+.howtolist { 
+	list-style:outside decimal;
+	margin-left:20px;
+	width:80%;
+	float:left;
+	margin-right:15px;	
+	
+}
+
+div.h30 {
+	height:30px;
+}
+
+/* Kategorie */
+#categorie-div-con {
+	width:90%;
+}
+
+.categorie-div-con > ul {
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+.categorie-div-con > ul li {
+	float:left;
+	margin:5px 20px 20px;
+	padding:10px;
+	background:rgba(255,255,255,0.5);
+	
+	list-style:none;
+}
+.categorie-div-con > ul li  > div {
+	width:159px;
+}
+.categorie-div-con > ul li  div.image-div {
+	border:1px solid #999999;
+	color:#fff;
+	
+	width:159px;
+	height:119px;
+	background-size:cover;
+}
+.categorie-div-con > ul li  div.image-div div.ttitle {
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.15);
+    height: 30px;
+    overflow: hidden;
+    padding: 5px;
+}
+
+.categorie-div-con > ul li input.cat-name-input {
+	width:161px;
+}
+
+.categorie-div-con .reset-cat-img-link-cont {
+	position:relative;
+	left:50px;
+	top:-60px;
+}
+
+.categorie-div-con .margin-botton {
+	margin-bottom:15px;
+}
+.hide-cat-div {margin-bottom:5px; }
+
+.show-subcat-div {min-height:130px; overflow:hidden; }
+
+.hidethisdiv { display:none; }
+
+.clear { clear:both; }
+
+
+/* support button */
+#nh_support_button {
+	display: block;
+	border: 1px solid #ff8000;
+	background-color: #FF8000;
+	cursor: pointer;
+	position: fixed;
+	z-index: 10000;
+	top: 25%;
+	right: 0;
+	height: 108px;
+}
+
+.nodisplay {
+	display:none !important;
+}

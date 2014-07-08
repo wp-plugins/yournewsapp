@@ -1,0 +1,111 @@
+div#side-sortables { width:300px;}
+div#posttype-page > ul > li.ui-tabs-active, div#posttype-post > ul > li.ui-tabs-active {
+	border-style: solid solid none;
+    border-width: 1px 1px 0;
+	border-color: #DFDFDF;
+}
+div#posttype-page > ul > li.ui-tabs-active a, div#posttype-post > ul > li.ui-tabs-active a {
+	color: #333333;
+}
+
+div#post-body-content {
+	padding:20px; 
+}
+div.publishing-action {
+	padding:10px 10px;
+}
+
+#menu-management-liquid {
+	min-width:90%;
+	margin-left:20px;
+}
+
+#css_textarea {
+	width:500px;
+	height:300px;
+}
+
+.extraweit { width:300px; }
+
+#nh_ynaa_form #nav-menu-header {
+	margin-bottom:0 !important;
+}
+
+#menu-to-edit li.floatli { 
+	float:left; 
+	margin:5px;
+	margin-bottom:20px;
+}
+#menu-to-edit li.floatli div.teaserdiv { 
+	border:1px solid #999; 
+	width:250px; 
+	height:90px;  
+	color:#ffffff; 
+	font-family:Helvetica, sans-serif; 
+	font-size:15px; font-weight:bold;  
+	background-size: 250px;
+    background-repeat: no-repeat;
+} 
+.empty_teaser_li {
+	width:250px;
+	height:90px;
+	border:1px dotted #000000;
+	background:url(../img/2-1.gif) no-repeat center;
+}
+#menu-to-edit li.floatli div.hpdiv { 
+	border:1px solid #999; 
+	width:159px; 
+	height:119px;  
+	color:#ffffff; 
+	font-family:Helvetica, sans-serif; 
+	font-size:15px; font-weight:bold;  
+	background-size:159px;
+    background-repeat: no-repeat;
+	margin-right:10px;
+}
+
+#menu-to-edit li.empty_li_clear {clear:left; }
+
+#menu-to-edit li.floatli div.teaserdiv div.ttitle, #menu-to-edit li.floatli div.hpdiv div.ttitle {
+	background: rgb(0, 0, 0);
+	 /* The Fallback */   
+	 background: rgba(0, 0, 0, 0.15); height:30px; padding:5px;
+	/*background-image: -moz-linear-gradient(top , #ccc 25%, #fff 75%);
+	background-image: -webkit-linear-gradient(top , #ccc 25%, #fff 75%);
+	background-image: -ms-linear-gradient(top , #ccc 25%, #fff 75%);
+	background-image: -o-linear-gradient(top , #ccc 25%, #fff 75%);*/
+	overflow:hidden;
+}
+#menu-to-edit li.floatli input[type=text]{
+	width:159px;
+}
+
+.setdefaultcatpic { 
+	font-size: 11px;
+    margin-top: 40px;
+    text-align: right;
+	padding-right:3px;
+}
+
+.empty_homepreset_li {
+	width:159px;
+	height:119px;
+	border:1px dotted #000000;
+	background:url(../img/2-1.gif) no-repeat center;
+}
+
+div.homepresetpreview { 
+	width:400px !important;
+}
+
+
+.howtolist { 
+	list-style:outside decimal;
+	margin-left:20px;
+	width:80%;
+	float:left;
+	margin-right:15px;
+	
+}
+
+.clear { clear:both; }
