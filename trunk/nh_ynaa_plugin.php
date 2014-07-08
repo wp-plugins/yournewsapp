@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.7.5
+Version: 0.7.6
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -13,7 +13,7 @@ License: GPL2
 
 //Version Number
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.7.5";
+$nh_ynaa_version = "0.7.6";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -221,34 +221,65 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$nh_ynaa_teaser_settings = array('ts'=>0,'teaser'=>false);
 			
 			//ADD Options in Wp-Option table
-			update_option('nh_ynaa_css_settings', $nh_ynnn_css_settings);	
-			update_option('nh_ynaa_css_settings_ts', $ts);	
+			$ts_setting = get_option( 'nh_ynaa_css_settings_ts' );
+			if(!$ts_setting || is_null($ts_setting)){
+				update_option('nh_ynaa_css_settings', $nh_ynnn_css_settings);	
+				update_option('nh_ynaa_css_settings_ts', $ts);
+			}	
 			update_option('nh_ynaa_plugin_version', $nh_ynaa_version);	
-			update_option('nh_ynaa_general_settings', $nh_ynaa_general_settings);	
-			update_option('nh_ynaa_general_settings_ts', $ts);	
-			update_option('nh_ynaa_menu_settings', $nh_ynaa_menu_settings);
-			update_option('nh_ynaa_menu_settings_ts', $ts);
+			$ts_setting = get_option( 'nh_ynaa_general_settings' );
+			if(!$ts_setting || is_null($ts_setting)){
 			
-			$args = array(
-				'numberposts' => 3,
-				'offset' => 0,				
-				'orderby' => 'post_date',
-				'order' => 'DESC',				
-				'post_type' => 'post',
-				'post_status' => 'publish' );
-		
-			$recent_posts = wp_get_recent_posts( $args, ARRAY_A );
-			$nh_ynaa_teaser_settings['limit'] = 3;
-			$nh_ynaa_teaser_settings['source'] = 'indi';
-			
-			if($recent_posts){
-				foreach($recent_posts as $recent){
-					$nh_ynaa_teaser_settings['teaser'][]=$recent["ID"];
-				}
+				update_option('nh_ynaa_general_settings', $nh_ynaa_general_settings);	
 			}
-			add_option('nh_ynaa_teaser_settings', $nh_ynaa_teaser_settings);	
-			add_option('nh_ynaa_teaser_settings_ts', $ts);
+			$ts_setting = get_option( 'nh_ynaa_general_settings_ts' );
+			if(!$ts_setting || is_null($ts_setting)){
+				update_option('nh_ynaa_general_settings_ts', $ts);	
+			
+			}
+			$ts_setting = get_option( 'nh_ynaa_menu_settings' );
+			if(!$ts_setting || is_null($ts_setting)){
+			
+			update_option('nh_ynaa_menu_settings', $nh_ynaa_menu_settings);
+			}
+			$ts_setting = get_option( 'nh_ynaa_menu_settings_ts' );
+			if(!$ts_setting || is_null($ts_setting)){
 				
+				update_option('nh_ynaa_menu_settings_ts', $ts);
+			}
+			
+			
+			$ts_setting = get_option( 'nh_ynaa_teaser_settings' );
+			if(!$ts_setting || is_null($ts_setting)){
+				
+				$args = array(
+					'numberposts' => 3,
+					'offset' => 0,				
+					'orderby' => 'post_date',
+					'order' => 'DESC',				
+					'post_type' => 'post',
+					'post_status' => 'publish' );
+			
+				$recent_posts = wp_get_recent_posts( $args, ARRAY_A );
+				$nh_ynaa_teaser_settings['limit'] = 3;
+				$nh_ynaa_teaser_settings['source'] = 'indi';
+				
+				if($recent_posts){
+					foreach($recent_posts as $recent){
+						$nh_ynaa_teaser_settings['teaser'][]=$recent["ID"];
+					}
+				}
+				
+				add_option('nh_ynaa_teaser_settings', $nh_ynaa_teaser_settings);	
+			}
+			$ts_setting = get_option( 'nh_ynaa_teaser_settings_ts' );
+			if(!$ts_setting || is_null($ts_setting)){
+				
+			
+				add_option('nh_ynaa_teaser_settings_ts', $ts);
+			}	
+			
+			
 			$nh_ynaa_homepreset_settings['ts'] = $ts;
 			$args = array(
 				'type'                     => 'post',
@@ -272,19 +303,45 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$nh_ynaa_homepreset_settings['homescreentype']=0;
 
 			
-			add_option('nh_ynaa_homepreset_settings', $nh_ynaa_homepreset_settings);
-			add_option('nh_ynaa_homepreset_settings_ts', 0);	
-				
-			add_option('nh_ynaa_push_settings', array());	
-			add_option('nh_ynaa_push_settings_ts', $ts);	
-			add_option('nh_ynaa_categories_settings', array());		
-			add_option('nh_ynaa_categories_settings_ts', $ts);	
-			add_option('nh_ynaa_articles_ts', $ts);	
-		
+			$ts_setting = get_option( 'nh_ynaa_homepreset_settings' );
+			if(!$ts_setting || is_null($ts_setting)){
+			
+				update_option('nh_ynaa_homepreset_settings', $nh_ynaa_homepreset_settings);
+			}
+			$ts_setting = get_option( 'nh_ynaa_homepreset_settings_ts' );
+			if(!$ts_setting || is_null($ts_setting)){
+			
+				update_option('nh_ynaa_homepreset_settings_ts', 0);	
+			}
+			$ts_setting = get_option( 'nh_ynaa_push_settings' );
+			if(!$ts_setting || is_null($ts_setting)){
+			
+				update_option('nh_ynaa_push_settings', array());	
+			}
+			$ts_setting = get_option( 'nh_ynaa_push_settings_ts' );
+			if(!$ts_setting || is_null($ts_setting)){
+			
+				update_option('nh_ynaa_push_settings_ts', $ts);	
+			}
+			$ts_setting = get_option( 'nh_ynaa_categories_settings' );
+			if(!$ts_setting || is_null($ts_setting)){
+			
+				update_option('nh_ynaa_categories_settings', array());		
+			}
+			$ts_setting = get_option( 'nh_ynaa_categories_settings_ts' );
+			if(!$ts_setting || is_null($ts_setting)){
+					
+				update_option('nh_ynaa_categories_settings_ts', $ts);	
+			}
+			$ts_setting = get_option( 'nh_ynaa_articles_ts' );
+			if(!$ts_setting || is_null($ts_setting)){
+			
+				update_option('nh_ynaa_articles_ts', $ts);	
+			}
 				
 			
         } // END public static function nh_ynaa_activate
-		
+			
 		
 		/**
 		 * Add Location Table 
@@ -2223,6 +2280,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				else $ts = 0;
 				$returnarray['changes']=0;
 				$ts_getoption = get_option( 'nh_ynaa_teaser_settings_ts' );	
+				
 				if($ts<$ts_getoption) {
 					$returnarray['changes']=1;
 					$ts = $ts_getoption;
@@ -2364,6 +2422,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 							/*if($this->categories_settings[$category->term_id]['img']) $items['articles']['items'][0]['thumb'] =$this->categories_settings[$category->term_id]['img']; 
 							else*/
 							//if($hp[$category->term_id]['img']) $items['articles']['items'][0]['thumb'] = $hp[$category->term_id]['img'];
+						}
+						if(!$this->categories_settings[$category->term_id]['img'] || is_null($this->categories_settings[$category->term_id]['img']))
+						{
+							$this->categories_settings[$category->term_id]['img']='';
+							
 						}
 						$cat[$category->term_id]=array('pos'=>$i, 'type'=>'cat', 'id'=> $category->term_id, 'parent_id'=>$category->parent, 'title'=>htmlspecialchars_decode($category->name), 'post_img'=>$items['articles']['items'][0]['thumb'], 'img'=>$this->categories_settings[$category->term_id]['img'], 'post_id'=>$items['articles']['items'][0]['id'] ,'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1);
 						
