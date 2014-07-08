@@ -12,6 +12,7 @@ License: GPL2
 */
 
 //Version Number
+//Temp fix folder problem
 global $nh_ynaa_version;
 $nh_ynaa_version = "0.7.6";
 global $nh_ynaa_db_version;
