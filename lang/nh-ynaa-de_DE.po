@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NH YNAA Plugin 1.0\n"
-"POT-Creation-Date: 2014-07-30 16:12+0100\n"
-"PO-Revision-Date: 2014-07-30 16:13+0100\n"
+"POT-Creation-Date: 2014-07-30 17:17+0100\n"
+"PO-Revision-Date: 2014-07-30 17:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: Nebelhorn <info@nebelhorn.com>\n"
 "Language: de\n"
@@ -132,7 +132,7 @@ msgid "Title Color"
 msgstr "Farbe Überschrift"
 
 #: nh_ynaa_plugin.php:652
-msgid "Flowing Text Color"
+msgid "Continuous Text Color"
 msgstr "Farbe Fließtext"
 
 #: nh_ynaa_plugin.php:655
@@ -416,16 +416,16 @@ msgid ""
 "Color of main elements, e.g. dog ears, menu button, time stamps, category "
 "names, empty tiles, bullet points, social icons, etc."
 msgstr ""
-"Farbe der Hauptelemente, Beispielsweise Eselsohren, Menütaste, Zeitstempel, "
-"Kategorienamen, leere Kacheln, Aufzählungszeichen, soziale Icons etc."
+"Farbe der Hauptelemente, beispielsweise Eselsohren, Menübutton, Zeitstempel, "
+"Kategorienamen, leere Kacheln, Aufzählungszeichen, Sharing Icons etc."
 
 #: nh_ynaa_plugin.php:1083
 msgid ""
 "Color of further elements, e.g. homescreen and posts background, elements of "
 "the commentary section"
 msgstr ""
-"Farb weiterer Elemente, Beispiels Homescreen und Beitragseite Hintergrund, "
-"Elemente der Kommentarteil"
+"Farbe weiterer Elemente, beispielsweise Homescreen- und Beitragseiten-"
+"Hintergrund, Elemente im Kommentarbereich"
 
 #: nh_ynaa_plugin.php:1084
 msgid "Color of title bar, navigation bar, quicknavigation bar"
@@ -438,7 +438,7 @@ msgstr ""
 
 #: nh_ynaa_plugin.php:1086
 msgid "Text color of post headlines"
-msgstr "Textfarbe der Post Schlagzeilen"
+msgstr "Textfarbe der Beitrags-Überschrift"
 
 #: nh_ynaa_plugin.php:1087
 msgid "Text color of post sub headlines"
@@ -590,11 +590,13 @@ msgstr ""
 
 #: nh_ynaa_plugin.php:1427
 msgid ""
-"Activate the checkbox if you get the errorcode 1000 in the app emulator."
+"Activate the checkbox if you get the tip \"Recent content could not be "
+"accessed. Please connect your device to the internet and try again.\" in the "
+"app emulator."
 msgstr ""
-"Aktiviren Sie diese Checkbox, wenn sie keinen Inhalt auf der Detailseite "
-"sehen\" zu \"Aktivieren Sie diese Checkbox, wenn Sie keinen Inhalt auf der "
-"Beitragsseite sehen"
+"Aktivieren Sie diese Checkbox, wenn Sie im Emulator den Hinweis \"Recent "
+"content could not be accessed. Please connect your device to the internet "
+"and try again.\" bekommen."
 
 #: nh_ynaa_plugin.php:1428
 msgid "Activate this checkbox if the content is not displayed correctly coded."
@@ -605,7 +607,7 @@ msgstr ""
 #: nh_ynaa_plugin.php:1429
 msgid "Activate this checkbox if you don't see any content in the detail view."
 msgstr ""
-"Aktiviren Sie diese Checkbox, wenn sie keinen Inhalt auf der Detailseite "
+"Aktivieren Sie diese Checkbox, wenn Sie keinen Inhalt auf der Beitragsseite "
 "sehen."
 
 #: nh_ynaa_plugin.php:1430
@@ -1024,6 +1026,15 @@ msgstr "Hier nehmen Sie die Einstellungen für den Teaser vor."
 #: include/teaser.php:258
 msgid "Save Changes"
 msgstr "Änderung Speichern"
+
+#~ msgid ""
+#~ "Activate the checkbox if you get the errorcode 1000 in the app emulator."
+#~ msgstr ""
+#~ "Aktivieren Sie diese Checkbox, wenn Sie keinen Inhalt auf der "
+#~ "Beitragsseite sehen."
+
+#~ msgid "Flowing Text Color"
+#~ msgstr "Farbe Fließtext"
 
 #~ msgid "Social Network"
 #~ msgstr "Soziales Netzwerk"
