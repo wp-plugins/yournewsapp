@@ -89,7 +89,7 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 - new function: choice between two themes
 - new function: automatically have your teaser filled with content (either the latest or from a certain category)
 - new function: we have created an option that delivers the content correctly to the app if there have been issues with certain installed plugins ("Use embedded JSON"). Only activate if you encounter problems. You need iOS 2.0.0 or Android 1.6.1.2 or higher for this to work.
-- new function: we have created an option that removes redundant rows in detail view ("Remove blank lines")
+- new function: we have created an option that removes blank lines in detail view ("Remove blank lines")
 - smaller bug fixes and performance improvements
 
 

@@ -649,7 +649,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			add_settings_field( 'ynaa-cm', __('Menu Text Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>'cm') );
 			add_settings_field( 'ynaa-ch', __('Title Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>'ch') );
 			//add_settings_field( 'ynaa-csh', __('Title 2 Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>'csh') );
-			add_settings_field( 'ynaa-ct', __('Flowing Text Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>'ct') );
+			add_settings_field( 'ynaa-ct', __('Continuous Text Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings', array('field'=>'ct') );
 		//	
 			
 			add_settings_field( 'ynaa-min-img-size-for-resize', __('Maximum width for images so they won‘t scale up (in px)', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_input' ), $this->general_settings_key, 'app_settings' , array('field'=>'min-img-size-for-resize'));
@@ -1424,7 +1424,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				case 'sort' : echo '<div class="helptext padding0">'.(__('Create separators for periods of time between posts<br>(only if post order within categories is set to "chronologically")', 'nh-ynaa')).'</div>'; break;
 				case 'comments' : echo '<div class="helptext padding0">'.(__('Turn the comments section beneath posts on or off.', 'nh-ynaa')).'</div>'; break;
 				case 'gadgetry': echo '<div class="helptext padding0">'.(__('Activate the checkbox if you use gadgetry theme image as post featured image.', 'nh-ynaa')).'</div>'; break;
-				case 'json_embedded': echo '<div class="helptext padding0">'.(__('Activate the checkbox if you get the errorcode 1000 in the app emulator.', 'nh-ynaa')).'</div>'; break;
+				case 'json_embedded': echo '<div class="helptext padding0">'.(__('Activate the checkbox if you get the tip "Recent content could not be accessed. Please connect your device to the internet and try again." in the app emulator.', 'nh-ynaa')).'</div>'; break;
 				case 'utf8': echo '<div class="helptext padding0">'.(__('Activate this checkbox if the content is not displayed correctly coded.', 'nh-ynaa')).'</div>'; break;
 				case 'domcontent': echo '<div class="helptext padding0">'.(__('Activate this checkbox if you don\'t see any content in the detail view.', 'nh-ynaa')).'</div>'; break;
 				case 'debug': echo '<div class="helptext padding0">'.(__('Activate the checkbox if you have any problems with the app, this help us to find out the error.', 'nh-ynaa')).'</div>'; break;
