@@ -136,12 +136,16 @@
             'The input is incomplete' => 'The input is incomplete',
             'Thanks' => 'Thanks',
 			'No set up email account.' => 'No set up email account.',
-			"No set up twitter account." => "No set up twitter account.",
+			"No set up twitter account." => "You have not yet set up your Twitter account on this device, which is necessary for sharing. Please go to your iOS Settings > Twitter and enter your login data.",
 			'Copy link' => 'Copy link',
 			'Open in Safari' => 'Open in Safari',
 			'Notifications' => 'Notifications',
 			'Select which categories to receive push-notifications from:' => 'Select which categories to receive push-notifications from:',
-			'Recent content could not be accessed. Please connect your device to the internet and try again.'=>'Recent content could not be accessed. Please connect your device to the internet and try again.'
+			'Recent content could not be accessed. Please connect your device to the internet and try again.'=>'Recent content could not be accessed. Please connect your device to the internet and try again.',
+			'No set up facebook account.'=>'You have not yet set up your Facebook account on this device, which is necessary for sharing. Please go to your iOS Settings > Facebook and enter your login data.',
+			'Settings'=>'Settings',
+			'You have not yet set up your Facebook account on this device, which is necessary for sharing. Please go to your iOS Settings > Facebook and enter your login data.'=>'You have not yet set up your Facebook account on this device, which is necessary for sharing. Please go to your iOS Settings > Facebook and enter your login data.',
+			'You have not yet set up your Twitter account on this device, which is necessary for sharing. Please go to your iOS Settings > Twitter and enter your login data.'=>'You have not yet set up your Twitter account on this device, which is necessary for sharing. Please go to your iOS Settings > Twitter and enter your login data.'
            ));
            
          }

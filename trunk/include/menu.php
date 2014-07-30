@@ -51,6 +51,7 @@
 														$temp = "";
 														$temp .= '<li>';
 														$temp .=  '<input type="hidden" value="'.$post_type.'" name="type-menu-item-'.$post_type.$menu_id.'" id="type-menu-item-'.$post_type.$menu_id.'" >';
+														//$temp .=  '<input type="text" value="'.strtotime($the_query->post->post_date).'" name="post_date-menu-item-'.$post_type.$menu_id.'" id="post_date-menu-item-'.$post_type.$menu_id.'">';
 														$temp .=  '<input type="hidden" value="html" name="link-typ-menu-item-'.$post_type.$menu_id.'" id="link-type-menu-item-'.$post_type.$menu_id.'">';
 														$temp .=  '<input type="hidden" value="'.$this->shortenText($the_query->post->post_title).'" name="title-menu-item-'.$post_type.$menu_id.'" id="title-menu-item-'.$post_type.$menu_id.'">';
 														$temp .=  '<label class="menu-item-title">';
@@ -310,6 +311,7 @@
 									?>
 								</ul>		
 							</div><!-- /#menu-accordion -->
+							<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Änderungen speichern"></p>
 						</div><!-- /#post-body-content -->
 					</div><!-- /#post-body -->
 					<div id="nav-menu-footer">

@@ -1,5 +1,6 @@
 <?php $menu_id=0;
 //var_dump($this->teaser_settings);
+_e('Here you can set up the teaser which will be displayed on the start view of your app.','nh-ynaa');
  ?>
  <input type="hidden" name="<?php echo $this->teaser_settings_key; ?>[ts]" value="<?php echo time(); ?>" />
 <div>
@@ -10,8 +11,8 @@
 				<td>
 					<select id="teaser_source"  name="<?php echo $this->teaser_settings_key; ?>[source]" class="nh-floatleft" >
 						<option value="indi" <?php if($this->teaser_settings['source']=='indi') echo 'selected="selected"'; ?>><?php _e('Individual','nh-ynaa'); ?></option>
-						<!--<option value="cat" <?php if($this->teaser_settings['source']=='cat') echo 'selected="selected"'; ?>><?php _e('Category','nh-ynaa'); ?></option>
-						<option value="recent" <?php if($this->teaser_settings['source']=='recent') echo 'selected="selected"'; ?>><?php _e('Recent posts','nh-ynaa'); ?></option>-->
+						<option value="cat" <?php if($this->teaser_settings['source']=='cat') echo 'selected="selected"'; ?>><?php _e('Category','nh-ynaa'); ?></option>
+						<option value="recent" <?php if($this->teaser_settings['source']=='recent') echo 'selected="selected"'; ?>><?php _e('Recent posts','nh-ynaa'); ?></option>
 					</select>
 					<div class="helptext padding5"><?php _e('Select your source for the teasers in the app.'); ?></div>
 					
@@ -28,10 +29,10 @@
 								
 								if($categories){
 									echo '<select id="teaser_cat" name="'.$this->teaser_settings_key.'[cat]" class="nh-floatleft">';
-										foreach ( $categories as $category ) {
+										foreach ( $categories as $category ) { 
 										$selected = "";
-											if($this->teaser_settings['cat']==$category->name) $selected = ' selected="selected" ' ;
-										echo '<option value="'.$category->name.'" '.$selected.'>'.$category->name.'</option>';
+											if($this->teaser_settings['cat']==$category->term_id) $selected = ' selected="selected" ' ;
+										echo '<option value="'.$category->term_id.'" '.$selected.'>'.$category->name.'</option>';
 										
 									}
 									echo '</select>';
@@ -44,7 +45,7 @@
 			<tr style="<?php if(!isset($this->teaser_settings['source']) || $this->teaser_settings['source']=='indi') echo 'display:none;'; ?>" class="teaser_limit">
 				<th><?php _e('Teaser limit', 'nh-ynaa'); ?></th>
 				<td>
-					<input type="number" name="<?php echo $this->teaser_settings_key; ?>[limit]" value="4" class="my-input-field nh-floatleft" step="1" min="1" >
+					<input type="number" name="<?php echo $this->teaser_settings_key; ?>[limit]" max="10" value="<?php echo $this->teaser_settings['limit']; ?>" class="my-input-field nh-floatleft" step="1" min="1" >
 					<div class="helptext"><?php _e('Number of teaser to be shown.','nh-ynaa'); ?></div>
 				</td>
 			</tr>

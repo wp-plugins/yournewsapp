@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.7.7
+Version: 0.7.8
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -14,7 +14,7 @@ License: GPL2
 //Version Number
 //Temp fix folder problem
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.7.7";
+$nh_ynaa_version = "0.7.8";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -124,7 +124,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			add_action("wp_ajax_nopriv_nh_ynaa_googlemap_action", array(&$this,"nh_must_login"));
 			
 			//Add new Blog in Multisite
-			add_action( 'wpmu_new_blog', array(&$this,'nh_new_blog'));    
+			add_action( 'wpmu_new_blog', array(&$this,'nh_new_blog'),100,6);    
 			
         } // END public function __construct
 		
@@ -148,6 +148,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$this->requesvar['name']= $prefix.'name';
 			$this->requesvar['email']= $prefix.'email';
 			$this->requesvar['comment_id']= $prefix.'comment_id';
+			$this->requesvar['cat_include']=$prefix.'cat_include';
+			$this->requesvar['meta']=$prefix.'meta';
 			
 			//App Infos
 			$this->requesvar['lang']= $prefix.'lang';
@@ -186,6 +188,15 @@ if(!class_exists('NH_YNAA_Plugin'))
 			NH_YNAA_Plugin::nh_update_db_check();
 		}// END public static function nh_ynaa_activate
 		
+		/**
+		 * Crete new BLOG
+		 * 
+		 */
+		public static function nh_ynaa_add_blog($blog_id, $user_id){
+			switch_to_blog($blog_id);
+			NH_YNAA_Plugin::_nh_ynaa_activate(); 
+		}
+		
         /**
          * Activate the plugin
          */
@@ -196,6 +207,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			//Preset app menu
 			$menu_array[0] = array('title'=>__('Browse','nh-ynaa'),'status'=>1,'pos'=>1, 'id'=>0, 'type'=>'app', 'type_text'=>'App');
 			$menu_array[1] = array('title'=>__('Subscription','nh-ynaa'),'status'=>1,'pos'=>2, 'id'=>1, 'type'=>'app', 'type_text'=>'App');
+			$menu_array[2] = array('title'=>__('Notifications','nh-ynaa'),'status'=>1,'pos'=>3, 'id'=>2, 'type'=>'pushCenter', 'type_text'=>__('Pushcenter', 'nh-ynaa'));
 			$ts = time();
 			
 			$nh_ynaa_menu_settings = array('menu'=>$menu_array,'ts'=>$ts);
@@ -210,9 +222,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 			}*/
 			$lang = 'en';
 			if(get_bloginfo('language')=='de_DE') $lang='de';
-			
-			$nh_ynaa_general_settings=(array('sort'=>1,'c1'=>'#3677a0', 'cm'=>'#3677a0','c2'=>'#ffffff', 'cn'=>'#ffffff', 'ct'=>'#000000', 'ch'=>'#000000', 'csh'=>'#000000','ts'=>$ts, 'logo'=>'', 'comments'=>0, 
-			'logo'=> plugins_url( 'img/blappsta_title.png' , __FILE__ ), 'lang_array'=>$lang_en, 'lang'=>$lang, 'homescreentype'=>0 , 'min-img-size-for-resize'=>100));
+			if('open'==get_option('default_comment_status')) $comments =1;
+			else $comments =0;
+			$nh_ynaa_general_settings=(array('sort'=>1,'c1'=>'#ff8000', 'cm'=>'#6ea0c8','c2'=>'#ffffff', 'cn'=>'#ffffff', 'ct'=>'#6ea0c8', 'ch'=>'#ff8000', 'csh'=>'#000000','ts'=>$ts, 'logo'=>'', 'comments'=>$comments, 
+			'logo'=> plugins_url( 'img/blappsta_title.png' , __FILE__ ), 'lang_array'=>$lang_en, 'lang'=>$lang, 'homescreentype'=>1, 'sorttype'=> 'recent' , 'min-img-size-for-resize'=>100, 'theme'=>1));
 			
 			$nh_ynnn_css_settings = array('css'=> $css, $ts=>$ts);
 			
@@ -263,7 +276,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 				$recent_posts = wp_get_recent_posts( $args, ARRAY_A );
 				$nh_ynaa_teaser_settings['limit'] = 3;
-				$nh_ynaa_teaser_settings['source'] = 'indi';
+				$nh_ynaa_teaser_settings['source'] = 'recent';
 				
 				if($recent_posts){
 					foreach($recent_posts as $recent){
@@ -293,13 +306,17 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			); 
 			$categories = get_categories( $args );
+			$nh_ynaa_categories_settings = array();
+			//$nh_ynaa_categories_settings['items'][-1] = array('img'=>'','cat_name'=>__('Events'));
+			//$nh_ynaa_categories_settings['items'][-1] = array('img'=>'','cat_name'=>__('Locations'));
 			if($categories){
 				$i=1;
 				foreach($categories as $category){
 					 $nh_ynaa_homepreset_settings['items'][] = array('img'=>'', 'title'=>$category->name, 'allowRemove'=>1, 'id' => $category->term_id, 'type'=>'cat', 'id2'=>$i);
-					 //$nh_ynaa_categories_settings['items'][] = array('img'=>'', 'title'=>$category->name, );
+					 $nh_ynaa_categories_settings['items'][$category->term_id] = array('img'=>'', 'cat_name'=>$category->name, 'cat_order'=>'date-desc', 'hidecat'=>0, "usecatimg"=>0);
 					 $i++;
 				}
+				
 			}
 			$nh_ynaa_homepreset_settings['homescreentype']=0;
 
@@ -312,12 +329,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$ts_setting = get_option( 'nh_ynaa_homepreset_settings_ts' );
 			if(!$ts_setting || is_null($ts_setting)){
 			
-				update_option('nh_ynaa_homepreset_settings_ts', 0);	
+				update_option('nh_ynaa_homepreset_settings_ts', $ts);	
 			}
 			$ts_setting = get_option( 'nh_ynaa_push_settings' );
 			if(!$ts_setting || is_null($ts_setting)){
 			
-				update_option('nh_ynaa_push_settings', array());	
+				update_option('nh_ynaa_push_settings', array('pushshow'=>1));	
 			}
 			$ts_setting = get_option( 'nh_ynaa_push_settings_ts' );
 			if(!$ts_setting || is_null($ts_setting)){
@@ -327,7 +344,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$ts_setting = get_option( 'nh_ynaa_categories_settings' );
 			if(!$ts_setting || is_null($ts_setting)){
 			
-				update_option('nh_ynaa_categories_settings', array());		
+				update_option('nh_ynaa_categories_settings', $nh_ynaa_categories_settings);		
 			}
 			$ts_setting = get_option( 'nh_ynaa_categories_settings_ts' );
 			if(!$ts_setting || is_null($ts_setting)){
@@ -547,7 +564,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				
 			$this->appmenus_pre[7] = array('title'=>__('Extern URL','nh-ynaa'),'status'=>1,'pos'=>7, 'id'=>-3, 'type'=>'webview', 'type_text'=>__('URL', 'nh-ynaa'), 'link-typ'=>'cat');
 			
-			$this->appmenus_pre[-96] = array('title'=>__('Pushcenter','nh-ynaa'),'status'=>1,'pos'=>8, 'id'=>-96, 'type'=>'pushCenter', 'type_text'=>__('Pushcenter', 'nh-ynaa'), 'link-typ'=>'cat');
+			$this->appmenus_pre[-96] = array('title'=>__('Notifications','nh-ynaa'),'status'=>1,'pos'=>8, 'id'=>-96, 'type'=>'pushCenter', 'type_text'=>__('Pushcenter', 'nh-ynaa'), 'link-typ'=>'cat');
 			
 			
 			
@@ -564,14 +581,23 @@ if(!class_exists('NH_YNAA_Plugin'))
 		/*
 		* Multisite loade Settings for new blog
 		*/
-		function nh_new_blog($blog_id, $user_id, $domain, $path, $site_id, $meta ) {
+		public static function nh_new_blog( $domain, $path, $title, $user_id, $meta, $site_id ) {
+			
 			global $wpdb;
-			if (is_plugin_active_for_network('nh_ynaa/nh_ynaa_plugin.php')) {
-				$old_blog = $wpdb->blogid;
-				switch_to_blog($blog_id);
-				$this->_nh_ynaa_activate();
+			$old_blog = $wpdb->blogid;
+			update_option('nh_ynaa_general_settings_uma', "$domain, $path, $title, $user_id, $meta, $site_id");
+			switch_to_blog($domain);
+			NH_YNAA_Plugin::_nh_ynaa_activate();
+			switch_to_blog($old_blog);
+			/*
+			 if ( ! function_exists( 'is_plugin_active_for_network' ) )
+    			require_once( ABSPATH . '/wp-admin/includes/plugin.php' );	
+			  if (is_plugin_active_for_network('nh_ynaa/nh_ynaa_plugin.php')) {
+				
+				switch_to_blog($domain);
+				NH_YNAA_Plugin::_nh_ynaa_activate();
 				switch_to_blog($old_blog);
-			}
+			}*/
 		}//END  nh_new_blog
 		
 		
@@ -609,7 +635,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			//Logo
 			add_settings_section( 'logo_setting', __('Logo', 'nh-ynaa'), array( &$this, 'nh_ynaa_section_general_logo' ), $this->general_settings_key );
-			add_settings_field( 'ynaa-logo', __('Select Logo', 'nh-ynaa'). '('.$this->logo_image_width.'x'.$this->logo_image_height.')', array( &$this, 'nh_ynaa_field_general_option_logo' ), $this->general_settings_key, 'logo_setting', array('field'=>'logo') );
+			add_settings_field( 'ynaa-logo', __('Select Logo', 'nh-ynaa'). ' ('.$this->logo_image_width.'x'.$this->logo_image_height.')', array( &$this, 'nh_ynaa_field_general_option_logo' ), $this->general_settings_key, 'logo_setting', array('field'=>'logo') );
+			//THEME
+			add_settings_section( 'theme_setting', __('Theme', 'nh-ynaa'), array( &$this, 'nh_ynaa_section_general_theme' ), $this->general_settings_key );
+			add_settings_field( 'ynaa-theme', __('Select theme', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_theme_select' ), $this->general_settings_key, 'theme_setting', array('field'=>'theme') );
+			
 			//Color
 			add_settings_section( 'app_settings', __('Color And Style Settings', 'nh-ynaa'), array( &$this, 'nh_ynaa_section_general_desc' ), $this->general_settings_key );
 			add_settings_field( 'ynaa-c1', __('Primary Color', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_color' ), $this->general_settings_key, 'app_settings' , array('field'=>'c1'));
@@ -627,10 +657,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 			//Hidden Fields
 			add_settings_field( 'ynaa-ts', null, array( &$this, 'nh_ynaa_field_general_option_hidden' ), $this->general_settings_key, 'app_settings', array('field'=>'ts') );
 			//Social Network
-			add_settings_section( 'social_settings', __('Social Network', 'nh-ynaa'), array( &$this, 'nh_ynaa_section_general_social' ), $this->general_settings_key );			
+			add_settings_section( 'social_settings', __('Facebook Feed', 'nh-ynaa'), array( &$this, 'nh_ynaa_section_general_social' ), $this->general_settings_key );			
 			add_settings_field( 'ynaa-social_fbsecretid', __('Facebook App Secret', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_social' ), $this->general_settings_key, 'social_settings', array('field'=>'social_fbsecretid') );
 			add_settings_field( 'ynaa-social_fbappid', __('Facebook App ID', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_social' ), $this->general_settings_key, 'social_settings', array('field'=>'social_fbappid') );
-			add_settings_field( 'ynaa-social_fbid', __('Facebook page ID', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_social' ), $this->general_settings_key, 'social_settings', array('field'=>'social_fbid') );
+			add_settings_field( 'ynaa-social_fbid', __('Facebook Page ID', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_social' ), $this->general_settings_key, 'social_settings', array('field'=>'social_fbid') );
 			
 			//Extras
 			global $nh_ynaa_db_version;	
@@ -639,7 +669,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			add_settings_field( 'ynaa-extra', __('Allow comments in App', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'comments'));
 			//add_settings_field( 'ynaa-homescreentype', __('Startscreen view', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_homescreentype' ), $this->general_settings_key, 'extra_settings' , array('field'=>'homescreentype'));
 			//add_settings_field( 'ynaa-sorttype', __('Startscreen articles sorty by <br><span>(Only if startscreen view is articles or pages)</span>', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_sorttype' ), $this->general_settings_key, 'extra_settings' , array('field'=>'sorttype'));
-			add_settings_field( 'ynaa-sort', __('Group by date', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'sort'));
+			//add_settings_field( 'ynaa-sort', __('Group by date', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'sort'));
 					
 			 
 			add_settings_field( 'ynaa-eventplugin', __('Select your Event Manager:', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_eventplugin' ), $this->general_settings_key, 'extra_settings' , array('field'=>'eventplugin'));
@@ -653,7 +683,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 			 
 			 add_settings_section( 'advanced_modus', __('Advanced', 'nh-ynaa'), array( &$this, 'nh_ynaa_section_general_extra' ), $this->general_settings_key );
 			 
+			 add_settings_field( 'ynaa-blank_lines', __('Remove blank lines', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'advanced_modus' , array('field'=>'blank_lines'));
+			 
 			 add_settings_field( 'ynaa-utf8', __('Enable UTF8 encode', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'advanced_modus' , array('field'=>'utf8'));
+			 add_settings_field( 'ynaa-json_embedded', __('Use JSON embedded', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'advanced_modus' , array('field'=>'json_embedded'));
+			 
 			 add_settings_field( 'ynaa-domcontent', __('Disable dom convert', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'advanced_modus' , array('field'=>'domcontent'));
 			 add_settings_field( 'ynaa-debug', __('Enable debug mode', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'advanced_modus' , array('field'=>'debug'));
 			//add_settings_field( 'ynaa-order_value', __('Order posts on overview page by', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_order' ), $this->general_settings_key, 'extra_settings' , array('field'=>'order_value'));
@@ -741,6 +775,21 @@ if(!class_exists('NH_YNAA_Plugin'))
 		} //END function nh_ynaa_register_categories_settings
 		
 		/*
+		 * 
+		*/
+		function nh_ynaa_field_general_theme_select($field){
+			
+			
+			?>
+			<select  id="nh_language" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" class="nh-floatleft">
+                    	<option value="0">Everest</option>
+                        <option value="1" <?php if($this->general_settings[$field['field']]=='1') echo ' selected'; ?>>Nebelhorn</option>                        
+                    </select>
+           <?php
+		   echo '<div class="helptext padding5">'.(__('Select your app theme.','nh-ynaa')).'</div>';
+		}
+		 
+		/*
 		 * Registers the Push settings and appends the
 		 * key to the plugin settings tabs array.
 		 */
@@ -748,16 +797,17 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$this->plugin_settings_tabs[$this->push_settings_key] = __('Push & iBeacon','nh-ynaa');			
 			register_setting( $this->push_settings_key, $this->push_settings_key );
 			//Push
-			add_settings_section( 'app_push_settings', __('App Push Settings', 'nh-ynaa'), array( &$this, 'nh_ynaa_push_settings_desc' ), $this->push_settings_key );	
-			//Timestamp
-			add_settings_field( 'ynaa-ts', null, array( &$this, 'nh_ynaa_field_push_hidden' ), $this->push_settings_key, 'app_push_settings', array('field'=>'ts') );
+			add_settings_section( 'app_push_settings', __('App Push Settings', 'nh-ynaa'), array( &$this, 'nh_ynaa_push_settings_desc' ), $this->push_settings_key );
 			
 			add_settings_field( 'ynaa-appkey', __('App Key', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_option' ), $this->push_settings_key, 'app_push_settings' , array('field'=>'appkey'));
 			add_settings_field( 'ynaa-pushsecret', __('PUSHSECRET', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_option' ), $this->push_settings_key, 'app_push_settings' , array('field'=>'pushsecret'));
 			add_settings_field( 'ynaa-pushurl', __('PUSHURL', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_option' ), $this->push_settings_key, 'app_push_settings' , array('field'=>'pushurl'));
 			add_settings_field( 'ynaa-pushshow', __('Show Push Metabox', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_checkbox' ), $this->push_settings_key, 'app_push_settings' , array('field'=>'pushshow'));
+			//Timestamp
+			add_settings_field( 'ynaa-ts', null, array( &$this, 'nh_ynaa_field_push_hidden' ), $this->push_settings_key, 'app_push_settings', array('field'=>'ts') );
+			
 			//iBeacon
-			add_settings_section( 'app_ibeacon_settings', __('iBeacon Settings', 'nh-ynaa'), array( &$this, 'nh_ynaa_push_settings_desc' ), $this->push_settings_key );	
+			add_settings_section( 'app_ibeacon_settings', __('iBeacon Settings', 'nh-ynaa'), array( &$this, 'nh_ynaa_ibeacon_settings_desc' ), $this->push_settings_key );	
 			add_settings_field( 'ynaa-ts', null, array( &$this, 'nh_ynaa_field_general_option_hidden' ), $this->general_settings_key, 'app_ibeacon_settings', array('field'=>'ts') );
 			add_settings_field( 'ynaa-uuid', __('UUID ', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_option' ), $this->push_settings_key, 'app_ibeacon_settings' , array('field'=>'uuid'));
 			add_settings_field( 'ynaa-welcome', __('Welcome text ', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_option_textarea' ), $this->push_settings_key, 'app_ibeacon_settings' , array('field'=>'welcome'));
@@ -783,11 +833,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 			register_setting( $this->css_settings_key, $this->css_settings_key );
 			
 			add_settings_section( 'css_settings', __('CSS Style settings', 'nh-ynaa'), array( &$this, 'nh_ynaa_css_settings_desc' ), $this->css_settings_key );	
-			//Timestamp
-			add_settings_field( 'ynaa-ts', null, array( &$this, 'nh_ynaa_field_css_hidden' ), $this->css_settings_key, 'css_settings', array('field'=>'ts') );
+			
 			
 			add_settings_field( 'ynaa-css', __('CSS Style', 'nh-ynaa').'<br>'.__('<span style="font-weight:normal;">Define here your CSS style for the content in the app.</span>','nh-ynaa'), array( &$this, 'nh_ynaa_field_general_option_css' ), $this->css_settings_key, 'css_settings' , array('field'=>'css'));
-			
+			//Timestamp
+			add_settings_field( 'ynaa-ts', null, array( &$this, 'nh_ynaa_field_css_hidden' ), $this->css_settings_key, 'css_settings', array('field'=>'ts') );
 		}//END  function nh_ynaa_register_css_settings()
 		
 		
@@ -800,11 +850,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 			echo '<div>88888</div>';
 		}*/
 		function nh_ynaa_section_general_logo() {  }
+		function nh_ynaa_section_general_theme() {  }
 		function nh_ynaa_section_general_social() { }
 		function nh_ynaa_section_general_extra() { }
 		function nh_ynaa_section_general_desc() {  }
-		function nh_ynaa_push_settings_desc() {   }
-		function nh_ynaa_css_settings_desc() {   }
+		function nh_ynaa_push_settings_desc() { _e('Please enter the push settings here that you have received from Team Blappsta after you have ordered your app. Only when these fields have been filled in correctly will you be able to send push notifications to your community. Please consider: If you wish to send a push notification you need to edit the post it shall be according to. There in the menus you will find the "Push Metabox".','nh-ynaa');  }
+		function nh_ynaa_ibeacon_settings_desc() { }
+		function nh_ynaa_css_settings_desc() { _e('Here you can add CSS statements tthat are applied to the start view of your app. The standard CSS commands which have been defined for the website will not be regarded in your app.', 'nh-ynaa');  }
 		/*function nh_ynaa_events_settings_desc() { 
 			do_accordion_sections( 'nav-menus', 'side', null );
 			$ynaa_menu = '';
@@ -838,6 +890,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		function nh_ynaa_categories_settings_desc(){
 			$categories = get_categories(array('orderby'=>'name', 'order'=>'ASC', 'hide_empty'=>0));
 			if($categories){
+				echo '<p>'.__('Here you can specify the names of the categories in the app individually. Assign categories to the default images that are displayed in the app, should a post or page have no post image. You can also set or define whether the category in the app should be hidden or not the sort order here.', 'nh-ynaa').'</p>';
 				echo '<div id="categorie-div-con" class="categorie-div-con"><ul>';
 				foreach($categories as $category){
 					 //var_dump($this->categories_settings);
@@ -1371,9 +1424,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 				case 'sort' : echo '<div class="helptext padding0">'.(__('Create separators for periods of time between posts<br>(only if post order within categories is set to "chronologically")', 'nh-ynaa')).'</div>'; break;
 				case 'comments' : echo '<div class="helptext padding0">'.(__('Turn the comments section beneath posts on or off.', 'nh-ynaa')).'</div>'; break;
 				case 'gadgetry': echo '<div class="helptext padding0">'.(__('Activate the checkbox if you use gadgetry theme image as post featured image.', 'nh-ynaa')).'</div>'; break;
+				case 'json_embedded': echo '<div class="helptext padding0">'.(__('Activate the checkbox if you get the errorcode 1000 in the app emulator.', 'nh-ynaa')).'</div>'; break;
 				case 'utf8': echo '<div class="helptext padding0">'.(__('Activate this checkbox if the content is not displayed correctly coded.', 'nh-ynaa')).'</div>'; break;
 				case 'domcontent': echo '<div class="helptext padding0">'.(__('Activate this checkbox if you don\'t see any content in the detail view.', 'nh-ynaa')).'</div>'; break;
 				case 'debug': echo '<div class="helptext padding0">'.(__('Activate the checkbox if you have any problems with the app, this help us to find out the error.', 'nh-ynaa')).'</div>'; break;
+				case 'blank_lines': echo '<div class="helptext padding0">'.(__('Activate the checkbox if you have to many blank lines on your content page in the app.', 'nh-ynaa')).'</div>'; break;
 				default: break;
 			}
 		}
@@ -1695,80 +1750,119 @@ if(!class_exists('NH_YNAA_Plugin'))
 			remove_action('pre_comment_on_post', 'dsq_pre_comment_on_post');
 			remove_filter('plugin_action_links', 'dsq_plugin_action_links', 10);
 			
-			if($ynaa_var=='settings'){
-				header('Content-Type: application/json');
-				echo(json_encode($this->nh_ynaa_settings()));				
+			$header = 'Content-Type: application/json; charset=utf-8';
+			$start = '';
+			$end = '';
+			if($this->general_settings['json_embedded']) {
+				$header = 'Content-Type: text/plain; charset=UTF-8';
+				$start = '[#NH_BLAPPSTA_START#]';
+				$end = '[#NH_BLAPPSTA_END#]';
+			}
+			if($ynaa_var=='settings' || $ynaa_var==$_GET['nh_prefix'].'_settings'){
+				header($header);
+				echo $start;
+				echo(json_encode($this->nh_ynaa_settings()));
+				echo $end;				
 				
 			}
-			elseif($ynaa_var=='homepresets'){
-				header('Content-Type: application/json');
-				echo(json_encode($this->nh_ynaa_homepresets()));				
+			elseif($ynaa_var=='homepresets' || $ynaa_var==$_GET['nh_prefix'].'_homepresets'){
+				header($header);
+				echo $start;
+				echo(json_encode($this->nh_ynaa_homepresets()));
+				echo $end;					
 			}
-			elseif($ynaa_var=='teaser'){
-				header('Content-Type: application/json');
-				echo(json_encode($this->nh_ynaa_teaser()));				
+			elseif($ynaa_var=='teaser' || $ynaa_var==$_GET['nh_prefix'].'_teaser'){
+				header($header);
+				echo $start;
+				echo(json_encode($this->nh_ynaa_teaser()));		
+				echo $end;			
 			}
-			elseif($ynaa_var=='categories'){
-				header('Content-Type: application/json');
-				echo(json_encode($this->nh_ynaa_categories()));				
+			elseif($ynaa_var=='categories' || $ynaa_var==$_GET['nh_prefix'].'_categories'){
+				header($header);
+				echo $start;
+				echo(json_encode($this->nh_ynaa_categories()));		
+				echo $end;			
 			}
-			elseif($ynaa_var=='articles'){
-				header('Content-Type: application/json');
-				echo(json_encode($this->nh_ynaa_articles()));				
+			elseif($ynaa_var=='articles' || $ynaa_var==$_GET['nh_prefix'].'_articles'){
+				header($header);
+				echo $start;
+				echo(json_encode($this->nh_ynaa_articles()));	
+				echo $end;				
 			}
-			elseif($ynaa_var=='article'){
-				header('Content-Type: application/json');
+			elseif($ynaa_var=='article' || $ynaa_var==$_GET['nh_prefix'].'_article'){
+				header($header);
+				echo $start;
 				//add_action('wp_head', array($this,'nh_buffer_start'));
 				//add_action('wp_footer', array($this,'nh_buffer_end'));
 				//ob_start(array($this,"nh_op_callback"));
 				
 				//remove_action( 'wp', 'wp_donottrack_ob_setup' );
 				echo(json_encode($this->nh_ynaa_article()));	
+				echo $end;	
 				//$out1 = ob_get_contents();
 				
 				//ob_end_clean();
 				//ob_end_flush();	
 				//echo substr($out1,strpos($out1,'<body>')+6,100);		
 			}
-			elseif($ynaa_var=='events'){
-				header('Content-Type: application/json');
-				echo(json_encode($this->nh_ynaa_events()));				
+			elseif($ynaa_var=='events' || $ynaa_var==$_GET['nh_prefix'].'_events'){
+				header($header);
+				echo $start;
+				echo(json_encode($this->nh_ynaa_events()));	
+				echo $end;				
 			}
-			elseif($ynaa_var=='event'){
-				header('Content-Type: application/json');
-				echo(json_encode($this->nh_ynaa_event()));				
+			elseif($ynaa_var=='event' || $ynaa_var==$_GET['nh_prefix'].'_event'){
+				header($header);
+				echo $start;
+				echo(json_encode($this->nh_ynaa_event()));	
+				echo $end;				
 			}
-			elseif($ynaa_var=='social'){
-				header('Content-Type: application/json');
-				echo(json_encode($this->nh_ynaa_social()));				
+			elseif($ynaa_var=='social' || $ynaa_var==$_GET['nh_prefix'].'_social'){
+				header($header);
+				echo $start;
+				echo(json_encode($this->nh_ynaa_social()));		
+				echo $end;			
 			}
-			elseif($ynaa_var=='comments'){
-				header('Content-Type: application/json');
-				echo(json_encode($this->nh_ynaa_comments()));				
+			elseif($ynaa_var=='comments' || $ynaa_var==$_GET['nh_prefix'].'_comments'){
+				header($header);
+				echo $start;
+				echo(json_encode($this->nh_ynaa_comments()));	
+				echo $end;				
 			}
-			elseif($ynaa_var=='ibeacon'){
-				header('Content-Type: application/json');
-				echo(json_encode($this->nh_ynaa_ibeacon()));				
+			elseif($ynaa_var=='ibeacon' || $ynaa_var==$_GET['nh_prefix'].'_ibeacon'){
+				header($header);
+				echo $start;
+				echo(json_encode($this->nh_ynaa_ibeacon()));	
+				echo $end;				
 			}
-			elseif($ynaa_var=='locations'){
-				header('Content-Type: application/json');
-				echo(json_encode($this->nh_ynaa_locations()));				
+			elseif($ynaa_var=='locations' || $ynaa_var==$_GET['nh_prefix'].'_locations'){
+				header($header);
+				echo $start;
+				echo(json_encode($this->nh_ynaa_locations()));	
+				echo $end;				
 			}
-			elseif($ynaa_var=='content'){
-				header('Content-Type: text/html');
-				echo ($this->nh_ynaa_content());				
+			elseif($ynaa_var=='content' || $ynaa_var==$_GET['nh_prefix'].'_content'){
+				header('Content-Type: text/html;charset=UTF-8');
+				echo ($this->nh_ynaa_content());
+							
 			}
-			elseif($ynaa_var=='yna_settings'){
-				header('Content-Type: application/json');
-				echo(json_encode($this->nh_ynaa_yna_settings()));				
+			elseif($ynaa_var=='yna_settings' || $ynaa_var==$_GET['nh_prefix'].'_yna_settings' ){
+				header($header);
+				echo $start;
+				echo(json_encode($this->nh_ynaa_yna_settings()));	
+				echo $end;				
 			}
 			elseif($ynaa_var){
-				header('Content-Type: application/json');
+				header($header);
+				echo $start;
 				echo(json_encode(array('error'=>$this->nh_ynaa_errorcode(11))));
+				echo $end;	
 			}							
 			else {
-				header('Content-Type: application/json');
+				header($header);
+				echo $start;
 				echo(json_encode(array('error'=>$this->nh_ynaa_errorcode())));
+				echo $end;	
 			}
 			exit();
 		} // END public function nh_ynaa_template_redirect()
@@ -1778,7 +1872,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 */
 		private function nh_ynaa_errorcode($er=10){
 			$errorarray = array();
-			$errorarray['url']="http://".$_SERVER['HTTP_HOST'].'/?'.$_SERVER['QUERY_STRING'];
+			$errorarray['url']="http://".$_SERVER['HTTP_HOST'].'/?'.$_SERVER['QUERY_STRING'];			
+			//$errorarray['header'] = getallheaders();
 			switch($er){
 				case 0: $errorarray['error_code']= 0; $errorarray['error_message']='No Error'; break;
 				case 11: $errorarray['error_code']= 11; $errorarray['error_message']='Unknown controller'; break;
@@ -1817,11 +1912,15 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 * Return Setting Array
 		 */
 		private function nh_ynaa_settings(){
-			//$returnarray['error']=$this->errorcode(0);	
+			
+			//$returnarray['error']=$this->errorcode(0);
+		
+			
+			
 			/*
 			* Debug Modus
 			*/
-			if($this->general_settings['debug'] ==1 && $_GET['debug']==1){
+			if($this->general_settings['debug'] && $this->general_settings['debug'] && $this->general_settings['debug'] ==1 && $_GET['debug']==1){
 				global $wpdb;
 				$returnarray['debug']['active']=1;
 				$returnarray['debug']['homescreentype']=$this->general_settings['homescreentype'];
@@ -1830,6 +1929,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$returnarray['upload_dir[baseurl]'] = $upload_dir['baseurl'];
 				
 			}
+			
 			if(!get_option($this->general_settings_key))   {
 				//echo 'Keine settings';
 				$returnarray['error']=$this->nh_ynaa_errorcode(13);
@@ -1841,6 +1941,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			else {
 				if($_GET[$this->requesvar['ts']]) $ts= $_GET[$this->requesvar['ts']];
 				else $ts = 0;
+				
 				
 				$returnarray['error']=$this->nh_ynaa_errorcode(0);
 				$returnarray['url']=get_bloginfo('url');
@@ -1871,8 +1972,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 					//if($this->general_settings['ts']>$this->menu_settings['ts'])$ts=$this->general_settings['ts'];
 					//else $ts=$this->menu_settings['ts'];
 					$ts = $ts_general;
-					if($this->general_settings['sort'])$returnarray['sort']=1;
-					else $returnarray['sort']=0;
+					if($this->general_settings['sort']) {
+						$returnarray['sort']=1;
+						//$returnarray['order']=1;
+					}
+					else {
+						$returnarray['sort']=0;
+					}
 					$returnarray['homescreentype'] = 0;
 					if($this->homepreset_settings['homescreentype']){
 						//App kann nur mit der 1 was anfangen
@@ -1906,7 +2012,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 						}
 						$returnarray['lang_array'] = $lang_en;
 					}*/
-					
+					if($this->general_settings['theme']) $returnarray['theme'] = (int) $this->general_settings['theme'];
+					else $returnarray['theme']=0;
 					if(!$this->general_settings['cm'])$this->general_settings['cm'] =$this->general_settings['c1'];
 					$returnarray['changes']=1;
 					$returnarray['color-01']=($this->general_settings['c1']);
@@ -1934,24 +2041,32 @@ if(!class_exists('NH_YNAA_Plugin'))
 						foreach($this->menu_settings['menu'] as $k=>$ar){
 							if($ar['status']==0) continue;
 							else {
+								$post_date = 0;
 								//echo  $ar['title'].'<br>';
 								if($ar['type'] != 'app' && $ar['type'] != 'cat' && $ar['type'] != 'fb' && $ar['type'] != 'map' && $ar['type'] != 'webview' && $ar['type'] != 'events' && $ar['type'] != 'pushCenter' ){
-									//echo  $ar['title']."\r\n";
+									//echo  $ar['title'];
+									//echo get_post_status($ar['item_id']);
+									//.get_post_status($ar['item_id']."\r\n";
 									if(get_post_status($ar['item_id']) != 'publish') {
-										//echo $ar['item_id'].':'.get_post_status($ar['id']).$ar['title']."\r\n";
+										//echo $ar['item_id'].':'.get_post_status($ar['item_id']).$ar['title']."\r\n";
 										continue;
 									}
+									/*else {
+										$get_postdata = get_postdata($ar['item_id'] );
+										$post_date = @strtotime($get_postdata['Date']);
+									}*/
 								}
 								unset($tempmenu);
 								if($ar['id']==-99 && ($this->homepreset_settings['homescreentype']== '1' || $this->homepreset_settings['homescreentype']== '2' )) continue;
 								
 								$tempmenu['pos'] =  $ar['pos'];
 								$tempmenu['type'] =  $ar['type'];
-								$tempmenu['id'] =  $ar['id'];
+								$tempmenu['id'] =  (int)$ar['id'];
 								$tempmenu['title'] =  $ar['title'];
 								$tempmenu['ts']= $this->menu_settings['ts'];
+								$tempmenu['post_date']= $post_date;
 								if(isset($ar['content']))$tempmenu['content'] = $ar['content'];
-								if(isset($ar['item_id']))$tempmenu['item_id'] = $ar['item_id'];
+								if(isset($ar['item_id']))$tempmenu['item_id'] = (int)$ar['item_id'];
 								if(isset($ar['url'])){
 									
 									$tempmenu['url'] = $ar['url'];
@@ -2032,20 +2147,16 @@ if(!class_exists('NH_YNAA_Plugin'))
 				else*/
 				
 				$ts_homepreset = -1;
-				$returnarray['changes']=0;
+				$returnarray['changes']=1;
 				$ts_homepreset=  get_option( 'nh_ynaa_homepreset_settings_ts' );	
 				if(!$ts_homepreset) $ts = -1;
 				if($ts<$ts_homepreset) {
 					$returnarray['changes']=1;
 					$ts = $ts_homepreset;
-					if($this->homepreset_settings['homescreentype']==1 || $this->homepreset_settings['homescreentype']==2){
-						$returnarray['homescreentype']=$this->homepreset_settings['homescreentype'];
-						$returnarray['sorttype']=$this->homepreset_settings['sorttype'];
-					}
-					elseif($this->homepreset_settings['homescreentype']==3){
+					if(($_GET[$this->requesvar['meta']] && $_GET[$this->requesvar['cat_include']]) ||$this->homepreset_settings['homescreentype']==3){
 						$categoris = ($this->nh_ynaa_categories());
 						//var_dump($categoris);
-						if($categoris['categories']['ass_cats'] && count($categoris['ass_cats']>0)){
+						if($categoris['categories']['ass_cats'] && is_array($categoris['categories']['ass_cats']) && count($categoris['ass_cats']>0)){
 							$i=1;
 							$allowRemove=0;
 							$cat_id = 0;
@@ -2054,7 +2165,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							foreach($categoris['categories']['ass_cats'] as $k=>$cat){
 								$item["pos"] = $i;
 								$item["type"] = 'cat';
-								$item["id"] = $cat['id'];
+								$item["id"] = (string)$cat['id'];
 								$item["cat_id"] = $cat['id'];
 								$item["title"] = $cat['title'];
 								if($cat['post_img'])$item["img"] = $cat['post_img'];
@@ -2062,6 +2173,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 								$item["post_id"] = $cat['post_id'];
 								$item["timestamp"] = $cat['post_ts'];
 								$item["publish_timestamp"] = $cat['publish_timestamp'];
+								$item["post_date"] = $cat['publish_timestamp'];
 								$item["showsubcategories"] = $cat['showsubcategories'];
 								$item["url"] = '';
 								$returnarray['items'][]=$item;
@@ -2073,9 +2185,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$returnarray['error']=$this->nh_ynaa_errorcode(23);
 						}
 					}
+					elseif($this->homepreset_settings['homescreentype']==1 || $this->homepreset_settings['homescreentype']==2){
+						$returnarray['homescreentype']=$this->homepreset_settings['homescreentype'];
+						$returnarray['sorttype']=$this->homepreset_settings['sorttype'];
+					}					
 					else{
 						if($this->homepreset_settings['items']){
-							$returnarray['changes']=0;
+							$returnarray['changes']=1;
 							/*if($ts<$this->homepreset_settings['ts']) {
 								$returnarray['changes']=1;
 								$ts = $this->homepreset_settings['ts'];
@@ -2286,6 +2402,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$returnarray['changes']=1;
 					$ts = $ts_getoption;
 				}
+				if($_GET[$this->requesvar['cat_include']]){
+					$cat_include = explode(',',$_GET[$this->requesvar['cat_include']]);
+				}
+				//var_dump($cat_include);
 				//var_dump($this->teaser_settings);	
 				if((!isset($this->teaser_settings['source']) || $this->teaser_settings['source']=='indi') && $this->teaser_settings['teaser']){		
 					
@@ -2293,6 +2413,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						$i=1;
 						foreach($this->teaser_settings['teaser'] as $teaser){
 							$p = wp_get_single_post($teaser);
+							
 							if($p){
 								//var_dump($p);
 								if( strtotime($p->post_modified) > $ts){
@@ -2300,9 +2421,14 @@ if(!class_exists('NH_YNAA_Plugin'))
 									$ts = strtotime($p->post_modified);
 								}
 								$category = get_the_category($teaser); 
+								
+								if($_GET[$this->requesvar['meta']]){
+									if(!$category[0]->term_id || is_null($category[0]->term_id)) continue;
+									if($cat_include && !in_array($category[0]->term_id,$cat_include)) continue;
+								}
 								if(get_post_type($teaser)=='event') $category[0]->term_id=0;
 								$posttitle = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($p->post_title)), ENT_NOQUOTES, 'UTF-8')));
-								$returnarray['items'][]=array('pos'=>$i, 'apectFill'=>1, 'type' => get_post_type($teaser), 'id'=> $teaser, 'title'=> $posttitle, 'thumb'=>$this->nh_getthumblepic($teaser, 'full'), 'cat_id'=>$category[0]->term_id, 'post_ts'=>strtotime($p->post_modified));
+								$returnarray['items'][]=array('pos'=>$i, 'apectFill'=>1, 'type' => get_post_type($teaser), 'id'=> (int) $teaser, 'title'=> $posttitle, 'thumb'=>$this->nh_getthumblepic($teaser, 'full'), 'cat_id'=>$category[0]->term_id, 'post_ts'=>strtotime($p->post_modified), 'post_date'=>strtotime($p->post_date));
 								$i++;
 								unset($category);
 							}
@@ -2325,10 +2451,73 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$returnarray['error']=$this->nh_ynaa_errorcode(18);
 						}
 						elseif($this->teaser_settings['source']=='cat'){
-							var_dump($this->nh_ynaa_articles($this->teaser_settings['cat'],$this->teaser_settings['limit']));
+							
+							$catitems = ($this->nh_ynaa_articles($this->teaser_settings['cat'],$this->teaser_settings['limit']));
+							
+							if($catitems && is_array($catitems)){
+								
+								if(isset($catitems['articles']['error']['error_code']) && $catitems['articles']['error']['error_code']!= 0)
+								$returnarray['error']=$this->nh_ynaa_errorcode(18);
+								else {
+									
+									if($catitems['articles']['items']){
+										foreach($catitems['articles']['items'] as $item){
+											$item['cat_id']=(int)$this->teaser_settings['cat'];
+											$item['apectFill'] = 1;
+											$item['post_ts'] = $item['timestamp'];
+											if($ts < $item['post_ts']) {
+												$returnarray['changes']=1;
+												$ts = $item['post_ts'];
+											}
+											$returnarray['items'][] = 	$item;
+										}	
+									}
+									else $returnarray['error']=$this->nh_ynaa_errorcode(18);
+									
+									
+								}
+									
+							}
+							else {
+								$returnarray['error']=$this->nh_ynaa_errorcode(18);
+							}
 						}
 						elseif($this->teaser_settings['source']=='recent'){
-							var_dump($this->nh_ynaa_articles($this->teaser_settings['cat'],$this->teaser_settings['limit']));
+							//var_dump($this->teaser_settings['cat'],$this->teaser_settings['limit']);
+							$_GET[$this->requesvar['option']]=1;
+							$_GET[$this->requesvar['sorttype']]='recent';
+							$_GET[$this->requesvar['limit']]=$this->teaser_settings['limit'];
+							$catitems = ($this->nh_ynaa_articles(0,$this->teaser_settings['limit']));
+							
+							if($catitems && is_array($catitems)){
+								
+								if(isset($catitems['articles']['error']['error_code']) && $catitems['articles']['error']['error_code']!= 0)
+								$returnarray['error']=$this->nh_ynaa_errorcode(18);
+								else {
+									
+									if($catitems['articles']['items']){
+										foreach($catitems['articles']['items'] as $item){
+											
+											$item['apectFill'] = 1;
+											$item['post_ts'] = $item['timestamp'];
+											$item['id'] = $item['post_id'];
+											$item['thumb'] = $item['img'];
+											if($ts < $item['post_ts']) {
+												$returnarray['changes']=1;
+												$ts = $item['post_ts'];
+											}
+											$returnarray['items'][] = 	$item;
+										}	
+									}
+									else $returnarray['error']=$this->nh_ynaa_errorcode(18);
+									
+									
+								}
+									
+							}
+							else {
+								$returnarray['error']=$this->nh_ynaa_errorcode(18);
+							}
 						}
 						else{
 							$returnarray['error']=$this->nh_ynaa_errorcode(37);
@@ -2357,8 +2546,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			$returnarray['error']=$this->nh_ynaa_errorcode(0);
 			$returnarray['changes']=0;
-			$returnarray['uma']['ts']=time();
-			$returnarray['uma']['current_time']=current_time('timestamp');
+			//$returnarray['uma']['ts']=time();
+			//$returnarray['uma']['current_time']=current_time('timestamp');
 			
 			
 			$args=array(
@@ -2366,6 +2555,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 			  'order' => 'ASC',
 			  'hide_empty'=>1
 			);
+			if($_GET[$this->requesvar['meta']] && $_GET[$this->requesvar['cat_include']]){
+				$args['include']=$_GET['cat_include'];
+			}
 			if($_GET[$this->requesvar['ts']]) {
 				$ts= $_GET[$this->requesvar['ts']];				
 			}
@@ -2377,7 +2569,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$parent = array();
 			$cat = array();		
 	
-			if($categories){
+			if($categories && is_array($categories) && count($categories)>0){
 				/*$homepresets = $this->nh_ynaa_homepresets();
 				//var_dump($homepresets);
 				//echo '<hr>';
@@ -2429,7 +2621,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$this->categories_settings[$category->term_id]['img']='';
 							
 						}
-						$cat[$category->term_id]=array('pos'=>$i, 'type'=>'cat', 'id'=> $category->term_id, 'parent_id'=>$category->parent, 'title'=>htmlspecialchars_decode($category->name), 'post_img'=>$items['articles']['items'][0]['thumb'], 'img'=>$this->categories_settings[$category->term_id]['img'], 'post_id'=>$items['articles']['items'][0]['id'] ,'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1);
+						$cat[$category->term_id]=array('pos'=>$i, 'type'=>'cat', 'id'=> (int) $category->term_id, 'parent_id'=> $category->parent, 'title'=>htmlspecialchars_decode($category->name), 'post_img'=>$items['articles']['items'][0]['thumb'], 'img'=>$this->categories_settings[$category->term_id]['img'], 'post_id'=>$items['articles']['items'][0]['id'] ,'post_date'=>$items['articles']['items'][0]['publish_timestamp'], 'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1);
 						
 						//$ass_cats[$category->term_id] = array('img'=>'');
 						if($this->categories_settings[$category->term_id]['showsub']){
@@ -2448,7 +2640,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$use_cat_img = 1;
 						}
 						else $use_cat_img = 0;
-						$ass_cats[$category->term_id] = array('showsubcategories'=>$cat[$category->term_id]['showsubcategories'], 'showoverviewposts'=>$cat[$category->term_id]['showoverviewposts'],'img'=>$this->categories_settings[$category->term_id]['img'], 'pos'=>$i, 'type'=>'cat', 'id'=> $category->term_id, 'parent_id'=>$category->parent, 'title'=>htmlspecialchars_decode($category->name), 'post_img'=>$items['articles']['items'][0]['thumb'], 'post_id'=>$items['articles']['items'][0]['id'] ,'publish_timestamp'=>$items['articles']['items'][0]['publish_timestamp'],'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1, 'use_cat_img'=> $use_cat_img   ); 
+						$ass_cats[$category->term_id] = array('showsubcategories'=>$cat[$category->term_id]['showsubcategories'], 'showoverviewposts'=>$cat[$category->term_id]['showoverviewposts'],'img'=>$this->categories_settings[$category->term_id]['img'], 'pos'=>$i, 'type'=>'cat', 'id'=> (int) $category->term_id, 'parent_id'=>$category->parent, 'title'=>htmlspecialchars_decode($category->name), 'post_img'=>$items['articles']['items'][0]['thumb'], 'post_id'=>$items['articles']['items'][0]['id'] ,'publish_timestamp'=>$items['articles']['items'][0]['publish_timestamp'],'post_date'=>$items['articles']['items'][0]['publish_timestamp'],'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1, 'use_cat_img'=> $use_cat_img   ); 
 						//$ass_cats[$category->term_id] = array('img'=>'http://yna.nebelhorn.com/wp-content/uploads/2014/02/image-653473-breitwandaufmacher-ixpz-300x111.jpg');
 						
 						$i++;
@@ -2504,7 +2696,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			}
 			
 			//Events
-			if($this->general_settings['eventplugin'] ){
+			if(!$_GET[$this->requesvar['meta']] && $this->general_settings['eventplugin'] ){
 				
 				$items = $this->nh_ynaa_events(1);
 				if($items['events']['items']){							
@@ -2527,7 +2719,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			//KArte
 			
-			if($this->general_settings['location'] ){
+			if(!$_GET[$this->requesvar['meta']] && $this->general_settings['location'] ){
 				//$hp[-98]['img'] = 'http://yna.nebelhorn.com/wp-content/uploads/2014/03/images.jpg';
 				$map_img = '';
 				if($this->categories_settings[-98]['img']) $map_img = $this->categories_settings[-98]['img'];
@@ -2567,6 +2759,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 * Return Aricles Array
 		 */
 		private function nh_ynaa_articles($id=0, $lim=0){
+			//var_dump($_GET);
 			$allowRemove=1;
 			//$returnarray['uma']['info_Articles_start'] = $id.'start nh_ynaa_articles'.$_GET[$this->requesvar['id']]; 
 			//$returnarray['uma']['categories_settings'] = $this->categories_settings;
@@ -2574,7 +2767,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 				if(isset($_GET[$this->requesvar['id']]) || $id){
 					if(( $id))$tempid= $id;
 					else $tempid= $_GET[$this->requesvar['id']];
-					if($this->categories_settings[$tempid]['hidecat']) {
+					if($_GET[$this->requesvar['cat_include']])	$cat_include = explode(',',$_GET[$this->requesvar['cat_include']]);
+					if($this->categories_settings[$tempid]['hidecat'] || ($_GET[$this->requesvar['meta']] && ($cat_include && !in_array($id, $cat_include)))) {
 						$returnarray['changes']=1;	
 						$returnarray['timestamp']=time();	
 						//$returnarray['uma']['info_Articles'] = 'Die Kategorie wurde deaktiviert'; 
@@ -2600,6 +2794,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					else{
 						$args ['nopaging'] = true; 
 					}
+					$hidecat = array();
 					if($this->categories_settings){
 
 						foreach($this->categories_settings as $cat_id => $cat){
@@ -2607,11 +2802,21 @@ if(!class_exists('NH_YNAA_Plugin'))
 						
 							if($cat['hidecat']) $hidecat[] = $cat_id * -1;
 						}
-						if($hidecat) {
+						
+						
+					}
+					
+					if($_GET[$this->requesvar['cat_include']]){
+						$cat_include = explode(',',$_GET[$this->requesvar['cat_include']]);
+						foreach ($cat_include as $key => $value) {
+							$hidecat[] = $value;
+							
+						} 
+					}
+					if($hidecat) {
 							
 							$args['cat']=implode($hidecat,',');;
 						}
-					}
 					
 					if($this->homepreset_settings['sorttype']=='alpha-asc'){
 						$args ['orderby'] = 'title';
@@ -3105,24 +3310,25 @@ if(!class_exists('NH_YNAA_Plugin'))
 					print '</pre>';*/
 				}
 				$content = apply_filters('the_content', $content);
+				//echo '1:'.$content;
 				$content = str_replace(']]>', ']]&gt;', $content);
 				$content = str_replace("\r\n",'\n',$content);
 				if(get_bloginfo('url')=='http://lovemypetbook.com'){			
 					$content = str_replace("\n",'',$content);
 				}
-				//$content = utf8_encode($content);
-						
+				//echo '2:'.$content;
+				//$content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$content);		
 				$content = preg_replace('/[\x00-\x1F\x80-\x9F]/u', '',$content);
-				//Für nicht utf8
+				//echo '4:'.$content;
 				$content = $this->nh_ynaa_get_appcontent($content);
-				//$content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$content);
+				//echo '5:'.$content;
 				if($this->css_settings['css'])$this->general_settings['css'] = $this->css_settings['css'];
 				$this->general_settings['css'] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$this->general_settings['css']);
 				$this->general_settings['css'] = str_replace('../fonts/stylesheet.css',plugins_url( 'fonts/stylesheet.css' , __FILE__ ),$this->general_settings['css']);
 				
 				
 				if(strpos($content,'<html><head><meta charset="utf-8"></head>')){
-							$content = str_replace('<html><head><meta charset="utf-8"></head>','<html data-html="html1"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+							$content = str_replace('<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head>','<html data-html="html1"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
 						}
 				elseif(strpos($content,'<html>')) {
 							//if(get_bloginfo('url') == 'http://www.automotiveit.eu' || get_bloginfo('url') == 'http://automotiveit.eu'  || (is_array($active_plugins) && in_array('wpseo/wpseo.php',$active_plugins)) ){
@@ -3136,12 +3342,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 							//}
 							//else {
 								//$content = str_replace('<html>','<html data-html="html2"><head><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
-								$content = str_replace('<html>','<html data-html="html2b"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
+								$content = str_replace('<html>','<html data-html="html2b"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head>',$content);
 
 							//}
 						}
 						else {
-							$content = '<!doctype html><html data-html="html3"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head><body>'.$content.'</body></html>';
+							$content = '<!doctype html><html data-html="html3"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css"><style type="text/css">'.$this->general_settings['css'].' body{color:'.$this->general_settings['ct'].';}</style></head><body>'.$content.'</body></html>';
 						}
 			}
 			return $content;
@@ -3911,16 +4117,18 @@ if(!class_exists('NH_YNAA_Plugin'))
 		*/		
 		private function nh_ynaa_get_appcontent($html){
 			//echo $html;
-			if($this->general_settings['domcontent'])return '<!doctype html><html><head><meta charset="utf-8"></head><body class="blappsta_ok">'.$html.'</body></html>';
+			if($this->general_settings['domcontent'])return '<!doctype html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head><body class="blappsta_ok">'.$html.'</body></html>';
 			
 			$libxml_previous_state = libxml_use_internal_errors(true);
 			$dom = new DOMDocument();
-			$caller = new ErrorTrap(array($dom, 'loadHTML'));
+			$caller = new ErrorTrap(array($dom, 'loadHTML')); 
 			$caller->call($html);
-			if (!$caller->ok()) {
-			  $html='<!doctype html><html><head><meta charset="utf-8"></head><body class="blappsta_ok">'.$html.'</body></html>';
+			if ( !$caller->ok()) {
+			  $html='<!doctype html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head><body class="blappsta_ok">'.$html.'</body></html>';
 			}
 			else {
+				if($this->general_settings['utf8'])	$html = mb_convert_encoding($html, 'html-entities', 'utf-8'); 
+				
 				$dom->validateOnParse = true;
 				$dom->loadHTML('<?xml encoding="UTF-8">' . $html);
 				$dom->preserveWhiteSpace = false;
@@ -3931,11 +4139,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 					if ($item->nodeType == XML_PI_NODE)
 						$dom->removeChild($item); // remove hack
 						
-				if(!isset($this->general_settings['utf8']) || !$this->general_settings['utf8']) {
-					$dom->encoding = 'UTF-8'; // insert proper
-				}
+				$dom->encoding = 'UTF-8'; // insert proper
+				
 			
-				$imgElements  = $dom->getElementsByTagName("img");
+				$imgElements  = $dom->getElementsByTagName("img"); 
 				if(!isset($this->general_settings['min-img-size-for-resize'])) $this->general_settings['min-img-size-for-resize'] = 100; 
 				 $upload_dir = wp_upload_dir();
 				foreach ($imgElements as $imgElement) {
@@ -3963,7 +4170,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 						}
 					}
 					//echo $imgElement->getAttribute("src").'<hr>';
-					if($imgElement->hasAttribute('width'))$imgElement->removeAttribute('width');
+					if($imgElement->hasAttribute('width')) {
+						
+						$imgElement->removeAttribute('width');
+						
+					}
+
 					$imgElement->setAttribute('width','100%');
 					if($imgElement->hasAttribute('height'))$imgElement->removeAttribute('height');
 					if($imgElement->parentNode->nodeName != 'a'){
@@ -4005,12 +4217,16 @@ if(!class_exists('NH_YNAA_Plugin'))
 				}*/
 				
 				$html = $dom->saveHTML();
-		
-				$html = nl2br($html);
-				$htmlsup = substr($html,0,strpos($html,'<body>'));
-				$htmlsup = str_replace('<br />','',$htmlsup);
-				$html = substr($html,strpos($html,'<body>'),-7);		
-				$html = $htmlsup.$html;
+				
+				if(!isset($this->general_settings['blank_lines']) && !$this->general_settings['blank_lines']){
+				
+					$html = nl2br($html);
+					$htmlsup = substr($html,0,strpos($html,'<body>'));
+					$htmlsup = str_replace(array('<br />', '<br>'),'',$htmlsup);
+					$html = substr($html,strpos($html,'<body>'),-7);		
+					$html = $htmlsup.$html;
+				 }
+		 
 			}
 			/*else{
 				$html = '<!doctype html>
@@ -4044,7 +4260,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		*/		
 		private function nh_ynaa_get_fbcontent($limit=50){
 			//echo 'fb';
-			if(isset($this->general_settings['social_fbid'],$this->general_settings['social_fbsecretid'],$this->general_settings['social_fbappid']) && ($this->general_settings['social_fbid'] != '' && $this->general_settings['social_fbsecretid'] != '' && $this->general_settings['social_fbappid'] != '' )){
+			if(!$_GET[$this->requesvar['meta']] && (isset($this->general_settings['social_fbid'],$this->general_settings['social_fbsecretid'],$this->general_settings['social_fbappid']) && ($this->general_settings['social_fbid'] != '' && $this->general_settings['social_fbsecretid'] != '' && $this->general_settings['social_fbappid'] != '' ))){
 				//echo 'fb3';
 				if(!class_exists('Facebook')) {
 					include_once('facebook-php-sdk-master/src/facebook.php');
@@ -4362,7 +4578,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		  echo '<div><label for="nh_ynaa_pushtext">';
 			_e( "Push Text", 'nh-ynaa' );
 			
-			echo '<br /><textarea style="width:100%" id="nh_ynaa_pushtext" name="nh_ynaa_pushtext" maxlength="120"></textarea>';
+			echo '<br /><textarea style="width:100%" id="nh_ynaa_pushtext" name="nh_ynaa_pushtext" maxlength="120">'.$post->post_title.'</textarea>';
 			
 			
 		  echo '</label></div> ';
@@ -4370,7 +4586,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		  echo '<div><label for="nh_ynaa_sendpush">';
 			
 			
-			echo '<input type="button" value="'.__('Send Push').'" id="nh_ynaa_sendpush" />';
+			echo '<input type="button" value="'.__('Send Push','nh-ynaa').'" id="nh_ynaa_sendpush" />';
 			
 			
 		  echo '</label></div><div id="nh-push-dialog" title="Push"><span style="display:none;">'.__('Please wait...','nh-ynaa').'</span></div> ';
@@ -4995,10 +5211,14 @@ if(class_exists('NH_YNAA_Plugin'))
     // Installation and uninstallation hooks
     register_activation_hook(__FILE__, array('NH_YNAA_Plugin', 'nh_ynaa_activate'));
     register_deactivation_hook(__FILE__, array('NH_YNAA_Plugin', 'nh_ynaa_deactivate'));
+	
+	//add_action( 'wpmu_new_blog', array('NH_YNAA_Plugin','nh_new_blog'),100,6); 
 
     // instantiate the plugin class
     $nh_ynaa = new NH_YNAA_Plugin();
 	add_action( 'plugins_loaded',array($nh_ynaa,'nh_update_db_check')); 
+	
+	   
 	
 	// Add a link to the settings page onto the plugin page
 	if(isset($nh_ynaa))
@@ -5021,7 +5241,7 @@ if(class_exists('NH_YNAA_Plugin'))
 		}
 		add_filter( 'query_vars', 'nh_ynaa_add_query_vars_filter' );
 		if(!empty($_GET[QUERY_VARS_YNAA])) {
-			add_action('template_redirect', array($nh_ynaa, 'nh_ynaa_template_redirect'));
+			add_action('template_redirect', array($nh_ynaa, 'nh_ynaa_template_redirect'),1);
 		}
 	}
 }
@@ -5041,15 +5261,19 @@ function nh_action_javascript() {
 	$cat = wp_get_post_categories($post->ID);
 	if($cat){
 		$cat = implode(',',$cat);
+	}
 	
 ?>
 <script type="text/javascript" >
-
+	<?php 
+	if(isset($post->ID)) {
+	?>
 jQuery(document).ready(function($) {
 	
 	//alert('<?php echo $post->ID;  ?>');	
 
 	// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
+
 	$('#nh_ynaa_sendpush').click(function(e) {	
 		if(<?php if($post->post_status== 'publish') echo 1; else echo 0;  ?>)	{
 			if($('#nh_ynaa_pushtext').val()=='') alert('<?php _e('Insert Pushtext!', 'nh-ynaa'); ?>');
@@ -5090,9 +5314,12 @@ jQuery(document).ready(function($) {
 		//alert('Got this from the server: ' + e);
 	});
 });
+<?php
+} 
+?>
 </script>
 <?php
-	}
+	
 }
 
 

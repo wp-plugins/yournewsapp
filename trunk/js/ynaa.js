@@ -84,6 +84,8 @@ jQuery(document).ready(function($){
 				  var $menu_id = $o.val(); 
 				  //alert($menu_id);
 				  var $title = $('#title-'+$o.attr('name')).val();
+				  /*var $post_date = $('#post_date-'+$o.attr('name')).val(); //alert($post_date);
+				  if (typeof $post_date == 'undefined') $post_date=0;*/
 				  var $inputurl = '';
 				  switch($type){
 					  case 'page': $type_text='Seite'; $type2='article'; break;
@@ -119,6 +121,7 @@ jQuery(document).ready(function($){
 											'<input type="hidden" value="'+$id+'" name="'+$menu_settings_key+'[menu]['+$pos+'][id]" id="menu-id'+$pos+'" class="menu-id-ynaa" />' +
 											'<input type="hidden" value="'+$menu_id+'" name="'+$menu_settings_key+'[menu]['+$pos+'][item_id]" id="menu-item-id'+$pos+'" />' +
 											'<input type="hidden" value="1" name="'+$menu_settings_key+'[menu]['+$pos+'][status]" id="menu-status'+$pos+'" />' +
+											//'<input type="hidden" value="'+$post_date+'" name="'+$menu_settings_key+'[menu]['+$pos+'][post_date]" id="menu-post_date'+$pos+'" />' +
 											'</label>' +
 										'</p>' +
 										$inputurl +									
