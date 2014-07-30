@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.8
-Stable tag: 0.7.7
+Stable tag: 0.7.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,14 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.7.8 =
+- new function: choice between two themes
+- new function: automatically have your teaser filled with content (either the latest or from a certain category)
+- new function: we have created an option that delivers the content correctly to the app if there have been issues with certain installed plugins ("Use embedded JSON"). Only activate if you encounter problems. You need iOS 2.0.0 or Android 1.6.1.2 or higher for this to work.
+- new function: we have created an option that removes redundant rows in detail view ("Remove blank lines")
+- smaller bug fixes and performance improvements
+
+
 = 0.7.7 =
 - fix plugin folder problem
 
@@ -294,6 +302,14 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.7.8 =
+- new function: choice between two themes
+- new function: automatically have your teaser filled with content (either the latest or from a certain category)
+- new function: we have created an option that delivers the content correctly to the app if there have been issues with certain installed plugins ("Use embedded JSON"). Only activate if you encounter problems. You need iOS 2.0.0 or Android 1.6.1.2 or higher for this to work.
+- new function: we have created an option that removes blank lines in detail view ("Remove blank lines")
+- smaller bug fixes and performance improvements
+
+
 = 0.7.7 =
 - fix plugin folder problem
 

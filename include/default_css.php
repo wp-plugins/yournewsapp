@@ -8,19 +8,20 @@ body {
 	padding:0;
 }	
 img {
-	width:100%;
-	margin-bottom:10px;
+	width: 100% !important;
+	margin-bottom: 10px;
+	height: auto !important;
 }
 
 img.wp-smiley { 
-	width:auto; 
+	width:auto !important; 
 }
 
 ul, ol{
 	margin:0 0 0 20px; 
 }
 iframe {
-    width:100%;
+    width:100% !important;
 }
 
 ';
