@@ -272,7 +272,7 @@
 										<?php
 										
 										}
-										
+										if(false) {
 										$menuitem['title'] = __('Report an error','nh-ynaa');
 										$menuitem['type_text'] = __('App','nh-ynaa');
 										$menuitem['pos'] = 999999999;
@@ -307,6 +307,7 @@
 												</div><!-- .menu-item-settings-->
 											</li>
                                         <?php
+                     }
 									}
 									?>
 								</ul>		

@@ -3,8 +3,8 @@ Contributors: nebelhorn
 Donate link: 
 Tags:
 Requires at least: 3.0
-Tested up to: 3.8
-Stable tag: 0.7.8
+Tested up to: 3.9.2
+Stable tag: 0.7.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -65,7 +65,7 @@ These features are currently under development and will soon be part of Blappsta
 2. To get a preview on what the app would look like, use our emulator in the first tab of the plugin settings in the WordPress backend.
 3. If you want, you can additionally get a preview of your blogs content and design in our test app from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-your-blog.-your-app./id865289027?mt=8) or [Google Play Store](https://play.google.com/store/apps/details?id=com.nebelhorn.blappsta&hl=de).
 4. Do you like what you see? Then register today on <a href="http://www.blappsta.com/">www.blappsta.com</a> to publish your app on the app stores for free!
-5. If you have any questions contact us: info@blappsta.com
+5. If you have any questions contact us: support@blappsta.com
 
 
 == Installation ==
@@ -85,6 +85,12 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.7.9 =
+- fix menu bug
+- new function: automatic sending of push notifications in the first publication of a post
+- remove "\n" from content pages
+- smaller bug fixes and performance improvements
+
 = 0.7.8 =
 - new function: choice between two themes
 - new function: automatically have your teaser filled with content (either the latest or from a certain category)
@@ -302,6 +308,12 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.7.9 =
+- fix menu bug
+- new function: automatic sending of push notifications in the first publication of a post
+- remove "\n" from content pages
+- smaller bug fixes and performance improvements
+
 = 0.7.8 =
 - new function: choice between two themes
 - new function: automatically have your teaser filled with content (either the latest or from a certain category)

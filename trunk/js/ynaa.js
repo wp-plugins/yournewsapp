@@ -77,6 +77,9 @@ jQuery(document).ready(function($){
 			  
 			  var $id = getMaxMenuID();
 			  var $pos = (getItemscount('ul#menu-to-edit li'));
+			  while($('#menu-item-'+$pos).length >0){
+			  	$pos++;
+			  }
 			  var $o = $(ob);
 			  if(typeof ($o.attr('checked')) != 'undefined'){				 
 			  
@@ -561,6 +564,7 @@ function getMaxMenuID(){
 	maxid++;
 
 	if(maxid<11)maxid=11;
+	//alert(maxid);
 	return maxid;
 }
 function getMaxHomepresetID(){
