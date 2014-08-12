@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.7.8
+Version: 0.7.9
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -14,7 +14,7 @@ License: GPL2
 //Version Number
 //Temp fix folder problem
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.7.8";
+$nh_ynaa_version = "0.7.9";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -803,6 +803,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			add_settings_field( 'ynaa-pushsecret', __('PUSHSECRET', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_option' ), $this->push_settings_key, 'app_push_settings' , array('field'=>'pushsecret'));
 			add_settings_field( 'ynaa-pushurl', __('PUSHURL', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_option' ), $this->push_settings_key, 'app_push_settings' , array('field'=>'pushurl'));
 			add_settings_field( 'ynaa-pushshow', __('Show Push Metabox', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_checkbox' ), $this->push_settings_key, 'app_push_settings' , array('field'=>'pushshow'));
+      add_settings_field( 'ynaa-autopush', __('Automatic Push send', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_push_checkbox' ), $this->push_settings_key, 'app_push_settings' , array('field'=>'autopush'));
 			//Timestamp
 			add_settings_field( 'ynaa-ts', null, array( &$this, 'nh_ynaa_field_push_hidden' ), $this->push_settings_key, 'app_push_settings', array('field'=>'ts') );
 			
@@ -1186,8 +1187,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 			if(esc_attr( $this->push_settings[$field['field']])=='1') $check = ' checked="checked" ';
 			else $check = '';		
 			?>			
-			<input type="checkbox" name="<?php echo $this->push_settings_key; ?>[<?php echo $field['field']; ?>]" id="<?php echo 'id_'.$field; ?>" <?php echo $check; ?> value="1" />
+			<input type="checkbox" name="<?php echo $this->push_settings_key; ?>[<?php echo $field['field']; ?>]" id="<?php echo 'id_'.$field; ?>" <?php echo $check; ?> value="1"  class="my-input-field nh-floatleft" />
 			<?php
+			switch($field['field']){
+        case 'autopush': echo '<div class="helptext">'.(__('Automatic sending of push notifications in the first publication of a post.','nh-ynaa')).'</div>'; break;        
+        default: break;
+      }
 		} //END function nh_ynaa_field_push_checkbox
 		
 		/*
@@ -3319,6 +3324,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 				//echo '2:'.$content;
 				//$content = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$content);		
 				$content = preg_replace('/[\x00-\x1F\x80-\x9F]/u', '',$content);
+       $content = str_replace(array("\n","\r", "\t", chr(10),chr(13),'\n'),'',$content);
+        
 				//echo '4:'.$content;
 				$content = $this->nh_ynaa_get_appcontent($content);
 				//echo '5:'.$content;
@@ -3494,8 +3501,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 									$temparray['author']['id']=$ar[0]['user_id'];
 									$temparray['author']['email'] = $ar[0]['comment_author_email'];
 									$temparray['author']['img']=get_avatar($ar[0]['comment_author_email'],32);
-									$temparray['author']['img'] = substr($temparray['author']['img'],strpos($temparray['author']['img'],'src=')+5);
-									$temparray['author']['img'] = substr($temparray['author']['img'],0,strpos($temparray['author']['img'],'\''));
+                  if($temparray['author']['img']){
+									 $temparray['author']['img'] = substr($temparray['author']['img'],strpos($temparray['author']['img'],'src=')+5);
+									 $temparray['author']['img'] = substr($temparray['author']['img'],0,strpos($temparray['author']['img'],'\''));
+                  }
+                  else $temparray['author']['img']='';
 									if(count($ar)>1){
 										$pos2 = 0;
 										//$temparray2 = array();
@@ -4996,103 +5006,66 @@ if(!class_exists('NH_YNAA_Plugin'))
 			}
 			die();
 			return;
-			if($cat = $_POST['push_cat']){ 
-				
-				//$cat= explode(',',$_POST['cat']);
-				 
-				if(is_array($cat) && count($cat)>0){
-					foreach($cat as $k=>$v) $cat[$k]= (string)($v);
-					//$device_token['device_token'] = array('6DBBDB5FD28A8A08FDC04DD36032C21C46120C233A7757CDDB666074777AA43E'); // Device 
-					//$apid['apid'] = array('52cf87da-84f1-40b1-a23e-50ad569c40f8'); // apid for Android
-					//$device_ids['OR'] = array($device_token, $apid);
-
-					$tag['tag'] = $cat;
-					$tag2['tag'] = array(get_bloginfo('url'));
-					//$tag2['tag'] = 'http://herri.nebelhorn.com';
-					if($tag2['tag'][0]=='http://smokeycats.com') $tag2['tag'][0] = 'http://www.smokeycats.com';
-					
-					// iOS
-					$iosContent = array();
-					$iosContent['alert'] = $_POST['push_text'];
-					$iosContent['sound'] = "default";
-					$iosContent['badge'] = "+1";					
-					$iosExtraContent = array();
-					$iosExtraContent['articleHierarchyIDs'] = array((int) $cat[0], (int) $_POST['push_post_id']);
-					$iosContent['extra'] = $iosExtraContent;
-					
-					// Android
-					$androidContent = array();
-					$androidContent['alert'] =$_POST['push_text'];					
-					$androidExtraContent = array();					
-					$androidExtraContent['articleHierarchyIDs'] = '['.((int) $cat[0]).','.((int) $_POST['push_post_id']).']';
-					$androidContent['extra'] = $androidExtraContent;
-
-
-					$alertContent = array();
-					$alertContent['ios'] = $iosContent;
-					$alertContent['android'] = $androidContent;
-
-					//$audience['AND'] = array( $tag, $tag2); //Push Filterung durch KAtegorien
-					$audience['AND'] = array(  $tag2); //Push für alle KAtegorien
-					//$audience['AND'] = array($device_ids, $tag, $tag2); // mit device token
-					$push = array("audience" => $audience); //$audience, wenn devicetoke dabei
-															//$tag, wenn nur auf tags separiert
-					$push['notification'] = $alertContent;
-					$push['device_types'] = $device_types;
-
-					$json = json_encode($push);
-					//$json= '{"aps":{"alert":"test uma static","badge":1}}';
-					var_dump($json);
-					
-					/*
-					POST /api/push HTTP/1.1
-					Authorization: Basic <master authorization string>
-					Content-Type: application/json
-					Accept: application/vnd.urbanairship+json; version=3;
-					*/
-					//echo PUSHURL;
-					//die();
-					$session = curl_init(PUSHURL); 
-					curl_setopt($session, CURLOPT_USERPWD, APPKEY . ':' . PUSHSECRET);
-					curl_setopt($session, CURLOPT_POST, True);
-					curl_setopt($session, CURLOPT_POSTFIELDS, $json);
-					curl_setopt($session, CURLOPT_HEADER, False);
-					curl_setopt($session, CURLOPT_RETURNTRANSFER, True);
-					curl_setopt($session, CURLOPT_HTTPHEADER, array('Content-Type:application/json', 'Accept: application/vnd.urbanairship+json; version=3;'));
-
-
-					$content = curl_exec($session);
-					//var_dump($content);
-
-					// Check if any error occured
-					$response = curl_getinfo($session);
-					//var_dump($response);
-					if($response['http_code']!='202') {
-						_e("Got negative response from server, http code: ");
-						echo $response['http_code'] . "\n";
-					}
-					else{
-						//Work around for www
-						
-						
-					
-						_e("Send successfull.");
-						
-					}
-
-					curl_close($session);
-				}
-				else {
-					_e('Feed Error!');
-				}
-			}
-			else {
-				_e('No Feed Set!');
-			}
-
-		//echo 'aaaaa';
-			die(); // this is required to return a proper result
 		}
+
+    /**
+    *PUSH Funktion have to combine both
+    */
+    function ny_ynaa_push_action2($postid) {
+      
+      if(!($this->push_settings['appkey']) || $this->push_settings['appkey'] == '') {
+           //_e('No Appkey.', 'nh-ynaa'); 
+           return 2;            
+      }
+      if(!($this->push_settings['pushsecret']) || $this->push_settings['pushsecret'] == '') {
+        //_e('No Push Secret Key.', 'nh-ynaa');
+        return 3;
+      }
+      if(!($this->push_settings['pushurl']) || $this->push_settings['pushurl'] == '') {
+        // _e('No Push Url.', 'nh-ynaa'); 
+        return 4;     
+      }
+      
+      define('APPKEY', esc_attr( $this->push_settings['appkey'] )); // App Key
+      define('PUSHSECRET', esc_attr( $this->push_settings['pushsecret'] )); // Master Secret
+      define('PUSHURL', esc_attr( $this->push_settings['pushurl'] ));
+      $device_types = array('ios', 'android');
+      //$device_types = array('ios');
+      $cat = wp_get_post_categories($postid);
+      if($cat){
+        $cat = implode(',',$cat);
+      }
+      $url= 'http://www.blappsta.com/';
+      $qry_str = '?bas=push&pkey='.APPKEY.'&pmkey='.PUSHSECRET.'&url='.get_bloginfo('url').'&nhcat='.$cat.'&id='.$postid.'&push_text='.urlencode(get_the_title($postid));
+      //return $qry_str;
+      if(ini_get('allow_url_fopen')){
+        $blappsta_return = (file_get_contents($url.(($qry_str)).'&nh_mode=fgc'));
+        
+      }
+      elseif(function_exists('curl_version')){
+        $ch = curl_init();
+        // Set query data here with the URL
+        curl_setopt($ch, CURLOPT_URL, $url . $qry_str.'&nh_mode=curl'); 
+        
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_TIMEOUT, '3');
+        $push_response = trim(curl_exec($ch));
+        curl_close($ch);
+        $blappsta_return=($push_response);
+      }     
+      else {
+        return 5; 
+      }
+      if($blappsta_return){
+        $blappsta_return = @json_decode($blappsta_return,true);
+        if(isset($blappsta_return['push status']['error']['error_code'])){
+          return $blappsta_return['push status']['error']['error_code'];
+        }
+        else return 7;
+      }
+      else return 6;
+     
+    }
 		
 		/*
 		 * Function to get Lan and LAt
@@ -5202,7 +5175,46 @@ if(!class_exists('NH_YNAA_Plugin'))
 
 			}
 			
-			
+		//Action on publish posts
+		public function nh_ynaa_publish_posts($ID, $post ){
+		  
+       global $nh_push_return;
+		  if($this->push_settings['autopush'] && !get_post_meta( $ID, 'nh_blappsta_send_push', true )){
+		   
+		    $nh_push_return = $this->ny_ynaa_push_action2($ID);
+        add_post_meta( $ID, 'nh_blappsta_send_push', time(),true );
+        
+      }
+      add_filter('redirect_post_location',array($this,'nh_add_get_var2'));
+		}
+    
+    
+    function nh_add_get_var($loc) {
+       return add_query_arg( 'nh_pm', 1, $loc );
+      }
+    
+    function nh_add_get_var2($loc) {
+      global $nh_push_return;
+       return add_query_arg( 'nh_pm', $nh_push_return, $loc );
+      }
+    
+    
+    
+    //Admin notice
+    public function nh_ynaa_admin_notice(){
+      if(isset($_GET['nh_pm'])){ 
+        echo '<div class="updated"><p>';
+        switch($_GET['nh_pm']){
+          case 0: _e( 'Push send successful.', 'nh-ynaa' ); break;
+          default: _e ('Unknown error sending the push message.','nh-ynaa');  echo ' (Error code:'.$_GET['nh_pm'].')';  break;
+        }
+       
+        echo '</p></div>';   
+    
+      }
+    }
+    
+    
     } // END class NH YNAA Plugin
 } // END if(!class_exists('NH_YNAA_Plugin))
 
@@ -5213,12 +5225,19 @@ if(class_exists('NH_YNAA_Plugin'))
     register_deactivation_hook(__FILE__, array('NH_YNAA_Plugin', 'nh_ynaa_deactivate'));
 	
 	//add_action( 'wpmu_new_blog', array('NH_YNAA_Plugin','nh_new_blog'),100,6); 
+	
+	
+	
 
     // instantiate the plugin class
     $nh_ynaa = new NH_YNAA_Plugin();
 	add_action( 'plugins_loaded',array($nh_ynaa,'nh_update_db_check')); 
+  
+  //add Notice
+   add_action('admin_notices', array($nh_ynaa,'nh_ynaa_admin_notice'));
 	
-	   
+	//publish Post
+	add_action('publish_post',array($nh_ynaa,'nh_ynaa_publish_posts'));   
 	
 	// Add a link to the settings page onto the plugin page
 	if(isset($nh_ynaa))
