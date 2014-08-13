@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 3.9.2
-Stable tag: 0.7.9
+Stable tag: 0.7.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,9 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.7.9.1 =
+- Bug fix: In some cases WordPress posts could not be published (Missing argument bug in ynaa_publish_posts function)
+
 = 0.7.9 =
 - fix menu bug
 - new function: automatic sending of push notifications in the first publication of a post
@@ -308,6 +311,9 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.7.9.1 =
+- Bug fix: In some cases WordPress posts could not be published (Missing argument bug in ynaa_publish_posts function)
+
 = 0.7.9 =
 - fix menu bug
 - new function: automatic sending of push notifications in the first publication of a post
