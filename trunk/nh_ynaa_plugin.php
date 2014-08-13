@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.7.9
+Version: 0.7.9.1
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -14,7 +14,7 @@ License: GPL2
 //Version Number
 //Temp fix folder problem
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.7.9";
+$nh_ynaa_version = "0.7.9.1";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -5176,16 +5176,17 @@ if(!class_exists('NH_YNAA_Plugin'))
 			}
 			
 		//Action on publish posts
-		public function nh_ynaa_publish_posts($ID, $post ){
-		  
-       global $nh_push_return;
-		  if($this->push_settings['autopush'] && !get_post_meta( $ID, 'nh_blappsta_send_push', true )){
-		   
-		    $nh_push_return = $this->ny_ynaa_push_action2($ID);
-        add_post_meta( $ID, 'nh_blappsta_send_push', time(),true );
-        
-      }
-      add_filter('redirect_post_location',array($this,'nh_add_get_var2'));
+		public function nh_ynaa_publish_posts($ID=0, $post=null ){
+		  if($ID){
+         global $nh_push_return;
+  		  if($this->push_settings['autopush'] && !get_post_meta( $ID, 'nh_blappsta_send_push', true )){
+  		   
+  		    $nh_push_return = $this->ny_ynaa_push_action2($ID);
+          add_post_meta( $ID, 'nh_blappsta_send_push', time(),true );
+          
+        }
+        add_filter('redirect_post_location',array($this,'nh_add_get_var2'));
+       }
 		}
     
     
