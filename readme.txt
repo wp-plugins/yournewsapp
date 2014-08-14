@@ -70,8 +70,7 @@ These features are currently under development and will soon be part of Blappsta
 
 == Installation ==
 
-1. Upload `post-types-order` folder to your `/wp-content/plugins/` directory.
-2. Activate the plugin from Admin > Plugins menu.
+1. Upload `yournewsapp` the plugin from Admin > Plugins menu.
 3. Once activated you should check with Settings > Blappsta Plugin 
 4. Update your Settings for the App.
 
