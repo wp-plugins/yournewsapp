@@ -312,7 +312,7 @@
 									?>
 								</ul>		
 							</div><!-- /#menu-accordion -->
-							<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Änderungen speichern"></p>
+							<p class="submit"><input type="submit" name="submit" id="submit2" class="button button-primary" value="<?php _e('Save Changes'); ?>"></p>
 						</div><!-- /#post-body-content -->
 					</div><!-- /#post-body -->
 					<div id="nav-menu-footer">

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.7.9.1
+Version: 0.8.0
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -14,7 +14,7 @@ License: GPL2
 //Version Number
 //Temp fix folder problem
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.7.9.1";
+$nh_ynaa_version = "0.8.0";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -666,6 +666,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			global $nh_ynaa_db_version;	
 			add_settings_section( 'extra_settings', __('Extras', 'nh-ynaa'), array( &$this, 'nh_ynaa_section_general_extra' ), $this->general_settings_key );
 			add_settings_field( 'ynaa-lang', __('Language', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_language' ), $this->general_settings_key, 'extra_settings' , array('field'=>'lang'));
+			add_settings_field( 'ynaa-showFeatureImageInPost', __('Activate feature image in post view', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'showFeatureImageInPost'));
 			add_settings_field( 'ynaa-extra', __('Allow comments in App', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'extra_settings' , array('field'=>'comments'));
 			//add_settings_field( 'ynaa-homescreentype', __('Startscreen view', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_homescreentype' ), $this->general_settings_key, 'extra_settings' , array('field'=>'homescreentype'));
 			//add_settings_field( 'ynaa-sorttype', __('Startscreen articles sorty by <br><span>(Only if startscreen view is articles or pages)</span>', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_sorttype' ), $this->general_settings_key, 'extra_settings' , array('field'=>'sorttype'));
@@ -686,7 +687,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			 add_settings_field( 'ynaa-blank_lines', __('Remove blank lines', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'advanced_modus' , array('field'=>'blank_lines'));
 			 
 			 add_settings_field( 'ynaa-utf8', __('Enable UTF8 encode', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'advanced_modus' , array('field'=>'utf8'));
-			 add_settings_field( 'ynaa-json_embedded', __('Use JSON embedded', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'advanced_modus' , array('field'=>'json_embedded'));
+			 add_settings_field( 'ynaa-json_embedded', __('Use embedded JSON', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'advanced_modus' , array('field'=>'json_embedded'));
 			 
 			 add_settings_field( 'ynaa-domcontent', __('Disable dom convert', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'advanced_modus' , array('field'=>'domcontent'));
 			 add_settings_field( 'ynaa-debug', __('Enable debug mode', 'nh-ynaa'), array( &$this, 'nh_ynaa_field_general_extra_sort' ), $this->general_settings_key, 'advanced_modus' , array('field'=>'debug'));
@@ -889,7 +890,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 		}
 		
 		function nh_ynaa_categories_settings_desc(){
-			$categories = get_categories(array('orderby'=>'name', 'order'=>'ASC', 'hide_empty'=>0));
+			$categories = @get_categories(array('orderby'=>'name', 'order'=>'ASC', 'hide_empty'=>0));
 			if($categories){
 				echo '<p>'.__('Here you can specify the names of the categories in the app individually. Assign categories to the default images that are displayed in the app, should a post or page have no post image. You can also set or define whether the category in the app should be hidden or not the sort order here.', 'nh-ynaa').'</p>';
 				echo '<div id="categorie-div-con" class="categorie-div-con"><ul>';
@@ -1235,13 +1236,31 @@ if(!class_exists('NH_YNAA_Plugin'))
                 function nh_the_home_content(){
                 	
 					echo '<div class="headercont clearfix">';
-					echo '<p>'.__('With this plugin you can deploy your own native iOS (iPhone) and Android app containing the content of this Wordpress installation. To get a preview on what the app would look like, use our emulator in the tab „App Settings“ of this plugin.', 'nh-ynaa').'</p>';
-					echo '<p>'.__('If you like the app, please register on our website <a href="http://www.blappsta.com" target="_blank">www.blappsta.com</a>. We will then create the app for you and upload it to the app stores!', 'nh-ynaa').'</p>';
-					echo '<p>'.__('If you have any questions contact us: <a href="mailto:support@blappsta.com">support@blappsta.com</a>', 'nh-ynaa').'</p>';
-					
-					
-					echo '<div>';
-					//echo '<div id="nh_support_button" href="#" title="Support" style=""><img src="'.plugins_url('/img/tab_support.png', __FILE__ ).'"></div>';
+          echo '<div class="blappsta-plugin-header">';
+					echo '<p>'.__('With this plugin you can deploy your own native iOS (iPhone) and Android app showing the content of your WordPress installation.<br />To get a preview on what the app would look like, please follow these steps:', 'nh-ynaa').'</p>';
+					echo '<ul class="howtolist">';
+            echo '<li>'.__('First of all download and install our <b>Blappsta Preview App</b> from the <a href="https://itunes.apple.com/de/app/blappsta-preview/id912390326?mt=8" target="_blank">Apple App Store</a> or from <a href="https://play.google.com/store/apps/details?id=com.nebelhorn.blappstaappcheck" target="_blank">Google Play Store</a>','nh-ynaa').'.</li>';
+            echo '<li>'.__('Start the <b>Blappsta Preview App</b> and enter your blog’s URL or simply scan the QR-code below with our integrated scanner.', 'nh-ynaa');
+            //echo '<li>'.__('Scan the QR code with this app or enter your blog URL in the app.','nh-ynaa').'';
+            
+            echo '</li>';
+          
+             echo '<li>'.__('Of course all of the settings can be changed at any time. A simple „pull to refresh“ suffices in order to take over the settings in the app.','nh-ynaa'); 
+           echo '</ul>';
+          echo '<div>';
+          echo '<p>'.__('If you like the app, please register on our website <a href="http://www.blappsta.com/sign-up" target="_blank">www.blappsta.com</a>.', 'nh-ynaa').'</p>';
+          echo '<p>'.__('If you have any questions contact us: <a href="mailto:support@blappsta.com">support@blappsta.com</a>', 'nh-ynaa').'</p>';
+          echo '</div>'; 
+					echo '</div>'; 
+					echo '<div>';					
+          echo '<h4 style="padding-top: 1em;">'.__('Download Blappsta Preview:','nh-ynaa').'</h4>';
+          echo '<a href="https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8&uo=4" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_appstore-lrg.png) no-repeat;width:135px;height:40px;@media only screen{background-image:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_appstore-lrg.svg);}"></a>';
+          echo '<br />';
+          echo '<a href="https://play.google.com/store/apps/details?id=com.nebelhorn.nebelhorn" data-hover=""><img src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" alt="Android app on Google Play"  ></a>';
+          echo '</div>';        
+          echo '</div>';
+          echo '<div class="clear"></div>';
+          
 					if(substr(get_bloginfo('language'),0,2)=='de'){
 					?>
                     <div>
@@ -1434,6 +1453,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				case 'domcontent': echo '<div class="helptext padding0">'.(__('Activate this checkbox if you don\'t see any content in the detail view.', 'nh-ynaa')).'</div>'; break;
 				case 'debug': echo '<div class="helptext padding0">'.(__('Activate the checkbox if you have any problems with the app, this help us to find out the error.', 'nh-ynaa')).'</div>'; break;
 				case 'blank_lines': echo '<div class="helptext padding0">'.(__('Activate the checkbox if you have to many blank lines on your content page in the app.', 'nh-ynaa')).'</div>'; break;
+        case 'showFeatureImageInPost': echo '<div class="helptext padding0">'.(__('Active this checkbox in order to bind in the feature image in post view.', 'nh-ynaa')).'</div>'; break;
 				default: break;
 			}
 		}
@@ -1984,6 +2004,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 					else {
 						$returnarray['sort']=0;
 					}
+          if(isset($this->general_settings['showFeatureImageInPost'])) {
+            $returnarray['showFeatureImageInPost']=(int)$this->general_settings['showFeatureImageInPost'];
+            //$returnarray['order']=1;
+          }
 					$returnarray['homescreentype'] = 0;
 					if($this->homepreset_settings['homescreentype']){
 						//App kann nur mit der 1 was anfangen
@@ -2555,10 +2579,16 @@ if(!class_exists('NH_YNAA_Plugin'))
 			//$returnarray['uma']['current_time']=current_time('timestamp');
 			
 			
+			$hide_empty = 1;
+      if($this->general_settings['debug'] ==1 && $_GET['debug']==1){
+        $hide_empty = 0;
+      }
+      
+      
 			$args=array(
 			  'orderby' => 'name',			  
 			  'order' => 'ASC',
-			  'hide_empty'=>1
+			  'hide_empty'=>$hide_empty
 			);
 			if($_GET[$this->requesvar['meta']] && $_GET[$this->requesvar['cat_include']]){
 				$args['include']=$_GET['cat_include'];
@@ -2569,7 +2599,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			else {
 				$ts = 0;				
 			}
-			$categories = get_categories( $args );
+			$categories = @get_categories( $args );
 			$i=0;
 			$parent = array();
 			$cat = array();		
@@ -2626,7 +2656,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$this->categories_settings[$category->term_id]['img']='';
 							
 						}
-						$cat[$category->term_id]=array('pos'=>$i, 'type'=>'cat', 'id'=> (int) $category->term_id, 'parent_id'=> $category->parent, 'title'=>htmlspecialchars_decode($category->name), 'post_img'=>$items['articles']['items'][0]['thumb'], 'img'=>$this->categories_settings[$category->term_id]['img'], 'post_id'=>$items['articles']['items'][0]['id'] ,'post_date'=>$items['articles']['items'][0]['publish_timestamp'], 'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1);
+            if($this->categories_settings[$category->term_id]['usecatimg']){
+              $use_cat_img = 1;
+            }
+            else $use_cat_img = 0;
+						$cat[$category->term_id]=array('pos'=>$i, 'type'=>'cat', 'id'=> (int) $category->term_id, 'parent_id'=> $category->parent, 'title'=>htmlspecialchars_decode($category->name), 'post_img'=>$items['articles']['items'][0]['thumb'], 'img'=>$this->categories_settings[$category->term_id]['img'], 'post_id'=>$items['articles']['items'][0]['id'] ,'post_date'=>$items['articles']['items'][0]['publish_timestamp'], 'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1, 'use_cat_img'=> $use_cat_img );
 						
 						//$ass_cats[$category->term_id] = array('img'=>'');
 						if($this->categories_settings[$category->term_id]['showsub']){
@@ -2641,10 +2675,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$cat[$category->term_id]['showsubcategories']=0;
 							$cat[$category->term_id]['showoverviewposts'] = 0;
 						}
-						if($this->categories_settings[$category->term_id]['usecatimg']){
-							$use_cat_img = 1;
-						}
-						else $use_cat_img = 0;
+						
 						$ass_cats[$category->term_id] = array('showsubcategories'=>$cat[$category->term_id]['showsubcategories'], 'showoverviewposts'=>$cat[$category->term_id]['showoverviewposts'],'img'=>$this->categories_settings[$category->term_id]['img'], 'pos'=>$i, 'type'=>'cat', 'id'=> (int) $category->term_id, 'parent_id'=>$category->parent, 'title'=>htmlspecialchars_decode($category->name), 'post_img'=>$items['articles']['items'][0]['thumb'], 'post_id'=>$items['articles']['items'][0]['id'] ,'publish_timestamp'=>$items['articles']['items'][0]['publish_timestamp'],'post_date'=>$items['articles']['items'][0]['publish_timestamp'],'post_ts'=>$items['articles']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove, 'itemdirekt'=>1, 'use_cat_img'=> $use_cat_img   ); 
 						//$ass_cats[$category->term_id] = array('img'=>'http://yna.nebelhorn.com/wp-content/uploads/2014/02/image-653473-breitwandaufmacher-ixpz-300x111.jpg');
 						
@@ -2701,7 +2732,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			}
 			
 			//Events
-			if(!$_GET[$this->requesvar['meta']] && $this->general_settings['eventplugin'] ){
+			if(!isset($_GET[$this->requesvar['meta']]) && $this->general_settings['eventplugin'] ){
 				
 				$items = $this->nh_ynaa_events(1);
 				if($items['events']['items']){							
@@ -2710,12 +2741,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 						$ts = $items['events']['items'][0]['timestamp'];
 					}
 					$event_im = '';
-					if(!$items['events']['items'][0]['thumb']) $items['events']['items'][0]['thumb'] = '';
+					if(!isset($items['events']['items'][0]['thumb'])) $items['events']['items'][0]['thumb'] = '';
 					//if(!$items['events']['items'][0]['thumb'] && $hp[-1]['img']) $items['events']['items'][0]['thumb'] = $hp[-1]['img'];
 					//if(!$items['events']['items'][0]['thumb'] && $this->categories_settings[-1]['img']) $items['events']['items'][0]['thumb'] = $this->categories_settings[-1]['img'];
-					if($this->categories_settings[-1]['img']) $event_im = $this->categories_settings[-1]['img'];
-					$returnarray['items'][]=array('pos'=>$i, 'type'=>'events', 'id'=> -1, 'title'=>__('Events','nh-ynaa'), 'img'=>$items['events']['items'][0]['thumb'], 'post_id'=>$items['events']['items'][0]['id'] ,'post_ts'=>$items['events']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove);
-					$ass_cats[-1]=array('pos'=>$i, 'type'=>'events', 'id'=> -1, 'title'=>__('Events','nh-ynaa'), 'img'=>$event_im, 'post_img'=>$items['events']['items'][0]['thumb'], 'post_id'=>$items['events']['items'][0]['id'] ,'post_ts'=>$items['events']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove);
+					if(isset($this->categories_settings[-1]['img'])) $event_im = $this->categories_settings[-1]['img'];
+          if(!isset($this->categories_settings[-1]['cat_name'])) $$this->categories_settings[-1]['cat_name']= __('Events','nh-ynaa');
+					$returnarray['items'][]=array('pos'=>$i, 'type'=>'events', 'id'=> -1, 'title'=>$this->categories_settings[-1]['cat_name'], 'img'=>$items['events']['items'][0]['thumb'], 'post_id'=>$items['events']['items'][0]['id'] ,'post_ts'=>$items['events']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove);
+					$ass_cats[-1]=array('pos'=>$i, 'type'=>'events', 'id'=> -1, 'title'=>$this->categories_settings[-1]['cat_name'], 'img'=>$event_im, 'post_img'=>$items['events']['items'][0]['thumb'], 'post_id'=>$items['events']['items'][0]['id'] ,'post_ts'=>$items['events']['items'][0]['timestamp'] ,'allowRemove'=> $allowRemove);
 					$i++;
 					unset($items);
 				}
@@ -2727,10 +2759,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 			if(!$_GET[$this->requesvar['meta']] && $this->general_settings['location'] ){
 				//$hp[-98]['img'] = 'http://yna.nebelhorn.com/wp-content/uploads/2014/03/images.jpg';
 				$map_img = '';
-				if($this->categories_settings[-98]['img']) $map_img = $this->categories_settings[-98]['img'];
+				if(isset($this->categories_settings[-98]['img'])) $map_img = $this->categories_settings[-98]['img'];
+        if(!isset($this->categories_settings[-98]['cat_name'])) $$this->categories_settings[-98]['cat_name']= __('Map','nh-ynaa');
 				//if(!$hp[-98]['img'] || $hp[-98]['img']==NULL || $hp[-98]['img']=='null') $hp[-98]['img']='';
-				$returnarray['items'][]=array('pos'=>$i, 'type'=>'map', 'id'=> -98, 'title'=>__('Map','nh-ynaa'), 'img'=>$map_img, 'allowRemove'=> 1);
-				$ass_cats[-98]=array('pos'=>$i, 'type'=>'map', 'id'=> -98, 'title'=>__('Map','nh-ynaa'),'img'=>$map_img, 'allowRemove'=> 1);
+				$returnarray['items'][]=array('pos'=>$i, 'type'=>'map', 'id'=> -98, 'title'=>$this->categories_settings[-98]['cat_name'], 'img'=>$map_img, 'allowRemove'=> 1);
+				$ass_cats[-98]=array('pos'=>$i, 'type'=>'map', 'id'=> -98, 'title'=>$this->categories_settings[-98]['cat_name'],'img'=>$map_img, 'allowRemove'=> 1);
 				$i++;
 			}
 			
@@ -3128,6 +3161,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 						
 						
 						$returnarray['title'] = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($post->post_title)), ENT_NOQUOTES, 'UTF-8')));
+            
+            if(isset($this->general_settings['showFeatureImageInPost'])) {
+            $returnarray['showFeatureImageInPost']=(int)$this->general_settings['showFeatureImageInPost'];
+            //$returnarray['order']=1;
+          }
 						//$returnarray['']['title']
 						//$content = '<html><head><title>'.get_bloginfo('name').'</title><body><div id="nh_ynaa__app_content">'.$post->post_content.'</div></body></html>';
 						/*$content = $post->post_content;
@@ -3676,12 +3714,26 @@ if(!class_exists('NH_YNAA_Plugin'))
 		* Return iframe with Emulator
 		*/
 		private function nh_ynaa_simulator(){
+		  ?>
+		  <div id="nh-simulator">
+		    <h3><?php _e('Blappsta Preview QR-Code','nh-ynaa'); ?></h3>
+		    <p><?php _e('Scan this QR-Code with our Blappsta Preview App to see your app in action.', 'nh-ynaa');?></p>
+		    <div>
+		      <?php echo '<a href="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=yba://?url='.get_site_url().'&choe=UTF-8"><img width="200px" src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl='.get_site_url().'&choe=UTF-8" alt="'.get_site_url().'" title="'.get_site_url().'" /></a>';
+          ?>
+		    </div>
+		   </div>
+		  <?php
+      
+      /*
 			?>
             <div id="nh-simulator">
             <h3><?php _e('Emulator','nh-ynaa'); ?></h3>
             <iframe src="https://app.io/p6Kgfi?params=%7B%22customURLString%22%3A%22<?php echo(get_site_url()); ?>%22%7D&#038;autoplay=true&#038;orientation=portrait&#038;device=iphone5" height="607px" width="291px" frameborder="0" allowtransparency="true" scrolling="no"></iframe><!--
             <img src="<?php echo plugins_url( 'img/simulator_default.jpg' , __FILE__ ); ?>" alt="" />--></div>
+       
             <?php
+       */
 		}// END private function nh_ynaa_simulator
 		
 		

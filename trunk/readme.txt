@@ -1,55 +1,47 @@
-﻿=== Blappsta - your FREE native Wordpress based Mobile App for iPhone and Android ===
+﻿=== Blappsta - your FREE native WordPress based mobile app for iPhone and Android ===
 Contributors: nebelhorn
 Donate link: 
 Tags:
 Requires at least: 3.0
 Tested up to: 3.9.2
-Stable tag: 0.7.9.1
+Stable tag: 0.8.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Your Blog and News App Builder for iPhone and Android
+Make your blog a native app!
 
 == Description ==
 
-Blappsta: This plugin is the first step to a free native App for iOS (iPhone) and Android.
+The Blappsta plugin is the first step to a free native App for iOS (iPhone) and Android.
 
-= Turn your blog into a free native App and even earn money =
-Don’t fall for the typical HTML web apps with poor usability. And don't spend money for a native app in iOS (iPhone) and Android. Blappsta is the first native App which is not only free for you but also enables you to earn money. 
-Build your app in only a few minutes. Instantly test it using our test app from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-your-blog.-your-app./id865289027?mt=8) or [Google Play Store](https://play.google.com/store/apps/details?id=com.nebelhorn.blappsta&hl=de). If you like it, you can instantly setup an account and we will take care of pushing the app into the stores. Advertisement in the app lets you even create revenue.
-Check out our [website](http://www.blappsta.com) for more information about Blappsta.
+= Turn your blog into a free native app =
+Don’t fall for the typical HTML web apps with poor usability. And don't spend money for a native app in iOS (iPhone) and Android.
+Build your individual app using your favorite colors and your own logo in only a few minutes. Instantly test it using our Blappsta Preview app from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8) or [Google Play Store](https://play.google.com/store/apps/details?id=com.nebelhorn.blappstaappcheck). If you like it, go to [www.blappsta.com](https://www.blappsta.com/sign-up) and we will take care of pushing the app into the stores. 
+Check out our [website](https://www.blappsta.com) for more information about Blappsta.
 
-**Increase the number of readers of your blog with Push Notification**
+= Increase the number of readers of your blog with Push Notification =
 Notify your readers with our free push notification service build into the plugin. This service will increase your number of readers largely. You can decide when and what you want to push. 
 
-**Features of the app**
-Some of the app features:
-- for iOS and Android devices
-- sharing via Facebook, Twitter, Google+ and email
+= Features of the app =
 - send push notifications
+- share to Facebook, Twitter, Google+ and email
 - show the feed of your Facebook page (optional)
-- your logo, your icons, your colors
-- your app can enable commenting and reading comments
+- allows commenting and reading comments
 - continual improvement guaranteed
+- free of charge for non-commercial use
 
-**Features of the plugin**
+= Features of the plugin =
 - fully integrated in WordPress
-- send push-notifications directly from a post
-- edit teaser content
-- add category images
-- individualize app menu
-- set homepresets for the app start screen
+- send push notifications directly from a post or page
+- edit teaser content in your app
+- add category images for your app
+- individualize your app menu
+- set your home screen look
 
-**Blappsta Business features**
-Our Business version version of the native app enables many more features like integration of events, setup of iBeacon, couponing and content triggering
+= Blappsta BUSINESS features =
+Our Blappsta BUSINESS version is the solution for commercial use (e.g. corporate blogs). Blappsta BUSINESS enables many more features, like integration of events and setup of iBeacon.
 
-**Design your app**
-There are a number of settings where you can change the looks of the app. Give it a try and test your design in the [emulator](http://www.blappsta.com/emulator/) or our [Blappsta Test App](https://itunes.apple.com/us/app/blappsta-your-blog.-your-app./id865289027?mt=8).
-
-**No build time required**
-Not like other app builders we do not require any build time. You can instantly test the app in our [test app](https://itunes.apple.com/de/app/nebelhorn/id707029895?mt=8) and if you like it, setup an account on [www.blappsta.com](http://www.blappsta.com) and we upload the app for you after approval.
-
-**There is more to come!**
+= There is more to come! =
 These features are currently under development and will soon be part of Blappsta:
 - support for videos
 - image galleries
@@ -61,29 +53,35 @@ These features are currently under development and will soon be part of Blappsta
 
 
 = How it works =
-1. Install and activate the plugin
-2. To get a preview on what the app would look like, use our emulator in the first tab of the plugin settings in the WordPress backend.
-3. If you want, you can additionally get a preview of your blogs content and design in our test app from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-your-blog.-your-app./id865289027?mt=8) or [Google Play Store](https://play.google.com/store/apps/details?id=com.nebelhorn.blappsta&hl=de).
-4. Do you like what you see? Then register today on <a href="http://www.blappsta.com/">www.blappsta.com</a> to publish your app on the app stores for free!
-5. If you have any questions contact us: support@blappsta.com
+1. Install and activate the plugin.
+2. To get a preview on what the app would look like, download and install our Blappsta Preview App from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8) or [Google Play Store](https://play.google.com/store/apps/details?id=com.nebelhorn.blappstaappcheck).
+3. Start the Blappsta Preview App and enter your blog’s URL or simply scan the QR-code you find in the Blappsta Plugin settings with our integrated scanner.
+4. Of course all of the settings can be changed at any time. A simple „pull to refresh“ suffices in order to take over the settings in the app.
+5. Do you like what you see? Then go to [www.blappsta.com](https://www.blappsta.com/sign-up) and we will take care of pushing the app into the stores.
+6. If you have any questions contact us: support@blappsta.com
 
 
 == Installation ==
 
-1. Upload `yournewsapp` the plugin from Admin > Plugins menu.
-3. Once activated you should check with Settings > Blappsta Plugin 
-4. Update your Settings for the App.
+1. Install Blappsta either via the WordPress.org plugin directory, or by uploading the files to your server.
+2. Once activated go to Settings > Blappsta Plugin.
+3. Update your settings for your app.
 
 
 == Screenshots ==
 
-1. Settings Page of the Plugin
+1. Settings page of the plugin
 
 == Frequently Asked Questions  ==
 
-Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
+Please refer to our [Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.8.0 =
+- Replacement of the app emulator by our Blappsta Preview app
+- New function: Support for featured image on post view in your app
+- Bug fixes
+
 = 0.7.9.1 =
 - Bug fix: In some cases WordPress posts could not be published (Missing argument bug in ynaa_publish_posts function)
 
@@ -309,7 +307,11 @@ Please refer to our [FAQ Website](http://www.blappsta.com/questions-answers/)
  - Initial Release - still in Alpha
  
  
-== Upgrade Notice ==
+== Upgrade Notice === 0.8.0 =
+- Replacement of the app emulator by our Blappsta Preview app
+- New function: Support for featured image on post view in your app
+- Bug fixes
+
 = 0.7.9.1 =
 - Bug fix: In some cases WordPress posts could not be published (Missing argument bug in ynaa_publish_posts function)
 
