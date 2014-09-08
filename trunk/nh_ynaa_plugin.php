@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.8.0
+Version: 0.8.1
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -14,7 +14,7 @@ License: GPL2
 //Version Number
 //Temp fix folder problem
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.8.0";
+$nh_ynaa_version = "0.8.1";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -1239,7 +1239,7 @@ if(!class_exists('NH_YNAA_Plugin'))
           echo '<div class="blappsta-plugin-header">';
 					echo '<p>'.__('With this plugin you can deploy your own native iOS (iPhone) and Android app showing the content of your WordPress installation.<br />To get a preview on what the app would look like, please follow these steps:', 'nh-ynaa').'</p>';
 					echo '<ul class="howtolist">';
-            echo '<li>'.__('First of all download and install our <b>Blappsta Preview App</b> from the <a href="https://itunes.apple.com/de/app/blappsta-preview/id912390326?mt=8" target="_blank">Apple App Store</a> or from <a href="https://play.google.com/store/apps/details?id=com.nebelhorn.blappstaappcheck" target="_blank">Google Play Store</a>','nh-ynaa').'.</li>';
+            echo '<li>'.__('First of all download and install our <b>Blappsta Preview App</b> from the <a href="https://itunes.apple.com/de/app/blappsta-preview/id912390326?mt=8" target="_blank"  style="text-decoration:none;">Apple App Store</a> or from <a href="https://play.google.com/store/apps/details?id=com.nebelhorn.blappstaappcheck" target="_blank"   style="text-decoration:none;">Google Play &trade; Store</a>','nh-ynaa').'.</li>';
             echo '<li>'.__('Start the <b>Blappsta Preview App</b> and enter your blog’s URL or simply scan the QR-code below with our integrated scanner.', 'nh-ynaa');
             //echo '<li>'.__('Scan the QR code with this app or enter your blog URL in the app.','nh-ynaa').'';
             
@@ -1248,16 +1248,25 @@ if(!class_exists('NH_YNAA_Plugin'))
              echo '<li>'.__('Of course all of the settings can be changed at any time. A simple „pull to refresh“ suffices in order to take over the settings in the app.','nh-ynaa'); 
            echo '</ul>';
           echo '<div>';
-          echo '<p>'.__('If you like the app, please register on our website <a href="http://www.blappsta.com/sign-up" target="_blank">www.blappsta.com</a>.', 'nh-ynaa').'</p>';
-          echo '<p>'.__('If you have any questions contact us: <a href="mailto:support@blappsta.com">support@blappsta.com</a>', 'nh-ynaa').'</p>';
+          echo '<p>'.__('If you like the app, please register on our website <a href="http://www.blappsta.com/sign-up" target="_blank"  style="text-decoration:none;">www.blappsta.com</a>.', 'nh-ynaa').'</p>';
+          echo '<p>'.__('If you have any questions contact us: <a href="mailto:support@blappsta.com"  style="text-decoration:none;">support@blappsta.com</a>', 'nh-ynaa').'</p>';
           echo '</div>'; 
 					echo '</div>'; 
-					echo '<div>';					
-          echo '<h4 style="padding-top: 1em;">'.__('Download Blappsta Preview:','nh-ynaa').'</h4>';
-          echo '<a href="https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8&uo=4" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_appstore-lrg.png) no-repeat;width:135px;height:40px;@media only screen{background-image:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_appstore-lrg.svg);}"></a>';
-          echo '<br />';
-          echo '<a href="https://play.google.com/store/apps/details?id=com.nebelhorn.nebelhorn" data-hover=""><img src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" alt="Android app on Google Play"  ></a>';
-          echo '</div>';        
+					echo '<div style="display:inline-block; width:315px; ">';					
+          echo '<h4 style="margin:0; padding-top:10px;">1. '.__('Download Blappsta Preview:','nh-ynaa').'</h4>';
+          echo '<a href="https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8&uo=4" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_appstore-lrg.png) no-repeat;width:135px;height:40px; padding-top:1px; margin-right:10px;@media only screen{background-image:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_appstore-lrg.svg);}"></a>';
+          //echo '<br />';
+          echo '<a href="https://play.google.com/store/apps/details?id=com.nebelhorn.blappstaappcheck" data-hover=""><img src="https://developer.android.com/images/brand/en_app_rgb_wo_45.png" alt="Android app on Google Play"  ></a>';
+          
+          echo '<div>';
+          echo '<h4  style="margin:0; padding-top:10px;">2. '.__('Blappsta Preview QR-Code','nh-ynaa').'</h4>';
+          echo '<p style="margin:0;">'.__('Scan this QR-Code with our Blappsta Preview App to see your app in action.', 'nh-ynaa').'</p>';
+          echo '<div>';
+          echo '<a href="https://chart.googleapis.com/chart?chs=125x125&cht=qr&chl=yba://?url='.get_site_url().'&choe=UTF-8"><img width="125" src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl='.get_site_url().'&choe=UTF-8" alt="'.get_site_url().'" title="'.get_site_url().'" /></a>';
+          echo '</div>';
+          echo '</div>'; 
+          
+          echo '</div>';       
           echo '</div>';
           echo '<div class="clear"></div>';
           
@@ -1669,7 +1678,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					<?php submit_button(); ?>
                     
 				</form>
-                <?php if($tab == $this->general_settings_key) $this->nh_ynaa_simulator(); ?>
+                <?php //if($tab == $this->general_settings_key) $this->nh_ynaa_simulator(); ?>
                 <?php }
 				else{
 					$this->nh_the_qrcode_tab_content();
@@ -2580,20 +2589,20 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			
 			$hide_empty = 1;
-      if($this->general_settings['debug'] ==1 && $_GET['debug']==1){
+      if(isset($this->general_settings['debug'])&& $this->general_settings['debug'] ==1 && isset($_GET['debug']) && $_GET['debug']==1){
         $hide_empty = 0;
       }
       
       
 			$args=array(
 			  'orderby' => 'name',			  
-			  'order' => 'ASC',
+			  'order' => 'asc',
 			  'hide_empty'=>$hide_empty
 			);
-			if($_GET[$this->requesvar['meta']] && $_GET[$this->requesvar['cat_include']]){
+			if(isset($_GET[$this->requesvar['meta']]) && isset($_GET[$this->requesvar['cat_include']])){
 				$args['include']=$_GET['cat_include'];
 			}
-			if($_GET[$this->requesvar['ts']]) {
+			if(isset($_GET[$this->requesvar['ts']])) {
 				$ts= $_GET[$this->requesvar['ts']];				
 			}
 			else {
@@ -2732,7 +2741,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			}
 			
 			//Events
-			if(!isset($_GET[$this->requesvar['meta']]) && $this->general_settings['eventplugin'] ){
+			if(!isset($_GET[$this->requesvar['meta']]) && isset($this->general_settings['eventplugin']) ){
 				
 				$items = $this->nh_ynaa_events(1);
 				if($items['events']['items']){							
@@ -2756,7 +2765,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			//KArte
 			
-			if(!$_GET[$this->requesvar['meta']] && $this->general_settings['location'] ){
+			if(!$_GET[$this->requesvar['meta']] && isset($this->general_settings['location']) ){
 				//$hp[-98]['img'] = 'http://yna.nebelhorn.com/wp-content/uploads/2014/03/images.jpg';
 				$map_img = '';
 				if(isset($this->categories_settings[-98]['img'])) $map_img = $this->categories_settings[-98]['img'];
@@ -4215,20 +4224,25 @@ if(!class_exists('NH_YNAA_Plugin'))
 						if($this->general_settings['min-img-size-for-resize']){
 							//echo $upload_dir['basedir'].substr($src,strlen($upload_dir['baseurl'])).'<br>';
 							$src = $upload_dir['basedir'].substr($src,strlen($upload_dir['baseurl']));
-							list($w, $h) = getimagesize($src);
-							if( $w < $this->general_settings['min-img-size-for-resize'] ) continue;
+              if(file_exists($src)){
+							 list($w, $h) = @getimagesize($src);
+							 if( $w < $this->general_settings['min-img-size-for-resize'] ) continue;
+              }
+              else continue;
 						}
 					}
 					elseif( ini_get('allow_url_fopen') ) {
 						if($this->general_settings['min-img-size-for-resize']){
 							
-							
-							list($w, $h) = getimagesize($src); 
-							if($w){
-								//list($w, $h) = getimagesize($src);
-								//$imgElement->setAttribute('title','uma05');
-								if( $w < $this->general_settings['min-img-size-for-resize'] ) continue;
-							}
+							if(file_exists($src)){
+  							list($w, $h) = @getimagesize($src); 
+  							if($w){
+  								//list($w, $h) = getimagesize($src);
+  								//$imgElement->setAttribute('title','uma05');
+  								if( $w < $this->general_settings['min-img-size-for-resize'] ) continue;
+  							}
+              }
+              else continue;
 						}
 					}
 					//echo $imgElement->getAttribute("src").'<hr>';
@@ -4374,14 +4388,16 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 	if(!$ts || date('Ymd',$ts)<date('Ymd') || $_GET['update_bas']=='true') {
 		 		//var_dump(get_bloginfo('url'));
 				$content = '';
-				$content = @file_get_contents('http://www.blappsta.com?bas=extra_infos&url='.urlencode(get_bloginfo('url')));
-				if($content){
-					$json=json_decode($content,true);
-					update_option('nh_ynaa_blappsta', $json);
-					update_option('nh_ynaa_blappsta_ts', time());
-					
-					
-				}
+        if(ini_get('allow_url_fopen')){
+  				$content = @file_get_contents('http://www.blappsta.com?bas=extra_infos&url='.urlencode(get_bloginfo('url')));
+  				if($content){
+  					$json=json_decode($content,true);
+  					update_option('nh_ynaa_blappsta', $json);
+  					update_option('nh_ynaa_blappsta_ts', time());
+  					
+  					
+  				}
+        }
 			}
 		 }// END private function nh_get_blappsta_extra
 		
@@ -4392,8 +4408,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 		*/
 		function nh_ynaa_get_data($url,$limit,$offset=0) {
 			$data = false;
+      $items = false;
 			//$url = $url.'&offset='.$offset;
-			$items = @file_get_contents($url);
+			if(ini_get('allow_url_fopen')){
+			 $items = file_get_contents($url);
+      }
 			if($items){
 				$data=$items;
 			}
@@ -5128,16 +5147,23 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$address = str_replace(" ", "+", $address);
 
 	 		$url='http://maps.googleapis.com/maps/api/geocode/json?address='.$address.'&sensor=false';
-			$source = file_get_contents($url);
-			$obj = json_decode($source);
-			if($obj != null){
-				$LATITUDE = $obj->results[0]->geometry->location->lat;
-				$LONGITUDE = $obj->results[0]->geometry->location->lng;
-			}else{
-				$LATITUDE = 0;
-				$LONGITUDE = 0;
-			}
-			return array('lat'=>$LATITUDE,'lng'=>$LONGITUDE);
+      if(ini_get('allow_url_fopen')){
+  			$source = file_get_contents($url);
+  			$obj = json_decode($source);
+  			if($obj != null){
+  				$LATITUDE = $obj->results[0]->geometry->location->lat;
+  				$LONGITUDE = $obj->results[0]->geometry->location->lng;
+  			}else{
+  				$LATITUDE = 0;
+  				$LONGITUDE = 0;
+  			}
+      }
+      else{
+          $LATITUDE = 0;
+          $LONGITUDE = 0;
+      }
+  		return array('lat'=>$LATITUDE,'lng'=>$LONGITUDE);
+        
 		}/* END function getLatLon() */
 		
 		/**
