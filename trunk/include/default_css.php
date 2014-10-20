@@ -1,5 +1,5 @@
 <?php
-	$css = '
+/*	$css = '
 	@import url("../fonts/stylesheet.css");
 body {	
 	font-family:"Roboto Condensed",Roboto, Helvetica, sans-serif;
@@ -25,5 +25,5 @@ iframe {
 }
 
 ';
-	
+*/	
 ?>

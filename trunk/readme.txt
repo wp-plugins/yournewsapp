@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 0.8.1
+Stable tag: 0.8.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,7 +16,7 @@ The Blappsta plugin is the first step to a free native App for iOS (iPhone) and 
 
 = Turn your blog into a free native app =
 Don’t fall for the typical HTML web apps with poor usability. And don't spend money for a native app in iOS (iPhone) and Android.
-Build your individual app using your favorite colors and your own logo in only a few minutes. Instantly test it using our Blappsta Preview app from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8) or [Google Play &trade; Store](https://play.google.com/store/apps/details?id=com.nebelhorn.blappstaappcheck). If you like it, go to [www.blappsta.com](https://www.blappsta.com/sign-up) and we will take care of pushing the app into the stores. 
+Build your individual app using your favorite colors and your own logo in only a few minutes. Instantly test it using our Blappsta Preview app from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8) or [Google Play&trade; Store](https://play.google.com/store/apps/details?id=com.blappsta.blappstaappcheck). If you like it, go to [www.blappsta.com](https://www.blappsta.com/sign-up) and we will take care of pushing the app into the stores. 
 Check out our [website](https://www.blappsta.com) for more information about Blappsta.
 
 = Increase the number of readers of your blog with Push Notification =
@@ -54,7 +54,7 @@ These features are currently under development and will soon be part of Blappsta
 
 = How it works =
 1. Install and activate the plugin.
-2. To get a preview on what the app would look like, download and install our Blappsta Preview App from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8) or [Google Play  Store](https://play.google.com/store/apps/details?id=com.nebelhorn.blappstaappcheck).
+2. To get a preview on what the app would look like, download and install our Blappsta Preview App from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8) or [Google Play  Store](https://play.google.com/store/apps/details?id=com.blappsta.blappstaappcheck).
 3. Start the Blappsta Preview App and enter your blog’s URL or simply scan the QR-code you find in the Blappsta Plugin settings with our integrated scanner.
 4. Of course all of the settings can be changed at any time. A simple „pull to refresh“ suffices in order to take over the settings in the app.
 5. Do you like what you see? Then go to [www.blappsta.com](https://www.blappsta.com/sign-up) and we will take care of pushing the app into the stores.
@@ -77,6 +77,12 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.8.2 =
+- Bug fixes
+- Integrate "How to use the Blappsta PREVIEW app" video
+- Use big images for teasers
+
+
 = 0.8.1 =
 - add plugin logo
 - correct Goole Play Store link to blappsta preview app (Google Play is a trademark of Google Inc.)
@@ -315,6 +321,11 @@ Please refer to our [Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.8.2 =
+- Bug fixes
+- Integrate "How to use the Blappsta PREVIEW app" video
+- Use big images for teasers
+
 = 0.8.1 =
 - add plugin logo
 - correct Goole Play Store link to blappsta preview app (Google Play is a trademark of Google Inc.)
