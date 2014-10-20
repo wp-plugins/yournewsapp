@@ -146,7 +146,12 @@
 			'Settings'=>'Settings',
 			'You have not yet set up your Facebook account on this device, which is necessary for sharing. Please go to your iOS Settings > Facebook and enter your login data.'=>'You have not yet set up your Facebook account on this device, which is necessary for sharing. Please go to your iOS Settings > Facebook and enter your login data.',
 			'You have not yet set up your Twitter account on this device, which is necessary for sharing. Please go to your iOS Settings > Twitter and enter your login data.'=>'You have not yet set up your Twitter account on this device, which is necessary for sharing. Please go to your iOS Settings > Twitter and enter your login data.',
-			'subscription'=>'Subscription'
+			'subscription'=>'Subscription',
+			'bookmarked_headline'=> 'Bookmarked headlines',
+			'bookmarked_posts' => 'Bookmarked posts',
+			'recent_notifications'=> 'Recent notifications',
+			'bookmarks_notifications' => 'Bookmarks & Notifications',
+			'delete'=>'delete'
            ));
            
          }

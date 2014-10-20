@@ -538,7 +538,7 @@ jQuery(document).ready(function($){
 	
 	//Show Post on category overvie page
 	$('.showoverviewposts').change(function(){
-		alert($(this).val());
+		//alert($(this).val());
 		var catid = $(this).attr('data-catid');
 		if($(this).val() == '1'){
 			$('#showoverviewposts'+$catid).show();

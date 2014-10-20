@@ -71,6 +71,12 @@
 			'No set up facebook account.'=>'Du hast noch keinen Facebook Account auf dem Gerät eingerichtet. Dieser ist für das Sharing notwendig. Bitte gehe zu Einstellungen -> Facebook und gib Deine Anmeldedaten ein.',
 			'Settings'=>'Einstellungen',
 			'You have not yet set up your Facebook account on this device, which is necessary for sharing. Please go to your iOS Settings > Facebook and enter your login data.'=>'Du hast noch keinen Facebook Account auf dem Gerät eingerichtet. Dieser ist für das Sharing notwendig. Bitte gehe zu Einstellungen -> Facebook und gib Deine Anmeldedaten ein.',
-			'You have not yet set up your Twitter account on this device, which is necessary for sharing. Please go to your iOS Settings > Twitter and enter your login data.'=>'Du hast noch keinen Twitter Account auf dem Gerät eingerichtet. Dieser ist für das Sharing notwendig. Bitte gehe zu Einstellungen -> Twitter und gib Deine Anmeldedaten ein.'
+			'You have not yet set up your Twitter account on this device, which is necessary for sharing. Please go to your iOS Settings > Twitter and enter your login data.'=>'Du hast noch keinen Twitter Account auf dem Gerät eingerichtet. Dieser ist für das Sharing notwendig. Bitte gehe zu Einstellungen -> Twitter und gib Deine Anmeldedaten ein.',
+			'subscription'=>'Abonnement',
+      'bookmarked_headline'=> 'Markierte Schlagzeilen',
+      'bookmarked_posts' => 'Markiert Beiträge',
+      'recent_notifications'=> 'Letzte Meldungen',
+      'bookmarks_notifications' => 'Favoriten & Benachrichtigungen',
+      'delete'=>'löschen'
            );
 ?>
