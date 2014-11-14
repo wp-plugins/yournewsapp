@@ -151,7 +151,8 @@
 			'bookmarked_posts' => 'Bookmarked posts',
 			'recent_notifications'=> 'Recent notifications',
 			'bookmarks_notifications' => 'Bookmarks & Notifications',
-			'delete'=>'delete'
+			'delete'=>'delete',
+			'You have not bookmarked any posts yet'=>'You have not bookmarked any posts yet'
            ));
            
          }

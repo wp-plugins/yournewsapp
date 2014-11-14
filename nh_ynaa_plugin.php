@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.8.2
+Version: 0.8.2.1
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -14,7 +14,7 @@ License: GPL2
 //Version Number
 //Temp fix folder problem
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.8.2";
+$nh_ynaa_version = "0.8.2.1";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -73,7 +73,7 @@ if(!class_exists('NH_YNAA_Plugin'))
         /**
          * Construct the plugin object
          */
-        public function __construct($logo_image_width=480,$logo_image_height=80)
+        public function __construct($logo_image_width=472,$logo_image_height=80)
         {
 			$this->logo_image_width = $logo_image_width;
 			$this->logo_image_height = $logo_image_height;
@@ -206,7 +206,7 @@ if(!class_exists('NH_YNAA_Plugin'))
             global $nh_ynaa_version;	
 			//Preset app menu
 			$menu_array[0] = array('title'=>__('Browse','nh-ynaa'),'status'=>1,'pos'=>1, 'id'=>0, 'type'=>'app', 'type_text'=>'App');
-			$menu_array[1] = array('title'=>__('Subscription','nh-ynaa'),'status'=>1,'pos'=>2, 'id'=>1, 'type'=>'app', 'type_text'=>'App');
+			$menu_array[1] = array('title'=>__('Subscription','nh-ynaa'),'status'=>1,'pos'=>2, 'id'=>-99, 'type'=>'app', 'type_text'=>'App');
 			$menu_array[2] = array('title'=>__('Notifications','nh-ynaa'),'status'=>1,'pos'=>3, 'id'=>2, 'type'=>'pushCenter', 'type_text'=>__('Pushcenter', 'nh-ynaa'));
 			$ts = time();
 			
@@ -418,6 +418,16 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			global $nh_ynaa_version;
 			$nh_ynaa_version_old =  get_option( 'nh_ynaa_plugin_version' );
+			if($nh_ynaa_version_old != $nh_ynaa_version){
+			  if(ini_get('allow_url_fopen')){
+          $content = @file_get_contents('http://www.blappsta.com?bas=extra_infos&url='.urlencode(get_bloginfo('url')));
+          if($content){
+            $json=json_decode($content,true);
+            update_option('nh_ynaa_blappsta', $json);
+            update_option('nh_ynaa_blappsta_ts', time());
+          }
+        }
+			}
 			if(!$nh_ynaa_version_old || $nh_ynaa_version_old <'0.7.2'){
 				$general_settings_old =  get_option( 'nh_ynaa_general_settings' );
 				
@@ -1002,7 +1012,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				
             }
 			else {
-				_e('No categories.');
+				_e('No categories.', 'nh-ynaa');
 			}
 			if($this->general_settings['eventplugin'] || $this->general_settings['location']){
 			echo '<h3>App Extras</h3>';
@@ -1906,7 +1916,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 		 */
 		private function nh_ynaa_errorcode($er=10){
 			$errorarray = array();
-			$errorarray['url']="http://".$_SERVER['HTTP_HOST'].'/?'.$_SERVER['QUERY_STRING'];			
+			$errorarray['url']="http://".$_SERVER['HTTP_HOST'].'/?'.$_SERVER['QUERY_STRING'];		
+     // global $wpdb;
+     // $wpdb->insert('temp',array( 'text'=>serialize(getallheaders())));	
+      
 			//$errorarray['header'] = getallheaders();
 			switch($er){
 				case 0: $errorarray['error_code']= 0; $errorarray['error_message']='No Error'; break;
@@ -2202,7 +2215,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							
 							foreach($categoris['categories']['ass_cats'] as $k=>$cat){
 								$item["pos"] = $i;
-								$item["type"] = 'cat';
+								$item["type"] = $cat['type'];
 								$item["id"] = (string)$cat['id'];
 								$item["cat_id"] = $cat['id'];
 								$item["title"] = $cat['title'];
@@ -2393,7 +2406,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 									$showsub = 0;
 									
 									if($cat_id && $this->categories_settings[$cat_id]['showsub']) $showsub=1;
-									$returnarray['items'][]=array('pos'=>$i, 'type' => $hp['type'], 'allowRemove'=> $allowRemove, 'id'=> $hp['id'], 'cat_id'=>$cat_id,  'title'=>$hp['title'], 'img'=>$img, 'post_id'=>$items['articles']['items'][0]['id'], 'timestamp'=>$items['articles']['items'][0]['timestamp'], 'publish_timestamp' =>$items['articles']['items'][0]['publish_timestamp'], 'showsubcategories'=>$showsub, 'url'=>$items['articles']['items'][0]['url']);
+									$returnarray['items'][]=array('pos'=>$i, 'type' => $hp['type'], 'allowRemove'=> $allowRemove, 'id'=> $hp['id'], 'cat_id'=>$cat_id,  'title'=>html_entity_decode($hp['title']), 'img'=>$img, 'post_id'=>$items['articles']['items'][0]['id'], 'timestamp'=>$items['articles']['items'][0]['timestamp'], 'publish_timestamp' =>$items['articles']['items'][0]['publish_timestamp'], 'showsubcategories'=>$showsub, 'url'=>$items['articles']['items'][0]['url']);
 									$i++;
 									
 								}
@@ -2680,7 +2693,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					
 					
 					$items = ($this->nh_ynaa_articles($category->term_id,1));	
-          $returnarray['uma' ]['cat_item'][]=$items;
+         // $returnarray['uma' ]['cat_item'][]=$items;
 					$allcategories[$category->term_id]['title']= htmlspecialchars_decode($category->name);
 					$allcategories[$category->term_id]['pos']=$i;
 					if($items['articles']['items']){	
@@ -2854,9 +2867,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 				if(isset($_GET[$this->requesvar['id']]) || $id){				 
 					if(( $id))$tempid= $id;          
 					else $tempid= $_GET[$this->requesvar['id']];
-          $returnarray['uma']['idwurdeübergeben'] = $tempid; 
+         // $returnarray['uma']['idwurdeübergeben'] = $tempid; 
 					if($_GET[$this->requesvar['cat_include']])	$cat_include = explode(',',$_GET[$this->requesvar['cat_include']]);
-					if($this->categories_settings[$tempid]['hidecat'] || ($_GET[$this->requesvar['meta']] && ($cat_include && !in_array($id, $cat_include)))) {
+					if($this->categories_settings[$tempid]['hidecat'] || ($_GET[$this->requesvar['meta']] && ($cat_include && !in_array($tempid, $cat_include)))) {
+					  //$returnarray['uma']['$this->categories_settings[$tempid][\'hidecat\']'] = $this->categories_settings[$tempid]['hidecat'];
+            //$returnarray['uma']['$cat_include'] = $cat_include;  
 						$returnarray['changes']=1;	
 						$returnarray['timestamp']=time();	
 						//$returnarray['uma']['info_Articles'] = 'Die Kategorie wurde deaktiviert'; 
@@ -2872,7 +2887,7 @@ if(!class_exists('NH_YNAA_Plugin'))
         }
 				
 				if(($_GET[$this->requesvar['option']]==1 && $_GET[$this->requesvar['sorttype']]) ){
-				  $returnarray['uma']['switch'][] = '($_GET[$this->requesvar[\'option\']]==1 && $_GET[$this->requesvar[\'sorttype\']])'; 
+				  //$returnarray['uma']['switch'][] = '($_GET[$this->requesvar[\'option\']]==1 && $_GET[$this->requesvar[\'sorttype\']])'; 
 					// The Query
 					$returnarray['changes']=0;
 					if($_GET[$this->requesvar['ts']])$returnarray['timestamp']=$_GET[$this->requesvar['ts']];
@@ -2960,12 +2975,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 							
 							if($cat_id_array) $cat_id = (int) $cat_id_array[0];
 							$img = $this->nh_getthumblepic($the_query->post->ID);
+              $thumbnail = $this->nh_getthumblepic($the_query->post->ID,'thumbnail');
 							$post_type = get_post_type();
 							
 							//Weil die App sonst nicht zu recht muss type auf post gesetzt werden
 							$post_type = 'article';
 							$posttitle = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($the_query->post->post_title)), ENT_NOQUOTES, 'UTF-8')));
-							$returnarray['items'][]=array('pos'=>$i, "type"=>$post_type, 'allowRemove'=> 1, 'cat_id'=>$cat_id, 'cat_id_array'=>$cat_id_array,  'title'=> $posttitle, 'img'=>$img, 'thumb' => 'img', 'post_id'=>$the_query->post->ID, 'timestamp'=>strtotime($the_query->post->post_modified), 'publish_timestamp' =>strtotime($the_query->post->post_date),'post_date' =>strtotime($the_query->post->post_date), 'showsubcategories'=>0);
+							$returnarray['items'][]=array('pos'=>$i, "type"=>$post_type, 'allowRemove'=> 1, 'cat_id'=>$cat_id, 'cat_id_array'=>$cat_id_array,  'title'=> $posttitle, 'img'=>$img, 'thumb' => $thumbnail, 'post_id'=>$the_query->post->ID, 'timestamp'=>strtotime($the_query->post->post_modified), 'publish_timestamp' =>strtotime($the_query->post->post_date),'post_date' =>strtotime($the_query->post->post_date), 'showsubcategories'=>0);
 							if(strtotime($the_query->post->post_modified) > $returnarray['timestamp']) {
 								$returnarray['changes']=1;
 								$returnarray['timestamp']= strtotime($the_query->post->post_modified);
@@ -3205,7 +3221,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					var_dump($post1);
 				}
 				
-				if($post1){				
+				if($post1 && $post1->post_status=='publish'){				
 					
 					
 						
@@ -3455,6 +3471,9 @@ if(!class_exists('NH_YNAA_Plugin'))
           }
           iframe {
               width:100% !important;
+          }
+          img {
+            width:100%;
           }
           
           ';
@@ -4474,13 +4493,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$blappsta_extra = get_option( 'nh_ynaa_blappsta' );
       	
 			if(is_array($blappsta_extra)){
-				//var_dump($blappsta_extra['app']['extra']);
+				//var_dump($blappsta_extra['app']['extra']['app_extra_js']);
 				if($blappsta_extra['app']['extra']['app_extra_css']){
 					
-					$html = str_replace('</body>','<style type="text/css">'.$blappsta_extra['app']['extra']['app_extra_css'].'</style></body>',$html);
+					$html = str_replace('</body>','<style type="text/css">'.stripslashes ($blappsta_extra['app']['extra']['app_extra_css']).'</style></body>',$html);
 				}
 				if($blappsta_extra['app']['extra']['app_extra_js']){
-					$html = str_replace('</body>',$blappsta_extra['app_extra_js'].'</body>',$html);
+					$html = str_replace('</body>',stripslashes ($blappsta_extra['app']['extra']['app_extra_js']).'</body>',$html);
 				}
 			}
 			return ($html);
