@@ -74,9 +74,10 @@
 			'You have not yet set up your Twitter account on this device, which is necessary for sharing. Please go to your iOS Settings > Twitter and enter your login data.'=>'Du hast noch keinen Twitter Account auf dem Gerät eingerichtet. Dieser ist für das Sharing notwendig. Bitte gehe zu Einstellungen -> Twitter und gib Deine Anmeldedaten ein.',
 			'subscription'=>'Abonnement',
       'bookmarked_headline'=> 'Markierte Schlagzeilen',
-      'bookmarked_posts' => 'Markiert Beiträge',
+      'bookmarked_posts' => 'Markierte Beiträge',
       'recent_notifications'=> 'Letzte Meldungen',
       'bookmarks_notifications' => 'Favoriten & Benachrichtigungen',
-      'delete'=>'löschen'
+      'delete'=>'löschen',
+      'You have not bookmarked any posts yet'=>'Sie haben noch keine Beiträge favorisiert.'
            );
 ?>

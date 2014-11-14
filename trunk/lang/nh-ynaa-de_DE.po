@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NH YNAA Plugin 1.0\n"
-"POT-Creation-Date: 2014-10-20 19:10+0100\n"
-"PO-Revision-Date: 2014-10-20 19:11+0100\n"
+"POT-Creation-Date: 2014-10-28 09:41+0100\n"
+"PO-Revision-Date: 2014-10-28 09:46+0100\n"
 "Last-Translator: \n"
 "Language-Team: Nebelhorn <info@nebelhorn.com>\n"
 "Language: de\n"
@@ -60,7 +60,7 @@ msgstr "Facebook"
 msgid "Events"
 msgstr "Events"
 
-#: nh_ynaa_plugin.php:563 nh_ynaa_plugin.php:2812 nh_ynaa_plugin.php:3786
+#: nh_ynaa_plugin.php:563 nh_ynaa_plugin.php:2812 nh_ynaa_plugin.php:3788
 msgid "Map"
 msgstr "Karte"
 
@@ -736,172 +736,172 @@ msgstr "Löschen"
 msgid "Allow hide on Startscreen"
 msgstr "Ausblenden erlauben"
 
-#: nh_ynaa_plugin.php:3564
+#: nh_ynaa_plugin.php:3566
 msgid "Comment is in review"
 msgstr "Kommentar wartet auf Freigabe"
 
-#: nh_ynaa_plugin.php:3810
+#: nh_ynaa_plugin.php:3812
 msgid "How to use the Blappsta PREVIEW app"
 msgstr "Wie verwendet man die Blappsta PREVIEW app"
 
-#: nh_ynaa_plugin.php:3860 nh_ynaa_plugin.php:4094
+#: nh_ynaa_plugin.php:3862 nh_ynaa_plugin.php:4096
 msgid "Sunday"
 msgstr "Sonntag"
 
-#: nh_ynaa_plugin.php:3860 nh_ynaa_plugin.php:4094
+#: nh_ynaa_plugin.php:3862 nh_ynaa_plugin.php:4096
 msgid "Monday"
 msgstr "Montag"
 
-#: nh_ynaa_plugin.php:3860 nh_ynaa_plugin.php:4094
+#: nh_ynaa_plugin.php:3862 nh_ynaa_plugin.php:4096
 msgid "Tuesday"
 msgstr "Dienstag"
 
-#: nh_ynaa_plugin.php:3860 nh_ynaa_plugin.php:4094
+#: nh_ynaa_plugin.php:3862 nh_ynaa_plugin.php:4096
 msgid "Wednesday"
 msgstr "Mittwoch"
 
-#: nh_ynaa_plugin.php:3860 nh_ynaa_plugin.php:4094
+#: nh_ynaa_plugin.php:3862 nh_ynaa_plugin.php:4096
 msgid "Thursday"
 msgstr "Donnerstag"
 
-#: nh_ynaa_plugin.php:3860 nh_ynaa_plugin.php:4094
+#: nh_ynaa_plugin.php:3862 nh_ynaa_plugin.php:4096
 msgid "Friday"
 msgstr "Freitag"
 
-#: nh_ynaa_plugin.php:3860 nh_ynaa_plugin.php:4094
+#: nh_ynaa_plugin.php:3862 nh_ynaa_plugin.php:4096
 msgid "Saturday"
 msgstr "Samstag"
 
-#: nh_ynaa_plugin.php:4626
+#: nh_ynaa_plugin.php:4628
 msgid "Blappsta Plugin extras"
 msgstr "Blappsta Plugin Extras"
 
-#: nh_ynaa_plugin.php:4649
+#: nh_ynaa_plugin.php:4651
 msgid "Blappsta Plugin locations"
 msgstr "Blappsta Plugin Orte"
 
-#: nh_ynaa_plugin.php:4688
+#: nh_ynaa_plugin.php:4690
 msgid "Location Name"
 msgstr "Ort Name"
 
-#: nh_ynaa_plugin.php:4693
+#: nh_ynaa_plugin.php:4695
 msgid ""
 "Create a location or start typing to search a previously created location."
 msgstr ""
 
-#: nh_ynaa_plugin.php:4694
+#: nh_ynaa_plugin.php:4696
 msgid "You cannot edit saved locations here."
 msgstr ""
 
-#: nh_ynaa_plugin.php:4694
+#: nh_ynaa_plugin.php:4696
 msgid "Reset this form to create a location or search again."
 msgstr ""
 
-#: nh_ynaa_plugin.php:4698
+#: nh_ynaa_plugin.php:4700
 msgid "Address:"
 msgstr "Anschrift:"
 
-#: nh_ynaa_plugin.php:4704
+#: nh_ynaa_plugin.php:4706
 msgid "City/Town:"
 msgstr "Stadt/Ort: "
 
-#: nh_ynaa_plugin.php:4710
+#: nh_ynaa_plugin.php:4712
 msgid "State/County:"
 msgstr "Bundesland/Land:"
 
-#: nh_ynaa_plugin.php:4716
+#: nh_ynaa_plugin.php:4718
 msgid "Postcode:"
 msgstr "Postleitzahl:"
 
-#: nh_ynaa_plugin.php:4723
+#: nh_ynaa_plugin.php:4725
 msgid "Region:"
 msgstr "Region:"
 
-#: nh_ynaa_plugin.php:4730
+#: nh_ynaa_plugin.php:4732
 msgid "Pin color"
 msgstr "Pin Farbe"
 
-#: nh_ynaa_plugin.php:4732
+#: nh_ynaa_plugin.php:4734
 msgid "red"
 msgstr "rot"
 
-#: nh_ynaa_plugin.php:4733
+#: nh_ynaa_plugin.php:4735
 msgid "green"
 msgstr "grün"
 
-#: nh_ynaa_plugin.php:4734
+#: nh_ynaa_plugin.php:4736
 msgid "purple"
 msgstr "violett"
 
-#: nh_ynaa_plugin.php:4741
+#: nh_ynaa_plugin.php:4743
 msgid "Reset this form to create a location."
 msgstr "Setze das Formular zurück um einen Ort anzulegen."
 
-#: nh_ynaa_plugin.php:4748
+#: nh_ynaa_plugin.php:4750
 msgid "Location not found"
 msgstr "Ort nicht gefunden"
 
-#: nh_ynaa_plugin.php:4810
+#: nh_ynaa_plugin.php:4812
 msgid "Show in App"
 msgstr "In der App anzeigen"
 
-#: nh_ynaa_plugin.php:4815
+#: nh_ynaa_plugin.php:4817
 msgid "Push Text"
 msgstr "Push Nachricht"
 
-#: nh_ynaa_plugin.php:4825
+#: nh_ynaa_plugin.php:4827
 msgid "Send Push"
 msgstr "Push senden"
 
-#: nh_ynaa_plugin.php:4828
+#: nh_ynaa_plugin.php:4830
 msgid "Please wait..."
 msgstr "Bitte warten..."
 
-#: nh_ynaa_plugin.php:5042
+#: nh_ynaa_plugin.php:5044
 msgid "No ID"
 msgstr "Keine ID"
 
-#: nh_ynaa_plugin.php:5081
+#: nh_ynaa_plugin.php:5083
 msgid "No posts found."
 msgstr "Keine Beiträge gefunden."
 
-#: nh_ynaa_plugin.php:5084
+#: nh_ynaa_plugin.php:5086
 msgid "Error"
 msgstr "Fehler"
 
-#: nh_ynaa_plugin.php:5198
+#: nh_ynaa_plugin.php:5200
 msgid "No Appkey."
 msgstr "Kein App Schlüssel."
 
-#: nh_ynaa_plugin.php:5199
+#: nh_ynaa_plugin.php:5201
 msgid "No Push Secret Key."
 msgstr "Kein Push Secret Schlüssel."
 
-#: nh_ynaa_plugin.php:5200
+#: nh_ynaa_plugin.php:5202
 msgid "No Push Url."
 msgstr "Keine Push URL."
 
-#: nh_ynaa_plugin.php:5443
+#: nh_ynaa_plugin.php:5445
 msgid "Push send successful."
 msgstr "Push-Nachricht Versand erfolgreich."
 
-#: nh_ynaa_plugin.php:5444
+#: nh_ynaa_plugin.php:5446
 msgid "Unknown error sending the push message."
 msgstr "Unbekannter Fehler beim Senden der Push-Nachricht."
 
-#: nh_ynaa_plugin.php:5483
+#: nh_ynaa_plugin.php:5485
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: nh_ynaa_plugin.php:5533
+#: nh_ynaa_plugin.php:5535
 msgid "Insert Pushtext!"
 msgstr "Pushtext einfügen!"
 
-#: nh_ynaa_plugin.php:5536
+#: nh_ynaa_plugin.php:5538
 msgid "Pleas wait!"
 msgstr "Bitte warten!"
 
-#: nh_ynaa_plugin.php:5567
+#: nh_ynaa_plugin.php:5569
 msgid "You have to publish the Post first.!"
 msgstr "Sie müssen zuerst den Beitrag veröffentlichen!"
 

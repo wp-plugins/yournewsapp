@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 0.8.2
+Stable tag: 0.8.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,10 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.8.2.1 =
+- Facebook Bug Fix for homepresets
+- Small Bug fixes
+
 = 0.8.2 =
 - Bug fixes
 - Integrate "How to use the Blappsta PREVIEW app" video
@@ -321,6 +325,10 @@ Please refer to our [Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.8.2.1 =
+- Facebook Bug Fix for homepresets
+- Small Bug fixes
+
 = 0.8.2 =
 - Bug fixes
 - Integrate "How to use the Blappsta PREVIEW app" video
