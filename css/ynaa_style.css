@@ -169,6 +169,7 @@ div.h30 {
 	background:rgba(255,255,255,0.5);
 	
 	list-style:none;
+	min-height:700px;
 }
 .categorie-div-con > ul li  > div {
 	width:159px;
