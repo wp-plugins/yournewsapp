@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.8.2.1
+Version: 0.8.2.2
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -14,7 +14,7 @@ License: GPL2
 //Version Number
 //Temp fix folder problem
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.8.2.1";
+$nh_ynaa_version = "0.8.2.2";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -206,7 +206,7 @@ if(!class_exists('NH_YNAA_Plugin'))
             global $nh_ynaa_version;	
 			//Preset app menu
 			$menu_array[0] = array('title'=>__('Browse','nh-ynaa'),'status'=>1,'pos'=>1, 'id'=>0, 'type'=>'app', 'type_text'=>'App');
-			$menu_array[1] = array('title'=>__('Subscription','nh-ynaa'),'status'=>1,'pos'=>2, 'id'=>-99, 'type'=>'app', 'type_text'=>'App');
+			//$menu_array[1] = array('title'=>__('Subscription','nh-ynaa'),'status'=>1,'pos'=>2, 'id'=>-99, 'type'=>'app', 'type_text'=>'App');
 			$menu_array[2] = array('title'=>__('Notifications','nh-ynaa'),'status'=>1,'pos'=>3, 'id'=>2, 'type'=>'pushCenter', 'type_text'=>__('Pushcenter', 'nh-ynaa'));
 			$ts = time();
 			
@@ -561,7 +561,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			
 			//set app menu
 			$this->appmenus_pre[0] = array('title'=>__('Browse','nh-ynaa'),'status'=>1,'pos'=>1, 'id'=>0, 'type'=>'app', 'type_text'=>'App', 'link-typ'=>'cat');
-			$this->appmenus_pre[1] = array('title'=>__('Subscription','nh-ynaa'),'status'=>1,'pos'=>2, 'id'=>-99, 'type'=>'app', 'type_text'=>'App', 'link-typ'=>'cat');
+			//$this->appmenus_pre[1] = array('title'=>__('Subscription','nh-ynaa'),'status'=>1,'pos'=>2, 'id'=>-99, 'type'=>'app', 'type_text'=>'App', 'link-typ'=>'cat');
 			
 			if(isset($this->general_settings['social_fbid'],$this->general_settings['social_fbsecretid'],$this->general_settings['social_fbappid'])) 
 				$this->appmenus_pre[3] = array('title'=>__('Facebook','nh-ynaa'),'status'=>1,'pos'=>3, 'id'=>-2, 'type'=>'fb', 'type_text'=>'Facebook', 'link-typ'=>'fb');
@@ -725,12 +725,17 @@ if(!class_exists('NH_YNAA_Plugin'))
 						$override = array('test_form' => false);      	
 						// save the file, and store an array, containing its location in $file       
 						$file = wp_handle_upload( $image, $override );
-						$img = wp_get_image_editor( $file['file'] ); // Return an implementation that extends <tt>WP_Image_Editor</tt>
-						if ( ! is_wp_error( $img ) ) {							
-							$img->resize( $this->logo_image_width, $this->logo_image_height, true );
-							$f = $img->save( $file['file']);
+						if(function_exists('wp_get_image_editor')){
+							$img = wp_get_image_editor( $file['file'] ); // Return an implementation that extends <tt>WP_Image_Editor</tt>
+							if ( ! is_wp_error( $img ) ) {							
+								$img->resize( $this->logo_image_width, $this->logo_image_height, true );
+								$f = $img->save( $file['file']);
+							}
+							$plugin_options[$keys[$i]] = dirname($file['url']).'/'.basename($f['path']);  
 						}
-						$plugin_options[$keys[$i]] = dirname($file['url']).'/'.basename($f['path']);     
+						elseif($file){
+							$plugin_options[$keys[$i]] = $file['url'];
+						}
 					} 
 					else {       // Not an image.        
 						$plugin_options[$keys[$i]] = $this->general_settings_key['logo'];       
@@ -903,6 +908,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$categories = @get_categories(array('orderby'=>'name', 'order'=>'ASC', 'hide_empty'=>0));
 			if($categories){
 				echo '<p>'.__('Here you can specify the names of the categories in the app individually. Assign categories to the default images that are displayed in the app, should a post or page have no post image. You can also set or define whether the category in the app should be hidden or not the sort order here.', 'nh-ynaa').'</p>';
+        echo '<input type="hidden" name="'.$this->categories_settings_key.'[ts]" id="'.$this->categories_settings_key.'_ts" value="'.time().'" />';
 				echo '<div id="categorie-div-con" class="categorie-div-con"><ul>';
 				foreach($categories as $category){
 					 //var_dump($this->categories_settings);
@@ -2852,6 +2858,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 			if($ass_cats && count($ass_cats)>0)
 			$returnarray['ass_cats'] = $ass_cats;
 			
+      $returnarray['timestamp']= (int) get_option('nh_ynaa_categories_settings_ts');
+      
 			return array('categories'=>$returnarray);			
 		} // END private function categories()
 		
