@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: NH YNAA Plugin 1.0\n"
 "POT-Creation-Date: 2014-10-28 09:41+0100\n"
-"PO-Revision-Date: 2014-10-28 09:46+0100\n"
+"PO-Revision-Date: 2014-12-05 16:06+0100\n"
 "Last-Translator: \n"
 "Language-Team: Nebelhorn <info@nebelhorn.com>\n"
 "Language: de\n"
@@ -486,7 +486,6 @@ msgstr ""
 "Vorschau zu sehen, gehe wie folgt vor:"
 
 #: nh_ynaa_plugin.php:1242
-#, fuzzy
 msgid ""
 "First of all download and install our <b>Blappsta Preview App</b> from the "
 "<a href=\"https://itunes.apple.com/de/app/blappsta-preview/id912390326?"
@@ -519,7 +518,6 @@ msgstr ""
 "einfacher „Pull to Refresh“, schon werden alle Settings neu geladen!"
 
 #: nh_ynaa_plugin.php:1251
-#, fuzzy
 msgid ""
 "If you like the app, please register on our website <a href=\"http://www."
 "blappsta.com/sign-up\" target=\"_blank\"  style=\"text-decoration:none;"
@@ -530,7 +528,6 @@ msgstr ""
 "\"_blank\">www.blappsta.com</a>."
 
 #: nh_ynaa_plugin.php:1252
-#, fuzzy
 msgid ""
 "If you have any questions contact us: <a href=\"mailto:support@blappsta.com"
 "\"  style=\"text-decoration:none;\">support@blappsta.com</a>"

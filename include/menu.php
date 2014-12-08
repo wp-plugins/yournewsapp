@@ -22,8 +22,8 @@
 										
 										$args = array(
 											'post_type'=> $post_type,
-											'order'    => 'post_modified'
-											
+											'order'    => 'post_modified',
+											'post_status'=>'publish'
 											//'nopaging' => true
 											);
 										$the_query = new WP_Query(  $args  );
@@ -135,8 +135,15 @@
 								$categories = get_categories( $args );
 								$post_type = 'cat';
 								if($categories){
+									//var_dump($this->categories_settings);
 										foreach ( $categories as $category ) {
+										if(isset($this->categories_settings[$category->term_id]) && $this->categories_settings[$category->term_id]['hidecat']==1) {
+										
+											continue;
+										}
+										
 										echo '<li>';
+										
 										echo '<input type="hidden" value="'.$post_type.'" name="type-menu-item-'.$post_type.$menu_id.'" id="type-menu-item-'.$post_type.$menu_id.'">';
 										echo '<input type="hidden" value="'.$post_type.'" name="link-typ-menu-item-'.$post_type.$menu_id.'" id="link-type-menu-item-'.$post_type.$menu_id.'">';
 										echo '<input type="hidden" value="'.$category->name.'" name="title-menu-item-'.$post_type.$menu_id.'" id="title-menu-item-'.$post_type.$menu_id.'">';
@@ -145,6 +152,8 @@
 										echo $category->name.'</label>';													
 										echo '</li>';
 										$menu_id++;
+										 
+										
 									}
 								}
 									//wp_category_checklist();
@@ -229,7 +238,7 @@
 								<p><?php _e('Here you change the settings for the app menu.','nh-ynaa'); ?></p>
 							</div>							
 							<div id="menu-accordion">
-								<ul id="menu-to-edit" class="menu nav-menus-php">
+								<ul id="menu-to-edit" class="menu nav-menus-php nh-menu-ul">
 									<?php
 									if($this->menu_settings['menu'] && !empty($this->menu_settings['menu'])){
 										$menuitems= $this->menu_settings['menu'];								
