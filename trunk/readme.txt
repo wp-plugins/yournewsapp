@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 0.8.2.2
+Stable tag: 0.8.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,14 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.8.3 =
+- New function: add categories as teaser items
+- New function: reorder startscreen, teaser and menu items by drag and drop
+- Fixed: problem with event manager location page
+- Fixed: image size bug on post view
+- Fixed: images not showing up in the app if they the html "src" attribute had no protocol
+- Fixed: image scaling problem
+
 = 0.8.2.2 =
 - Fixed: Logo upload problem in WordPress versions smaller 3.5
 
@@ -328,6 +336,14 @@ Please refer to our [Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.8.3 =
+- New function: add categories as teaser items
+- New function: reorder startscreen, teaser and menu items by drag and drop
+- Fixed: problem with event manager location page
+- Fixed: image size bug on post view
+- Fixed: images not showing up in the app if they the html "src" attribute had no protocol
+- Fixed: image scaling problem
+
 = 0.8.2.2 =
 - Fixed: Logo upload problem in WordPress versions smaller 3.5
 

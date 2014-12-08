@@ -72,7 +72,9 @@ _e('Here you can set up the teaser which will be displayed on the start view of 
 									<?php
 										$args = array(
 											'post_type'=> $post_type,							
-											'order'    => 'post_modified'//,
+											'order'    => 'post_modified',
+											'post_status'=>'publish'
+											//,
 											//'nopaging' => true											
 											);
 										$the_query = new WP_Query( $args );
@@ -165,7 +167,7 @@ _e('Here you can set up the teaser which will be displayed on the start view of 
 						}
 					}					
 				?>	
-                <!--<li id="add-custom-categories" class="control-section accordion-section   add-custom-categories">
+                <li id="add-custom-categories" class="control-section accordion-section   add-custom-categories">
 				<h3 title="<?php _e('Categories'); ?>" tabindex="0" class="accordion-section-title hndle"><?php _e('Categories'); ?></h3>
 				<div class="accordion-section-content ">
 					<div class="inside">
@@ -179,6 +181,8 @@ _e('Here you can set up the teaser which will be displayed on the start view of 
 								$categories = get_categories( $args );
 								$post_type = 'cat';
 								foreach ( $categories as $category ) {
+									//var_dump($this->categories_settings[$category->term_id]);
+									if(isset($this->categories_settings[$category->term_id]) && $this->categories_settings[$category->term_id]['hidecat']==1) continue;
 									echo '<li>';
 									echo '<input type="hidden" value="'.$post_type.'" name="type-menu-item-'.$post_type.$menu_id.'" id="type-menu-item-'.$post_type.$menu_id.'">';
 									echo '<input type="hidden" value="'.$post_type.'" name="link-typ-menu-item-'.$post_type.$menu_id.'" id="link-type-menu-item-'.$post_type.$menu_id.'">';
@@ -194,17 +198,17 @@ _e('Here you can set up the teaser which will be displayed on the start view of 
 								?>
 							</ul>
 							<p class="button-controls">
-								<!--<span class="list-controls"><a class="select-all" href="<?php echo $_SERVER['PHP_SELF']; ?>?page=ynaa_plugin_options&page-tab=all&amp;selectall=1#category ?>"><?php //_e('Select All'); ?></a></span>->
+								<span class="list-controls"><a class="select-all" href="<?php echo $_SERVER['PHP_SELF']; ?>?page=ynaa_plugin_options&page-tab=all&amp;selectall=1#category ?>"><?php //_e('Select All'); ?></a></span>
 								<span class="add-to-menu">
-									<input type="submit" id="submit-customcategorydiv" name="add-custom-menu-item" value="<?php _e('Add to Menu'); ?>" class="button-secondary submit-add-to-menu right">
+									<input type="submit" id="submit-customcategorydiv" name="add-custom-menu-item" value="<?php _e('Add to Teaser'); ?>" class="button-secondary submit-add-to-teaser right">
 									<span class="spinner"></span>
 								</span>
 							</p>
 
-						</div><!-- /.customlinkdiv ->
-					</div><!-- .inside ->
-				</div><!-- .accordion-section-content ->
-			</li>-->
+						</div><!-- /.customlinkdiv -->
+					</div><!-- .inside -->
+				</div><!-- .accordion-section-content -->
+			</li>
             					
 		</ul><!-- .outer-border -->
         <input type="hidden" value="<?php echo $menu_id; ?>" id="menu_id_counter">
@@ -232,14 +236,59 @@ _e('Here you can set up the teaser which will be displayed on the start view of 
 									if($this->teaser_settings['teaser'] && !empty($this->teaser_settings['teaser'])){
 										$menuitems= $this->teaser_settings['teaser'];
 										//var_dump($menuitems);								
-										foreach($menuitems as $k=>$v){									
+										foreach($menuitems as $k=>$v){
+											
+											if($k && $k=='type') continue;	
+											
+											//$data = $this->ny_ynaa_teaser_action($v,$menuitems['type'][$k]);
+											
+											if($menuitems['type'][$k]=='cat'){
+												$category = get_the_category_by_ID($v); 
+												if($category) {
+													$cat = $this->categories_settings[$v];
+													if($cat){
+														//if($cat['hidecat']==1) $result['error'] = 1;;
+														$title = $cat['cat_name']  ;
+														if($cat['usecatimg']==1 && !empty($cat['img'])) {
+															$thumb = $cat['img']  ;
+														}
+														else {
+															$post = $this->nh_wp_get_recent_posts(1,$v);
+															$result['uma']['$post_id']=$post;
+															$result['uma']['$post[0]']=$post[0];
+															$result['uma']['$post[0]->ID']=$post[0]->ID;
+															$result['uma']['$post[0]->[ID]']=$post[0]['ID'];
+															$thumb = $this->nh_getthumblepic($post[0]['ID'],'full');  ;
+															
+														}
+														
+													}
+													else {
+														$title = $category  ;
+														$post = $this->nh_wp_get_recent_posts(1,$v );
+														$result['uma']['$post_id']=$post;
+														$result['uma']['$post[0]']=$post[0];
+														$result['uma']['$post[0]->ID']=$post[0]->ID;
+														$result['uma']['$post[0]->[ID]']=$post[0]['ID'];
+														$thumb = $this->nh_getthumblepic($post[0]['ID'],'full');  ;
+														
+														
+													}
+												} 
+												
+											}	
+											else{						
+												$thumb = $this->nh_getthumblepic($v);
+												$title = get_the_title($v);
+											}
 										?>
-											<li id="teaserli<?php echo $v; ?>"  class="floatli"><div class="teaserdiv" style="background-image:url('<?php echo $this->nh_getthumblepic($v); ?>');">
-                                                <div class="ttitle"><?php echo get_the_title($v); ?></div>
+											<li id="teaserli<?php echo $v.$menuitems['type'][$k]; ?>"  class="floatli"><div class="teaserdiv" style="background-image:url('<?php echo $thumb; ?>');">
+                                                <div class="ttitle"><?php echo $title; ?></div>
                                                 </div>
                                                 <div>
-                                                <a href="<?php echo $v; ?>" class="dellteaser"><?php _e('Delete'); ?></a>
-                                                <input type="hidden" value="<?php echo $v; ?>"  name="<?php echo $this->teaser_settings_key; ?>[teaser][]" /> 
+                                                <a href="<?php echo $v.$menuitems['type'][$k]; ?>" class="dellteaser"><?php _e('Delete'); ?></a>
+                                                <input type="hidden" value="<?php echo $v; ?>"  name="<?php echo $this->teaser_settings_key; ?>[teaser][]" />
+                                                <input type="hidden" value="<?php echo $menuitems['type'][$k]; ?>"  name="<?php echo $this->teaser_settings_key; ?>[teaser][type][]" />  
                                                 </div>
                                             </li><!--End menu-item -->
 										<?php										
@@ -255,7 +304,9 @@ _e('Here you can set up the teaser which will be displayed on the start view of 
                                     
 								</ul>
                                 <div style="clear:both;"></div>
-                                <p class="submit"><input type="button" value="<?php _e('Save Changes'); ?>" class="button button-primary submitbutton" id="submit2" name="submit2"></p>		
+                                <div>
+                                	<p class="submit"><input type="button" value="<?php _e('Save Changes'); ?>" class="button button-primary submitbutton" id="submit2" name="submit2"></p>
+                               	</div>		
 							</div><!-- /#menu-accordion -->
 						</div><!-- /#post-body-content -->
 					</div><!-- /#post-body -->

@@ -88,7 +88,8 @@
 									<?php
 										$args = array(
 											'post_type'=> $post_type,							
-											'order'    => 'post_modified'//,
+											'order'    => 'post_modified',
+											'post_status'=>'publish'//,
 											//'nopaging' => true											
 											);
 										$the_query = new WP_Query( $args );
@@ -272,22 +273,30 @@
 												 	else {
 	                                                	echo '<div class="hpdiv" id="hpdiv'.$v.'" style="background-image:url(\''.($this->nh_getthumblepic($ar['id'])).'\');">';
     	                                            }
-												   ?>
-                                                    <div class="ttitle" id="hptitle<?php echo $v; ?>div"><?php echo ($ar['title']); ?></div>
-                                                    <?php if($ar['type']=='cat' || $ar['type']=='fb' || $ar['type']=='events' ||$ar['type']=='webview') { ?>
+												   
+                                                   echo '<div class="ttitle" id="hptitle'.$v.'div">'.$ar['title'].'</div>';
+                                                    if($ar['type']=='cat' || $ar['type']=='fb' || $ar['type']=='events' ||$ar['type']=='webview') { ?>
                                                     
                                                     <div class="setdefaultcatpic" <?php if($ar['type']!='webview') echo ' style="display:none;"'; ?>><a id="upload_image_button<?php echo $v; ?>" class="upload_image_button" href="#" name="<?php echo $this->homepreset_settings_key; ?>_items_<?php echo $v; ?>_img"><?php _e('Set default image','nh-ynaa'); ?></a></div>
            											<input type="hidden" value="<?php echo $ar['img']; ?>" id="<?php echo $this->homepreset_settings_key; ?>_items_<?php echo $v; ?>_img" name="<?php echo $this->homepreset_settings_key; ?>[items][<?php echo $v; ?>][img]" data-id="hpdiv<?php echo $v; ?>" />                                         
                                                     <?php } ?>
                                                </div>
-                                                <div><input type="text" value="<?php echo $ar['title']; ?>" id="hptitle<?php echo $v; ?>" name="<?php echo $this->homepreset_settings_key; ?>[items][<?php echo $v; ?>][title]" class="hptitle" /></div>
+                                                <div><input type="text" value="<?php echo $ar['title']; ?>" id="hptitle<?php echo $v; ?>" name="<?php echo $this->homepreset_settings_key; ?>[items][<?php echo $v; ?>][title]" class="hptitle" placeholder="<?php echo $ar['title']; ?>" /></div>
+                                                <?php 
                                                 
-                                                <div class="h30">
-                                                <?php if($ar['type']=='webview') { ?>
-                                                <input type="text" value="<?php echo $ar['url']; ?>"  name="<?php echo $this->homepreset_settings_key; ?>[items][<?php echo $v; ?>][url]"  />
-                                                <?php } ?>
-                                                </div>
-                                                <div><input type="checkbox" name="<?php echo $this->homepreset_settings_key; ?>[items][<?php echo $v; ?>][allowRemove]" id="allowRemove<?php echo $v; ?>" value="1" <?php if($ar['allowRemove']) echo ' checked="checked" '; ?> /><label for="allowRemove<?php echo $v; ?>"> <?php _e('Allow hide on Startscreen','nh-ynaa'); ?></label></div>
+                                               
+                                                if($ar['type']=='webview') {
+                                                	 echo '<div class="h30">'; 
+                                                	echo '<input type="text" value="'.$ar['url'].'"  name="'.$this->homepreset_settings_key.'[items]['.$v.'][url]"  />';
+                                                	echo '</div>';
+												}
+                                                
+                                                if($ar['allowRemove']) $checked =  ' checked="checked" '; else $checked= ' '; ?>
+                                                <?php 
+                                                //	echo '<div><input type="checkbox" name="'.$this->homepreset_settings_key.'[items]['.$v.'][allowRemove]" id="allowRemove'.$v.'" value="1" '.$checked.' /><label for="allowRemove'.$v.'"> ';
+                                                //	_e('Allow hide on Startscreen','nh-ynaa'); 
+                                                //	echo '</label></div>'; 
+                                                ?>
                                                 <div>
                                                     <a href="<?php echo $v; ?>" class="delhp"><?php _e('Delete'); ?></a>
                                                     <input type="hidden" value="<?php echo $ar['id']; ?>"  name="<?php echo $this->homepreset_settings_key; ?>[items][<?php echo $v; ?>][id]"   />

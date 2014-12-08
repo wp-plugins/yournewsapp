@@ -69,6 +69,10 @@ div.publishing-action {
 	float:left; 
 	margin:5px;
 	margin-bottom:20px;
+	
+}
+#menu-to-edit.nh-homepreset-ul li {
+	min-height: 200px;
 }
 #menu-to-edit li.floatli div.teaserdiv { 
 	border:1px solid #999; 
@@ -79,6 +83,7 @@ div.publishing-action {
 	font-size:15px; font-weight:bold;  
 	background-size: 250px;
     background-repeat: no-repeat;
+	cursor:move;
 } 
 .empty_teaser_li {
 	width:250px;
@@ -96,6 +101,7 @@ div.publishing-action {
 	background-size:cover;
     background-repeat: no-repeat;
 	margin-right:10px;
+	cursor:move;
 }
 
 #menu-to-edit li.empty_li_clear {clear:left; }
@@ -135,6 +141,9 @@ div.homepresetpreview {
 
 div.blappsta-plugin-header {
 	float: left;
+	width:50%;
+	min-width:600px;
+	margin-right:20px;
 }
 
 

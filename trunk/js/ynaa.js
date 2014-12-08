@@ -38,7 +38,7 @@ jQuery(document).ready(function($){
 	});
 	
 	//Menu accoding
-	$('#menu-to-edit')
+	$('#menu-to-edit.nh-menu-ul')
       .accordion({
         header: "> li > dl",
 		collapsible: true,
@@ -60,23 +60,28 @@ jQuery(document).ready(function($){
 			});
 		}
       });
+      
+       
+	  $('#menu-to-edit.nh-menu-ul > li > dl :first').trigger('click');
 	  
-	  $('#menu-to-edit > li > dl :first').trigger('click');
+	  //teaser draggable
+	  $('#menu-to-edit.nh-teaser-ul, #menu-to-edit.nh-homepreset-ul').sortable();
 	  
 	  //Add Items to menu
-	  $('.submit-add-to-menu').click(function(e){		  
+	  $('.submit-add-to-menu').click(function(e){		 
+	  	//alert(2); 
 	  	if($( e.target ).parentsUntil('div.inside').children('div.tabs-panel-active') && $( e.target ).parentsUntil('div.inside').children('div.tabs-panel-active').length>0){
 	  		
-			var obj = ($( e.target ).parentsUntil('div.inside').children('div.tabs-panel-active').find('input[type="checkbox"]'));
+			var obj = ($( e.target ).parentsUntil('div.inside').children('div.tabs-panel-active').find('input[type="checkbox"]:checked'));
 		}
 		else {
-		  var obj = ($( e.target ).parentsUntil('div.inside').find('input[type="checkbox"]'));
+		  var obj = ($( e.target ).parentsUntil('div.inside').find('input[type="checkbox"]:checked'));
 		}
 		
 		  $.each( obj, function( key, ob ) {
 			  
 			  var $id = getMaxMenuID();
-			  var $pos = (getItemscount('ul#menu-to-edit li'));
+			  var $pos = (getItemscount('ul#menu-to-edit.nh-menu-ul li'));
 			  while($('#menu-item-'+$pos).length >0){
 			  	$pos++;
 			  }
@@ -144,36 +149,48 @@ jQuery(document).ready(function($){
 		  return false;
 	  });
 	  
+	
+	  
 	  //Teaser Add Elemt
 		$('.submit-add-to-teaser').click(function(e){
-			//alert(1);
+			
 		  	if($( e.target ).parentsUntil('div.inside').children('div.tabs-panel-active') && $( e.target ).parentsUntil('div.inside').children('div.tabs-panel-active').length>0){
-	  			var obj = ($( e.target ).parentsUntil('div.inside').children('div.tabs-panel-active').find('input[type="checkbox"]'));
+	  			var obj = ($( e.target ).parentsUntil('div.inside').children('div.tabs-panel-active').find('input[type="checkbox"]:checked'));
+	  			
 			}
 			else {
-		  		var obj = ($( e.target ).parentsUntil('div.inside').find('input[type="checkbox"]'));
+		  		var obj = ($( e.target ).parentsUntil('div.inside').find('input[type="checkbox"]:checked'));
+		  		
 			}
 		
 		  	$.each( obj, function( key, ob ) {
 				
 				var $o = $(ob);
+				//alert($o.val());
 			  	if(typeof ($o.attr('checked')) != 'undefined'){
-					//alert($o.val());
+					
+					
+					var $type = $('#type-'+$o.attr('name')).val();
+					if (typeof $type == 'undefined') $type='';
+					//alert($type);
 					$('<li id="replace'+$o.val()+'" class="floatli empty_teaser_li"></li>').appendTo( "ul.nh-teaser-ul" );
 					jQuery.ajax({
 					 type : "post",			 
 					 url : ajaxurl,
 					 dataType : "json",
-					 data : {action: "ny_ynaa_teaser_action", tpid: $o.val()},
+					 data : {action: "ny_ynaa_teaser_action", tpid: $o.val(), type:$type },
 					 success: function(data,textStatus,jqXHR ) {
+					 	console.log(data);
 						 if(data.error == 0){
-							 $objhtml = '<li id="teaserli'+$o.val()+'" class="floatli">' +
+						 	
+							 $objhtml = '<li id="teaserli'+$o.val()+data.type+'" class="floatli">' +
 									'<div  class="teaserdiv" style="background-image:url('+data.img+');">' +
 									data.title +
 									'</div>' +
 									'<div>' +
-									'<a href="'+$o.val()+'" class="dellteaser">'+$delete+'</a> ' +
+									'<a href="'+$o.val()+data.type+'" class="dellteaser">'+$delete+'</a> ' +
 									'<input type="hidden" value="'+$o.val()+'"  name="'+$teaser_settings_key+'[teaser][]" /> ' +
+									'<input type="hidden" value="'+data.type+'"  name="'+$teaser_settings_key+'[teaser][type][]" /> ' +
 									'</div>' +
 									'</li>';
 							//alert(data.title);
@@ -281,10 +298,10 @@ jQuery(document).ready(function($){
 	  $('.submit-add-to-homepreset').click(function(e){
 			//alert(1);
 		  	if($( e.target ).parentsUntil('div.inside').children('div.tabs-panel-active') && $( e.target ).parentsUntil('div.inside').children('div.tabs-panel-active').length>0){
-	  			var obj = ($( e.target ).parentsUntil('div.inside').children('div.tabs-panel-active').find('input[type="checkbox"]'));
+	  			var obj = ($( e.target ).parentsUntil('div.inside').children('div.tabs-panel-active').find('input[type="checkbox"]:checked'));
 			}
 			else {
-		  		var obj = ($( e.target ).parentsUntil('div.inside').find('input[type="checkbox"]'));
+		  		var obj = ($( e.target ).parentsUntil('div.inside').find('input[type="checkbox"]:checked'));
 			}
 		
 		  	$.each( obj, function( key, ob ) {				
@@ -292,7 +309,7 @@ jQuery(document).ready(function($){
 			  	if(typeof ($o.attr('checked')) != 'undefined'){
 					
 					$('<li class="floatli empty_homepreset_li"></li>').appendTo( "ul.nh-homepreset-ul" );
-					//alert($o.val());
+					
 					var $type = $('#type-'+$o.attr('name')).val();
 					var $link_type = $('#link-type-'+$o.attr('name')).val();
 					
@@ -311,9 +328,9 @@ jQuery(document).ready(function($){
 											'<div class="setdefaultcatpic" style="display:none;"><a id="upload_image_button" class="upload_image_button" href="#" name="'+$homepreset_settings_key+'_items_'+$pos+'_img">'+$catText+'</a></div>' +
 										'</div>' +
 									   '<div><input type="text" value="'+$title+'" id="hptitle'+$pos+'" name="'+$homepreset_settings_key+'[items]['+$pos+'][title]" class="hptitle" /></div>' +
-									   $urldiv +
-									   '<div><input type="checkbox" checked="checked" name="'+$homepreset_settings_key+'[items]['+$pos+'][allowRemove]" id="allowRemove'+$pos+'" value="1" /><label for="allowRemove'+$pos+'"> '+$allowremoveText+'</label></div>' +									   
-									   '<div>' +
+									   $urldiv;
+						//$objhtml +=   '<div><input type="checkbox" checked="checked" name="'+$homepreset_settings_key+'[items]['+$pos+'][allowRemove]" id="allowRemove'+$pos+'" value="1" /><label for="allowRemove'+$pos+'"> '+$allowremoveText+'</label></div>';									   
+						$objhtml +=   '<div>' +
 											'<a href="'+$pos+'" class="delhp">'+$delete+'</a>' +
 											'<input type="hidden" value="'+$o.val()+'"  name="'+$homepreset_settings_key+'[items]['+$pos+'][id]" />' +
 											'<input type="hidden" value="'+$type+'"  name="'+$homepreset_settings_key+'[items]['+$pos+'][type]" />' + 
@@ -325,23 +342,27 @@ jQuery(document).ready(function($){
 						$( $objhtml).replaceAll( ".empty_homepreset_li" );	
 						//if(parseInt($('.floatli').length)% 2 == 0 ) $('<li class="empty_li_clear"></li>' ).appendTo( "ul.nh-homepreset-ul" );					
 						$o.attr('checked', false);
+						
 					}
 					else {
+						//alert($o.val());
 						jQuery.ajax({
 						 type : "post",			 
 						 url : ajaxurl,
 						 dataType : "json",
+						 async: false,
 						 data : {action: "ny_ynaa_teaser_action", tpid: $o.val()},
 						 success: function(data,textStatus,jqXHR ) {
+						 	//console.log(data);
 							 if(data.error == 0){							
 								$objhtml = '<li id="homepresetli'+$pos+'" class="floatli">' +
 											'<div class="hpdiv" id="hpdiv'+$pos+'" style="background-image:url('+data.img+');">' +
 												'<div class="ttitle" id="hptitle'+$pos+'div">'+data.title+'</div>' +
 												
 											'</div>' +
-										   '<div><input type="text" value="'+data.title+'" id="hptitle'+$pos+'" name="'+$homepreset_settings_key+'[items]['+$pos+'][title]" class="hptitle" /></div>' +
-										   '<div><input type="checkbox" checked="checked" name="'+$homepreset_settings_key+'[items]['+$pos+'][allowRemove]" id="allowRemove'+$pos+'" value="1" /><label for="allowRemove'+$pos+'"> '+$allowremoveText+'</label></div>' +
-										   '<div>' +
+										   '<div><input type="text" value="'+data.title+'" id="hptitle'+$pos+'" name="'+$homepreset_settings_key+'[items]['+$pos+'][title]" class="hptitle" /></div>';
+							//$objhtml +=	   '<div><input type="checkbox" checked="checked" name="'+$homepreset_settings_key+'[items]['+$pos+'][allowRemove]" id="allowRemove'+$pos+'" value="1" /><label for="allowRemove'+$pos+'"> '+$allowremoveText+'</label></div>';
+							$objhtml +=   '<div>' +
 												'<a href="'+$pos+'" class="delhp">'+$delete+'</a>' +
 												'<input type="hidden" value="'+$o.val()+'"  name="'+$homepreset_settings_key+'[items]['+$pos+'][id]" />' +
 												'<input type="hidden" value="'+$type+'"  name="'+$homepreset_settings_key+'[items]['+$pos+'][type]" />' + 
@@ -356,7 +377,7 @@ jQuery(document).ready(function($){
 								//$( $objhtml ).appendTo( "ul.nh-homepreset-ul" );
 							 }
 							 else {
-								 alert (data.error);
+								 //alert (data.error);
 								 $('.empty_homepreset_li').remove();
 							 }
 							/*if(response.type == "success") {
@@ -578,7 +599,9 @@ function getMaxHomepresetID(){
 		});
 	}
 	maxid++;
+	
 	return maxid;
+	
 }
 
 function getItemscount(e){
