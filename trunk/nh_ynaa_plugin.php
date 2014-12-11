@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.8.3
+Version: 0.8.3.1
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -20,7 +20,7 @@ else {
 //Version Number
 //Temp fix folder problem
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.8.3";
+$nh_ynaa_version = "0.8.3.1";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -2322,6 +2322,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 								//var_dump($this->homepreset_settings['items'] );
 								foreach($this->homepreset_settings['items'] as $hp){
 									//var_dump($hp);
+									$post_title= '';
 									if($hp['type'] == 'map' && !$this->general_settings['location']) { continue; }
 									if($hp['type'] == 'cat' && ($this->categories_settings[$hp['id']]['hidecat'] || !term_exists(get_cat_name($hp['id']), 'category'))) { /*var_dump($hp);echo 'term'.term_exists($hp['id'], 'category'); echo 'cat<hr />'."\r\n";*/ continue; }
 									if($hp['type'] != 'cat' && $hp['type'] != 'fb' && $hp['type'] != 'map' && $hp['type'] != 'webview' && $hp['type'] != 'events' && $hp['type']!='pushCenter' ){
@@ -2405,16 +2406,44 @@ if(!class_exists('NH_YNAA_Plugin'))
 										if(!$img && $hp['img']) $img = $hp['img'];
 										
 									}
+									elseif($hp['type'] == 'events'){
+										
+										$cat_id	= (int)  $hp['id'];
+										$img = '';
+										//if($this->categories_settings[-1]['img']) $img = $this->categories_settings[-1]['img'];
+										$_GET[$this->requesvar['id']] = $hp['id'];
+										$event = $this->nh_ynaa_events(1);										
+										if($event){
+											$items['articles']['items'][0]['id']=$event['events']['items'][0]['id'];
+											$items['articles']['items'][0]['timestamp']=$event['events']['items'][0]['timestamp'];
+											$items['articles']['items'][0]['publish_timestamp']=$event['events']['items'][0]['publish_timestamp'];
+											if(!$img)$img = $event['events']['items'][0]['thumb'];
+											$post_title = $event['events']['items'][0]['title'];
+											//$items['articles']['items'][0]['publish_timestamp']= $event;
+										}
+										/*$event = $this->nh_ynaa_events($hp['id']);										
+										if($event){
+											$items['articles']['items'][0]['id']=$event['events']['items'][0]['id'];
+											$items['articles']['items'][0]['timestamp']=$event['events']['items'][0]['timestamp'];
+											$items['articles']['items'][0]['publish_timestamp']=$event['events']['items'][0]['publish_timestamp'];
+											$img = $event['events']['items'][0]['thumb'];
+										}*/
+										
+										//if(!$img) $img = $hp['img'];
+										
+									}
 									elseif($hp['type'] == 'event'){
 										
 										$cat_id	= (int)  $hp['id'];
-										
+										$img = '';
 										$_GET[$this->requesvar['id']] = $hp['id'];
 										$event = $this->nh_ynaa_event();
+										//var_dump($event);
 										if($event){
 											$items['articles']['items'][0]['id']=(int)  $hp['id'];
 											$items['articles']['items'][0]['timestamp']=$event['event']['timestamp'];
 											$items['articles']['items'][0]['publish_timestamp']=$event['event']['publish_timestamp'];
+											$post_title= ($event['event']['title']);
 											$img = $event['event']['thumb'];
 											//$items['articles']['items'][0]['publish_timestamp']= $event;
 										}
@@ -2452,6 +2481,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 											//var_dump($p);
 											$items['articles']['items'][0]['timestamp'] = strtotime($p->post_modified);
 											$items['articles']['items'][0]['publish_timestamp'] = strtotime($p->post_date);
+											$post_title= html_entity_decode($p->post_title);
 										}
 										
 										$hp['type'] = 'article';
@@ -2459,7 +2489,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 									$showsub = 0;
 									
 									if($cat_id && $this->categories_settings[$cat_id]['showsub']) $showsub=1;
-									$returnarray['items'][]=array('pos'=>$i, 'type' => $hp['type'], 'allowRemove'=> $allowRemove, 'id'=> (int)$hp['id'], 'cat_id'=>$cat_id,  'title'=>html_entity_decode($hp['title']), 'img'=>$img, 'post_id'=>$items['articles']['items'][0]['id'], 'timestamp'=>$items['articles']['items'][0]['timestamp'], 'publish_timestamp' =>$items['articles']['items'][0]['publish_timestamp'], 'showsubcategories'=>$showsub, 'url'=>$items['articles']['items'][0]['url']);
+									$returnarray['items'][]=array('pos'=>$i, 'type' => $hp['type'], 'allowRemove'=> $allowRemove, 'id'=> (int)$hp['id'], 'cat_id'=>$cat_id,  'title'=>html_entity_decode($hp['title']), 'img'=>$img,'post_title'=> $post_title, 'post_id'=>$items['articles']['items'][0]['id'], 'timestamp'=>$items['articles']['items'][0]['timestamp'], 'publish_timestamp' =>$items['articles']['items'][0]['publish_timestamp'], 'showsubcategories'=>$showsub, 'url'=>$items['articles']['items'][0]['url']);
 									$i++;
 									
 								}
@@ -3593,7 +3623,7 @@ if(!class_exists('NH_YNAA_Plugin'))
           }
           img {
             width:100%;
-			 height: auto ;
+			height: auto;
           }
           
           ';
@@ -3601,7 +3631,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$this->general_settings['css'] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '',$this->general_settings['css']);
 				$this->general_settings['css'] = str_replace('../fonts/stylesheet.css',plugins_url( 'fonts/stylesheet.css' , __FILE__ ),$this->general_settings['css']);
 				$css ='<style type="text/css">'.$css.$this->general_settings['css'].'body{color:'.$this->general_settings['ct'].'}</style>';
-				
+				 
 				if(strpos($content,'<html><head><meta charset="utf-8"></head>')){
 							$content = str_replace('<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></head>','<html data-html="html1"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css">'.$css.'</head>',$content);
 						}
@@ -4158,8 +4188,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 						}
 						if ( has_post_thumbnail($post->ID)) {
 							$post_thumbnail_image=wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'medium');
+							$post_thumbnail_image_full=wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full');
 						}
-						else $post_thumbnail_image[0] = '';	
+						else {
+							$post_thumbnail_image[0] = '';
+							$post_thumbnail_image_full[0] = '';
+						}	
 						$start_ts = strtotime($event->event_start_date.' '.$event->event_start_time);
 						$end_ts = strtotime($event->event_end_date.' '.$event->event_end_time);
 						if(!$event->location_latitude || $event->location_latitude== null || $event->location_latitude=='null' || $event->location_latitude=='0.000000') $event->location_latitude =  0;
@@ -4191,7 +4225,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							//$returnarray['start_time'] .= (__(' Uhr'));
 							//$returnarray['end_time'] .= (__(' Uhr'));
 							//'thumb' => $post_thumbnail_image[0],
-							'img' => $post_thumbnail_image[0],
+							'img' => $post_thumbnail_image_full[0],
 							'location' => $event->location_name,
 							'town' => $event->location_town,							
 							'city' => $event->location_town,
