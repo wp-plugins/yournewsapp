@@ -569,8 +569,39 @@ jQuery(document).ready(function($){
 		}
 
 	});
+	
+	if($('#ynaa_nav_tab').length>0){
+	
+		
+		var $ynaa_nav_tab = $('#ynaa_nav_tab');
+		
+		 var eTop = $ynaa_nav_tab.offset().top; //get the offset top of the element
+		nh_tab_nav_fix(eTop);
+		// log(eTop - $(window).scrollTop()); //position of the ele w.r.t window
+		$( window ).scroll(function(event) {
+			//var position = $('h2.nav-tab-wrapper').position();
+			//$('#placeholder').html(eTop - $(window).scrollTop());	
+			 nh_tab_nav_fix(eTop - $(window).scrollTop()); 
+
+		});
+	}
 			
 });
+
+
+function nh_tab_nav_fix(eTop){
+	var $ynaa_nav_tab = jQuery('#ynaa_nav_tab');
+	
+	if(eTop<30){
+		  if(!$ynaa_nav_tab.hasClass('fixed')){
+			$ynaa_nav_tab.addClass('fixed');
+		  }
+	  }
+	  else if($ynaa_nav_tab.hasClass('fixed')){
+		  $ynaa_nav_tab.removeClass('fixed');
+	  }
+	
+}
 
 function getMaxMenuID(){
 	var maxid=-1;

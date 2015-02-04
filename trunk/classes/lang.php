@@ -152,7 +152,9 @@
 			'recent_notifications'=> 'Recent notifications',
 			'bookmarks_notifications' => 'Bookmarks & Notifications',
 			'delete'=>'delete',
-			'You have not bookmarked any posts yet'=>'You have not bookmarked any posts yet'
+			'You have not bookmarked any posts yet'=>'You have not bookmarked any posts yet',
+			'Share now:'=>'Share now:',
+			'WhatsApp not installed'=>'WhatsApp not installed'
            ));
            
          }
