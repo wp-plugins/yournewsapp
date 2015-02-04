@@ -78,6 +78,8 @@
       'recent_notifications'=> 'Letzte Meldungen',
       'bookmarks_notifications' => 'Favoriten & Benachrichtigungen',
       'delete'=>'löschen',
-      'You have not bookmarked any posts yet'=>'Sie haben noch keine Beiträge favorisiert.'
+      'You have not bookmarked any posts yet'=>'Sie haben noch keine Beiträge favorisiert.',
+      'Share now:'=>'Hier teilen:',
+      'WhatsApp not installed'=>'WhatsApp ist nicht installiert'
            );
 ?>
