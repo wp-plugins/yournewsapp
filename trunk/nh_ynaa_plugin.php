@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.8.3.1
+Version: 0.8.4.1
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -20,7 +20,7 @@ else {
 //Version Number
 //Temp fix folder problem
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.8.3.1";
+$nh_ynaa_version = "0.8.4.1";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -821,8 +821,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 			<select  id="nh_language" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" class="nh-floatleft">
                     	<option value="0">Everest</option>
                         <option value="1" <?php if($this->general_settings[$field['field']]=='1') echo ' selected'; ?>>Nebelhorn</option>
-                        <!--<option value="2" <?php if($this->general_settings[$field['field']]=='2') echo ' selected'; ?>><?php _e('Hallasan','nh-bas'); ?></option>
-                        <option value="3" <?php if($this->general_settings[$field['field']]=='3') echo ' selected'; ?>><?php _e('Piz Palü','nh-bas'); ?></option>-->
+                        <!--<option value="2" <?php if($this->general_settings[$field['field']]=='2') echo ' selected'; ?>><?php _e('Hallasan','nh-bas'); ?></option>-->
+                        <!--<option value="3" <?php if($this->general_settings[$field['field']]=='3') echo ' selected'; ?>><?php _e('Piz Palü','nh-bas'); ?></option>-->
                     </select>
            <?php
 		   echo '<div class="helptext padding5">'.(__('Select your app theme.','nh-ynaa')).'</div>';
@@ -3094,21 +3094,24 @@ if(!class_exists('NH_YNAA_Plugin'))
 					if ( $the_query->have_posts() ) {
 						$i=1;
 						while ( $the_query->have_posts() ) {
+							
+							
 							$the_query->the_post();
 
 							//var_dump($the_query->post->ID);
 
 							//Hide POSTS
-							/*if($_nh_ynaa_meta_keys =get_post_meta($the_query->post->ID,'_nh_ynaa_meta_keys',true)){
+							$_nh_ynaa_meta_keys = (get_post_meta( $the_query->post->ID, '_nh_ynaa_meta_keys', true ));
+							if($_nh_ynaa_meta_keys){
 								$_nh_ynaa_meta_keys = unserialize($_nh_ynaa_meta_keys);
 								if($_nh_ynaa_meta_keys && is_array($_nh_ynaa_meta_keys)){
-									if(isset($_nh_ynaa_meta_keys) && is_null($_nh_ynaa_meta_keys['s'])) {
-										var_dump ($_nh_ynaa_meta_keys);
+									if(is_null($_nh_ynaa_meta_keys['s'])) {
+										//var_dump ($_nh_ynaa_meta_keys);
 										continue;
 									}
 								}
 
-							}*/
+							}
 							$cat_id = 0;
 							$cat_id_array = $this->nh_getpostcategories($the_query->post->ID);
 
@@ -3123,7 +3126,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 							//Weil die App sonst nicht zu recht muss type auf post gesetzt werden
 							$post_type = 'article';
 							$posttitle = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($the_query->post->post_title)), ENT_NOQUOTES, 'UTF-8')));
-							$returnarray['items'][]=array('pos'=>$i, "type"=>$post_type, 'allowRemove'=> 1, 'cat_id'=>$cat_id, 'cat_id_array'=>$cat_id_array,  'title'=> $posttitle, 'img'=>$img, 'thumb' => $thumbnail, 'images'=>$images, 'post_id'=>$the_query->post->ID, 'timestamp'=>strtotime($the_query->post->post_modified), 'publish_timestamp' =>strtotime($the_query->post->post_date),'post_date' =>strtotime($the_query->post->post_date), 'showsubcategories'=>0);
+							if($this->general_settings['theme']=3) $excerpt = get_the_excerpt() ;
+							else $excerpt='';
+							
+							$returnarray['items'][]=array('pos'=>$i, "type"=>$post_type, 'allowRemove'=> 1, 'cat_id'=>$cat_id, 'cat_id_array'=>$cat_id_array,  'title'=> $posttitle, 'img'=>$img, 'thumb' => $thumbnail, 'images'=>$images, 'post_id'=>$the_query->post->ID, 'timestamp'=>strtotime($the_query->post->post_modified), 'publish_timestamp' =>strtotime($the_query->post->post_date),'post_date' =>strtotime($the_query->post->post_date), 'showsubcategories'=>0, 'excerpt'=>html_entity_decode(str_replace('[&hellip;]', '',$excerpt)));
+							
 							if(strtotime($the_query->post->post_modified) > $returnarray['timestamp']) {
 								$returnarray['changes']=1;
 								$returnarray['timestamp']= strtotime($the_query->post->post_modified);
@@ -3308,7 +3315,9 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$ts = strtotime($post->post_modified);
 							$returnarray['changes']=1;
 						}
-						$post_thumbnail_image[0] = $this->nh_getthumblepic($post->ID,'medium');
+						if(!$size) $size = 'medium';
+						$post_thumbnail_image[0] = $this->nh_getthumblepic($post->ID,$size);
+						
 						$images = $this->nh_getthumblepic_allsize($post->ID);
 					/*	if ( has_post_thumbnail($post->ID)) {
 							$post_thumbnail_image=wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'medium');

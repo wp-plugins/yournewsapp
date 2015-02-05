@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 0.8.3.1
+Stable tag: 0.8.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,15 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.8.4.1 =
+- Teaser image quality improves
+
+= 0.8.4 =
+- New function: Integration of Avada Theme Portfolio categories
+- Update Plugin backend user interface
+- Smaller bug fixes and performance improvements
+
+
 = 0.8.3.1 =
 - Fixed: event on startscreen problem
 
@@ -340,6 +349,15 @@ Please refer to our [Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.8.4.1 =
+- Teaser image quality improves
+
+= 0.8.4 =
+- New function: Integration of Avada Theme Portfolio categories
+- Update Plugin backend user interface
+- Smaller bug fixes and performance improvements
+
+
 = 0.8.3.1 =
 - Fixed: event on startscreen problem
 
