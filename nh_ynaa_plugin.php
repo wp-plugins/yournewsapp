@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.8.4.2
+Version: 0.8.4.3
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -20,7 +20,7 @@ else {
 //Version Number
 //Temp fix folder problem
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.8.4.2";
+$nh_ynaa_version = "0.8.4.3";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -59,14 +59,6 @@ if(!class_exists('NH_YNAA_Plugin'))
 		private $requesvar ; // Define Get POST Requst Var
 
 
-		public $tabs = array(
-			// The assoc key represents the ID
-			// It is NOT allowed to contain spaces
-			 'EXAMPLE' => array(
-				 'title'   => 'TEST ME!'
-				,'content' => 'FOO'
-			 )
-		);
 
 
 
@@ -238,7 +230,12 @@ if(!class_exists('NH_YNAA_Plugin'))
 
 			}*/
 			$lang = 'en';
-			if(get_bloginfo('language')=='de-DE' || get_bloginfo('language')=='de-DE' || get_bloginfo('language')=='de-CH') $lang='de';
+			if(get_bloginfo('language')=='de-DE' || get_bloginfo('language')=='de-CH') {
+				$lang='de';
+				$menu_array[0]['title']='Stöbern';
+				$menu_array[2]['title']='Benachrichtigungen';
+				
+			}
 			if('open'==get_option('default_comment_status')) $comments =1;
 			else $comments =0;
 
@@ -339,7 +336,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				$nh_ynaa_categories_settings['ts'] = $ts;
 			}
 			$nh_ynaa_homepreset_settings['homescreentype']=1;
-
+			$nh_ynaa_homepreset_settings['sorttype']='date-desc';
 
 			$ts_setting = get_option( 'nh_ynaa_homepreset_settings' );
 			if(!$ts_setting || is_null($ts_setting)){
@@ -1371,42 +1368,10 @@ if(!class_exists('NH_YNAA_Plugin'))
                     </div>
                     <?php
 					}
-				/*	echo '<div class="headercont clearfix">';
-                    echo '<p>'.__('With this plugin you can deploy your own native iOS (iPhone) and Android app containing the content of this Wordpress installation.','nh-ynaa').'<br>';
-					echo __('To get a preview on what the app would look like, please follow these steps:','nh-ynaa').'</p>';
-					echo '<ul class="howtolist">';
-						echo '<li>'.__('First of all download and install the <a href="https://itunes.apple.com/de/app/yourblogapp-yournewsapp/id815084293?mt=8" target="_blank">yourBlogApp test app</a> from the Apple AppStore','nh-ynaa').'</li>';
-						echo '<li>'.__('Scan the QR code and open the link on your smartphone. Other than scanning the QR you can type the following link into your smartphone’s browser: ','nh-ynaa').'yba://?url='.get_site_url().'';
-
-						echo '</li>';
-
-                    	echo '<li>'.__('By opening this link the test app will be reconfigured and filled with the content from your Wordpress site. Change the look and feel of your app by modifying the settings, adding your logo, customizing the startscreen and changing the overall style.','nh-ynaa').'</li>';
-						echo '<li>'.__('If you like the app, please register on our website <a href="http://www.your-news-app.com" target="_blank">www.your-news-app.com</a>. We will then create the app for you and upload it to the app stores!','nh-ynaa').'</li>';
-						echo '<li>'.__('If you have any questions contact us: ','nh-ynaa').'<a href="mailto:support@yournewsapp.de">support@yournewsapp.de</a>'.'</li>';
-					echo '</ul>';
-					echo '<div>';
-					echo '<a href="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=yba://?url='.get_site_url().'&choe=UTF-8"><img width="100px" src="https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=yba://?url='.get_site_url().'&choe=UTF-8" alt="yba://?url='.get_site_url().'" /></a> <br>';
-					echo '</div>';
-					echo '</div>';
-					echo '<div class="clear"></div>';
-					echo '<p>'.__('In the following tabs you can modify the appearance and functions of the app. With our <a href="https://itunes.apple.com/de/app/yourblogapp-yournewsapp/id815084293?mt=8" target="_blank">yourBlogApp test app</a> you can see what your app would look like.', 'nh-ynaa');
-					*/
-                } //END function nh_the_home_content
+				
+        	} //END function nh_the_home_content
 
 
-		/*
-		 * Start screen View
-		*/
-		/*function nh_ynaa_field_general_homescreentype($field){
-			?>
-			<select id="nh_homescreentype" name="<?php echo $this->general_settings_key; ?>[<?php echo $field['field']; ?>]" class="nh-floatleft">
-                    	<option value="0"><?php _e('Categories', 'nh-ynaa'); ?></option>
-                        <option value="1" <?php if($this->general_settings[$field['field']]=='1') echo ' selected'; ?>><?php _e('Articles', 'nh-ynaa'); ?></option>
-                        <option value="2" <?php if($this->general_settings[$field['field']]=='2') echo ' selected'; ?>><?php _e('Pages', 'nh-ynaa'); ?></option>
-                    </select>
-           <?php
-		    echo '<div class="helptext padding5">'.(__('Select your startscreen view for your app.','nh-ynaa')).'</div>';
-		}*/
 
 		/*
 		 * LAngugae
@@ -1424,6 +1389,7 @@ if(!class_exists('NH_YNAA_Plugin'))
                         <option value="pt" <?php if($this->general_settings[$field['field']]=='pt') echo ' selected'; ?>><?php _e('Portuguese', 'nh-ynaa'); ?></option>
                         <option value="ru" <?php if($this->general_settings[$field['field']]=='ru') echo ' selected'; ?>><?php _e('Russian', 'nh-ynaa'); ?></option>
                         <option value="es" <?php if($this->general_settings[$field['field']]=='es') echo ' selected'; ?>><?php _e('Spanish', 'nh-ynaa'); ?></option>
+                        <option value="es" <?php if($this->general_settings[$field['field']]=='ro') echo ' selected'; ?>><?php _e('Romanian', 'nh-ynaa'); ?></option>
                     </select>
            <?php
 		   echo '<div class="helptext padding5">'.(__('Interface and dialogue language','nh-ynaa')).'</div>';
@@ -1820,13 +1786,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			//wp_localize_script( 'ynaa-script-handle', 'ajax_object',  array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 			if( 'index.php' != $hook_suffix ) return;	// Only applies to dashboard panel
 
-			wp_enqueue_script( 'ynaa_push-script', plugins_url( 'js/ynaa_push.js', __FILE__ ), array('jquery'));
-
-			// in javascript, object properties are accessed as ajax_object.ajax_url, ajax_object.we_value
-			wp_localize_script( 'ynaa_push-script', 'ajax_object',
-					array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'we_value' => 1234 ) );
-
-			/**/
+		
 
 
 		}
@@ -6051,9 +6011,9 @@ function nh_enqueue() {
 }
 
 // Same handler function...
-add_action( 'wp_ajax_my_action', 'my_action_callback' );
-add_action( 'wp_ajax_nopriv_my_action', 'my_action_callback' );
-function my_action_callback() {
+add_action( 'wp_ajax_my_action', 'nh_my_action_callback' );
+add_action( 'wp_ajax_nopriv_my_action', 'nh_my_action_callback' );
+function nh_my_action_callback() {
 
       define('APPKEY', 'DqGr_G2SR42eWPqmnfh6Fw'); // App Key
       define('PUSHSECRET', 'qLyftFGzTfeDjFbhjphcNw'); // Master Secret

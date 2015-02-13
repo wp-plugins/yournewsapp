@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: NH YNAA Plugin 1.0\n"
-"POT-Creation-Date: 2015-02-04 12:42+0100\n"
-"PO-Revision-Date: 2015-02-04 12:43+0100\n"
+"POT-Creation-Date: 2015-02-13 20:16+0100\n"
+"PO-Revision-Date: 2015-02-13 20:16+0100\n"
 "Last-Translator: \n"
 "Language-Team: Nebelhorn <info@nebelhorn.com>\n"
 "Language: de\n"
@@ -16,289 +16,289 @@ msgstr ""
 "X-Poedit-KeywordsList: __;_e;_n\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: nh_ynaa_plugin.php:225 nh_ynaa_plugin.php:583
+#: nh_ynaa_plugin.php:217 nh_ynaa_plugin.php:575
 msgid "Browse"
 msgstr "Stöbern"
 
-#: nh_ynaa_plugin.php:227 nh_ynaa_plugin.php:597
+#: nh_ynaa_plugin.php:219 nh_ynaa_plugin.php:589
 msgid "Notifications"
 msgstr "Benachrichtigungen"
 
-#: nh_ynaa_plugin.php:227 nh_ynaa_plugin.php:597
+#: nh_ynaa_plugin.php:219 nh_ynaa_plugin.php:589
 msgid "Pushcenter"
 msgstr "Pushcenter"
 
-#: nh_ynaa_plugin.php:563
+#: nh_ynaa_plugin.php:555
 msgid "General value"
 msgstr "Hauptvariablen"
 
-#: nh_ynaa_plugin.php:567
+#: nh_ynaa_plugin.php:559
 msgid "Menu value"
 msgstr "Menüvariablen"
 
-#: nh_ynaa_plugin.php:571
+#: nh_ynaa_plugin.php:563
 msgid "Teaser value"
 msgstr "Teaservariablen"
 
-#: nh_ynaa_plugin.php:575
+#: nh_ynaa_plugin.php:567
 msgid "Push value"
 msgstr "Pushvariblen"
 
-#: nh_ynaa_plugin.php:579 nh_ynaa_plugin.php:872
+#: nh_ynaa_plugin.php:571 nh_ynaa_plugin.php:864
 msgid "CSS"
 msgstr "CSS"
 
-#: nh_ynaa_plugin.php:587 nh_ynaa_plugin.php:2971 nh_ynaa_plugin.php:2972
+#: nh_ynaa_plugin.php:579 nh_ynaa_plugin.php:2926 nh_ynaa_plugin.php:2927
 msgid "Facebook"
 msgstr "Facebook"
 
-#: nh_ynaa_plugin.php:590 nh_ynaa_plugin.php:1071 nh_ynaa_plugin.php:2934
+#: nh_ynaa_plugin.php:582 nh_ynaa_plugin.php:1063 nh_ynaa_plugin.php:2889
 msgid "Events"
 msgstr "Events"
 
-#: nh_ynaa_plugin.php:593 nh_ynaa_plugin.php:2949 nh_ynaa_plugin.php:3977
+#: nh_ynaa_plugin.php:585 nh_ynaa_plugin.php:2904 nh_ynaa_plugin.php:3953
 msgid "Map"
 msgstr "Karte"
 
-#: nh_ynaa_plugin.php:593 include/menu.php:298
+#: nh_ynaa_plugin.php:585 include/menu.php:298
 msgid "App"
 msgstr "App"
 
-#: nh_ynaa_plugin.php:595
+#: nh_ynaa_plugin.php:587
 msgid "Extern URL"
 msgstr "Externe Url"
 
-#: nh_ynaa_plugin.php:595
+#: nh_ynaa_plugin.php:587
 msgid "URL"
 msgstr "URL"
 
-#: nh_ynaa_plugin.php:639
+#: nh_ynaa_plugin.php:631
 msgid "QR-Code"
 msgstr "QR-Code"
 
-#: nh_ynaa_plugin.php:649 include/homepreset.php:251
+#: nh_ynaa_plugin.php:641 include/homepreset.php:251
 #: include/homepreset.php:257
 msgid "Homepresets"
 msgstr "Startseite"
 
-#: nh_ynaa_plugin.php:662
+#: nh_ynaa_plugin.php:654
 msgid "App Settings"
 msgstr "App Einstellungen"
 
-#: nh_ynaa_plugin.php:667
+#: nh_ynaa_plugin.php:659
 msgid "Logo"
 msgstr "Logo"
 
-#: nh_ynaa_plugin.php:668
+#: nh_ynaa_plugin.php:660
 msgid "Select Logo"
 msgstr "Logo auswählen"
 
-#: nh_ynaa_plugin.php:670
+#: nh_ynaa_plugin.php:662
 msgid "Theme"
 msgstr "Theme"
 
-#: nh_ynaa_plugin.php:671
+#: nh_ynaa_plugin.php:663
 msgid "Select theme"
 msgstr "Theme auswählen"
 
-#: nh_ynaa_plugin.php:674
+#: nh_ynaa_plugin.php:666
 msgid "Color And Style Settings"
 msgstr "Farb-Einstellungen"
 
-#: nh_ynaa_plugin.php:675
+#: nh_ynaa_plugin.php:667
 msgid "Primary Color"
 msgstr "Primärfarbe"
 
-#: nh_ynaa_plugin.php:676
+#: nh_ynaa_plugin.php:668
 msgid "Secondary Color"
 msgstr "Sekundärfarbe"
 
-#: nh_ynaa_plugin.php:678
+#: nh_ynaa_plugin.php:670
 msgid "Navigation Bar Color"
 msgstr "Navigationbar-Farbe"
 
-#: nh_ynaa_plugin.php:679
+#: nh_ynaa_plugin.php:671
 msgid "Menu Text Color"
 msgstr "Menü Textfarbe"
 
-#: nh_ynaa_plugin.php:680
+#: nh_ynaa_plugin.php:672
 msgid "Title Color"
 msgstr "Farbe Überschrift"
 
-#: nh_ynaa_plugin.php:682
+#: nh_ynaa_plugin.php:674
 msgid "Continuous Text Color"
 msgstr "Farbe Fließtext"
 
-#: nh_ynaa_plugin.php:685
+#: nh_ynaa_plugin.php:677
 msgid "Maximum width for images so they won‘t scale up (in px)"
 msgstr "Maximale Breite für Bilder, so dass sie nicht skalieren (in px)"
 
-#: nh_ynaa_plugin.php:690
+#: nh_ynaa_plugin.php:682
 msgid "Facebook Feed"
 msgstr "Facebook Feed"
 
-#: nh_ynaa_plugin.php:691
+#: nh_ynaa_plugin.php:683
 msgid "Facebook App Secret"
 msgstr "Facebook App Secret"
 
-#: nh_ynaa_plugin.php:692
+#: nh_ynaa_plugin.php:684
 msgid "Facebook App ID"
 msgstr "Facebook App ID"
 
-#: nh_ynaa_plugin.php:693
+#: nh_ynaa_plugin.php:685
 msgid "Facebook Page ID"
 msgstr "Facebook Page ID"
 
-#: nh_ynaa_plugin.php:697
+#: nh_ynaa_plugin.php:689
 msgid "Extras"
 msgstr "Extras"
 
-#: nh_ynaa_plugin.php:698
+#: nh_ynaa_plugin.php:690
 msgid "Language"
 msgstr "Sprache"
 
-#: nh_ynaa_plugin.php:699
+#: nh_ynaa_plugin.php:691
 msgid "Activate feature image in post view"
 msgstr "Aktiviere das Beitragsbild auf der Artikel-Detailseite"
 
-#: nh_ynaa_plugin.php:700
+#: nh_ynaa_plugin.php:692
 msgid "Allow comments in App"
 msgstr "Kommentieren in der App erlauben"
 
-#: nh_ynaa_plugin.php:706 include/events.php:22
+#: nh_ynaa_plugin.php:698 include/events.php:22
 msgid "Select your Event Manager:"
 msgstr "Ihren Event Manager auswählen:"
 
-#: nh_ynaa_plugin.php:708
+#: nh_ynaa_plugin.php:700
 msgid "Enable locations and activate location metabox in posts"
 msgstr "Karte aktivieren und Ort Metabox in Beiträgen anzeigen"
 
-#: nh_ynaa_plugin.php:710
+#: nh_ynaa_plugin.php:702
 msgid "Use image from Gadgetry-Theme"
 msgstr "Gadgetry-Theme Bild verwenden"
 
-#: nh_ynaa_plugin.php:711
+#: nh_ynaa_plugin.php:703
 msgid "Avada Portfolio Categories"
 msgstr "Avada Portfolio Kategorien"
 
-#: nh_ynaa_plugin.php:712
+#: nh_ynaa_plugin.php:704
 msgid "Google Analytics Tracking ID"
 msgstr "Google Analytics Tracking ID"
 
-#: nh_ynaa_plugin.php:716
+#: nh_ynaa_plugin.php:708
 msgid "Advanced"
 msgstr "Fortgeschrittene Einstellungen"
 
-#: nh_ynaa_plugin.php:718
+#: nh_ynaa_plugin.php:710
 msgid "Remove blank lines"
 msgstr "Entferne überflüssige Leerzeilen"
 
-#: nh_ynaa_plugin.php:720
+#: nh_ynaa_plugin.php:712
 msgid "Enable UTF8 encode"
 msgstr "UTF8 Encodierung aktivieren"
 
-#: nh_ynaa_plugin.php:721
+#: nh_ynaa_plugin.php:713
 msgid "Use embedded JSON"
 msgstr "Eingebettete JSON verwenden"
 
-#: nh_ynaa_plugin.php:722
+#: nh_ynaa_plugin.php:714
 msgid "Disable dom convert"
 msgstr "Dom Konvertierung deaktivieren"
 
-#: nh_ynaa_plugin.php:723
+#: nh_ynaa_plugin.php:715
 msgid "Enable debug mode"
 msgstr "Debug Modus aktivieren"
 
-#: nh_ynaa_plugin.php:764
+#: nh_ynaa_plugin.php:756
 msgid "Select your Logo."
 msgstr "Logo auswählen"
 
-#: nh_ynaa_plugin.php:783
+#: nh_ynaa_plugin.php:775
 msgid "Menu"
 msgstr "Menü"
 
-#: nh_ynaa_plugin.php:787
+#: nh_ynaa_plugin.php:779
 msgid "App Menu Settings"
 msgstr "App Menü Einstellungen"
 
-#: nh_ynaa_plugin.php:796 include/teaser.php:238
+#: nh_ynaa_plugin.php:788 include/teaser.php:238
 msgid "Teaser"
 msgstr "Teaser"
 
-#: nh_ynaa_plugin.php:799
+#: nh_ynaa_plugin.php:791
 msgid "App Teaser Settings"
 msgstr "App Teaser  Einstellungen"
 
-#: nh_ynaa_plugin.php:807 include/events.php:135 include/homepreset.php:11
+#: nh_ynaa_plugin.php:799 include/events.php:135 include/homepreset.php:11
 #: include/homepreset.php:38 include/menu.php:125 include/teaser.php:172
 msgid "Categories"
 msgstr "Kategorien"
 
-#: nh_ynaa_plugin.php:810
+#: nh_ynaa_plugin.php:802
 msgid "Categories Settings"
 msgstr "Kategorien Einstellungen"
 
-#: nh_ynaa_plugin.php:824
+#: nh_ynaa_plugin.php:816
 msgid "Hallasan"
 msgstr "Hallasan"
 
-#: nh_ynaa_plugin.php:825
+#: nh_ynaa_plugin.php:817
 msgid "Piz Palü"
 msgstr "Piz Palü"
 
-#: nh_ynaa_plugin.php:828
+#: nh_ynaa_plugin.php:820
 msgid "Select your app theme."
 msgstr "Wähle das Theme für deine App"
 
-#: nh_ynaa_plugin.php:836
+#: nh_ynaa_plugin.php:828
 msgid "Push & iBeacon"
 msgstr "Push & iBeacon"
 
-#: nh_ynaa_plugin.php:839
+#: nh_ynaa_plugin.php:831
 msgid "App Push Settings"
 msgstr "App Push  Einstellungen"
 
-#: nh_ynaa_plugin.php:841
+#: nh_ynaa_plugin.php:833
 msgid "App Key"
 msgstr "App Schlüssel"
 
-#: nh_ynaa_plugin.php:842
+#: nh_ynaa_plugin.php:834
 msgid "PUSHSECRET"
 msgstr "Push Schlüssel"
 
-#: nh_ynaa_plugin.php:844
+#: nh_ynaa_plugin.php:836
 msgid "Show Push Metabox"
 msgstr "Push Metabox anzeigen"
 
-#: nh_ynaa_plugin.php:845
+#: nh_ynaa_plugin.php:837
 msgid "Automatic Push send"
 msgstr "Automatischer Push Versand"
 
-#: nh_ynaa_plugin.php:850
+#: nh_ynaa_plugin.php:842
 msgid "iBeacon Settings"
 msgstr "iBeacon Settings"
 
-#: nh_ynaa_plugin.php:852
+#: nh_ynaa_plugin.php:844
 msgid "UUID "
 msgstr ""
 
-#: nh_ynaa_plugin.php:853
+#: nh_ynaa_plugin.php:845
 msgid "Welcome text "
 msgstr "Willkommens Text"
 
-#: nh_ynaa_plugin.php:854
+#: nh_ynaa_plugin.php:846
 msgid "Silent intervall (sec) "
 msgstr "Silent Intervall (in Sekunden)"
 
-#: nh_ynaa_plugin.php:875
+#: nh_ynaa_plugin.php:867
 msgid "CSS Style settings"
 msgstr "CSS Style Einstellungen"
 
-#: nh_ynaa_plugin.php:878
+#: nh_ynaa_plugin.php:870
 msgid "CSS Style"
 msgstr "CSS Style"
 
-#: nh_ynaa_plugin.php:878
+#: nh_ynaa_plugin.php:870
 msgid ""
 "<span style=\"font-weight:normal;\">Define here your CSS style for the "
 "content in the app.</span>"
@@ -306,7 +306,7 @@ msgstr ""
 "<span style=\"font-weight:normal;\">Hier CSS Style für die Beitragsseite "
 "definieren.</span>"
 
-#: nh_ynaa_plugin.php:897
+#: nh_ynaa_plugin.php:889
 msgid ""
 "Please enter the push settings here that you have received from Team "
 "Blappsta after you have ordered your app. Only when these fields have been "
@@ -322,7 +322,7 @@ msgstr ""
 "Sie den entsprechenden Beitrag, zu dem eine Push-Nachricht versendet werden "
 "soll. Dort finden Sie die „Push Metabox“."
 
-#: nh_ynaa_plugin.php:899
+#: nh_ynaa_plugin.php:891
 msgid ""
 "Here you can add CSS statements tthat are applied to the start view of your "
 "app. The standard CSS commands which have been defined for the website will "
@@ -332,7 +332,7 @@ msgstr ""
 "App verwendet werden. Die Standard CSS Anweisungen, die für die Website "
 "festgelegt worden, werden in der App nicht beachtet."
 
-#: nh_ynaa_plugin.php:943
+#: nh_ynaa_plugin.php:935
 msgid ""
 "Here you can specify the names of the categories in the app individually. "
 "Assign categories to the default images that are displayed in the app, "
@@ -345,92 +345,92 @@ msgstr ""
 "können Sie hier die Sortierreihenfolge festlegen oder definieren, ob die "
 "Kategorie in der App ausgeblendet werden soll oder nicht."
 
-#: nh_ynaa_plugin.php:956 include/homepreset.php:275 include/menu.php:257
+#: nh_ynaa_plugin.php:948 include/homepreset.php:275 include/menu.php:257
 #: include/teaser.php:267
 msgid "This category is deactivated in the app"
 msgstr "Diese Kategorie ist in der App deaktiviert"
 
-#: nh_ynaa_plugin.php:963
+#: nh_ynaa_plugin.php:955
 msgid "Category is not visible in the app!"
 msgstr "Kategorie ist in der App nicht sichtbar!"
 
-#: nh_ynaa_plugin.php:966 nh_ynaa_plugin.php:1818
+#: nh_ynaa_plugin.php:958 nh_ynaa_plugin.php:1779
 msgid "Set default image for category"
 msgstr "Ein Standardbild für diese Kategorie setzen"
 
-#: nh_ynaa_plugin.php:971 nh_ynaa_plugin.php:1082 nh_ynaa_plugin.php:1104
+#: nh_ynaa_plugin.php:963 nh_ynaa_plugin.php:1074 nh_ynaa_plugin.php:1096
 msgid "Reset image"
 msgstr "Bild zurücksetzen"
 
-#: nh_ynaa_plugin.php:976
+#: nh_ynaa_plugin.php:968
 msgid "Order posts in category:"
 msgstr "Sortierung der Beiträge in der Kategorie"
 
-#: nh_ynaa_plugin.php:978 nh_ynaa_plugin.php:1439 include/homepreset.php:22
+#: nh_ynaa_plugin.php:970 nh_ynaa_plugin.php:1400 include/homepreset.php:22
 #: include/teaser.php:15
 msgid "Recent posts"
 msgstr "Aktuellsten Beiträge"
 
-#: nh_ynaa_plugin.php:979 nh_ynaa_plugin.php:1440 include/homepreset.php:23
+#: nh_ynaa_plugin.php:971 nh_ynaa_plugin.php:1401 include/homepreset.php:23
 msgid "Oldest posts"
 msgstr "Älteste Beiträge"
 
-#: nh_ynaa_plugin.php:980 nh_ynaa_plugin.php:1441 include/homepreset.php:24
+#: nh_ynaa_plugin.php:972 nh_ynaa_plugin.php:1402 include/homepreset.php:24
 msgid "Alphabetically"
 msgstr "Alphabetisch"
 
-#: nh_ynaa_plugin.php:983
+#: nh_ynaa_plugin.php:975
 msgid "Hide this category and all posts in this category in the app:"
 msgstr ""
 "Diese Kategorie und alle Beiträge aus dieser Kategorie in der App nicht "
 "anzeigen:"
 
-#: nh_ynaa_plugin.php:994 nh_ynaa_plugin.php:1022 nh_ynaa_plugin.php:1042
+#: nh_ynaa_plugin.php:986 nh_ynaa_plugin.php:1014 nh_ynaa_plugin.php:1034
 msgid "Yes"
 msgstr "Ja"
 
-#: nh_ynaa_plugin.php:995 nh_ynaa_plugin.php:1023 nh_ynaa_plugin.php:1043
+#: nh_ynaa_plugin.php:987 nh_ynaa_plugin.php:1015 nh_ynaa_plugin.php:1035
 msgid "No"
 msgstr "Nein"
 
-#: nh_ynaa_plugin.php:999
+#: nh_ynaa_plugin.php:991
 msgid "Use post image on homescreen"
 msgstr "Beitragsbild für Startseite benutzen"
 
-#: nh_ynaa_plugin.php:1002
+#: nh_ynaa_plugin.php:994
 msgid "Use category image on homescreen"
 msgstr "Kategoriebild für Startseite benutzen"
 
-#: nh_ynaa_plugin.php:1021
+#: nh_ynaa_plugin.php:1013
 msgid "Show subcategories overview:"
 msgstr "Subkategorien Übersicht anzeigen:"
 
-#: nh_ynaa_plugin.php:1041
+#: nh_ynaa_plugin.php:1033
 msgid "Show posts under subcategories overview"
 msgstr ""
 "Beiträge unter den Kategorien auf der Kategorieübersicht Seite anzeigen"
 
-#: nh_ynaa_plugin.php:1062
+#: nh_ynaa_plugin.php:1054
 msgid "No categories."
 msgstr "Keine Kategorien."
 
-#: nh_ynaa_plugin.php:1078
+#: nh_ynaa_plugin.php:1070
 msgid "Set default image for events"
 msgstr "Ein Standardbild für Events setzen"
 
-#: nh_ynaa_plugin.php:1093
+#: nh_ynaa_plugin.php:1085
 msgid "Locations"
 msgstr "Orte"
 
-#: nh_ynaa_plugin.php:1100
+#: nh_ynaa_plugin.php:1092
 msgid "Set default image for location"
 msgstr "Ein Standardbild für diese Karte setzen"
 
-#: nh_ynaa_plugin.php:1118
+#: nh_ynaa_plugin.php:1110
 msgid "Set the app menu."
 msgstr "App Menü Einstellungen."
 
-#: nh_ynaa_plugin.php:1141
+#: nh_ynaa_plugin.php:1133
 msgid ""
 "Color of main elements, e.g. dog ears, menu button, time stamps, category "
 "names, empty tiles, bullet points, social icons, etc."
@@ -438,7 +438,7 @@ msgstr ""
 "Farbe der Hauptelemente, beispielsweise Eselsohren, Menübutton, Zeitstempel, "
 "Kategorienamen, leere Kacheln, Aufzählungszeichen, Sharing Icons etc."
 
-#: nh_ynaa_plugin.php:1142
+#: nh_ynaa_plugin.php:1134
 msgid ""
 "Color of further elements, e.g. homescreen and posts background, elements of "
 "the commentary section"
@@ -446,34 +446,34 @@ msgstr ""
 "Farbe weiterer Elemente, beispielsweise Homescreen- und Beitragseiten-"
 "Hintergrund, Elemente im Kommentarbereich"
 
-#: nh_ynaa_plugin.php:1143
+#: nh_ynaa_plugin.php:1135
 msgid "Color of title bar, navigation bar, quicknavigation bar"
 msgstr "Farbe der Titelleiste, die Navigationsleiste, Schnellnavigationsleiste"
 
-#: nh_ynaa_plugin.php:1144
+#: nh_ynaa_plugin.php:1136
 msgid "Text color in main menu and navigation menus (browse, subscribe, etc.)"
 msgstr ""
 "Textfarbe im Hauptmenü und Navigationsmenüs (stöbern, abonnieren, etc.)"
 
-#: nh_ynaa_plugin.php:1145
+#: nh_ynaa_plugin.php:1137
 msgid "Text color of post headlines"
 msgstr "Textfarbe der Beitrags-Überschrift"
 
-#: nh_ynaa_plugin.php:1146
+#: nh_ynaa_plugin.php:1138
 msgid "Text color of post sub headlines"
 msgstr "Textfarbe der Subschlagzeilen"
 
-#: nh_ynaa_plugin.php:1147
+#: nh_ynaa_plugin.php:1139
 msgid "Text color of continuous text"
 msgstr "Textfarbe von Fließtext"
 
-#: nh_ynaa_plugin.php:1161
+#: nh_ynaa_plugin.php:1153
 msgid "Images wider than this will be scaled up to full display width"
 msgstr ""
 "Maximale Breite (in Pixeln) für Bilder auf der Beitragsseite, so dass sie "
 "nicht hochskaliert werden"
 
-#: nh_ynaa_plugin.php:1220
+#: nh_ynaa_plugin.php:1212
 msgid ""
 "Enter your Google Analytics Mobile App tracking ID here. You get it in your "
 "Google Analytics account."
@@ -481,14 +481,14 @@ msgstr ""
 "Hier die Google Anlaytic Mobile App Tracking ID eintragen.  Die Tracking ID "
 "erhalten sie in ihrem Google Analytics Konto."
 
-#: nh_ynaa_plugin.php:1251
+#: nh_ynaa_plugin.php:1243
 msgid ""
 "Automatic sending of push notifications in the first publication of a post."
 msgstr ""
 "Automatischer Versand von Push-Benachrichtigungen bei der 1. "
 "Veröffentlichung eines Beitrags."
 
-#: nh_ynaa_plugin.php:1297
+#: nh_ynaa_plugin.php:1289
 msgid ""
 "With this plugin you can deploy your own native iOS (iPhone) and Android app "
 "showing the content of your WordPress installation.<br />To get a preview on "
@@ -498,7 +498,7 @@ msgstr ""
 "mit den Inhalten Deiner WordPress-Installation erstellen.<br />Um eine "
 "Vorschau zu sehen, gehe wie folgt vor:"
 
-#: nh_ynaa_plugin.php:1299
+#: nh_ynaa_plugin.php:1291
 msgid ""
 "First of all download and install our <b>Blappsta Preview App</b> from the "
 "<a href=\"https://itunes.apple.com/de/app/blappsta-preview/id912390326?"
@@ -513,7 +513,7 @@ msgstr ""
 "play.google.com/store/apps/details?id=com.nebelhorn.blappstaappcheck\" "
 "target=\"_blank\">Google Play Store</a>"
 
-#: nh_ynaa_plugin.php:1300
+#: nh_ynaa_plugin.php:1292
 msgid ""
 "Start the <b>Blappsta Preview App</b> and enter your blog’s URL or simply "
 "scan the QR-code below with our integrated scanner."
@@ -521,7 +521,7 @@ msgstr ""
 "Starte die <b>Blappsta Preview App</b> und gib die Adresse Deines Blogs ein "
 "oder scanne den unten stehenden QR-Code mit der Blappsta Preview App."
 
-#: nh_ynaa_plugin.php:1305
+#: nh_ynaa_plugin.php:1297
 msgid ""
 "Of course all of the settings can be changed at any time. A simple „pull to "
 "refresh“ suffices in order to take over the settings in the app."
@@ -530,7 +530,7 @@ msgstr ""
 "die Änderungen im laufenden Betrieb der App zu übernehmen, reicht ein "
 "einfacher „Pull to Refresh“, schon werden alle Settings neu geladen!"
 
-#: nh_ynaa_plugin.php:1308
+#: nh_ynaa_plugin.php:1300
 msgid ""
 "If you like the app, please register on our website <a href=\"http://www."
 "blappsta.com/sign-up\" target=\"_blank\"  style=\"text-decoration:none;"
@@ -540,7 +540,7 @@ msgstr ""
 "registriere Dich auf  <a href=\"http://www.blappsta.com/sign-up\" target="
 "\"_blank\">www.blappsta.com</a>."
 
-#: nh_ynaa_plugin.php:1309
+#: nh_ynaa_plugin.php:1301
 msgid ""
 "If you have any questions contact us: <a href=\"mailto:support@blappsta.com"
 "\"  style=\"text-decoration:none;\">support@blappsta.com</a>"
@@ -548,90 +548,94 @@ msgstr ""
 "Hast Du Fragen, setze Dich mit uns in Verbindung: <a href=\"mailto:"
 "support@blappsta.com\">support@blappsta.com</a>"
 
-#: nh_ynaa_plugin.php:1313
+#: nh_ynaa_plugin.php:1305
 msgid "Download Blappsta Preview:"
 msgstr "Download Blappsta Preview:"
 
-#: nh_ynaa_plugin.php:1319
+#: nh_ynaa_plugin.php:1311
 msgid "Blappsta Preview QR-Code"
 msgstr "Blappsta Preview QR-Code"
 
-#: nh_ynaa_plugin.php:1320
+#: nh_ynaa_plugin.php:1312
 msgid ""
 "Scan this QR-Code with our Blappsta Preview App to see your app in action."
 msgstr ""
 "Scanne diesen QR-Code mit unserer Blappsta Preview App, um Dir Deine App "
 "anzusehen."
 
-#: nh_ynaa_plugin.php:1419
+#: nh_ynaa_plugin.php:1379
 msgid "English"
 msgstr "Englisch"
 
-#: nh_ynaa_plugin.php:1420
+#: nh_ynaa_plugin.php:1380
 msgid "French"
 msgstr "Französisch"
 
-#: nh_ynaa_plugin.php:1421
+#: nh_ynaa_plugin.php:1381
 msgid "Dutch"
 msgstr "Niederländisch"
 
-#: nh_ynaa_plugin.php:1422
+#: nh_ynaa_plugin.php:1382
 msgid "German"
 msgstr "Deutsch"
 
-#: nh_ynaa_plugin.php:1423
+#: nh_ynaa_plugin.php:1383
 msgid "Italian"
 msgstr "Italienisch"
 
-#: nh_ynaa_plugin.php:1424
+#: nh_ynaa_plugin.php:1384
 msgid "Portuguese"
 msgstr "Portugiesisch"
 
-#: nh_ynaa_plugin.php:1425
+#: nh_ynaa_plugin.php:1385
 msgid "Russian"
 msgstr "Russisch"
 
-#: nh_ynaa_plugin.php:1426
+#: nh_ynaa_plugin.php:1386
 msgid "Spanish"
 msgstr "Spanisch"
 
-#: nh_ynaa_plugin.php:1429
+#: nh_ynaa_plugin.php:1387
+msgid "Romanian"
+msgstr "Rumänisch"
+
+#: nh_ynaa_plugin.php:1390
 msgid "Interface and dialogue language"
 msgstr "Interface-und Dialogsprache"
 
-#: nh_ynaa_plugin.php:1442 include/homepreset.php:25
+#: nh_ynaa_plugin.php:1403 include/homepreset.php:25
 msgid "Most popular posts"
 msgstr "Beliebtesten Beiträge"
 
-#: nh_ynaa_plugin.php:1445 include/homepreset.php:27
+#: nh_ynaa_plugin.php:1406 include/homepreset.php:27
 msgid "Post order on starscreen."
 msgstr "Beiträge sortiern auf der Startseite."
 
-#: nh_ynaa_plugin.php:1464
+#: nh_ynaa_plugin.php:1425
 msgid "Please select"
 msgstr "Bitte auswählen"
 
-#: nh_ynaa_plugin.php:1474 nh_ynaa_plugin.php:1512
+#: nh_ynaa_plugin.php:1435 nh_ynaa_plugin.php:1473
 msgid "This is a Blappsta business feature."
 msgstr "Dies ist eine Blappsta Business Funktion."
 
-#: nh_ynaa_plugin.php:1474
+#: nh_ynaa_plugin.php:1435
 msgid "You can select here a event plugin to show events in your app."
 msgstr ""
 "Hier können sie ein Event Plugin wählen , um Events in Ihrer Anwendung zu "
 "zeigen."
 
-#: nh_ynaa_plugin.php:1477 include/events.php:12
+#: nh_ynaa_plugin.php:1438 include/events.php:12
 msgid "No supported Plugin installed. Please Install the Plugin Event Manager."
 msgstr ""
 "Kein unterstütztes Eventplugin installiert. Bitte installieren Sie den Event "
 "Manager."
 
-#: nh_ynaa_plugin.php:1479 include/events.php:14
+#: nh_ynaa_plugin.php:1440 include/events.php:14
 msgid "Plugin Directory"
 msgstr "Plugin Verzeichnis"
 
-#: nh_ynaa_plugin.php:1512
+#: nh_ynaa_plugin.php:1473
 msgid ""
 "Activate this checkbox if they want under your posts show a map with a "
 "location."
@@ -639,7 +643,7 @@ msgstr ""
 "Aktivieren Sie diese Checkbox, wenn sie unter den Beiträge eine Karte "
 "anzeigen möchten."
 
-#: nh_ynaa_plugin.php:1513
+#: nh_ynaa_plugin.php:1474
 msgid ""
 "Create separators for periods of time between posts<br>(only if post order "
 "within categories is set to \"chronologically\")"
@@ -647,18 +651,18 @@ msgstr ""
 "Beiträge in Zeiträume einteilen<br>(Nur wenn in den Kategorien "
 "chronologische Reihenfolge gewählt wurde)"
 
-#: nh_ynaa_plugin.php:1514
+#: nh_ynaa_plugin.php:1475
 msgid "Turn the comments section beneath posts on or off."
 msgstr "Schalten Sie den Kommentarbereich unterhalb der Beiträge an oder aus."
 
-#: nh_ynaa_plugin.php:1515
+#: nh_ynaa_plugin.php:1476
 msgid ""
 "Activate the checkbox if you use gadgetry theme image as post featured image."
 msgstr ""
 "Aktivieren Sie die Checkbox, wenn Sie Gadgetry Theme Bilder als Beitrags "
 "Bild verwenden möchten."
 
-#: nh_ynaa_plugin.php:1516
+#: nh_ynaa_plugin.php:1477
 msgid ""
 "Activate the checkbox if you get the tip \"Recent content could not be "
 "accessed. Please connect your device to the internet and try again.\" in the "
@@ -668,19 +672,19 @@ msgstr ""
 "content could not be accessed. Please connect your device to the internet "
 "and try again.\" bekommen."
 
-#: nh_ynaa_plugin.php:1517
+#: nh_ynaa_plugin.php:1478
 msgid "Activate this checkbox if the content is not displayed correctly coded."
 msgstr ""
 "Aktivieren Sie diese Checkbox, wenn die Sonderzeichen und Umlaute auf der "
 "Beitragsseite in der App nicht richtig dargestellt werden."
 
-#: nh_ynaa_plugin.php:1518
+#: nh_ynaa_plugin.php:1479
 msgid "Activate this checkbox if you don't see any content in the detail view."
 msgstr ""
 "Aktivieren Sie diese Checkbox, wenn Sie keinen Inhalt auf der Beitragsseite "
 "sehen."
 
-#: nh_ynaa_plugin.php:1519
+#: nh_ynaa_plugin.php:1480
 msgid ""
 "Activate the checkbox if you have any problems with the app, this help us to "
 "find out the error."
@@ -688,7 +692,7 @@ msgstr ""
 "Aktivieren Sie diese Checkbox, wenn Sie Probleme mit Ihrer App haben. Diese "
 "Einstellung erleichtert uns die Fehlersuche"
 
-#: nh_ynaa_plugin.php:1520
+#: nh_ynaa_plugin.php:1481
 msgid ""
 "Activate the checkbox if you have to many blank lines on your content page "
 "in the app."
@@ -696,35 +700,35 @@ msgstr ""
 "Aktivieren Sie diese Checkbox, wenn auf der Beitragsseite überflüssige "
 "Leerzeilen angezeigt werden."
 
-#: nh_ynaa_plugin.php:1521
+#: nh_ynaa_plugin.php:1482
 msgid ""
 "Active this checkbox in order to bind in the feature image in post view."
 msgstr ""
 "Aktiviere diese Checkbox, wenn Du das Beitragsbild auf der Artikel-"
 "Detailseite einblenden möchtest."
 
-#: nh_ynaa_plugin.php:1522
+#: nh_ynaa_plugin.php:1483
 msgid "Treat Avada portfolio categories as normal WordPress categories"
 msgstr ""
 "Avada Portfolio Kategorien zu den Wordpress Kategorien in der App hinzufügen"
 
-#: nh_ynaa_plugin.php:1538
+#: nh_ynaa_plugin.php:1499
 msgid "date"
 msgstr "Datum"
 
-#: nh_ynaa_plugin.php:1539
+#: nh_ynaa_plugin.php:1500
 msgid "alphabetical"
 msgstr "Alphabetisch"
 
-#: nh_ynaa_plugin.php:1540
+#: nh_ynaa_plugin.php:1501
 msgid "random"
 msgstr "Zufällig"
 
-#: nh_ynaa_plugin.php:1643
+#: nh_ynaa_plugin.php:1604
 msgid "Help"
 msgstr "Hilfe"
 
-#: nh_ynaa_plugin.php:1645
+#: nh_ynaa_plugin.php:1606
 msgid ""
 "For help visit our website <a href=\"http://www.your-news-app.com/\">www."
 "your-news-app.com/</a>."
@@ -732,191 +736,187 @@ msgstr ""
 "Für weiter Hilfe besuche unsere Webseite: <a href=\"http://www.yournewsapp.de"
 "\">http://www.yournewsapp.de</a>."
 
-#: nh_ynaa_plugin.php:1718
+#: nh_ynaa_plugin.php:1679
 msgid "You do not have sufficient permissions to access this page."
 msgstr ""
 "Sie verfügen nicht über ausreichende Berechtigungen, um auf diese Seite "
 "zuzugreifen."
 
-#: nh_ynaa_plugin.php:1725
+#: nh_ynaa_plugin.php:1686
 msgid "Settings for Blappsta Plugin"
 msgstr "Blappsta Plugin Einstellungen"
 
-#: nh_ynaa_plugin.php:1818 include/homepreset.php:316 include/menu.php:288
+#: nh_ynaa_plugin.php:1779 include/homepreset.php:316 include/menu.php:288
 #: include/teaser.php:304
 msgid "Delete"
 msgstr "Löschen"
 
-#: nh_ynaa_plugin.php:1818
+#: nh_ynaa_plugin.php:1779
 msgid "Allow hide on Startscreen"
 msgstr "Ausblenden erlauben"
 
-#: nh_ynaa_plugin.php:3755
+#: nh_ynaa_plugin.php:3731
 msgid "Comment is in review"
 msgstr "Kommentar wartet auf Freigabe"
 
-#: nh_ynaa_plugin.php:4001
+#: nh_ynaa_plugin.php:3977
 msgid "How to use the Blappsta PREVIEW app"
 msgstr "Wie verwendet man die Blappsta PREVIEW app"
 
-#: nh_ynaa_plugin.php:4051 nh_ynaa_plugin.php:4289
+#: nh_ynaa_plugin.php:4027 nh_ynaa_plugin.php:4265
 msgid "Sunday"
 msgstr "Sonntag"
 
-#: nh_ynaa_plugin.php:4051 nh_ynaa_plugin.php:4289
+#: nh_ynaa_plugin.php:4027 nh_ynaa_plugin.php:4265
 msgid "Monday"
 msgstr "Montag"
 
-#: nh_ynaa_plugin.php:4051 nh_ynaa_plugin.php:4289
+#: nh_ynaa_plugin.php:4027 nh_ynaa_plugin.php:4265
 msgid "Tuesday"
 msgstr "Dienstag"
 
-#: nh_ynaa_plugin.php:4051 nh_ynaa_plugin.php:4289
+#: nh_ynaa_plugin.php:4027 nh_ynaa_plugin.php:4265
 msgid "Wednesday"
 msgstr "Mittwoch"
 
-#: nh_ynaa_plugin.php:4051 nh_ynaa_plugin.php:4289
+#: nh_ynaa_plugin.php:4027 nh_ynaa_plugin.php:4265
 msgid "Thursday"
 msgstr "Donnerstag"
 
-#: nh_ynaa_plugin.php:4051 nh_ynaa_plugin.php:4289
+#: nh_ynaa_plugin.php:4027 nh_ynaa_plugin.php:4265
 msgid "Friday"
 msgstr "Freitag"
 
-#: nh_ynaa_plugin.php:4051 nh_ynaa_plugin.php:4289
+#: nh_ynaa_plugin.php:4027 nh_ynaa_plugin.php:4265
 msgid "Saturday"
 msgstr "Samstag"
 
-#: nh_ynaa_plugin.php:4886
+#: nh_ynaa_plugin.php:4862
 msgid "Blappsta Plugin extras"
 msgstr "Blappsta Plugin Extras"
 
-#: nh_ynaa_plugin.php:4909
+#: nh_ynaa_plugin.php:4885
 msgid "Blappsta Plugin locations"
 msgstr "Blappsta Plugin Orte"
 
-#: nh_ynaa_plugin.php:4948
+#: nh_ynaa_plugin.php:4924
 msgid "Location Name"
 msgstr "Ort Name"
 
-#: nh_ynaa_plugin.php:4953
+#: nh_ynaa_plugin.php:4929
 msgid ""
 "Create a location or start typing to search a previously created location."
 msgstr ""
 
-#: nh_ynaa_plugin.php:4954
+#: nh_ynaa_plugin.php:4930
 msgid "You cannot edit saved locations here."
 msgstr ""
 
-#: nh_ynaa_plugin.php:4954
+#: nh_ynaa_plugin.php:4930
 msgid "Reset this form to create a location or search again."
 msgstr ""
 
-#: nh_ynaa_plugin.php:4958
+#: nh_ynaa_plugin.php:4934
 msgid "Address:"
 msgstr "Anschrift:"
 
-#: nh_ynaa_plugin.php:4964
+#: nh_ynaa_plugin.php:4940
 msgid "City/Town:"
 msgstr "Stadt/Ort: "
 
-#: nh_ynaa_plugin.php:4970
+#: nh_ynaa_plugin.php:4946
 msgid "State/County:"
 msgstr "Bundesland/Land:"
 
-#: nh_ynaa_plugin.php:4976
+#: nh_ynaa_plugin.php:4952
 msgid "Postcode:"
 msgstr "Postleitzahl:"
 
-#: nh_ynaa_plugin.php:4983
+#: nh_ynaa_plugin.php:4959
 msgid "Region:"
 msgstr "Region:"
 
-#: nh_ynaa_plugin.php:4990
+#: nh_ynaa_plugin.php:4966
 msgid "Pin color"
 msgstr "Pin Farbe"
 
-#: nh_ynaa_plugin.php:4992
+#: nh_ynaa_plugin.php:4968
 msgid "red"
 msgstr "rot"
 
-#: nh_ynaa_plugin.php:4993
+#: nh_ynaa_plugin.php:4969
 msgid "green"
 msgstr "grün"
 
-#: nh_ynaa_plugin.php:4994
+#: nh_ynaa_plugin.php:4970
 msgid "purple"
 msgstr "violett"
 
-#: nh_ynaa_plugin.php:5001
+#: nh_ynaa_plugin.php:4977
 msgid "Reset this form to create a location."
 msgstr "Setze das Formular zurück um einen Ort anzulegen."
 
-#: nh_ynaa_plugin.php:5008
+#: nh_ynaa_plugin.php:4984
 msgid "Location not found"
 msgstr "Ort nicht gefunden"
 
-#: nh_ynaa_plugin.php:5070
+#: nh_ynaa_plugin.php:5046
 msgid "Show in App"
 msgstr "In der App anzeigen"
 
-#: nh_ynaa_plugin.php:5075
+#: nh_ynaa_plugin.php:5051
 msgid "Push Text"
 msgstr "Push Nachricht"
 
-#: nh_ynaa_plugin.php:5085
+#: nh_ynaa_plugin.php:5061
 msgid "Send Push"
 msgstr "Push senden"
 
-#: nh_ynaa_plugin.php:5088
+#: nh_ynaa_plugin.php:5064
 msgid "Please wait..."
 msgstr "Bitte warten..."
 
-#: nh_ynaa_plugin.php:5345
+#: nh_ynaa_plugin.php:5321
 msgid "No ID"
 msgstr "Keine ID"
 
-#: nh_ynaa_plugin.php:5403
+#: nh_ynaa_plugin.php:5379
 msgid "No posts found."
 msgstr "Keine Beiträge gefunden."
 
-#: nh_ynaa_plugin.php:5406
+#: nh_ynaa_plugin.php:5382
 msgid "Error"
 msgstr "Fehler"
 
-#: nh_ynaa_plugin.php:5558
+#: nh_ynaa_plugin.php:5534
 msgid "No Appkey."
 msgstr "Kein App Schlüssel."
 
-#: nh_ynaa_plugin.php:5559
+#: nh_ynaa_plugin.php:5535
 msgid "No Push Secret Key."
 msgstr "Kein Push Secret Schlüssel."
 
-#: nh_ynaa_plugin.php:5560
-msgid "No Push Url."
-msgstr "Keine Push URL."
-
-#: nh_ynaa_plugin.php:5859
+#: nh_ynaa_plugin.php:5835
 msgid "Push send successful."
 msgstr "Push-Nachricht Versand erfolgreich."
 
-#: nh_ynaa_plugin.php:5860
+#: nh_ynaa_plugin.php:5836
 msgid "Unknown error sending the push message."
 msgstr "Unbekannter Fehler beim Senden der Push-Nachricht."
 
-#: nh_ynaa_plugin.php:5899
+#: nh_ynaa_plugin.php:5875
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: nh_ynaa_plugin.php:5949
+#: nh_ynaa_plugin.php:5925
 msgid "Insert Pushtext!"
 msgstr "Pushtext einfügen!"
 
-#: nh_ynaa_plugin.php:5952
+#: nh_ynaa_plugin.php:5928
 msgid "Pleas wait!"
 msgstr "Bitte warten!"
 
-#: nh_ynaa_plugin.php:5983
+#: nh_ynaa_plugin.php:5959
 msgid "You have to publish the Post first.!"
 msgstr "Sie müssen zuerst den Beitrag veröffentlichen!"
 
@@ -1096,6 +1096,9 @@ msgstr "Teaser Struktur"
 #: include/teaser.php:246
 msgid "Here you change the settings for teasers on the home screen."
 msgstr "Hier nehmen Sie die Einstellungen für den Teaser vor."
+
+#~ msgid "No Push Url."
+#~ msgstr "Keine Push URL."
 
 #~ msgid "PUSHURL"
 #~ msgstr "Push URL"
