@@ -311,6 +311,10 @@ body.folded .stickyBottom {
 	
 }
 
+#nh_ynaa_form .form-table {
+	margin-bottom:60px;
+}
+
 @media screen and (max-width: 782px) {
 	body.folded .stickyBottom, .stickyBottom {
 	 left: 0;   
@@ -324,25 +328,20 @@ body.folded .stickyBottom {
 	}
 	#nh_ynaa_form.nh_ynaa_general_settings h3 {
 		margin-top:50px;
-	}
-	
-	
+	}	
 	#nh_ynaa_form .wp-color-result:after {
 		font-size:11px;
-		line-height:14px;
+		
 	}
 	#nh_ynaa_form .menu-item {
 		width:90%;
-	}
-	
+	}	
 	#menu-management-liquid {
 		margin-left:0;
-	}
-	
+	}	
 	#nh_ynaa_form.nh_ynaa_general_settings {
 		margin-bottom:100px;
-	}
-	
+	}	
 	#nh_ynaa_form .nh-floatleft {
 		width:100%;
 	}
