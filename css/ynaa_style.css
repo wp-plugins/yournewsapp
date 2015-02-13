@@ -43,7 +43,7 @@ div.publishing-action {
 
 #nh_ynaa_form .helptext {
 	float:left;
-	width:50%;
+	width:100%;
 	/*line-height:27px;*/
 	/*padding-top:5px;*/
 }
@@ -61,7 +61,8 @@ div.publishing-action {
 }
 
 #nh-simulator {
-	"width: 300px; float: left;
+	width: 300px; 
+	float: left;
 	margin-top:50px;
 }
 
@@ -288,7 +289,7 @@ label.activated {
     z-index: 999;
 }
 
-.sticky-menu .stickyBottom {
+body.folded .stickyBottom {
 	 left: 36px;   
 }
 
@@ -311,7 +312,38 @@ label.activated {
 }
 
 @media screen and (max-width: 782px) {
-	.sticky-menu .stickyBottom, .stickyBottom {
+	body.folded .stickyBottom, .stickyBottom {
 	 left: 0;   
+	}
+	
+	body.folded .wp-responsive-open .stickyBottom {
+		 left: 190px;  	
+	}
+	#nh_ynaa_form.nh_ynaa_general_settings {
+		width:100%;
+	}
+	#nh_ynaa_form.nh_ynaa_general_settings h3 {
+		margin-top:50px;
+	}
+	
+	
+	#nh_ynaa_form .wp-color-result:after {
+		font-size:11px;
+		line-height:14px;
+	}
+	#nh_ynaa_form .menu-item {
+		width:90%;
+	}
+	
+	#menu-management-liquid {
+		margin-left:0;
+	}
+	
+	#nh_ynaa_form.nh_ynaa_general_settings {
+		margin-bottom:100px;
+	}
+	
+	#nh_ynaa_form .nh-floatleft {
+		width:100%;
 	}
 }

@@ -4,7 +4,7 @@ Donate link:
 Tags:
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 0.8.4.1
+Stable tag: 0.8.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.8.4.2 =
+- Fixed: problem with Push URL
+
 = 0.8.4.1 =
 - Teaser image quality improves
 
@@ -349,6 +352,9 @@ Please refer to our [Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.8.4.2 =
+- Fixed: problem with Push URL
+
 = 0.8.4.1 =
 - Teaser image quality improves
 

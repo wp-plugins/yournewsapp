@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.8.4.1
+Version: 0.8.4.2
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -20,7 +20,7 @@ else {
 //Version Number
 //Temp fix folder problem
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.8.4.1";
+$nh_ynaa_version = "0.8.4.2";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -238,7 +238,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 
 			}*/
 			$lang = 'en';
-			if(get_bloginfo('language')=='de_DE') $lang='de';
+			if(get_bloginfo('language')=='de-DE' || get_bloginfo('language')=='de-DE' || get_bloginfo('language')=='de-CH') $lang='de';
 			if('open'==get_option('default_comment_status')) $comments =1;
 			else $comments =0;
 
@@ -338,7 +338,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				}
 				$nh_ynaa_categories_settings['ts'] = $ts;
 			}
-			$nh_ynaa_homepreset_settings['homescreentype']=0;
+			$nh_ynaa_homepreset_settings['homescreentype']=1;
 
 
 			$ts_setting = get_option( 'nh_ynaa_homepreset_settings' );
@@ -3028,6 +3028,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 
 					$img_size = 'thumbnail';
 					if($size)$img_size = $size;
+					$ynaa_controller = $_GET['nh_prefix'].'_articles';
+					if($_GET['ynaa'] == $ynaa_controller ) $img_size= 'large';
 
 					if(isset($_GET[$this->requesvar['id']])) $args['cat'] =$_GET[$this->requesvar['id']];
 					elseif($id) $args['cat'] =$id;
@@ -3126,10 +3128,10 @@ if(!class_exists('NH_YNAA_Plugin'))
 							//Weil die App sonst nicht zu recht muss type auf post gesetzt werden
 							$post_type = 'article';
 							$posttitle = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($the_query->post->post_title)), ENT_NOQUOTES, 'UTF-8')));
-							if($this->general_settings['theme']=3) $excerpt = get_the_excerpt() ;
+							if($this->general_settings['theme']==3) $excerpt = get_the_excerpt() ;
 							else $excerpt='';
 							
-							$returnarray['items'][]=array('pos'=>$i, "type"=>$post_type, 'allowRemove'=> 1, 'cat_id'=>$cat_id, 'cat_id_array'=>$cat_id_array,  'title'=> $posttitle, 'img'=>$img, 'thumb' => $thumbnail, 'images'=>$images, 'post_id'=>$the_query->post->ID, 'timestamp'=>strtotime($the_query->post->post_modified), 'publish_timestamp' =>strtotime($the_query->post->post_date),'post_date' =>strtotime($the_query->post->post_date), 'showsubcategories'=>0, 'excerpt'=>html_entity_decode(str_replace('[&hellip;]', '',$excerpt)));
+							$returnarray['items'][]=array('pos'=>$i, "type"=>$post_type, 'allowRemove'=> 1, 'cat_id'=>$cat_id, 'cat_id_array'=>$cat_id_array,  'title'=> $posttitle, 'img'=>$thumbnail, 'thumb' => $thumbnail, 'images'=>$images, 'post_id'=>$the_query->post->ID, 'timestamp'=>strtotime($the_query->post->post_modified), 'publish_timestamp' =>strtotime($the_query->post->post_date),'post_date' =>strtotime($the_query->post->post_date), 'showsubcategories'=>0, 'excerpt'=>html_entity_decode(str_replace('[&hellip;]', '',$excerpt)));
 							
 							if(strtotime($the_query->post->post_modified) > $returnarray['timestamp']) {
 								$returnarray['changes']=1;
@@ -3273,15 +3275,25 @@ if(!class_exists('NH_YNAA_Plugin'))
 						}
 					}
 
-					$args = array('posts_per_page'   => -1, 'category' => $cid, 'orderby' => $orderby ,	'order' => $order);
+					$args = array('posts_per_page'   => -1, 'category__in' => array($cid), 'orderby' => $orderby ,	'order' => $order);
 					$posts_array = get_posts( $args );
-
+					//$args = array('posts_per_page'   => -1, 'category__in' => array($cid), 'orderby' => $orderby ,	'order' => $order);
+					/*
+					$posts_array = query_posts( $args );
+					while(have_posts()) {
+						 the_post();
+						$post_ids[] = $post->ID;
+					}
+					wp_reset_query();
+					 * */
 					if($posts_array){
 						foreach($posts_array as $po){
+							//var_dump($po);
 							$post_ids[] = $po->ID;
 
 						}
 					}
+					 
 				}
 				//$post_ids = false;
 				if(!$post_ids){
@@ -3315,7 +3327,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$ts = strtotime($post->post_modified);
 							$returnarray['changes']=1;
 						}
-						if(!$size) $size = 'medium';
+						if(!$size) $size = 'large';
 						$post_thumbnail_image[0] = $this->nh_getthumblepic($post->ID,$size);
 						
 						$images = $this->nh_getthumblepic_allsize($post->ID);
@@ -3329,7 +3341,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						*/
 						//echo esc_url($post_thumbnail_image[0]);
 						$posttitle = str_replace(array("\\r","\\n","\r", "\n"),'',trim(html_entity_decode(strip_tags(do_shortcode($post->post_title)), ENT_NOQUOTES, 'UTF-8')));
-						$returnarray['items'][] = array('pos'=>$i, 'id'=>$post->ID,'title'=>$posttitle,'timestamp'=>strtotime($post->post_modified),'type'=>$post->post_type, 'thumb'=> ($post_thumbnail_image[0]), 'images'=>$images, 'publish_timestamp'=> strtotime($post->post_date), 'post_date'=> strtotime($post->post_date));
+						$returnarray['items'][] = array('uma'=>array('test'),'pos'=>$i, 'id'=>$post->ID,'title'=>$posttitle,'timestamp'=>strtotime($post->post_modified),'type'=>$post->post_type, 'thumb'=> ($post_thumbnail_image[0]), 'images'=>$images, 'publish_timestamp'=> strtotime($post->post_date), 'post_date'=> strtotime($post->post_date));
 						$i++;
 					}
 					if(!($returnarray['items'])){
@@ -5566,11 +5578,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 
 			if(!($this->push_settings['appkey']) || $this->push_settings['appkey'] == '') { _e('No Appkey.', 'nh-ynaa'); die(); }
 			if(!($this->push_settings['pushsecret']) || $this->push_settings['pushsecret'] == '') {_e('No Push Secret Key.', 'nh-ynaa');die(); }
-			if(!($this->push_settings['pushurl']) || $this->push_settings['pushurl'] == '') { _e('No Push Url.', 'nh-ynaa'); die(); }
+		//	if(!($this->push_settings['pushurl']) || $this->push_settings['pushurl'] == '') { _e('No Push Url.', 'nh-ynaa'); die(); }
 
 			define('APPKEY', esc_attr( $this->push_settings['appkey'] )); // App Key
 			define('PUSHSECRET', esc_attr( $this->push_settings['pushsecret'] )); // Master Secret
-			define('PUSHURL', esc_attr( $this->push_settings['pushurl'] ));
+		//	define('PUSHURL', esc_attr( $this->push_settings['pushurl'] ));
 			$device_types = array('ios', 'android');
 			//$device_types = array('ios');
 			$cat = '';
@@ -5617,14 +5629,14 @@ if(!class_exists('NH_YNAA_Plugin'))
         //_e('No Push Secret Key.', 'nh-ynaa');
         return 3;
       }
-      if(!($this->push_settings['pushurl']) || $this->push_settings['pushurl'] == '') {
+     /* if(!($this->push_settings['pushurl']) || $this->push_settings['pushurl'] == '') {
         // _e('No Push Url.', 'nh-ynaa');
         return 4;
       }
-
+	*/
       define('APPKEY', esc_attr( $this->push_settings['appkey'] )); // App Key
       define('PUSHSECRET', esc_attr( $this->push_settings['pushsecret'] )); // Master Secret
-      define('PUSHURL', esc_attr( $this->push_settings['pushurl'] ));
+    //  define('PUSHURL', esc_attr( $this->push_settings['pushurl'] ));
       $device_types = array('ios', 'android');
       //$device_types = array('ios');
       $cat = wp_get_post_categories($postid);
@@ -6024,8 +6036,8 @@ add_action('widgets_init', create_function('', 'return register_widget("NH_Blapp
 
 /*Nur für OPEL */
 
-add_action( 'wp_enqueue_scripts', 'my_enqueue' );
-function my_enqueue() {
+add_action( 'wp_enqueue_scripts', 'nh_enqueue' );
+function nh_enqueue() {
   /*  if( 'index.php' != $hook ) {
   // Only applies to dashboard panel
   return;
