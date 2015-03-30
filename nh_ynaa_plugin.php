@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.8.4.3
+Version: 0.8.4.4
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -20,7 +20,7 @@ else {
 //Version Number
 //Temp fix folder problem
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.8.4.3";
+$nh_ynaa_version = "0.8.4.4";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -1389,7 +1389,7 @@ if(!class_exists('NH_YNAA_Plugin'))
                         <option value="pt" <?php if($this->general_settings[$field['field']]=='pt') echo ' selected'; ?>><?php _e('Portuguese', 'nh-ynaa'); ?></option>
                         <option value="ru" <?php if($this->general_settings[$field['field']]=='ru') echo ' selected'; ?>><?php _e('Russian', 'nh-ynaa'); ?></option>
                         <option value="es" <?php if($this->general_settings[$field['field']]=='es') echo ' selected'; ?>><?php _e('Spanish', 'nh-ynaa'); ?></option>
-                        <option value="es" <?php if($this->general_settings[$field['field']]=='ro') echo ' selected'; ?>><?php _e('Romanian', 'nh-ynaa'); ?></option>
+                        <option value="ro" <?php if($this->general_settings[$field['field']]=='ro') echo ' selected'; ?>><?php _e('Romanian', 'nh-ynaa'); ?></option>
                     </select>
            <?php
 		   echo '<div class="helptext padding5">'.(__('Interface and dialogue language','nh-ynaa')).'</div>';
@@ -3179,6 +3179,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$cid = $id;
 					if($lim) $limit = $lim;
 					else $limit=999;
+				
 				}
 				else  {$cid = $_GET[$this->requesvar['id']];
 					//LIMIT
@@ -3188,6 +3189,13 @@ if(!class_exists('NH_YNAA_Plugin'))
 					else {
 						$limit = 999;
 					}
+				}
+				
+				if($_GET[$this->requesvar['offset']]) {
+					$offset=$_GET[$this->requesvar['offset']];
+				}
+				else {
+					$offset = 0;
 				}
 
 				//Timestamp
@@ -3235,7 +3243,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 						}
 					}
 
-					$args = array('posts_per_page'   => -1, 'category__in' => array($cid), 'orderby' => $orderby ,	'order' => $order);
+					$args = array('posts_per_page'   => $limit, 'offset'=>$offset, 'category__in' => array($cid), 'orderby' => $orderby ,	'order' => $order);
 					$posts_array = get_posts( $args );
 					//$args = array('posts_per_page'   => -1, 'category__in' => array($cid), 'orderby' => $orderby ,	'order' => $order);
 					/*
@@ -3622,12 +3630,29 @@ if(!class_exists('NH_YNAA_Plugin'))
             margin:0 0 0 20px;
           }
           iframe {
-              width:100% !important;
+              /*width:100% !important; */
           }
           img {
             width:100%;
 			height: auto;
           }
+		  
+		  .nh-elastic-video {
+			  position: relative;
+			  padding-bottom: 55%;
+			  padding-top: 15px;
+			  height: 0;
+			  overflow: hidden;
+			}
+		  .nh-elastic-video iframe {
+			  position: absolute;
+			  top: 0;
+			  left: 0;
+			  width: 100%;
+			  height: 100%;
+			}
+					  
+
 
           ';
 				if($this->css_settings['css']) $this->general_settings['css'] = $this->css_settings['css'];
@@ -4596,19 +4621,25 @@ if(!class_exists('NH_YNAA_Plugin'))
 					}
 
 
-				//iframe tag src replace // with http://
-					$iframeElements  = $dom->getElementsByTagName("iframe");
-					foreach ($iframeElements as $iframeElement) {
-						$src = $iframeElement->getAttribute('src');
-						/*if(substr($src,0,2)=='//'){
-							$iframeElement->setAttribute('src','http:'.$src);
-						}*/
-					}
-
+				
 					$divElements  = $dom->getElementsByTagName("div");
 					foreach ($divElements as $divElement) {
 						if($divElement->hasAttribute('style'))$divElement->removeAttribute('style');
 					}
+					
+					//iframe tag src replace // with http://
+					$iframeElements  = $dom->getElementsByTagName("iframe");
+					foreach ($iframeElements as $iframeElement) {
+						$clone = $iframeElement->cloneNode(false);
+						$newEdiv = $dom->createElement('div');
+						$newEdiv->setAttribute('class', 'nh-elastic-video');
+						$newEdiv->appendChild ($clone);
+						$iframeElement->parentNode->replaceChild($newEdiv,$iframeElement);
+						/*if(substr($src,0,2)=='//'){
+							$iframeElement->setAttribute('src','http:'.$src);
+						}*/
+					}
+					
 
 
 					/*//$headdom = $dom->createElement('head','<title>'..'</title>');
