@@ -54,7 +54,7 @@ These features are currently under development and will soon be part of Blappsta
 
 = How it works =
 
-[youtube https://www.youtube.com/embed/Ng6xlcZr7Uw]
+[youtube https://www.youtube.com/watch?v=Ng6xlcZr7Uw]
 
 1. Install and activate the plugin.
 2. To get a preview on what the app would look like, download and install our Blappsta Preview App from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8) or [Google Play  Store](https://play.google.com/store/apps/details?id=com.blappsta.blappstaappcheck).
