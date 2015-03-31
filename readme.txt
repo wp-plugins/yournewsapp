@@ -1,4 +1,4 @@
-﻿=== Blappsta - your FREE native WordPress based mobile app for iPhone and Android ===
+﻿=== Blappsta Mobile App Plugin - Your native app for iPhone and Android ===
 Contributors: nebelhorn
 Tags: •	App, application, abmob, adsense, app generator, blappsta, blappsta plugin, blappsta mobile, blappsta wordpress plugin, blappsta mobile wordpress plugin, smartphone, tablet, social, facebook, twitter, post, posts, comments, widget, Android, android app, app for android, wordpress android app, android tablet, android smartphone, android, android blog app, samsung, htc, google, Ios, ios app, app for ios, apple, iphone, iphone app, ipad app, wordpress ios app, wordpress iphone app, wordpress ipad app, wordpress apple app,	mobile, mobile app, mobile app for wordpress, mobile app plugin, mobile plugin, mobile site, mobile website, mobile theme, mobile web, create mobile app, build mobile app, build wordpress app, app for wordpress, build blog app, blog app, app for blog, build blog app, create blog app, mobile app converter, native app, native blog app, native wordpress app, native app plugin, native wordpress app plugin, native, native smartphone app, native ios app, native android app, native mobile app, push, push notification, intelligent push notification, wordpress app plugin, wordpress app, wordpress, wordpress plugin, wordpress app builder, wordpress app maker, wordpress native app plugin, website to mobile app, wordpress blog app, wordpress website app, wordpress mobile, wordpress mobile app
 
@@ -14,7 +14,7 @@ Make your blog a native app!
 
 == Description ==
 
-The Blappsta plugin is the first step to a free native App for iOS (iPhone) and Android.
+The Blappsta plugin is the first step to your native App for iOS (iPhone) and Android.
 
 = Turn your blog into a free native app =
 **Don’t fall for the typical HTML web apps with poor usability. And don't spend money for a native app in iOS (iPhone) and Android. Build your individual app using your favorite colors and your own logo in only a few minutes. Install our Blappsta plugin for free and design your app the way you want it to look. Instantly test it using our Blappsta Preview app from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8) or [Google Play&trade; Store](https://play.google.com/store/apps/details?id=com.blappsta.blappstaappcheck). You can test it as long as you want. If you like it, go to [http://www.blappsta.com](https://www.blappsta.com) and we will take care of publishing the app to the stores. Check out our website for more information about Blappsta and our affordable pricing plans.** 
