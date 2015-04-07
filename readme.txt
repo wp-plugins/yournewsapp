@@ -1,12 +1,11 @@
 ﻿=== Blappsta Mobile App Plugin - Your native app for iPhone and Android ===
 Contributors: nebelhorn
-Tags: •	App, application, abmob, adsense, app generator, blappsta, blappsta plugin, blappsta mobile, blappsta wordpress plugin, blappsta mobile wordpress plugin, smartphone, tablet, social, facebook, twitter, post, posts, comments, widget, Android, android app, app for android, wordpress android app, android tablet, android smartphone, android, android blog app, samsung, htc, google, Ios, ios app, app for ios, apple, iphone, iphone app, ipad app, wordpress ios app, wordpress iphone app, wordpress ipad app, wordpress apple app,	mobile, mobile app, mobile app for wordpress, mobile app plugin, mobile plugin, mobile site, mobile website, mobile theme, mobile web, create mobile app, build mobile app, build wordpress app, app for wordpress, build blog app, blog app, app for blog, build blog app, create blog app, mobile app converter, native app, native blog app, native wordpress app, native app plugin, native wordpress app plugin, native, native smartphone app, native ios app, native android app, native mobile app, push, push notification, intelligent push notification, wordpress app plugin, wordpress app, wordpress, wordpress plugin, wordpress app builder, wordpress app maker, wordpress native app plugin, website to mobile app, wordpress blog app, wordpress website app, wordpress mobile, wordpress mobile app
+Tags: App, application, abmob, adsense, app generator, blappsta, blappsta plugin, blappsta mobile, blappsta wordpress plugin, blappsta mobile wordpress plugin, smartphone, tablet, social, facebook, twitter, post, posts, comments, widget, Android, android app, app for android, wordpress android app, android tablet, android smartphone, android, android blog app, samsung, htc, google, Ios, ios app, app for ios, apple, iphone, iphone app, ipad app, wordpress ios app, wordpress iphone app, wordpress ipad app, wordpress apple app,	mobile, mobile app, mobile app for wordpress, mobile app plugin, mobile plugin, mobile site, mobile website, mobile theme, mobile web, create mobile app, build mobile app, build wordpress app, app for wordpress, build blog app, blog app, app for blog, build blog app, create blog app, mobile app converter, native app, native blog app, native wordpress app, native app plugin, native wordpress app plugin, native, native smartphone app, native ios app, native android app, native mobile app, push, push notification, intelligent push notification, wordpress app plugin, wordpress app, wordpress, wordpress plugin, wordpress app builder, wordpress app maker, wordpress native app plugin, website to mobile app, wordpress blog app, wordpress website app, wordpress mobile, wordpress mobile app
 
 Donate link: 
-Tags:
 Requires at least: 3.0
 Tested up to: 4.1.1
-Stable tag: 0.8.4.4
+Stable tag: 0.8.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -80,6 +79,10 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.8.4.5 =
+- Support: BJ Lazy Load Plugin is supported
+
+
 = 0.8.4.4 =
 - Fixed: iframe video size problem
 
@@ -363,6 +366,10 @@ Please refer to our [Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.8.4.5 =
+- Support: BJ Lazy Load Plugin is supported
+
+
 = 0.8.4.4 =
 - Fixed: iframe video size problem
 

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.8.4.4
+Version: 0.8.4.5
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -20,7 +20,7 @@ else {
 //Version Number
 //Temp fix folder problem
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.8.4.4";
+$nh_ynaa_version = "0.8.4.5";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -3683,6 +3683,11 @@ if(!class_exists('NH_YNAA_Plugin'))
 							$content = '<!doctype html><html data-html="html3"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><meta name="viewport" content="width=device-width"><link href="http://necolas.github.io/normalize.css/3.0.1/normalize.css" rel="stylesheet" type="text/css">'.$css.'</head><body>'.$content.'</body></html>';
 						}
 			}
+			$content = str_replace('</body>', '<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" type="text/javascript"></script></body>', $content);
+			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+			if(is_plugin_active('bj-lazy-load/bj-lazy-load.php')){
+				$content = str_replace('</body>','<script src="'.plugins_url().'/bj-lazy-load/js/combined.min.js" type="text/javascript"></script></body>', $content);
+			}
 			return $content;
 		}
 
@@ -4521,8 +4526,8 @@ if(!class_exists('NH_YNAA_Plugin'))
 
 
 
-
-						$src = $imgElement->getAttribute('src');
+						if($imgElement->hasAttribute('data-lazy-src')) $src = $imgElement->getAttribute('data-lazy-src');
+						else $src = $imgElement->getAttribute('src');
 						if($upload_dir['baseurl'] == substr($src,0,strlen($upload_dir['baseurl']))){
 						  //echo $upload_dir['basedir'].substr($src,strlen($upload_dir['baseurl'])).'<br>';
 							if($this->general_settings['min-img-size-for-resize']){
@@ -4577,7 +4582,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 
 	  							list($w, $h) = @getimagesize(($src)); //var_dump($w);
 	  							if(isset($w)){
-	  							  if( $w < $this->general_settings['min-img-size-for-resize'] ) {
+	  							  if(  $w < $this->general_settings['min-img-size-for-resize'] ) {
 	  							  	$imgclass=' nh-no-resize ';
 					                  if($imgElement->hasAttribute('class')){
 					                    $imgclass = $imgElement->getAttribute('class').$imgclass;
@@ -4714,6 +4719,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 					$html = str_replace('</body>',stripslashes ($blappsta_extra['app']['extra']['app_extra_js']).'</body>',$html);
 				}
 			}
+			$html = str_replace('<body>', '<body id="post-'.$_GET[$this->requesvar['id']].'">', $html);
 			return ($html);
 		}//END private function nh_ynaa_get_appcontent
 
