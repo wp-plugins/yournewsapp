@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Blappsta Plugin
-Version: 0.8.5.1
+Version: 0.8.5.2
 
 Plugin URI: http://wordpress.org/plugins/yournewsapp/
 Description: Blappsta your blog. your app. - The Wordpress Plugin for Blappsta App
@@ -20,7 +20,7 @@ else {
 //Version Number
 //Temp fix folder problem
 global $nh_ynaa_version;
-$nh_ynaa_version = "0.8.5.1";
+$nh_ynaa_version = "0.8.5.2";
 global $nh_ynaa_db_version;
 $nh_ynaa_db_version=1.2;
 
@@ -6054,7 +6054,7 @@ jQuery(document).ready(function($) {
 					 success: function(data,textStatus,jqXHR ) {
 						jQuery('#nh-push-dialog span').hide();
 
-						if(data.substr(0,7)=='nomodul' || true){	
+						if(data.substr(0,7)=='nomodul' ){	
 							
 							
 							jQuery.get( data.substr(8), function( data2 ) {
@@ -6071,7 +6071,7 @@ jQuery(document).ready(function($) {
 							  .fail(function(e) {
 							  	
 							  	window.open( data.substr(8));
-							  	alert( "Error on send push. Errorcode: 1001. Please allow Pop-Up window to send push" );
+							  	alert( "Error on send push. Errorcode: 1001. Please allow Pop-Up window to send push." );
 							  });
 							
 
