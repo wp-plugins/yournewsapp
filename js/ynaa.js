@@ -13,9 +13,14 @@ jQuery(document).ready(function($){
 		
 	}
 	
-    $('.my-color-field').wpColorPicker({
-		//clear: function() {alert('Dieser Wert ist ung�ltig.');}
-	});
+	
+	if($('.my-color-field').length>0){
+	    $('.my-color-field').wpColorPicker({
+			//clear: function() {alert('Dieser Wert ist ung�ltig.');}
+		});
+	}
+	
+	
 	
 	//Secon Submit Button
 	$('.submitbutton').click(function(){
@@ -101,6 +106,7 @@ jQuery(document).ready(function($){
 					  case 'app': $type_text='App'; $type2='app'; $id = $o.val();break;
 					  case 'cat': $type_text='Kategorie'; $type2='cat'; break;
 					  case 'fb': $type_text='Facebook'; $type2='fb'; break;
+					  case 'event': $type_text='Event'; $type2='event'; break;
 					  case 'events': $type_text='Events'; $type2='events'; break;
 					  case 'map': $type_text='Map'; $type2='map'; break;
 					   case 'pushCenter': $type_text='Push center'; $type2='pushCenter'; break;
@@ -500,6 +506,8 @@ jQuery(document).ready(function($){
 		
 	});*/
 	
+	
+	
 	$('div.tabs-panel p.quick-search-wrap input.quick-search').bind('keypress', function(e) {
 		$this = $(this);
 		//$this.next('span.spinner').show();
@@ -534,6 +542,34 @@ jQuery(document).ready(function($){
 		
 	});
 	
+	/* active autopush */
+	if($('#id_appkey').length>0){
+		
+		$('#id_appkey, #id_pushsecret').change(function(){
+			if($('#id_appkey').val()!='' && $('#id_pushsecret').val()!=''){
+				
+				$("input[name='nh_ynaa_push_settings[autopush]']").prop('checked', true);
+			}
+		});
+	}
+	
+	
+	if($('.showoverviewposts').length>0){
+		$('.showoverviewposts').change(function(){
+			//alert($(this).val());
+			var catid = $(this).attr('data-catid');
+			//alert(catid);
+			if($(this).val() == '1'){
+				
+				$('#showoverviewposts'+catid).show();
+			}
+			else{
+				$('#showoverviewposts'+catid).hide();
+			}
+	
+		});
+	}
+	
 	/* deactive post order if startvie = category */
 	
 	$('#nh_homescreentype').change(function(){
@@ -558,17 +594,9 @@ jQuery(document).ready(function($){
 	});
 	
 	//Show Post on category overvie page
-	$('.showoverviewposts').change(function(){
-		//alert($(this).val());
-		var catid = $(this).attr('data-catid');
-		if($(this).val() == '1'){
-			$('#showoverviewposts'+$catid).show();
-		}
-		else{
-			$('#showoverviewposts'+$catid).show();
-		}
-
-	});
+	//if($('.showoverviewposts').length>0){
+	
+	//}
 	
 	if($('#ynaa_nav_tab').length>0){
 	
@@ -585,6 +613,8 @@ jQuery(document).ready(function($){
 
 		});
 	}
+	
+	
 			
 });
 

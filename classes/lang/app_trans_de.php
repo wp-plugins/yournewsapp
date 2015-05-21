@@ -80,6 +80,7 @@
       'delete'=>'löschen',
       'You have not bookmarked any posts yet'=>'Sie haben noch keine Beiträge favorisiert.',
       'Share now:'=>'Hier teilen:',
-      'WhatsApp not installed'=>'WhatsApp ist nicht installiert'
+      'WhatsApp not installed'=>'WhatsApp ist nicht installiert', 
+      'This might interest you as well' => 'Das könnte dich auch interessieren'
            );
 ?>

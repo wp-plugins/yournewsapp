@@ -1,11 +1,11 @@
-﻿=== Blappsta Mobile App Plugin - Your native app for iPhone and Android ===
+﻿=== Blappsta Mobile App Plugin - Your native, mobile iPhone App and Android App ===
 Contributors: nebelhorn
 Tags: App, application, abmob, adsense, app generator, blappsta, blappsta plugin, blappsta mobile, blappsta wordpress plugin, blappsta mobile wordpress plugin, smartphone, tablet, social, facebook, twitter, post, posts, comments, widget, Android, android app, app for android, wordpress android app, android tablet, android smartphone, android, android blog app, samsung, htc, google, Ios, ios app, app for ios, apple, iphone, iphone app, ipad app, wordpress ios app, wordpress iphone app, wordpress ipad app, wordpress apple app,	mobile, mobile app, mobile app for wordpress, mobile app plugin, mobile plugin, mobile site, mobile website, mobile theme, mobile web, create mobile app, build mobile app, build wordpress app, app for wordpress, build blog app, blog app, app for blog, build blog app, create blog app, mobile app converter, native app, native blog app, native wordpress app, native app plugin, native wordpress app plugin, native, native smartphone app, native ios app, native android app, native mobile app, push, push notification, intelligent push notification, wordpress app plugin, wordpress app, wordpress, wordpress plugin, wordpress app builder, wordpress app maker, wordpress native app plugin, website to mobile app, wordpress blog app, wordpress website app, wordpress mobile, wordpress mobile app
 
 Donate link: 
 Requires at least: 3.0
-Tested up to: 4.1.1
-Stable tag: 0.8.4.5
+Tested up to: 4.2.2
+Stable tag: 0.8.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,10 @@ Make your blog a native app!
 
 == Description ==
 
-The Blappsta plugin is the first step to your native App for iOS (iPhone) and Android.
+Blappsta is a great and easy to use tool to convert your WordPress site into a native mobile app for iOS and Android in only a few minutes (including iPhone, iPad, Android phones and tablets). Blappsta does not require any skills and no coding. We even upload the App for you.
 
-= Turn your blog into a free native app =
-**Don’t fall for the typical HTML web apps with poor usability. And don't spend money for a native app in iOS (iPhone) and Android. Build your individual app using your favorite colors and your own logo in only a few minutes. Install our Blappsta plugin for free and design your app the way you want it to look. Instantly test it using our Blappsta Preview app from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8) or [Google Play&trade; Store](https://play.google.com/store/apps/details?id=com.blappsta.blappstaappcheck). You can test it as long as you want. If you like it, go to [http://www.blappsta.com](https://www.blappsta.com) and we will take care of publishing the app to the stores. Check out our website for more information about Blappsta and our affordable pricing plans.** 
+= Turn your blog into a native app =
+**Build your individual app using your favorite colors and your own logo. Install our Blappsta plugin for free and design your app the way you want it to look. Instantly test it using our Blappsta Preview app from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8) or [Google Play&trade; Store](https://play.google.com/store/apps/details?id=com.blappsta.blappstaappcheck). You can test it as long as you want. If you like it, go to [http://www.blappsta.com](http://www.blappsta.com) and we will take care of publishing the app to the stores. Check out our [website](http://www.blappsta.com) for more information about Blappsta and our affordable pricing plans.
 
 = Increase the number of readers of your blog with Push Notification =
 Notify your readers with our free push notification service build into the plugin. This service will increase your number of readers largely. You can decide when and what you want to push. 
@@ -26,8 +26,9 @@ Notify your readers with our free push notification service build into the plugi
 - share to Facebook, Twitter, Google+ and email
 - show the feed of your Facebook page (optional)
 - allows commenting and reading comments
+- a list of the most popular articles instead of the categories or the latest articles up front
+- support for videos
 - continual improvement guaranteed
-- free of charge for non-commercial use
 
 = Features of the plugin =
 - fully integrated in WordPress
@@ -37,15 +38,10 @@ Notify your readers with our free push notification service build into the plugi
 - individualize your app menu
 - set your home screen look
 
-= Blappsta BUSINESS features =
-Our Blappsta BUSINESS version is the solution for commercial use (e.g. corporate blogs). Blappsta BUSINESS enables many more features, like integration of events and setup of iBeacon.
-
-= There is more to come! =
-These features are currently under development and will soon be part of Blappsta:
-- support for videos
+= There is more to come! These features are currently under development and will soon be part of Blappsta: =
 - image galleries
 - a growing number of available themes
-- a list of the most popular articles instead of the categories or the latest articles up front
+- support for wordpress.com
 - iPad/Android Tablet version
 - Windows Phone version
 
@@ -79,6 +75,15 @@ These features are currently under development and will soon be part of Blappsta
 Please refer to our [Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.8.5 =
+- Fix sticky Post problem
+- Fix send push problem with proxy on server 
+- Fix coding problems on autopush
+- New Premium Theme - Kilimanjaro
+- New Function - Related Posts
+- Small Bug fixes
+
+
 = 0.8.4.5 =
 - Support: BJ Lazy Load Plugin is supported
 
@@ -366,6 +371,14 @@ Please refer to our [Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.8.5 =
+- Fix sticky Post problem
+- Fix send push problem with proxy on server 
+- Fix coding problems on autopush
+- New Premium Theme - Kilimanjaro
+- New Function - Related Posts
+- Small Bug fixes
+
 = 0.8.4.5 =
 - Support: BJ Lazy Load Plugin is supported
 

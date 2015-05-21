@@ -154,7 +154,8 @@
 			'delete'=>'delete',
 			'You have not bookmarked any posts yet'=>'You have not bookmarked any posts yet',
 			'Share now:'=>'Share now:',
-			'WhatsApp not installed'=>'WhatsApp not installed'
+			'WhatsApp not installed'=>'WhatsApp not installed',
+			'This might interest you as well' => 'This might interest you as well'
            ));
            
          }
