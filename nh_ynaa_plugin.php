@@ -5657,8 +5657,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 			$qry_str = '?bas=push&pkey='.APPKEY.'&pmkey='.PUSHSECRET.'&url='.get_bloginfo('url').'&nhcat='.$cat.'&id='.$_POST['push_post_id'].'&push_text='.urlencode($_POST['push_text']);
 			//echo $qry_str; die();
 			if(function_exists('curl_version') && empty($this->push_settings['jspush'])){
-				echo 'curl_version';
-				die();
+				
 				$ch = curl_init();
 				// Set query data here with the URL
 				curl_setopt($ch, CURLOPT_URL, $url . $qry_str.'&nh_mode=curl');
@@ -5670,8 +5669,7 @@ if(!class_exists('NH_YNAA_Plugin'))
 				echo($push_response);
 			}
 			elseif(ini_get('allow_url_fopen') && empty($this->push_settings['jspush'])){
-				echo 'allow_url_fopen';
-				die();
+				
 				//echo ('http://www.blappsta.com/?bas=push&pkey='.APPKEY.'&pmkey='.PUSHSECRET.'&url='.get_bloginfo('url').'&cat='.$cat.'&id='.$_POST['push_post_id'].'&push_text='.$_POST['push_text']);
 				//die();
 				echo (file_get_contents($url.(($qry_str)).'&nh_mode=fgc'));
@@ -6056,8 +6054,7 @@ jQuery(document).ready(function($) {
 					 success: function(data,textStatus,jqXHR ) {
 						jQuery('#nh-push-dialog span').hide();
 
-						if(data.substr(0,7)=='nomodul'){
-							
+						if(data.substr(0,7)=='nomodul' || true){	
 							
 							
 							jQuery.get( data.substr(8), function( data2 ) {
@@ -6072,7 +6069,9 @@ jQuery(document).ready(function($) {
 							  	
 							})
 							  .fail(function(e) {
-							  	alert( "Error on send push. Errorcode: 1001" );
+							  	
+							  	window.open( data.substr(8));
+							  	alert( "Error on send push. Errorcode: 1001. Please allow Pop-Up window to send push" );
 							  });
 							
 
