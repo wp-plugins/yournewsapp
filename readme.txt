@@ -1,6 +1,6 @@
 ﻿=== Blappsta Mobile App Plugin - Your native, mobile iPhone App and Android App ===
 Contributors: nebelhorn
-Tags: App, application, abmob, adsense, app generator, blappsta, blappsta plugin, blappsta mobile, blappsta wordpress plugin, blappsta mobile wordpress plugin, smartphone, tablet, social, facebook, twitter, post, posts, comments, widget, Android, android app, app for android, wordpress android app, android tablet, android smartphone, android, android blog app, samsung, htc, google, Ios, ios app, app for ios, apple, iphone, iphone app, ipad app, wordpress ios app, wordpress iphone app, wordpress ipad app, wordpress apple app,	mobile, mobile app, mobile app for wordpress, mobile app plugin, mobile plugin, mobile site, mobile website, mobile theme, mobile web, create mobile app, build mobile app, build wordpress app, app for wordpress, build blog app, blog app, app for blog, build blog app, create blog app, mobile app converter, native app, native blog app, native wordpress app, native app plugin, native wordpress app plugin, native, native smartphone app, native ios app, native android app, native mobile app, push, push notification, intelligent push notification, wordpress app plugin, wordpress app, wordpress, wordpress plugin, wordpress app builder, wordpress app maker, wordpress native app plugin, website to mobile app, wordpress blog app, wordpress website app, wordpress mobile, wordpress mobile app
+Tags: App, application, abmob, adsense, app generator, blappsta, blappsta plugin, blappsta mobile, blappsta wordpress plugin, blappsta mobile wordpress plugin, smartphone, tablet, social, facebook, twitter, post, posts, comments, widget, Android, android app, app for android, wordpress android app, android tablet, android smartphone, android, android blog app, samsung, htc, google, Ios, ios app, app for ios, apple, iphone, iphone app, ipad app, wordpress ios app, wordpress iphone app, wordpress ipad app, wordpress apple app,	mobile, mobile app, mobile app for wordpress, mobile app plugin, mobile plugin, mobile site, mobile website, mobile theme, mobile web, create mobile app, build mobile app, build wordpress app, app for wordpress, build blog app, blog app, app for blog, build blog app, create blog app, mobile app converter, native app, native blog app, native wordpress app, native app plugin, native wordpress app plugin, native, native smartphone app, native ios app, native android app, native mobile app, push, push notification, intelligent push notification, wordpress app plugin, wordpress app, wordpress, wordpress plugin, wordpress app builder, wordpress app maker, wordpress native app plugin, website to mobile app, wordpress blog app, wordpress website app, wordpress mobile, wordpress mobile app, nebelhorn
 
 Donate link: 
 Requires at least: 3.0
@@ -13,38 +13,43 @@ Make your blog a native app!
 
 == Description ==
 
-Blappsta is a great and easy to use tool to convert your WordPress site into a native mobile app for iOS and Android in only a few minutes (including iPhone, iPad, Android phones and tablets). Blappsta does not require any skills and no coding. We even upload the App for you.
+You are searching for an easy way to create an app out of your WordPress blog? Then Blappsta is a great tool to convert your WordPress site into a native mobile app for iOS and Android in only a few minutes - including iPhone, iPad, Android phones and tablets! Blappsta does not require any skills and no coding and even though you can individualize your app to your own needs. We even upload the App for you, so your readers can download your Android app and Apple app right from the App Stores. 
 
-= Turn your blog into a native app =
-**Build your individual app using your favorite colors and your own logo. Install our Blappsta plugin for free and design your app the way you want it to look. Instantly test it using our Blappsta Preview app from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8) or [Google Play&trade; Store](https://play.google.com/store/apps/details?id=com.blappsta.blappstaappcheck). You can test it as long as you want. If you like it, go to [http://www.blappsta.com](http://www.blappsta.com) and we will take care of publishing the app to the stores. Check out our [website](http://www.blappsta.com) for more information about Blappsta and our affordable pricing plans.
+= Turn your WordPress blog into a native app for iOS and Android =
+**You can build your individual Android and Apple app using your favorite colors and your own logo. First of all, please install our free Blappsta Wordpress app plugin and then you can change your native app just the way you want it to look. Instantly test it using our Blappsta Preview app for iOS and Android from the [Apple App Store](https://itunes.apple.com/us/app/blappsta-preview/id912390326?mt=8) or [Google Play&trade; Store](https://play.google.com/store/apps/details?id=com.blappsta.blappstaappcheck). You can test it as long as you want. If you like it, go to [http://www.blappsta.com](http://www.blappsta.com) and we will take care of publishing your very own app to the Apple and Google Play Store. Your readers can download your app from there and read your articles on their iPhone, iPad or Android smartphone. If you want to learn more about Blappsta, please check out our [website](http://www.blappsta.com).
 
-= Increase the number of readers of your blog with Push Notification =
-Notify your readers with our free push notification service build into the plugin. This service will increase your number of readers largely. You can decide when and what you want to push. 
+= Increase the number of loyal readers of your blog with Push Notification in your own native app for Apple and Android =
+Notify your blog readers with our free push notification service build into the plugin. This service will increase your number of readers largely, as they will receive notifications on their iPhone, iPad or Android smartphone whenever you have to share something with them. You can decide when and what you want to push. The notifications pops up on the Apple or Android devices and are also highlighted in the app itself. We really want to make sure that your readers will never miss a story of you again! 
+
+= Have your native app for iPhone, iPad and Android devices indexed by Google =
+As Google takes care of mobile friendliness as a ranking factor we have added an awesome feature to our Blappsta apps: You can get your app indexed by Google with deeplinks right into your native app! This will help to boost your ranking and to gain more app installs and find new readers. At the moment this works for Android apps, but in the future iOS apps will also be indexed.  
 
 = Features of the app =
-- send push notifications
-- share to Facebook, Twitter, Google+ and email
-- show the feed of your Facebook page (optional)
-- allows commenting and reading comments
+- send push notifications to iOS and Android devices
+- share your app content to Facebook, Twitter, Google+ and email
+- show the feed of your Facebook page in the app (optional)
+- allows commenting and reading comments in your native app for iPhone, iPad and Android devices
 - a list of the most popular articles instead of the categories or the latest articles up front
 - support for videos
-- continual improvement guaranteed
+- show related articles at the bottom of your post in your native app for iPhone, iPad and Android devices
+- continual improvement of the app guaranteed
+
 
 = Features of the plugin =
 - fully integrated in WordPress
-- send push notifications directly from a post or page
-- edit teaser content in your app
-- add category images for your app
+- send push notifications directly from a post or page in WordPress
+- edit teaser content in your native app for iPhone, iPad and Android devices
+- add category images for your app for iPhone, iPad and Android devices
 - individualize your app menu
 - set your home screen look
+- Contact form 7 support
 
 = There is more to come! These features are currently under development and will soon be part of Blappsta: =
 - image galleries
 - a growing number of available themes
 - support for wordpress.com
-- iPad/Android Tablet version
+- Android Tablet version
 - Windows Phone version
-
 
 
 = How it works =
@@ -75,6 +80,13 @@ Notify your readers with our free push notification service build into the plugi
 Please refer to our [Website](http://www.blappsta.com/questions-answers/)
 
 == Change Log ==
+= 0.8.6 =
+- Contact Form 7 Formular support
+- Add Recent post count
+- Support apply_filters for content page
+- Support custom posttype on homescreen
+- Small Bug fixes
+
 = 0.8.5.2 =
 - Fix push alert message
 
@@ -378,6 +390,13 @@ Please refer to our [Website](http://www.blappsta.com/questions-answers/)
  
  
 == Upgrade Notice ==
+= 0.8.6 =
+- Contact Form 7 Formular support
+- Add Recent post count
+- Support apply_filters for content page
+- Support custom posttype on homescreen
+- Small Bug fixes
+
 = 0.8.5.2 =
 - Fix push alert message
 

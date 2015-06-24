@@ -110,6 +110,7 @@ jQuery(document).ready(function($){
 					  case 'events': $type_text='Events'; $type2='events'; break;
 					  case 'map': $type_text='Map'; $type2='map'; break;
 					   case 'pushCenter': $type_text='Push center'; $type2='pushCenter'; break;
+					   case 'carFinder': $type_text='Car Finder'; $type2='carFinder'; break;
 					  case 'webview': $type_text='URL'; $type2='webview'; $inputurl='<div style="clear:left; margin-top:10px;"><p><label for="edit-menu-item-url-'+$pos+'">Url<br><input type="text" value="http://" name="'+$menu_settings_key+'[menu]['+$pos+'][url]" class="widefat edit-menu-item-url" id="edit-menu-item-url-'+$pos+'"></p></div>'; break;
 					  default: $type_text='';  $type2=''; break;
 				  }
@@ -573,16 +574,19 @@ jQuery(document).ready(function($){
 	/* deactive post order if startvie = category */
 	
 	$('#nh_homescreentype').change(function(){
+		
 		if($(this).val()==3){
 		
 			$('.nh_sorttype-tr').hide();
 			$('#nav-menus-frame').hide();
+			$('#nh_posttype-tr').hide();
 		}
 		else if($(this).val()!=1 && $(this).val()!=2 ){
 			//alert('disable=false setzen');
 			//$('#nh_sorttype').prop('disabled', false);
 			$('.nh_sorttype-tr').hide();			
 			$('#nav-menus-frame').show();
+			$('#nh_posttype-tr').hide();
 		}		
 		else {
 			//alert('disable=true setzen');
@@ -590,6 +594,9 @@ jQuery(document).ready(function($){
 			//$('#nh_sorttype').prop('disabled', true);
 			$('.nh_sorttype-tr').show();
 			$('#nav-menus-frame').hide();
+			
+			if($(this).val()==1 )$('#nh_posttype-tr').show();
+			else $('#nh_posttype-tr').hide();
 		}
 	});
 	

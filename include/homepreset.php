@@ -9,14 +9,36 @@
  			<select id="nh_homescreentype" name="<?php echo $this->homepreset_settings_key; ?>[homescreentype]" class="nh-floatleft">
  				<option value="0" ><?php _e('Individual','nh-ynaa'); ?></option>
             	<option value="3" <?php if($this->homepreset_settings['homescreentype']=='3') echo 'selected="selected"'; ?>><?php _e('Categories', 'nh-ynaa'); ?></option>
-                <option value="1" <?php if($this->homepreset_settings['homescreentype']=='1') echo ' selected="selected"'; ?>><?php _e('Articles', 'nh-ynaa'); ?></option>
+                <option value="1" <?php if($this->homepreset_settings['homescreentype']=='1') echo ' selected="selected"'; ?>><?php _e('Posts', 'nh-ynaa'); ?></option>
                 <option value="2" <?php if($this->homepreset_settings['homescreentype']=='2') echo ' selected="selected"'; ?>><?php _e('Pages', 'nh-ynaa'); ?></option>
             </select>
            <?php echo '<div class="helptext padding5">'.(__('Select your startscreen view for your app.','nh-ynaa')).'</div>'; ?>
            </td>
  	</tr>
+ 	
+ 	<tr id="nh_posttype-tr" style="<?php if($this->homepreset_settings['homescreentype']!='1') { echo 'display:none;'; } ?>">
+   		<th scope="row"><span><?php _e('Post types shown on starscreen','nh-ynaa'); ?></span></th>
+   		<td>
+   		<?php
+   		
+		if(!isset($this->homepreset_settings['posttype'])) {
+			$this->homepreset_settings['posttype']['post'] =  1;
+		}
+		$post_types = get_post_types();
+		foreach( $post_types as $post_type ){
+			if( !in_array( $post_type, array( 'attachment', 'revision', 'nav_menu_item' ) ) ){
+				if(!empty($this->homepreset_settings['posttype'][$post_type])) $checked =  'checked="checked"';
+				else $checked = '';
+				echo '<label class="posttypelabel"><input type="checkbox" name="'.$this->homepreset_settings_key.'[posttype]['.$post_type.']" value="1" '.$checked.' > '.$post_type.'</label> ';
+			}
+		}
+   		?>	
+   		<?php echo '<div class="helptext padding5">'.(__('Select the types of posts displayed on startscreen','nh-ynaa')).'</div>'; ?>
+   			
+   		</td>
+   </tr>
  	<tr class="nh_sorttype-tr" style="<?php if(isset($this->homepreset_settings['homescreentype']) && ($this->homepreset_settings['homescreentype']==0 || $this->homepreset_settings['homescreentype']==3)) {echo 'display:none;'; }  ?>">
- 		<th scope="row"><?php _e('Startscreen articles sorty by','nh-ynaa'); ?></span></th>
+ 		<th scope="row"><span><?php _e('Startscreen articles sorty by','nh-ynaa'); ?></span></th>
  		<td>
  			<select id="nh_sorttype" name="<?php echo $this->homepreset_settings_key; ?>[sorttype]" class="nh-floatleft">
             	<option value="date-desc" <?php if($this->homepreset_settings['sorttype']=='date-desc') echo ' selected="selected"'; ?>><?php _e('Recent posts', 'nh-ynaa'); ?></option>
@@ -25,8 +47,9 @@
                 <!--<option value="popular" <?php if($this->general_settings[$field['field']]=='popular') echo ' selected'; ?>><?php _e('Most popular posts', 'nh-ynaa'); ?></option> -->
             </select>
    		<?php echo '<div class="helptext padding5">'.(__('Post order on starscreen.','nh-ynaa')).'</div>'; ?>
-   	</td>
-   </tr>
+   		</td>
+   	</tr>
+   	
  </table>
  <input type="hidden" name="<?php echo $this->homepreset_settings_key; ?>[ts]" value="<?php echo time(); ?>" />
 <div id="nav-menus-frame" style="<?php if(isset($this->homepreset_settings['homescreentype']) && $this->homepreset_settings['homescreentype']!=0  ) echo 'display:none;';?>">
@@ -278,21 +301,26 @@
 											<li id="homepresetli<?php echo $v; ?>" class="floatli">
 
                                                  <?php
-												 	if($ar['type']=='cat' || $ar['type']=='fb' || $ar['type']=='events' ||$ar['type']=='map' ||$ar['type']=='webview') {
+												 	if($ar['type']=='cat' || $ar['type']=='fb' || $ar['type']=='events' ||$ar['type']=='map' ||$ar['type']=='webview' ||$ar['type']=='carFinder' || $ar['type']=='pushCenter') {
 														echo '<div class="hpdiv" id="hpdiv'.$v.'" ';
 														if($this->categories_settings[$ar['id']]['img']) echo  'style="background-image:url(\''.($this->categories_settings[$ar['id']]['img']).'\');"';
 														elseif(($ar['img'])) echo  'style="background-image:url(\''.($ar['img']).'\');"';
 														else echo 'style="background-color:'.$this->general_settings['c1'].';"';
 														echo ' >';
 												 	}
+													elseif($ar['type']=='pushCenter' || $ar['type']=='carFinder'){
+														echo '<div class="hpdiv" id="hpdiv'.$v.'" ';
+														echo 'style="background-color:'.$this->general_settings['c1'].';"';
+														echo ' >';
+													}
 												 	else {
 	                                                	echo '<div class="hpdiv" id="hpdiv'.$v.'" style="background-image:url(\''.($this->nh_getthumblepic($ar['id'])).'\');">';
     	                                            }
 
                                                    echo '<div class="ttitle'.$deactivated_class.'" id="hptitle'.$v.'div" title="'.$deactivated_cat_title.'">'.$ar['title'].'</div>';
-                                                    if($ar['type']=='cat' || $ar['type']=='fb' || $ar['type']=='events' ||$ar['type']=='webview') { ?>
+                                                    if($ar['type']=='cat' || $ar['type']=='fb' || $ar['type']=='events' ||$ar['type']=='webview' ||$ar['type']=='carFinder' || $ar['type']=='pushCenter') { ?>
 
-                                                    <div class="setdefaultcatpic" <?php if($ar['type']!='webview') echo ' style="display:none;"'; ?>><a id="upload_image_button<?php echo $v; ?>" class="upload_image_button" href="#" name="<?php echo $this->homepreset_settings_key; ?>_items_<?php echo $v; ?>_img"><?php _e('Set default image','nh-ynaa'); ?></a></div>
+                                                    <div class="setdefaultcatpic" <?php if($ar['type']!='webview' && $ar['type']!='carFinder' && $ar['type']!='pushCenter') echo ' style="display:none;"'; ?>><a id="upload_image_button<?php echo $v; ?>" class="upload_image_button" href="#" name="<?php echo $this->homepreset_settings_key; ?>_items_<?php echo $v; ?>_img"><?php _e('Set default image','nh-ynaa'); ?></a></div>
            											<input type="hidden" value="<?php echo $ar['img']; ?>" id="<?php echo $this->homepreset_settings_key; ?>_items_<?php echo $v; ?>_img" name="<?php echo $this->homepreset_settings_key; ?>[items][<?php echo $v; ?>][img]" data-id="hpdiv<?php echo $v; ?>" />
                                                     <?php } ?>
                                                </div>

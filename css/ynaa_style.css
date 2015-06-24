@@ -139,6 +139,9 @@ div.publishing-action {
 div.homepresetpreview {
 	width:400px !important;
 }
+label.posttypelabel {
+  margin-right: 30px;
+}
 
 div.blappsta-plugin-header {
 	float: left;
